@@ -1,43 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 13:19:05 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/12 13:46:42 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/01/09 10:42:42 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/01/09 16:55:46 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+/*#include <stdio.h>*/
 
-size_t	ft_strlcpy(char	*dest,	char	*src, size_t size)
+int	ft_strlen(const char	*str)
 {
-	size_t	index;
+	int	len;
 
-	index = 0;
-	while (src [index] != 0 && index < (size - 1))
+	len = 0;
+	while (*str != 0)
 	{
-		dest[index] = src[index];
-		index++;
+		str++;
+		len++;
 	}
-	dest [index] = 0;
-	while (src [index] != 0)
-	{
-		index++;
-	}
-	return (index);
+	return (len);
 }
 /*
 int	main(void)
 {
-	char	buffer [8];
-	int		lenght;
+	char	*texto;
+	int		len;
 
-	lenght = ft_strlcpy(buffer, "Hola", 8);
-	printf("%s\n", buffer);
-	lenght = ft_strlcpy(buffer, "Torrelodones", 8);
-	printf("%s\n", buffer);
+	texto = "Hola";
+	len = ft_strlen(texto);
+	printf("El texto es :%s\n y la longitud es de %d caracteres\n", texto, len);
 	return (0);
 }*/
