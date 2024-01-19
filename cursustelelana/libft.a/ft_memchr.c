@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/17 08:48:18 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/01/17 08:55:36 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 
-void	*ft_memchr(const void *s, int	c, size_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t index;
-	char *aux;
-		
-	aux = (char*)s;
+	size_t	index;
+	char	*aux;
+
+	aux = (char *)s;
 	index = 0;
 	while (index < n)
 	{
@@ -17,7 +29,7 @@ void	*ft_memchr(const void *s, int	c, size_t n)
 		{
 			aux++;
 		}
-	index ++;
+		index ++;
 	}
 	return (0);
 }
@@ -35,4 +47,3 @@ int	main(void)
 	}
 	return (0);
 }
-

@@ -17,6 +17,7 @@ fclean: clean
 
 re: fclean $(NAME)
 
+.PHONY: all clean fclean re
 # Makefile consta de targets, dependencias y ordenes. Primero se ejecutan las dependencias, luego el target (con las ordenes que estan especificadas en el target).
 # ejempo = make libft.a
 # SE va al libft.a que es el $(NAME)y alli ve que depende de $(OBJ) asi que busca para cada .o su target que en este caso es la dependencia de .c y realizar la orden cc- W -W -W -c $>.

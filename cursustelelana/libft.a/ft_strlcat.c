@@ -6,13 +6,13 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:40:02 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/11 19:14:59 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/01/17 17:04:19 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 #include "libft.h"
 
-size_t	ft_strlcat(char	*dest,	char	*src, size_t size)
+size_t	ft_strlcat(char	*dest, const char	*src, size_t size)
 {
 	size_t	length;
 
