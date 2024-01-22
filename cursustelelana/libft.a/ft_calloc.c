@@ -24,7 +24,7 @@ void	*ft_calloc(size_t quantity, size_t size_of_each_element)
 	ft_bzero(result, total_bytes);
 	return (result);
 }
-
+/*
 int	main(void)
 {
 	int	*numbers;
@@ -38,4 +38,4 @@ int	main(void)
 		index++;
 	}
 	return (0);
-}
+}*/

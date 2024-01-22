@@ -39,5 +39,7 @@ int	main(void)
 	printf("%s\n", buffer);
 	lenght = ft_strlcpy(buffer, "Torrelodones", 8);
 	printf("%s\n", buffer);
+	char dest[1000];
+	printf("%d\n", ft_strlcpy(dest, "lorem ipsum dolor sit amet", 0));
 	return (0);
 }*/

@@ -43,5 +43,8 @@ char	*ft_strtrim(const char	*str, const char	*set);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putendl_fd(char	*str, int fd);
+char	*ft_itoa(int n);
+char	**ft_split(char	*s, char c);
+void	ft_putnbr_fd(int c, int fd);
 
 #endif
