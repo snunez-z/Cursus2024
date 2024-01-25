@@ -1,72 +1,103 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/23 09:14:12 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/01/25 14:58:12 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include "libft.h"
+#include <stdlib.h>
 
-int ft_count_words(char* str, int separator)
+static int	ft_count_words(char *str, int divider)
 {
-   int     words;
-   char    *aux;
+	int		words;
+	char	*aux;
 
-   // Excepcion
-   if (ft_strlen(str) == 0)
-       return 0;
-    
-   words = 0;
-   aux = str;
-   while (aux != 0)
-   {
-       aux = ft_strchr(aux, separator);
-       if (aux != 0)
-           aux++;
-       words++;
-   }
-
-   return words;
+	words = 0;
+	aux = str;
+	while (*aux != '\0')
+	{
+		while (*aux != '\0' && *aux == divider)
+			aux++;
+		if (*aux != '\0')
+			words++;
+		while (*aux != '\0' && *aux != divider)
+			aux++;
+	}
+	return (words);
 }
 
-char** ft_split(char *str, int separator)
+static int find_words_into_string(char *str, char **words, int divider)
 {
-   char    **words;
-   int     num_words;
-   char    *from;
-   char    *to;
-   int     index;
-
-   num_words = ft_count_words(str, separator);
-   words = (char**) ft_calloc(num_words + 1, sizeof(char*));
-
-   index = 0;
-   from = str;
-   while (from != 0)
-   {
-       to = ft_strchr(from, separator);
-       if (to != 0)
-       {
-           words[index] = ft_substr(from, 0, to - from);
-           from = to + 1;
-       }
-       else
-       {
-           words[index] = ft_substr(from, 0, ft_strlen(from));
-           from = to;
-       }
-       index++;
-   }
-
-   return words;
+	char	*from;
+	char	*to;
+	int		index;
+	
+	index = 0;
+	from = str;
+	while (*from != 0)
+	{
+		for(; *from != '\0' && *from == divider; from++);
+		if (*from != '\0')
+		{	
+			for (to = from; *to != '\0' && *to != divider; to++)
+			words[index] = ft_substr(from, 0, to - from);
+			if (words [index] == 0)
+			return (0);
+		from = to;
+		index++;
+		}
+	}	
+	return (1);
 }
 
-int main(void)
+static	void ft_free_reserved_memory (char **words)
 {
-   int index;
-   char** split;
+	int index;
 
-   split = ft_split("Susana Núñez Zamora", ' ');
-   index = 0;
-   while(split[index] != 0)
-   {
-       printf("%s\n", split[index]);
-       index++;
-   }
+	index = 0;
+	while (words[index] != 0)
+	{
+		free (words [index]);
+		index++;
+	}
+    free(words);
+}
 
-   return (0);
+char	**ft_split(char *str, char divider)
+{
+	char	**words;
+	int		num_words;
+	
+	if (str == 0)
+		return (0);
+	num_words = ft_count_words(str, divider);
+	words = (char **) ft_calloc(num_words + 1, sizeof(char *));
+	if (find_words_into_string (str, words, divider) == 0)
+	{
+		ft_free_reserved_memory (words);
+		return (0);
+	}	
+	return (words);
+}
+
+int	main(void)
+{
+	int		index;
+	char	**split;
+
+	split = ft_split("    Susana      Núñez       Zamora     ", ' ');
+	index = 0;
+	while (split[index] != 0)
+	{
+		printf("[%s]\n", split[index]);
+		index++;
+	}
+	return (0);
 }
