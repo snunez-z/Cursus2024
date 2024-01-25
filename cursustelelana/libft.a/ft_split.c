@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 09:14:12 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/25 14:58:12 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:06:47 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,18 @@ static int find_words_into_string(char *str, char **words, int divider)
 	from = str;
 	while (*from != 0)
 	{
-		for(; *from != '\0' && *from == divider; from++);
+		while (*from != '\0' && *from == divider)
+			from++;
 		if (*from != '\0')
 		{	
-			for (to = from; *to != '\0' && *to != divider; to++)
+			while (*to != '\0' && *to != divider)
+				to++;
 			words[index] = ft_substr(from, 0, to - from);
 			if (words [index] == 0)
-			return (0);
-		from = to;
-		index++;
-		}
+				return (0);
+			from = to;
+			index++;
+	    }	
 	}	
 	return (1);
 }
@@ -96,7 +98,7 @@ int	main(void)
 	index = 0;
 	while (split[index] != 0)
 	{
-		printf("[%s]\n", split[index]);
+		printf("%s\n", split[index]);
 		index++;
 	}
 	return (0);
