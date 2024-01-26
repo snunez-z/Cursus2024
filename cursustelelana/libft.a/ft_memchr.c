@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:48:18 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/17 08:55:36 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:09:24 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (0);
 }
-
+/*
 int	main(void)
 {
 	char	*str;
@@ -46,4 +46,4 @@ int	main(void)
 		printf("No lo ha encotrado\n");
 	}
 	return (0);
-}
+}*/

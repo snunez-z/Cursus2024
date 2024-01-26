@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:10:21 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/17 08:35:55 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:27:27 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	*ft_calloc(size_t quantity, size_t size_of_each_element)
 
 	total_bytes = quantity * size_of_each_element;
 	result = malloc(total_bytes);
-	ft_bzero(result, total_bytes);
+	if (result)  
+		ft_bzero(result, total_bytes);
 	return (result);
 }
 /*
@@ -39,3 +40,4 @@ int	main(void)
 	}
 	return (0);
 }*/
+

@@ -6,11 +6,11 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 12:15:55 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/09 13:01:19 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:03:03 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+/*#include <stdio.h>*/
 
 int	ft_tolower(int c)
 {
@@ -20,7 +20,7 @@ int	ft_tolower(int c)
 	}
 	return (c);
 }
-
+/*
 int	main(void)
 {
 	char	c;
@@ -33,4 +33,4 @@ int	main(void)
 	lc = ft_tolower(c);
 	printf("%c\n", lc);
 	return (0);
-}
+}*/

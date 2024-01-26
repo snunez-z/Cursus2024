@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 09:02:13 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/17 09:06:33 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:06:47 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	ft_memcmp(const void	*s1, const void	*s2, size_t n)
 {
-	size_t	index;
-	char	*aux1;
-	char	*aux2;
-	int		result_cmp;
+	size_t			index;
+	char			*aux1;
+	char			*aux2;
+	unsigned int	result_cmp;
 
 	aux1 = (char *)s1;
 	aux2 = (char *)s2;
@@ -38,7 +38,7 @@ int	ft_memcmp(const void	*s1, const void	*s2, size_t n)
 	}
 	return (0);
 }
-
+/*
 int	main(void)
 {
 	int	result;
@@ -56,4 +56,4 @@ int	main(void)
 	result = ft_memcmp ("Hola", "Hola Su", 4);
 	printf("%d\n", result);
 	return (0);
-}
+}*/

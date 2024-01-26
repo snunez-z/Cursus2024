@@ -6,11 +6,11 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:46:32 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/17 14:36:02 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/01/24 15:49:32 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+/*#include <stdio.h>*/
 #include <stdlib.h>
 #include "libft.h"
 
@@ -26,7 +26,7 @@ char	*ft_substr(const char	*str, unsigned int start, size_t len)
 	ft_strlcpy (sub, (str + start), (len + 1));
 	return (sub);
 }
-
+/*
 int	main(void)
 {
 	char	*new_str;
@@ -39,4 +39,4 @@ int	main(void)
 	printf("%s\n", new_str);
 	free (new_str);
 	return (0);
-}
+}*/

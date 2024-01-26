@@ -6,11 +6,11 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 12:49:49 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/09 12:51:16 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:03:30 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+/*#include <stdio.h>*/
 
 int	ft_toupper(int c)
 {
@@ -20,7 +20,7 @@ int	ft_toupper(int c)
 	}
 	return (c);
 }
-
+/*
 int	main(void)
 {
 	char	c;
@@ -30,4 +30,4 @@ int	main(void)
 	lc = ft_toupper(c);
 	printf("%c\n", lc);
 	return (0);
-}
+}*/

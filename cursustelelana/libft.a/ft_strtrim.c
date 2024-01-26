@@ -6,11 +6,11 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:30:17 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/18 12:46:41 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:00:17 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+/*#include <stdio.h>*/
 #include "libft.h"
 #include <stdlib.h>
 
@@ -36,7 +36,7 @@ char	*ft_strtrim(const char	*str, const char *set)
 	ft_strlcpy (result, str + left_index, size);
 	return (result);
 }
-
+/*
 int	main(void)
 {
 	char	*result;
@@ -48,4 +48,4 @@ int	main(void)
 	result = ft_strtrim (" H ", " ");
 	printf("%s\n", result);
 	return (0);
-}
+}*/ 
