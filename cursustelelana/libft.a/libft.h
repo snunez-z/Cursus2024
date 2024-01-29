@@ -15,6 +15,12 @@
 # define LIBFT_H
 # include <stddef.h>
 
+typedef struct s_list
+{
+	int				content;
+	struct s_list	*next;
+}	t_list;
+
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
@@ -47,5 +53,9 @@ char	*ft_itoa(int n);
 char	**ft_split(char	*s, char divider);
 void	ft_putnbr_fd(int c, int fd);
 char	**ft_split(char	*str, char divider);
+char	*ft_strmapi(const char	*str, char (*accion) (unsigned int, char));
+void	ft_striteri(char	*str, void (*f) (unsigned int, char *s));
 
+t_list	*ft_lstnew(int content);
+t_list	*ft_lstadd_front(t_list	*first, t_list	*new_first);
 #endif

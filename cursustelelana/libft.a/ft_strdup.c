@@ -31,6 +31,6 @@ int	main(void)
 
 	copy = ft_strdup("Hola");
 	printf("%s\n", copy);
-	/*free(copy);*/
+	free(copy);
 	return (0);
 }*/

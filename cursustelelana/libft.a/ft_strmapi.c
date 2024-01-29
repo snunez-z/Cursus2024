@@ -8,9 +8,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+/*#include <stdio.h>*/
 #include "libft.h"
 #include <stdlib.h>
+#include <ctype.h>
 /*
 char	convert_to_alpha_upper(unsigned	int a, char b)
 {
@@ -27,8 +28,7 @@ char	convert_to_alpha_lower(unsigned	int a, char b)
 	else
 		return (ft_tolower(b));	
 }
-
-static int isspace(char a)
+static int ft_isspace(char a)
 {
 	if(( a == '\t') ||( a == '\n') || (a == '\f') || (a == '\r') || (a == ' ') || (a == 11))
 		return (1);
@@ -36,51 +36,88 @@ static int isspace(char a)
 		return (0);
 }
 
-char	convert_to_underscore(char a)
+char	convert_to_underscore(unsigned int no_lo_uso, char a)
 {
-	if (isspace(a))
+	(void)no_lo_uso;
+	if (ft_isspace(a))
 		return ( '_');
 	else
 		return (a);
 }
-
 char	convert_to_alpha(unsigned int a, char b)
 {	
 	if (a == 0) 
 		return (convert_to_alpha_upper(a, b));
 	else  
 		return (convert_to_alpha_lower(a, b));
-}*/
-
-char	*copy_string(const char	*str)
-{
-	char	*copy;
-	int		len;
-	int 	index;
-	
-	len = ft_strlen(str) + 1;
-    copy = (char *)malloc( len * sizeof(char));
-	if (copy)
-	{
-		index = 0;
-		while (*str != 0 && index < len )
-		{
-			copy [index] = str [index];
-			str++;
-		}
-	*copy = 0;
-	while(*str != '\0')
-		index++;
-	return (index);
-	}
-	return(copy);
 }
 
+char todo_espacios(unsigned int a, char ch)
+{
+		(void)a;
+		(void)ch;
+		return '.';
+}
+
+char copy_char(unsigned int a, char ch)
+{
+		(void)a;
+		return ch;
+}
+
+char password_generate (unsigned int a, char ch)
+{
+		(void)a;
+		if (ch == 'i' || ch == 'I')
+				return '1';
+		if (ch == 'a' || ch == 'A')
+				return '@';
+		if (ch == 'o' || ch == 'O')
+				return '0';
+		return ch;
+}
+*/
+char	*ft_strmapi(const char *str, char (*accion) (unsigned int, char))
+{
+		char	*copy;
+		int	len;
+		int	index;
+
+		if (str == NULL)
+			return (NULL);
+
+		while (str[0] == ' ')
+				str++;
+
+		len = ft_strlen(str) + 1;
+		copy = (char *) malloc ( len * sizeof (char));
+		if (copy != NULL)
+		{	
+			index = 0;
+			while (str [index] != '\0' && index < len)
+			 {
+				copy [index] = (*accion)(index, str[index]);
+				index++;
+			 }
+			 copy [index] = 0;
+		}	
+		return (copy); 
+}
+/*
 int	main(void)
 {
 	char	*copy;
 
-	copy = copy_string( "Hola muchachita");
+	copy = str_copy2("            hola MuchaChita");
 	printf("%s\n", copy);
-}
-/*char	*ft_strmapi(const char *str, (*f) (unsigned int, char b)*/
+	copy = ft_strmapi("            hola MuchaChita", convert_to_alpha);
+	printf("%s\n", copy);
+	copy = ft_strmapi("            hola MuchaChita", todo_espacios);
+	printf("%s\n", copy);
+	copy = ft_strmapi("            hola MuchaChita", copy_char);
+	printf("%s\n", copy);
+	copy = ft_strmapi("            hola MuchaChita", convert_to_underscore);
+	printf("%s\n", copy);
+	copy = ft_strmapi("            hola MuchaChita", pasword_generate);
+	printf("%s\n", copy);
+}*/
