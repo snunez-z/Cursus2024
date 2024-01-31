@@ -9,36 +9,65 @@
 /*   Updated: 2024/01/17 17:04:19 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
+
+/*#include <stdio.h>*/
 #include "libft.h"
 
-size_t	ft_strlcat(char	*dest, const char	*src, size_t size)
+void	t_len_bigger_size(char	*dest, const char *src, size_t size)
 {
+	int		max_chars_to_copy;
 	size_t	length;
+	int		index;
 
 	length = ft_strlen(dest);
+	max_chars_to_copy = (size - length) - 1;
 	dest = dest + length;
-	while (*src != 0 && length < (size - 1))
+	index = 0;
+	while (index < max_chars_to_copy)
 	{
 		*dest = *src;
 		src++;
 		dest++;
-		length++;
+		index++;
 	}
-	*dest = 0;
-	return (length + ft_strlen(src));
+	*dest = '\0';
+}
+
+size_t	ft_strlcat(char	*dest, const char	*src, size_t size)
+{
+	size_t	length;
+	size_t	total_length;
+
+	length = ft_strlen(dest);
+	total_length = length + ft_strlen(src);
+	if ((length) >= size)
+		return (size + ft_strlen (src));
+	if (total_length >= size)
+	{
+		t_len_bigger_size(dest, src, size);
+		return (total_length);
+	}
+	dest = dest + length;
+	while (*src != '\0')
+	{
+		*dest = *src;
+		src++;
+		dest++;
+	}
+	*dest = '\0';
+	return (total_length);
 }
 /*
 int	main(void)
 {
-	char	buffer [10];
-	int		length;
+	char	dest[10];
+	int	length ;
 
-	length = ft_strlcat(buffer, "Hola", 10);
-	printf("%d = %s\n", length, buffer);
-	length = ft_strlcat(buffer, "buena", 10);
-	printf("%d = %s\n", length, buffer);
-	length = ft_strlcat(buffer, "amiga", 10);
-	printf("%d = %s\n", length, buffer);
-	return (0);
+	ft_strlcpy (dest, "Hola", 5);
+    length = ft_strlcat (dest, "Sushi", 7);
+	printf("%d = %s\n", length, dest);
+
+	ft_strlcpy (dest, "Hola", 5);
+    length = ft_strlcat (dest, "Sushi", 7);
+	printf("%d = %s\n", length, dest);
 }*/

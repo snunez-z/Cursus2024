@@ -10,36 +10,47 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include <stdio.h>*/
+/*#include <stdio.h>
+#include <string.h>*/
 
 char	*ft_strchr(const char	*str, int c)
 {
-	while (*str != 0)
+	if (c > 255)
+		c = (c % 256);
+
+	while (*str != '\0')
 	{
 		if (*str != c)
-		{
 			str++;
-		}
 		else
-		{
 			return ((char *)str);
-		}
 	}
-	return (0);
+	if (c == '\0')
+		return ((char *)str);
+	else
+		return (0);
 }
 /*
 int	main(void)
 {
 	char	*result;
 
-	result = ft_strchr ("SONORo", 'o');
+	result = strchr ("SONORo", 'o' + 256);
 	printf("%s\n", result);
-	result = ft_strchr ("SONORo", 'O');
+	result = ft_strchr ("SONORo", 'o' + 256);
 	printf("%s\n", result);
-	result = ft_strchr ("SONORo", 'I');
+	
+	result = ft_strchr ("SONORo", 'c');
 	if (result == 0)
-	{
-		printf(" No se ha encontrado el caracter en esa cadena");
-	}
+			printf("No encontrado\n");
+	result = strchr ("SONORo", 'c');
+	if (result == 0)
+			printf("No encontrado\n");
+
+	result = ft_strchr ("SONORo", '\0');
+	printf("%s\n", result);
+	result = strchr ("SONORo", '\0');
+	printf("%s\n", result);
+	
 	return (0);
 }*/
