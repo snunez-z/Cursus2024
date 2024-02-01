@@ -10,17 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+//#include <stdio.h>
+#include <stddef.h>
 
 int	ft_memcmp(const void	*s1, const void	*s2, size_t n)
 {
 	size_t			index;
-	char			*aux1;
-	char			*aux2;
-	unsigned int	result_cmp;
+	unsigned char	*aux1;
+	unsigned char	*aux2;
+	int				result_cmp;
 
-	aux1 = (char *)s1;
-	aux2 = (char *)s2;
+	aux1 = (unsigned char *)s1;
+	aux2 = (unsigned char *)s2;
 	index = 0;
 	while (index < n)
 	{
@@ -43,6 +44,10 @@ int	main(void)
 {
 	int	result;
 
+	result = ft_memcmp ("t\200", "t\0", 2);
+	printf("%d\n", result);
+	result = ft_memcmp ("t\200", "t\0", 2);
+	printf("%d\n", result);
 	result = ft_memcmp ("Hola", "Hola", 3);
 	printf("%d\n", result);
 	result = ft_memcmp ("Hola", "Hala", 3);

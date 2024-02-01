@@ -9,25 +9,31 @@
 /*   Updated: 2024/01/11 19:19:06 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
+
+//#include <stdio.h>
+#include <stddef.h>
 
 int	ft_strncmp(char	*s1,	char*s2, size_t	n)
 {
 	size_t	index;
 	int		result;
+	unsigned char	*aux1;
+	unsigned char	*aux2;
 
+	aux1 = (unsigned char *)s1;
+	aux2 = (unsigned char *)s2;
 	index = 0;
 	result = 0;
-	while ((result == 0) && (*s1 != '\0') && (*s2 != '\0') && (index < n))
+	while ((result == 0) && (*aux1 != '\0') && (*aux2 != '\0') && (index < n))
 	{
-		result = (*s1 - *s2);
-		s1++;
-		s2++;
+		result = (*aux1 - *aux2);
+		aux1++;
+		aux2++;
 		index++;
 	}
 	if ((result == 0) && (index < n))
 	{
-		result = (*s1 - *s2);
+		result = (*aux1 - *aux2);
 	}
 	return (result);
 }

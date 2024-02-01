@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include <stdio.h>*/
+//#include <stdio.h>
 #include "libft.h"
 #include <stdlib.h>
 
 char	*ft_strtrim(const char	*str, const char *set)
 {
 	char	*result;
-	size_t	left_index;
-	size_t	right_index;
+	int		left_index;
+	int		right_index;
 	size_t	size;
 
 	left_index = 0;
@@ -47,5 +47,7 @@ int	main(void)
 	printf("%s\n", result);
 	result = ft_strtrim (" H ", " ");
 	printf("%s\n", result);
+	result = ft_strtrim ("", "");
+	printf("%s\n", result);
 	return (0);
-}*/ 
+}*/
