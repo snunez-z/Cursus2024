@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/18 17:10:21 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/02 09:15:36 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/02/02 07:51:21 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/02/02 07:53:18 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stdio.h>
+#include "libft.h"
+#include <stdlib.h>
 
-void	ft_putchar_fd(char c, int fd)
+t_list	*ft_lstnew(int content)
 {
-	write (fd, &c, 1);
+	t_list	*new_node;
+
+	new_node = (t_list *)malloc (sizeof (t_list));
+	if (new_node != NULL)
+	{
+		new_node->content = content;
+		new_node->next = NULL;
+	}
+	return (new_node);
 }
+
 /*
 int	main(void)
 {
-	int	stdout_fd;
+	int	num;
+	t_list	*node;
 
-	stdout_fd = 1;
-	ft_putchar_fd ('S', stdout_fd);
-	ft_putchar_fd ('U', stdout_fd);
-	ft_putchar_fd ('S', stdout_fd);
-	ft_putchar_fd ('A', stdout_fd);
-	ft_putchar_fd ('N', stdout_fd);
-	ft_putchar_fd ('A', stdout_fd);
-	ft_putchar_fd ('\n', stdout_fd);
-	return (0);
-}*/
+	num = 13;
+	node = ft_lstnew (num);
+	printf("%d %ld", node->content, (long)node->next);
+}
+*/

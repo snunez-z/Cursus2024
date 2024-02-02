@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 08:10:21 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/02 07:44:20 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/02/02 07:45:48 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/02/02 07:48:25 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,23 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void	*ft_calloc(size_t quantity, size_t size_of_each_element)
+t_list	*ft_lstadd_front(t_list	*first_node, t_list	*next_node)
 {
-	size_t	total_bytes;
-	void	*result;
-
-	total_bytes = quantity * size_of_each_element;
-	result = malloc(total_bytes);
-	if (result)
-		ft_bzero(result, total_bytes);
-	return (result);
+	first_node->next = next_node;
+	return (first_node);
 }
-/*
+
 int	main(void)
 {
-	int	*numbers;
-	int	index;
+	t_list	*node1;
+	t_list	*node2;
+	t_list	*list;
 
-	numbers = ft_calloc (100, sizeof (int));
-	index = 0;
-	while (index < 100)
-	{
-		printf("%d", numbers[index]);
-		index++;
-	}
-	return (0);
-}*/
+	node1 = ft_lstnew (13);
+	node2 = ft_lstnew(14);
+	list = ft_lstadd_front(node1, node2);
+	printf("% d, %d\n", list->content, list->next->content);
+	printf("%ld\n", (long)list);
+	printf("%ld\n", (long)list->next);
+	printf("%ld\n", (long)list->next->next);
+}

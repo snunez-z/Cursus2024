@@ -6,17 +6,16 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 16:46:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/24 13:54:00 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/02 07:42:25 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*#include <stdio.h>*/
 #include "libft.h"
 
-
 static int	ft_isspace(const char *str)
 {
-	if (*str == '\t' || *str == '\n' || *str == '\f' 
+	if (*str == '\t' || *str == '\n' || *str == '\f'
 		|| *str == '\r' || *str == ' ' || *str == 11)
 		return (1);
 	else

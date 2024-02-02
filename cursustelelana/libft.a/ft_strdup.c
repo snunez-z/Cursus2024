@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 09:07:57 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/26 13:17:44 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/02 09:32:51 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char	*ft_strdup(const char *src)
 
 	size = ft_strlen(src) + 1;
 	copy = malloc(size * sizeof(char));
-	ft_strlcpy(copy, src, size);
+	if (copy)
+		ft_strlcpy(copy, src, size);
 	return (copy);
 }
 /*

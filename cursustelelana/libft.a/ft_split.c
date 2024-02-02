@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 09:14:12 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/26 08:24:53 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/02 09:32:05 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,13 @@ char	**ft_split(char *str, char divider)
 		return (0);
 	num_words = ft_count_words(str, divider);
 	words = (char **) ft_calloc(num_words + 1, sizeof(char *));
-	if (find_words_into_string (str, words, divider) == 0)
+	if (words)
 	{
-		ft_free_reserved_memory (words);
-		return (0);
+		if (find_words_into_string (str, words, divider) == 0)
+		{
+			ft_free_reserved_memory (words);
+			return (0);
+		}
 	}
 	return (words);
 }

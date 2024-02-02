@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 08:21:19 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/23 08:28:22 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/02 09:23:00 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	ft_putnbr_fd(int n, int fd)
 	char	*len;
 
 	len = ft_itoa(n);
-	ft_putstr_fd(len, fd);
+	if (len)
+		ft_putstr_fd(len, fd);
 	free(len);
 }
 /*

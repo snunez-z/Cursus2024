@@ -1,10 +1,12 @@
+/* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 08:48:34 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/26 10:42:44 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/01/30 11:32:28 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/02/02 07:58:29 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +32,8 @@ char	convert_to_alpha_lower(unsigned	int a, char b)
 }
 static int ft_isspace(char a)
 {
-	if(( a == '\t') ||( a == '\n') || (a == '\f') || (a == '\r') || (a == ' ') || (a == 11))
+	if(( a == '\t') ||( a == '\n') || (a == '\f') 
+		|| (a == '\r') || (a == ' ') || (a == 11))
 		return (1);
 	else
 		return (0);
@@ -79,29 +82,27 @@ char password_generate (unsigned int a, char ch)
 */
 char	*ft_strmapi(const char *str, char (*accion) (unsigned int, char))
 {
-		char	*copy;
-		int	len;
-		int	index;
+	char	*copy;
+	int		len;
+	int		index;
 
-		if (str == NULL)
-			return (NULL);
-
-		while (str[0] == ' ')
-				str++;
-
-		len = ft_strlen(str) + 1;
-		copy = (char *) malloc ( len * sizeof (char));
-		if (copy != NULL)
-		{	
-			index = 0;
-			while (str [index] != '\0' && index < len)
-			 {
-				copy [index] = (*accion)(index, str[index]);
-				index++;
-			 }
-			 copy [index] = 0;
-		}	
-		return (copy); 
+	if (str == NULL)
+		return (NULL);
+	while (str[0] == ' ')
+		str++;
+	len = ft_strlen(str) + 1;
+	copy = (char *) malloc (len * sizeof (char));
+	if (copy != NULL)
+	{
+		index = 0;
+		while (str [index] != '\0' && index < len)
+		{
+			copy [index] = (*accion)(index, str[index]);
+			index++;
+		}
+		copy [index] = 0;
+	}
+	return (copy);
 }
 /*
 int	main(void)

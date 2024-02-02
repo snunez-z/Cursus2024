@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 09:19:25 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/18 11:48:41 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/02 07:55:55 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*ft_strchr(const char	*str, int c)
 {
 	if (c > 255)
 		c = (c % 256);
-
 	while (*str != '\0')
 	{
 		if (*str != c)

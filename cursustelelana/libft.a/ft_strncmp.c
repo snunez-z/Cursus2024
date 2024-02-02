@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 07:42:38 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/11 19:19:06 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/02 07:59:08 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 int	ft_strncmp(char	*s1,	char*s2, size_t	n)
 {
-	size_t	index;
-	int		result;
+	size_t			index;
+	int				result;
 	unsigned char	*aux1;
 	unsigned char	*aux2;
 

@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:30:17 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/23 10:00:17 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/02 09:33:49 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char	*ft_strtrim(const char	*str, const char *set)
 	}
 	size = (right_index - left_index + 2);
 	result = ((char *) malloc (size));
-	ft_strlcpy (result, str + left_index, size);
+	if (result)
+		ft_strlcpy (result, str + left_index, size);
 	return (result);
 }
 /*

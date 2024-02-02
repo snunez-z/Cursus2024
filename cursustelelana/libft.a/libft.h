@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:25:57 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/24 13:57:11 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/02 08:44:39 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_putnbr_fd(int c, int fd);
 char	**ft_split(char	*str, char divider);
 char	*ft_strmapi(const char	*str, char (*accion) (unsigned int, char));
 void	ft_striteri(char	*str, void (*f) (unsigned int, char *s));
+char	*ft_strjoin(const char	*str1, const char	*str2);
 
 t_list	*ft_lstnew(int content);
 t_list	*ft_lstadd_front(t_list	*first, t_list	*new_first);
