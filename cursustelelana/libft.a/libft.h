@@ -17,7 +17,7 @@
 
 typedef struct s_list
 {
-	int				content;
+	void			*content;
 	struct s_list	*next;
 }	t_list;
 
@@ -57,6 +57,11 @@ char	*ft_strmapi(const char	*str, char (*accion) (unsigned int, char));
 void	ft_striteri(char	*str, void (*f) (unsigned int, char *s));
 char	*ft_strjoin(const char	*str1, const char	*str2);
 
-t_list	*ft_lstnew(int content);
-t_list	*ft_lstadd_front(t_list	*first, t_list	*new_first);
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_front(t_list	**first, t_list	*new_first);
+int		ft_lstsize(t_list *lst);
+t_list	*ft_lstlast(t_list *lst);
+void	ft_lstadd_back(t_list **first_node, t_list *last_node);
+void	ft_lstdelone(t_list *lst, void (*del)(void*));
+
 #endif

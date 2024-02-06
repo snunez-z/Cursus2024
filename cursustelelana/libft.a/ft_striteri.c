@@ -55,16 +55,16 @@ void	ft_striteri(char *str, void (*f)(unsigned int, char*))
 int	main(void)
 {
 	char str[] = " hola_ muchachita  LINDA";
-	ft_convert_to_upper(str, ft_new_toupper);
+	ft_striteri(str, ft_new_toupper);
 	printf("%s\n", str);
 	
-	ft_convert_to_upper(str, ft_new_tolower);
+	ft_striteri(str, ft_new_tolower);
 	printf("%s\n", str);
 	
-	ft_convert_to_upper(str, ft_new_isspace);
+	ft_striteri(str, ft_new_isspace);
 	printf("%s\n", str);
 	
-	ft_convert_to_upper(str, convert_to_underscore);
+	ft_striteri(str, convert_to_underscore);
 	printf("%s\n", str);
 	return(0);
 }*/

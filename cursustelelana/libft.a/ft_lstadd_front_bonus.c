@@ -10,27 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+//#include <stdio.h>
 #include "libft.h"
 #include <stdlib.h>
 
-t_list	*ft_lstadd_front(t_list	*first_node, t_list	*next_node)
+void	ft_lstadd_front(t_list	**first_node, t_list	*new_node)
 {
-	first_node->next = next_node;
-	return (first_node);
+	if (*first_node == NULL)
+		*first_node = new_node;
+	else
+	{
+		new_node->next = *first_node;
+		*first_node = new_node;
+	}
 }
-
+/*
 int	main(void)
 {
-	t_list	*node1;
-	t_list	*node2;
-	t_list	*list;
+	t_list	*first_node;
+	t_list	*new_node;
+	int		index;
+	char	*copy;
 
-	node1 = ft_lstnew (13);
-	node2 = ft_lstnew(14);
-	list = ft_lstadd_front(node1, node2);
-	printf("% d, %d\n", list->content, list->next->content);
-	printf("%ld\n", (long)list);
-	printf("%ld\n", (long)list->next);
-	printf("%ld\n", (long)list->next->next);
-}
+	first_node = ft_lstnew((void *)((long)1));
+	index = 2;
+	while (index < 10)
+	{
+		new_node = ft_lstnew((void *)((long)index));
+		ft_lstadd_front(&first_node, new_node);
+		index++;
+	}
+	new_node = ft_lstnew("hola Sushi");
+	ft_lstadd_front(&first_node, new_node);
+	printf("%s\n", (char *)first_node->content);
+	printf("%ld\n", (long)first_node->next->content);
+	printf("%ld\n", (long)first_node->next->next->content);
+	printf("%ld\n", (long)first_node->next->next->next->content);
+}*/

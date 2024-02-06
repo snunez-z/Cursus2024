@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-t_list	*ft_lstnew(int content)
+t_list	*ft_lstnew(void *content)
 {
 	t_list	*new_node;
 
