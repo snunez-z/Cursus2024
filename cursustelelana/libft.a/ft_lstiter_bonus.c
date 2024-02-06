@@ -1,4 +1,4 @@
-#include <stdio.h>
+// #include <stdio.h>
 #include <stddef.h>
 #include "libft.h"
 
@@ -7,7 +7,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void*))
 	t_list	*iter;
 
 	if (lst == NULL)
-		return (0);
+		return;
 	iter = lst;
 	while (iter != NULL)
 	{
@@ -16,6 +16,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void*))
 	}
 }
 
+/*
 static void	test_function(void	*content)
 {
 	long	num;
@@ -45,3 +46,4 @@ int	main(void)
 	}
 	ft_lstiter(list, test_function);
 }
+*/

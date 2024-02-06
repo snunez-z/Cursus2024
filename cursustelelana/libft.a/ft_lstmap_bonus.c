@@ -17,7 +17,7 @@ t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		node = ft_lstnew(new_content);
 		if (node == NULL)
 		{
-			ft_lstclear(new_list, del);
+			ft_lstclear(&new_list, del);
 			return NULL;
 		}
 		ft_lstadd_back(&new_list, node);
@@ -30,7 +30,7 @@ t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 static void	*add_one(void	*content)
 {
 	long num = (long)content;
-	return num * 10;
+	return (void*)(num * 10);
 }
 
 static void print_value(void	*content)
@@ -59,7 +59,13 @@ int main(void)
 		index++;
 	}
 
+    printf("Lista original: ");
+	ft_lstiter(list, print_value);
+
 	new_list = ft_lstmap(list, add_one, NULL);
+    printf("\nLista creada con ft_lstmap: ");
 	ft_lstiter(new_list, print_value);
+
+    printf("\n");
 }
 

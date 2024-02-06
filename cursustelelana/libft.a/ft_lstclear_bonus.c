@@ -3,11 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void	ft_free_itoa(void *content)
-{
-	free(content);
-}
-
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
 	t_list	*each_node;
@@ -23,6 +18,11 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	*lst = NULL;
 }
 /*
+static void	ft_free_itoa(void *content)
+{
+	free(content);
+}
+
 int	main(void)
 {
 	t_list	*list;
