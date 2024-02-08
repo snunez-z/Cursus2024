@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/08 07:56:30 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/02/08 12:37:03 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include "libft.h"
 #include <stdlib.h>
@@ -10,7 +22,7 @@ static void ft_free_itoa(void *content)
 }
 */
 
-void ft_lstdelone(t_list *lst, void (*del)(void*))
+voidf	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
 	if (del != NULL)
 		(*del)(lst->content);

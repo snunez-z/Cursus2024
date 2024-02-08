@@ -1,4 +1,16 @@
-//#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/08 07:55:24 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/02/08 07:55:27 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdio.h>
 #include "libft.h"
 
 void	ft_lstadd_back(t_list	**first_node, t_list *new_last_node)
