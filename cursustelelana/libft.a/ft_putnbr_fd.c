@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
+#include <stdio.h>
 #include <unistd.h>
 
 static void	ft_putnbr_without_sign(unsigned int n, int fd)
@@ -20,7 +20,9 @@ static void	ft_putnbr_without_sign(unsigned int n, int fd)
     // El fin de la recursividad lo marca cuando, a base de dividir "n" entre 10,
     // llegamos al cero
     if (n == 0)
+    {
         return;
+    }
 
     // Primero tenemos que poner los dígitos que hay más a la izquierda, así es,
     // antes de poner este dígito, nos llamamos a nosotros mismos, pero dividiendo
@@ -62,15 +64,16 @@ void	ft_putnbr_fd(int n, int fd)
         unsigned_n = n;
 
 
-    ft_putnbr_without_sign(n, fd);
+    ft_putnbr_without_sign(unsigned_n, fd);
 }
 
-/*
 int	main(void)
 {
 	int	stdout_fd;
 
 	stdout_fd = 1;
+	ft_putnbr_fd(0, stdout_fd);
+	printf("\n");
 	ft_putnbr_fd(555, stdout_fd);
 	printf("\n");
 	ft_putnbr_fd(-555, stdout_fd);
@@ -87,4 +90,4 @@ int	main(void)
 	printf("\n");
 	return (0);
 }
-*/
+
