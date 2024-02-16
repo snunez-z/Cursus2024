@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 07:55:05 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/08 07:55:10 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:15:24 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void*))
 	t_list	*iter;
 
 	if (lst == NULL)
-		return;
+		return ;
 	iter = lst;
 	while (iter != NULL)
 	{
@@ -27,7 +27,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void*))
 		iter = iter->next;
 	}
 }
-
 /*
 static void	test_function(void	*content)
 {

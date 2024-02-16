@@ -6,11 +6,11 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:50:32 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/23 10:02:13 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/12 10:49:34 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include <stdio.h>*/
+//#include <stdio.h>
 #include "libft.h"
 #include <stdlib.h>
 
@@ -42,4 +42,4 @@ int	main(void)
 	printf("%s\n", result);
 	free (result);
 	return (0);
-} */
+}*/

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 16:46:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/02 07:42:25 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/12 10:20:48 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include <stdio.h>*/
 #include "libft.h"
+//#include <stdio.h>
+#include <stdlib.h>
 
 static int	ft_isspace(const char *str)
 {
@@ -61,7 +62,6 @@ int	ft_atoi(const char	*str)
 	return (value);
 }
 /*
-#include <stdlib.h>
 int	main(void)
 {
 	int	value;

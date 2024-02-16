@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:10:21 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/02 07:44:20 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/12 10:17:40 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 #include <stdlib.h>
+//#include <stdio.h>
 
 void	*ft_calloc(size_t quantity, size_t size_of_each_element)
 {

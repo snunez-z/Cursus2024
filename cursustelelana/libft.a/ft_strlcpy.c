@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:19:05 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/30 14:31:22 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/15 07:50:45 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*#include <stdio.h>*/
@@ -30,8 +30,6 @@ size_t	ft_strlcpy(char	*dest, const char	*src, size_t size)
 		index++;
 	}
 	dest[index] = '\0';
-	while (src[index] != '\0')
-		index++;
 	return (ft_strlen(src));
 }
 /*

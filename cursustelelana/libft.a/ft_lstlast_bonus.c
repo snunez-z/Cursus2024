@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 07:57:03 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/08 07:57:07 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/12 11:10:53 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 t_list	*ft_lstlast(t_list	*lst)
 {
 	t_list	*last;
+
 	last = NULL;
 	while (lst != NULL)
 	{

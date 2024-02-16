@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:25:57 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/02 08:44:39 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/12 07:38:28 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ void	ft_lstadd_front(t_list	**first, t_list	*new_first);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **first_node, t_list *last_node);
-void    ft_lstiter(t_list *lst, void (*f)(void*));
+void	ft_lstiter(t_list *lst, void (*f)(void*));
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
-void    ft_lstclear(t_list **lst, void (*del)(void*));
+void	ft_lstclear(t_list **lst, void (*del)(void*));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 #endif
