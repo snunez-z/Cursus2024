@@ -29,7 +29,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		node = ft_lstnew(new_content);
 		if (node == NULL)
 		{
-			(*del)(new_content);
+			if (del != NULL)
+				(*del)(new_content);
 			ft_lstclear(&new_list, del);
 			return (NULL);
 		}
