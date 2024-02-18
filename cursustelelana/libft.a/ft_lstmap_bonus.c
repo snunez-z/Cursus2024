@@ -39,10 +39,10 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	}
 	return (new_list);
 }
-/*
+
 static void	*add_one(void	*content)
 {
-	long	num;:wq
+	long	num;
 	
 	num = (long)content;
 	return ((void *)(num * 10));
@@ -65,8 +65,9 @@ int	main(void)
 	long	index;
 
 	printf("Dime cuántos elementos quieres:");
-	scanf("%d", &num_elements);
-	list = ft_lstnew ((void *)(long)0);:w
+	//scanf("%d", &num_elements);
+	num_elements = 3;
+	list = ft_lstnew ((void *)(long)0);
 	index = 1;
 	while (index <= num_elements)
 	{
@@ -80,4 +81,4 @@ int	main(void)
 	printf("\nLista creada con ft_lstmap: ");
 	ft_lstiter(new_list, print_value);
 	printf("\n");
-}*/
+}
