@@ -6,13 +6,12 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 07:56:12 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/08 07:56:16 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:30:24 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include <stdio.h>
 #include "libft.h"
-#include <stdlib.h>
 #include <string.h>
 
 void	ft_lstclear(t_list **lst, void (*del)(void*))

@@ -6,11 +6,11 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 09:14:12 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/02 09:32:05 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:41:08 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include <stdio.h>*/
+//#include <stdio.h>
 #include "libft.h"
 #include <stdlib.h>
 
@@ -73,18 +73,18 @@ static void	ft_free_reserved_memory(char **words)
 	free(words);
 }
 
-char	**ft_split(char *str, char divider)
+char	**ft_split(char const *str, char divider)
 {
 	char	**words;
 	int		num_words;
 
 	if (str == 0)
 		return (0);
-	num_words = ft_count_words(str, divider);
+	num_words = ft_count_words((char *)str, divider);
 	words = (char **) ft_calloc(num_words + 1, sizeof(char *));
 	if (words)
 	{
-		if (find_words_into_string (str, words, divider) == 0)
+		if (find_words_into_string ((char *)str, words, divider) == 0)
 		{
 			ft_free_reserved_memory (words);
 			return (0);
@@ -93,7 +93,7 @@ char	**ft_split(char *str, char divider)
 	return (words);
 }
 /*
-int	main(void):w
+int	main(void)
 {
 	int		index;
 	char	**split;
@@ -106,4 +106,4 @@ int	main(void):w
 		index++;
 	}
 	return (0);
-*/
+}*/

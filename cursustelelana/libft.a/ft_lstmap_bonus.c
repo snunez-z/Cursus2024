@@ -6,12 +6,11 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 07:59:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/12 10:47:14 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:31:45 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <stddef.h>
 #include "libft.h"
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
@@ -39,10 +38,10 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	}
 	return (new_list);
 }
-
+/*
 static void	*add_one(void	*content)
 {
-	long	num;
+	long	num;:wq
 	
 	num = (long)content;
 	return ((void *)(num * 10));
@@ -65,9 +64,8 @@ int	main(void)
 	long	index;
 
 	printf("Dime cuántos elementos quieres:");
-	//scanf("%d", &num_elements);
-	num_elements = 3;
-	list = ft_lstnew ((void *)(long)0);
+	scanf("%d", &num_elements);
+	list = ft_lstnew ((void *)(long)0);:w
 	index = 1;
 	while (index <= num_elements)
 	{
@@ -81,4 +79,4 @@ int	main(void)
 	printf("\nLista creada con ft_lstmap: ");
 	ft_lstiter(new_list, print_value);
 	printf("\n");
-}
+}*/

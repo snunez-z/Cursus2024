@@ -6,15 +6,16 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 10:42:42 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/09 16:55:46 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:55:03 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include <stdio.h>*/
+//#include <stdio.h>
+#include "libft.h"
 
-int	ft_strlen(const char	*str)
+size_t	ft_strlen(const char	*str)
 {
-	int	len;
+	size_t	len;
 
 	len = 0;
 	while (*str != 0)

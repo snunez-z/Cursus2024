@@ -6,12 +6,12 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:48:18 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/12 11:19:34 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:13:17 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include <stdio.h>
-#include <stddef.h>
+#include "libft.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {

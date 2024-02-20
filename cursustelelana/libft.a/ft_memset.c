@@ -6,26 +6,27 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 10:41:47 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/02 10:25:52 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:45:07 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "libft.h"
 
-void	*ft_memset(void	*src, int c, size_t n)
+void	*ft_memset(void	*b, int c, size_t len)
 {
 	size_t	index;
 	char	*temp;
 
-	temp = (char *) src;
+	temp = (char *) b;
 	index = 0;
-	while (index < n)
+	while (index < len)
 	{
 		*temp = c;
 		temp++;
 		index++;
 	}
-	return (src);
+	return (b);
 }
 /*
 int	main(void)

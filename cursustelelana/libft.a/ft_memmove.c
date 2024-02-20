@@ -6,19 +6,19 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:39:37 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/12 17:01:08 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:48:27 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 #include "libft.h"
 
-void	*ft_memmove(void	*dest, const void	*src, size_t len)
+void	*ft_memmove(void	*dst, const void	*src, size_t len)
 {
 	int			index;
 	char		*dest1;
 	const char	*src1;
 
-	dest1 = (char *) dest;
+	dest1 = (char *) dst;
 	src1 = (const char *) src;
 	if ((dest1 > src1) && (src1 + len) > dest1)
 	{
@@ -28,13 +28,13 @@ void	*ft_memmove(void	*dest, const void	*src, size_t len)
 			dest1 [index] = src1 [index];
 			index--;
 		}
-		return (dest);
+		return (dst);
 	}
 	else
 	{
-		ft_memcpy(dest, src, len);
+		ft_memcpy(dst, src, len);
 	}
-	return (dest);
+	return (dst);
 }
 /*
 int	main(void)

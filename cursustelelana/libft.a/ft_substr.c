@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:46:32 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/30 17:04:52 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:55:14 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 #include <stdlib.h>
 #include "libft.h"
 
-char	*ft_substr(const char	*str, unsigned int start, size_t len)
+char	*ft_substr(const char	*s, unsigned int start, size_t len)
 {
 	char			*sub;
-	unsigned int	str_len;
+	unsigned int	s_len;
 
-	str_len = (unsigned int) ft_strlen(str);
-	if (start > str_len)
+	s_len = (unsigned int) ft_strlen(s);
+	if (start > s_len)
 	{
 		sub = (char *)malloc (1);
 		if (sub)
 			sub [0] = '\0';
 		return (sub);
 	}
-	if ((start + len) > str_len)
+	if ((start + len) > s_len)
 	{
-		sub = (char *)malloc (((str_len - start) + 1) * sizeof(char));
+		sub = (char *)malloc (((s_len - start) + 1) * sizeof(char));
 		if (sub)
-			ft_strlcpy (sub, (str + start), ((str_len - start) + 1));
+			ft_strlcpy (sub, (s + start), ((s_len - start) + 1));
 		return (sub);
 	}
 	sub = (char *)malloc ((len +1) * sizeof(char));
 	if (sub)
-		ft_strlcpy (sub, (str + start), (len + 1));
+		ft_strlcpy (sub, (s + start), (len + 1));
 	return (sub);
 }
 /*

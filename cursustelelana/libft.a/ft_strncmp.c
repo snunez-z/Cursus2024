@@ -6,14 +6,14 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 07:42:38 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/02 07:59:08 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 19:00:18 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include <stdio.h>
-#include <stddef.h>
+#include "libft.h"
 
-int	ft_strncmp(char	*s1,	char*s2, size_t	n)
+int	ft_strncmp(const char	*s1, const char*s2, size_t n)
 {
 	size_t			index;
 	int				result;

@@ -6,14 +6,14 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:40:02 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/16 10:28:23 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:55:12 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include <stdio.h>
 #include "libft.h"
 
-void	t_len_bigger_size(char	*dest, const char *src, size_t size)
+static void	t_len_bigger_size(char	*dest, const char *src, size_t size)
 {
 	int		max_chars_to_copy;
 	size_t	length;
@@ -33,28 +33,28 @@ void	t_len_bigger_size(char	*dest, const char *src, size_t size)
 	*dest = '\0';
 }
 
-size_t	ft_strlcat(char	*dest, const char	*src, size_t size)
+size_t	ft_strlcat(char	*dst, const char	*src, size_t	dstsize)
 {
 	size_t	length;
 	size_t	total_length;
 
-	length = ft_strlen(dest);
+	length = ft_strlen(dst);
 	total_length = length + ft_strlen(src);
-	if ((length) >= size)
-		return (size + ft_strlen (src));
-	if (total_length >= size)
+	if ((length) >= dstsize)
+		return (dstsize + ft_strlen (src));
+	if (total_length >= dstsize)
 	{
-		t_len_bigger_size(dest, src, size);
+		t_len_bigger_size(dst, src, dstsize);
 		return (total_length);
 	}
-	dest = dest + length;
+	dst = dst + length;
 	while (*src != '\0')
 	{
-		*dest = *src;
+		*dst = *src;
 		src++;
-		dest++;
+		dst++;
 	}
-	*dest = '\0';
+	*dst = '\0';
 	return (total_length);
 }
 /*
@@ -70,7 +70,7 @@ int	main(void)
 		printf("%d = %s\n", length, dest);
 
 		ft_strlcpy (dest, "hola", 5);
-   		length = strlcat (dest, "", 2);
+   		length = ft_strlcat (dest, "", 2);
 		printf("%d = %s\n", length, dest);
 		
 		ft_strlcpy (dest, "Hola", 5);

@@ -6,13 +6,12 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 16:46:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/12 10:20:48 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:47:33 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 //#include <stdio.h>
-#include <stdlib.h>
 
 static int	ft_isspace(const char *str)
 {

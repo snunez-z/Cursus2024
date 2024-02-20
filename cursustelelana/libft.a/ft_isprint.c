@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 09:09:22 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/01/09 10:02:53 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:52:39 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 int	ft_isprint(int c)
 {
 	if (c >= ' ' && c <= '~')
-	{
 		return (1);
-	}
 	else
-	{
 		return (0);
-	}
 }
 /*
 int	main(void)

@@ -6,13 +6,11 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:06:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/02 08:55:18 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:10:21 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*#include <stdio.h>*/
-#include <unistd.h>
-#include <stdlib.h>
 #include "libft.h"
 
 static int	ft_cont_len(int n)
