@@ -8,4 +8,5 @@ int main (void)
 	
 	new_node = ft_lstnew("Susana");
 	printf("%s %s", new_node->content, (char *)new_node->next);
+	ft_lstdelone (lst);
 }

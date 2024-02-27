@@ -4,13 +4,11 @@
 
 int	main(void)
 {
-	t_list	*first_node;
-	t_list	*new_node;
-
-	first_node = ft_lstnew ("Susana");
+	t_list	*lst;
 	
-	new_node = ft_lstnew ("Maria");
-	printf("%s %ld\n", first_node->content,(long)first_node->next);
-	ft_lstadd_front(&first_node, new_node);
-	printf("%s, %s", first_node->content, new_node->content);
+	lst = ft_lstnew ("Susana");
+	printf("%s %p\n", (char *) lst->content, lst->next);
+	ft_lstadd_front(&lst, ft_lstnew("Maria"));
+	printf("%s %p\n", (char *) lst->content, lst->next);
+	ft_lstclear(&lst, NULL);
 }
