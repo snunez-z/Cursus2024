@@ -50,9 +50,9 @@ static int	printf_convertion_d_i(va_list args, int count)
 	{
 		count = count + ft_strlen(str);
 		w_check = ft_putstr_printf(str);
+		free (str);
 		if(w_check < 0)
 			return (-1);
-		free (str);
 	}
 		return (count);
 }
@@ -93,9 +93,9 @@ static int printf_convertion_u(va_list args, int count)
 	{
 		count = count + ft_strlen(str);
 		w_check = ft_putstr_printf(str);
+		free(str);
 		if (w_check < 0)
 			return (-1);
-		free(str);
 	}
 	return (count);
 }
@@ -112,9 +112,9 @@ static int printf_convertion_x (va_list args, int count)
 	{
 		count = count + ft_strlen(str);
 		w_check = ft_putstr_printf(str);
+		free (str);
 		if(w_check < 0)
 			return (-1);
-		free (str);
 	}
 	return (count);
 }
@@ -131,9 +131,9 @@ static int printf_convertion_X (va_list args, int count)
 	{
 		count = count + ft_strlen(str);
 		w_check = ft_putstr_printf(str);
+		free(str);
 		if(w_check < 0)
 			return (-1);
-		free(str);
 	}
 	return( count);
 }
@@ -143,19 +143,29 @@ static int printf_convertion_p (va_list args, int count)
 	void	*p;
 	char	*str;
 	int		w_check;
-
+    
 	p = va_arg(args, void *);
-	str = ft_htoa_lower((unsigned long)p);
-	if (str)
+	if(p == 0)
 	{
-		count = count + 2 + ft_strlen (str);
+		w_check = ft_putstr_printf ("(nil)");
+		if (w_check < 0)
+			return (-1);
+		count = count + 5;
+	}
+	else 
+	{
 		w_check = ft_putstr_printf("0x");
 		if (w_check < 0)
 			return (-1);
-		w_check = ft_putstr_printf(str);
-		if (w_check < 0)
-			return (-1);
-		free (str);
+		str = ft_htoa_lower((unsigned long)p);
+		if (str)
+		{		
+			count = count + 2 + ft_strlen (str);
+			w_check = ft_putstr_printf(str);
+			free (str);
+			if (w_check < 0)
+				return (-1);
+		}	
 	}
 	return (count);
 }
@@ -217,7 +227,14 @@ int	main(void)
 	n = printf ("%p\n", (void *)-1);
 	ft_putnbr_fd (n, 1);
 	ft_putstr_fd ("\n", 1);
-	
+	n = ft_printf ("%p %p\n", 0, 0);
+	n = printf ("%p %p\n", 0, 0);
+	ft_putnbr_fd (n, 1);
+	ft_putstr_fd("\n", 1);
+	n = ft_printf ("%p %p\n", 1, 1);
+	n = printf ("%p %p\n", 1, 1);
+	ft_putnbr_fd (n, 1);
+	ft_putstr_fd("\n", 1);
 	n = ft_printf ("NULL %s NULL\n", NULL);
 	n = printf ("NULL %s NULL\n", NULL);
 	ft_putnbr_fd (n, 1);

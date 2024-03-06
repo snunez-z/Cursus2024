@@ -13,7 +13,7 @@ all: libft_all $(NAME)
 %.o: %.c
 	cc -Wall -Werror -Wextra -c $<
 
-$(NAME): libft_name $(OBJ)
+$(NAME): $(OBJ) $(LIBFT_OBJ)
 	ar -cr $(NAME) $(OBJ) $(LIBFT_OBJ)
 
 clean: libft_clean
@@ -29,9 +29,6 @@ re: libft_re fclean all
 # Targets para el libft
 libft_all:
 	make -C $(LIBFT_PATH) all
-
-libft_name:
-	make -C $(LIBFT_PATH) libft.a
 
 libft_clean:
 	make -C $(LIBFT_PATH) clean
