@@ -25,7 +25,7 @@ static int ft_cont_len (unsigned long	n)
 	{
 		n = n/16;
 		size_n++;
-
+    }
 	return (size_n + 1);
 }
 
