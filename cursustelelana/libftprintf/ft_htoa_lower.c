@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_htoa_lower.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/06 14:28:41 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/03/06 14:28:46 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 //#include <stdio.h>
-#include "libftprintf.h"
+#include "ft_printf.h"
 #include "libft/libft.h"
 
 char	*ft_htoa_lower(unsigned long n)
@@ -8,6 +20,8 @@ char	*ft_htoa_lower(unsigned long n)
 	int index;
 
 	result = ft_htoa (n);
+	if (!result)
+		return (NULL);
 	index = 0;
 	while (result [index] != '\0')
 	{

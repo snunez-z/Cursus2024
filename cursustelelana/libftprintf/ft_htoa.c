@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_htoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/06 14:28:00 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/03/06 14:28:05 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 //#include <stdio.h>
-#include "libftprintf.h"
+#include "ft_printf.h"
 #include "libft/libft.h"
 
 static int ft_cont_len (unsigned long	n)
@@ -13,8 +25,8 @@ static int ft_cont_len (unsigned long	n)
 	{
 		n = n/16;
 		size_n++;
-	}
-	return (size_n + 3);
+
+	return (size_n + 1);
 }
 
 static char	ft_hexadigit (int digit)
@@ -43,12 +55,10 @@ char	*ft_htoa(unsigned long	n)
 		return(NULL);
 	if (n == 0)
 	{
-		ft_strlcpy(buffer, "0x0", 4);
+		ft_strlcpy(buffer, "0", 4);
 		return (buffer);
 	}
-	buffer[0] = '0';
-	buffer[1] = 'x';
- 	last_index = ft_cont_len(n) -2;
+	last_index = ft_cont_len(n) -2;
 	while (n != 0)
 	{
 		buffer [last_index] = ft_lastdigit(n);

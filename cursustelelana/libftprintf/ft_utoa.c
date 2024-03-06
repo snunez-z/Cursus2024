@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/06 14:29:20 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/03/06 14:29:25 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 //#include <stdio.h>
 #include <stddef.h>
 #include "libft/libft.h"
@@ -52,7 +64,7 @@ int main(void)
 {
 	char	*result;
 
-    printf ("%d\n", ft_cont_len(1));
+    printf ("%d\n", ft_cont_len(-1));
 	result = ft_utoa(1);
 	printf("%s\n", result);
 	free (result);
@@ -71,4 +83,4 @@ int main(void)
     result = ft_utoa(1);
 	printf("%s\n", result);
 	free(result);
-}*/
+} */
