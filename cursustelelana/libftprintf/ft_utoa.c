@@ -14,51 +14,51 @@
 #include <stddef.h>
 #include "libft/libft.h"
 
-static int ft_cont_len(unsigned int n)
+static int	ft_cont_len(unsigned int n)
 {
 	unsigned int	size_n;
 
 	if (n == 0)
-		return(2);
+		return (2);
 	size_n = 0;
-	while(n != 0)
+	while (n != 0)
 	{
-		n = n/10;
+		n = n / 10;
 		size_n++;
 	}
 	return (size_n + 1);
 }
 
-static char ft_lastdigit (unsigned int n)
+static char	ft_lastdigit(unsigned int n)
 {
 	char	last_digit;
-	
+
 	last_digit = (n % 10) + '0';
-	return(last_digit);
+	return (last_digit);
 }
 
-char	*ft_utoa(unsigned int	n)
+char	*ft_utoa(unsigned int n)
 {
-	int last_index;
+	int	last_index;
 	char	*buffer;
 
-	buffer = (char *) ft_calloc (ft_cont_len (n), sizeof(char));
+	buffer = (char *)ft_calloc (ft_cont_len (n), sizeof(char));
 	if (buffer == NULL)
 		return (NULL);
 	if (n == 0)
 	{
-		ft_strlcpy(buffer, "0", 2); 
-		return(buffer);
+		ft_strlcpy(buffer, "0", 2);
+		return (buffer);
 	}
 	last_index = ft_cont_len (n) - 2;
-	while(n != 0)
+	while (n != 0)
 	{
-		buffer [last_index] = ft_lastdigit(n);
-		n = n/10;
+		buffer[last_index] = ft_lastdigit(n);
+		n = n / 10;
 		last_index--;
 	}
-	return(buffer);
-}	
+	return (buffer);
+}
 /*
 int main(void)
 {

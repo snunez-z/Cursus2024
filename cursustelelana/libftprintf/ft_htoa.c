@@ -14,45 +14,47 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-static int ft_cont_len (unsigned long	n)
+static int	ft_cont_len(unsigned long n)
 {
 	unsigned int	size_n;
 
-	if(n == 0)
-		return(2);
+	if (n == 0)
+		return (2);
 	size_n = 0;
-	while(n != 0)
+	while (n != 0)
 	{
-		n = n/16;
+		n = n / 16;
 		size_n++;
-    }
+	}
 	return (size_n + 1);
 }
 
-static char	ft_hexadigit (int digit)
+static char	ft_hexadigit(int digit)
 {
-	char	conversion_table [] = "0123456789ABCDEF";
-	return (conversion_table[digit]);
+	char	*convertion_table;
+
+	convertion_table = "0123456789ABCDEF";
+	return (convertion_table[digit]);
 }
 
-static char	ft_lastdigit(unsigned long	n)
+static char	ft_lastdigit(unsigned long n)
 {
-	int		last_digit;
+	int	last_digit;
 	char	result;
-	
+
 	last_digit = (n % 16);
-	result = ft_hexadigit (last_digit ); 
+	result = ft_hexadigit(last_digit);
 	return (result);
 }
 
-char	*ft_htoa(unsigned long	n)
+char	*ft_htoa(unsigned long n)
 {
 	int	last_index;
 	char	*buffer;
 
 	buffer = (char *) ft_calloc (ft_cont_len(n), sizeof(char));
 	if (buffer == NULL)
-		return(NULL);
+		return (NULL);
 	if (n == 0)
 	{
 		ft_strlcpy(buffer, "0", 4);
@@ -62,7 +64,7 @@ char	*ft_htoa(unsigned long	n)
 	while (n != 0)
 	{
 		buffer [last_index] = ft_lastdigit(n);
-		n = n/16;
+		n = n / 16;
 		last_index--;
 	}
 	return (buffer);

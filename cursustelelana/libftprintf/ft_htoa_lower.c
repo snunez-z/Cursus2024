@@ -16,8 +16,8 @@
 
 char	*ft_htoa_lower(unsigned long n)
 {
-	char 	*result;
-	int index;
+	char	*result;
+	int	index;
 
 	result = ft_htoa (n);
 	if (!result)
