@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_convertion_u.c                                  :+:      :+:    :+:   */
+/*   ft_convertion_hx.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 11:22:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/03/12 11:24:46 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/03/12 11:29:59 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/03/12 11:32:37 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-int	printf_convertion_u(va_list args, int count)
+int	printf_convertion_x(va_list args, int count)
 {
 	char			*str;
-	unsigned int	c;
+	unsigned long	ld;
 	int				w_check;
 
-	c = va_arg(args, unsigned int);
-	str = ft_utoa(c);
+	ld = va_arg (args, unsigned int);
+	str = ft_htoa_lower(ld);
 	if (str)
 	{
 		count = count + ft_strlen(str);
 		w_check = ft_putstr_printf(str);
-		free(str);
+		free (str);
 		if (w_check < 0)
 			return (-1);
 	}

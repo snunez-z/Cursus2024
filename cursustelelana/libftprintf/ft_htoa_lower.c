@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:28:41 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/03/06 14:28:46 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:57:32 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 char	*ft_htoa_lower(unsigned long n)
 {
 	char	*result;
-	int	index;
+	int		index;
 
 	result = ft_htoa (n);
 	if (!result)

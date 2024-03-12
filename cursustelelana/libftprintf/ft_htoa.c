@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:28:00 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/03/06 14:28:05 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:16:37 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	ft_hexadigit(int digit)
 
 static char	ft_lastdigit(unsigned long n)
 {
-	int	last_digit;
+	int		last_digit;
 	char	result;
 
 	last_digit = (n % 16);
@@ -49,7 +49,7 @@ static char	ft_lastdigit(unsigned long n)
 
 char	*ft_htoa(unsigned long n)
 {
-	int	last_index;
+	int		last_index;
 	char	*buffer;
 
 	buffer = (char *) ft_calloc (ft_cont_len(n), sizeof(char));

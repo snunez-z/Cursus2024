@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:29:20 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/03/06 14:29:25 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:56:38 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	ft_lastdigit(unsigned int n)
 
 char	*ft_utoa(unsigned int n)
 {
-	int	last_index;
+	int		last_index;
 	char	*buffer;
 
 	buffer = (char *)ft_calloc (ft_cont_len (n), sizeof(char));
