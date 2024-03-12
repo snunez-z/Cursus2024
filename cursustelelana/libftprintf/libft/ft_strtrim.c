@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include <stdio.h>
 #include "libft.h"
 
 char	*ft_strtrim(char const	*s1, char const	*set)
@@ -35,3 +36,19 @@ char	*ft_strtrim(char const	*s1, char const	*set)
 		ft_strlcpy (result, s1 + left_index, size);
 	return (result);
 }
+/*
+int	main(void)
+{
+	char	*result;
+
+	result = ft_strtrim ("SUSANA NUNEZ", "USAZE");
+	printf("%s\n", result);
+	result = ft_strtrim (" HOLA ", " ");
+	printf("%s\n", result);
+	result = ft_strtrim (" H ", " ");
+	printf("%s\n", result);
+	result = ft_strtrim ("", "");
+	printf("%s\n", result);
+	return (0);
+}
+*/

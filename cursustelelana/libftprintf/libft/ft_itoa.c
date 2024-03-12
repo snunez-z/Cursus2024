@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*#include <stdio.h>*/
 #include "libft.h"
 
 static int	ft_cont_len(int n)
@@ -66,3 +67,32 @@ char	*ft_itoa(int n)
 	}
 	return (len);
 }
+/*
+int	main(void)
+{
+	char	*len;
+
+	len = ft_itoa (-2147483648);
+	printf ("%s\n", len);
+	len = ft_itoa (0);
+	printf ("%s\n", len);
+	len = ft_itoa (2147483647); 
+	printf ("%s\n", len);
+	len = ft_itoa (2); 
+	printf ("%s\n", len);
+	len = ft_itoa (-2); 
+	printf ("%s\n", len);
+	len = ft_itoa (21448);
+	printf ("%s\n", len);
+	return (0);
+}*/
+/* La funcion itoa recibe un numero entero y retorna un puntero
+ *  a una region de memoria donde se ha guardado los digitos convertidos
+ *  del numero. Necesita reservar memoria para la cantidad de bytes
+ *  que ocupe los digitos del num y. Lo primero que hacemos es hacer una
+ *  funcion que nos diga esa longitud cont_len. Esta funcion tiene
+ *  uan variable size_n que dependeinedo de si es positiva o negativa
+ *  empezará valiendo cero o 1 y retornara el numero de bytes
+ *  +  el de la posicion del final.Con eso ya podemso reservar
+ *  la memoria y a continuacion el caso de que la memoria sea cero
+ *  nso retorne NULL.*/

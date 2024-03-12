@@ -10,9 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*#include <stdio.h>*/
+
 int	ft_toupper(int c)
 {
 	if (c >= 'a' && c <= 'z')
 		c = c - ('a' - 'A');
 	return (c);
 }
+/*
+int	main(void)
+{
+	char	c;
+	char	lc;
+
+	c = 'A';
+	lc = ft_toupper(c);
+	printf("%c\n", lc);
+	return (0);
+}*/

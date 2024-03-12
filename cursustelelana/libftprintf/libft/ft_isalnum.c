@@ -10,8 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
+/*#include <stdio.h>*/
 
 int	ft_isalnum(int c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c));
 }
+/*
+int	main(void)
+{
+	int	c;
+
+	c = ft_isalnum ('9');
+	printf("%d\n", c);
+	c = ft_isalnum ('G');
+	printf("%d\n", c);
+	c = ft_isalnum ('!');
+	printf("%d\n", c);
+	c = ft_isalnum ('?');
+	printf("%d\n", c);
+	return (0);
+}*/

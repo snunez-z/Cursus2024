@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "libft.h"
 
 void	*ft_memset(void	*b, int c, size_t len)
@@ -27,3 +28,12 @@ void	*ft_memset(void	*b, int c, size_t len)
 	}
 	return (b);
 }
+/*
+int	main(void)
+{
+	char	str1[5] = "Hola";
+	char	str2[5] = "1234";
+
+	printf("%s\n", ft_memset(str1, 34, 3));
+	printf("%s\n", ft_memset(str2, 97, 3));
+}*/

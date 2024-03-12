@@ -6,10 +6,12 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:46:32 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/20 15:55:14 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:57:16 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*#include <stdio.h>*/
+#include <stdlib.h>
 #include "libft.h"
 
 char	*ft_substr(const char	*s, unsigned int start, size_t len)
@@ -37,3 +39,17 @@ char	*ft_substr(const char	*s, unsigned int start, size_t len)
 		ft_strlcpy (sub, (s + start), (len + 1));
 	return (sub);
 }
+/*
+int	main(void)
+{
+	char	*new_str;
+
+	new_str = ft_substr ("Susana", 8, 5);
+	printf("%s\n", new_str);
+	new_str = ft_substr ("Susana Nunez", 6, 20);
+	printf("%s\n", new_str);
+	new_str = ft_substr ("Susana Nunez Zamora", 2, 8);
+	printf("%s\n", new_str);
+	free (new_str);
+	return (0);
+}*/

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:41:39 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/19 19:06:03 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/20 09:47:28 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include <stdio.h>
 #include "libft.h"
 
 char	*ft_strnstr(const char	*haystack, const char	*needle, size_t len)
@@ -37,3 +38,17 @@ char	*ft_strnstr(const char	*haystack, const char	*needle, size_t len)
 	}
 	return (0);
 }
+/*
+int	main(void)
+{
+	char	*result;
+
+	result = ft_strnstr("Hola buena amiga", "buen", 12);
+	printf("%s\n", result);
+	result = ft_strnstr("Hola buena amiga", "", 100);
+	printf("%s\n", result);
+	result = ft_strnstr("Hola buena amiga", "ola", 3);
+	printf("%ld\n",(long) result);
+	result = ft_strnstr("Hola buena amiga", "Hola buena amiga", 16);
+	printf("%s\n", result);
+}*/

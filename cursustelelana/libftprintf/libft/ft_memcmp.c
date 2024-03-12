@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include <stdio.h>
 #include <stddef.h>
 
 int	ft_memcmp(const void	*s1, const void	*s2, size_t n)
@@ -38,3 +39,26 @@ int	ft_memcmp(const void	*s1, const void	*s2, size_t n)
 	}
 	return (0);
 }
+/*
+int	main(void)
+{
+	int	result;
+
+	result = ft_memcmp ("t\200", "t\0", 2);
+	printf("%d\n", result);
+	result = ft_memcmp ("t\200", "t\0", 2);
+	printf("%d\n", result);
+	result = ft_memcmp ("Hola", "Hola", 3);
+	printf("%d\n", result);
+	result = ft_memcmp ("Hola", "Hala", 3);
+	printf("%d\n", result);
+	result = ft_memcmp ("cola", "coma", 3);
+	printf("%d\n", result);
+	result = ft_memcmp ("Hola", "Hola susana", 3);
+	printf("%d\n", result);
+	result = ft_memcmp ("Hola", "Hola susana", 6);
+	printf("%d\n", result);
+	result = ft_memcmp ("Hola", "Hola Su", 4);
+	printf("%d\n", result);
+	return (0);
+}*/

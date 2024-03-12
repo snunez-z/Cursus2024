@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include <stdio.h>
 #include "libft.h"
 
 size_t	ft_strlen(const char	*str)
@@ -24,3 +25,14 @@ size_t	ft_strlen(const char	*str)
 	}
 	return (len);
 }
+/*
+int	main(void)
+{
+	char	*texto;
+	int		len;
+
+	texto = "Hola";
+	len = ft_strlen(texto);
+	printf("El texto es :%s\n y la longitud es de %d caracteres\n", texto, len);
+	return (0);
+}*/

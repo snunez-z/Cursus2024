@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*#include <stdio.h>*/
 #include "libft.h"
 
 char	*ft_strdup(const char *s1)
@@ -23,3 +24,13 @@ char	*ft_strdup(const char *s1)
 		ft_strlcpy(copy, s1, size);
 	return (copy);
 }
+/*
+int	main(void)
+{
+	char	*copy;
+
+	copy = ft_strdup("Hola");
+	printf("%s\n", copy);
+	free(copy);
+	return (0);
+}*/

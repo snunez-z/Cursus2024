@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+//#include <stdio.h>
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -23,3 +24,18 @@ void	*ft_calloc(size_t count, size_t size)
 		ft_bzero(result, total_bytes);
 	return (result);
 }
+/*
+int	main(void)
+{
+	int	*numbers;
+	int	index;
+
+	numbers = ft_calloc (100, sizeof (int));
+	index = 0;
+	while (index < 100)
+	{
+		printf("%d", numbers[index]);
+		index++;
+	}
+	return (0);
+}*/

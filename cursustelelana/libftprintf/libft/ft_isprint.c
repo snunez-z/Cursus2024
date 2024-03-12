@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*#include <stdio.h>*/
+
 int	ft_isprint(int c)
 {
 	if (c >= ' ' && c <= '~')
@@ -17,3 +19,18 @@ int	ft_isprint(int c)
 	else
 		return (0);
 }
+/*
+int	main(void)
+{
+	int	c;
+
+	c = ft_isprint(60);
+	printf("%d\n", c);
+	c = ft_isprint('A');
+	printf("%d\n", c);
+	c = ft_isprint(250);
+	printf("%d\n", c);
+	c = ft_isprint(158);
+	printf("%d\n", c);
+	return (0);
+}*/

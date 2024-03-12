@@ -6,10 +6,10 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:19:05 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/20 13:19:06 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/19 19:35:07 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+/*#include <stdio.h>*/
 #include "libft.h"
 
 size_t	ft_strlcpy(char	*dst, const char	*src, size_t	dstsize)
@@ -32,3 +32,14 @@ size_t	ft_strlcpy(char	*dst, const char	*src, size_t	dstsize)
 	dst[index] = '\0';
 	return (ft_strlen(src));
 }
+/*
+int	main(void)
+{
+	char	buffer[0];
+ 	int		len;
+
+	len = ft_strlcpy (buffer, "Hola", 3);
+	printf ("%d\n", len);
+	printf("%s", buffer);
+	return (0);
+}*/

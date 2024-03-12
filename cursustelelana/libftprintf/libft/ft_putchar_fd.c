@@ -10,9 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <unistd.h>
 
 void	ft_putchar_fd(char c, int fd)
 {
 	write (fd, &c, 1);
 }
+/*
+int	main(void)
+{
+	int	stdout_fd;
+
+	stdout_fd = 1;
+	ft_putchar_fd ('S', stdout_fd);
+	ft_putchar_fd ('U', stdout_fd);
+	ft_putchar_fd ('S', stdout_fd);
+	ft_putchar_fd ('A', stdout_fd);
+	ft_putchar_fd ('N', stdout_fd);
+	ft_putchar_fd ('A', stdout_fd);
+	ft_putchar_fd ('\n', stdout_fd);
+	return (0);
+}*/

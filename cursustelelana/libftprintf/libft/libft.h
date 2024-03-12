@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:25:57 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/19 19:50:18 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:17:46 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char	*s, int fd);
 char	*ft_itoa(int n);
-char	**ft_split(char	const	*str, char divider);
 void	ft_putnbr_fd(int c, int fd);
 char	**ft_split(char	const	*str, char divider);
 char	*ft_strmapi(char const	*s, char (*accion) (unsigned int, char));
@@ -61,7 +60,7 @@ void	ft_striteri(char	*s, void (*f) (unsigned int, char *));
 char	*ft_strjoin(char const	*s1, char const	*s2);
 
 t_list	*ft_lstnew(void *content);
-void	ft_lstadd_front(t_list	**first, t_list	*new_first);
+void	ft_lstadd_front(t_list	**first_node, t_list	*new_first);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **first_node, t_list *last_node);

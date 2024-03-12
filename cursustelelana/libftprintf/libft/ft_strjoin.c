@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include <stdio.h>
 #include "libft.h"
+#include <stdlib.h>
 
 char	*ft_strjoin(char const	*s1, char const		*s2)
 {
@@ -31,3 +33,13 @@ char	*ft_strjoin(char const	*s1, char const		*s2)
 	ft_strlcat (sub, s2, t_size);
 	return (sub);
 }
+/*
+int	main(void)
+{
+	char	*result;
+
+	result = ft_strjoin("Susana", "Nuñez");
+	printf("%s\n", result);
+	free (result);
+	return (0);
+}*/

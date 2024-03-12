@@ -9,6 +9,7 @@
 /*   Updated: 2024/02/19 16:49:23 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+/*#include <stdio.h>*/
 
 int	ft_isalpha(int c)
 {
@@ -17,3 +18,14 @@ int	ft_isalpha(int c)
 	else
 		return (0);
 }
+/*
+int	main(void)
+{
+	int	c;
+
+	c = ft_isalpha ('b');
+	printf("%d\n",c);
+	c = ft_isalpha ('5');
+	printf("%d\n", c);
+	return (0);
+}*/

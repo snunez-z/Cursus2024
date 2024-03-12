@@ -10,7 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "libft.h"
+#include <string.h>
+
+/*
+static void ft_free_itoa(void *content)
+{
+	free(content);
+}
+*/
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
@@ -19,3 +28,17 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*))
 	free(lst);
 }
 
+/*
+int main(void)
+{
+	t_list *list;
+
+	list = ft_lstnew(ft_itoa(0));
+	ft_lstdelone(list, ft_free_itoa);
+
+	list = ft_lstnew("hola");
+	ft_lstdelone(list, NULL);
+
+	return (0);
+}
+*/

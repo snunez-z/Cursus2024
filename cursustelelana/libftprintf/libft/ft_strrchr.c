@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*#include <stdio.h>*/
 #include "libft.h"
 
 char	*ft_strrchr(const char	*s, int c)
@@ -34,3 +35,20 @@ char	*ft_strrchr(const char	*s, int c)
 	else
 		return (0);
 }
+/*
+int	main(void)
+
+{
+	char	*result;
+
+	result = ft_strrchr("Hola", 'o');
+	printf("%s\n", result);
+	result = ft_strrchr("Hola", 'e');
+	if (result == 0)
+		printf("No se ha encontrado\n");
+	result = ft_strrchr("Hola", 'o' + 256 );
+	printf("%s\n", result);
+	result = ft_strrchr("Hola", '\0');
+	if (result == 0)
+		printf("No se ha encontrado\n");
+}*/

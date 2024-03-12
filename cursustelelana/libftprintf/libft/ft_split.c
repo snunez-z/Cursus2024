@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 09:14:12 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/20 15:41:08 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/02/20 08:09:48 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*#include <stdio.h>*/
 #include "libft.h"
+#include <stdlib.h>
 
 static int	ft_count_words(char *str, int divider)
 {
@@ -90,3 +92,18 @@ char	**ft_split(char const *str, char divider)
 	}
 	return (words);
 }
+/*
+int	main(void):w
+{
+	int		index;
+	char	**split;
+
+	split = ft_split("    Susana      Núñez       Zamora     ", ' ');
+	index = 0;
+	while (split[index] != 0)
+	{
+		printf("%s\n", split[index]);
+		index++;
+	}
+	return (0);
+*/

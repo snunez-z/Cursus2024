@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+//#include <stdio.h>
 
 static int	ft_isspace(const char *str)
 {
@@ -59,3 +60,33 @@ int	ft_atoi(const char	*str)
 		value = (value * -1);
 	return (value);
 }
+/*
+int	main(void)
+{
+	int	value;
+
+	value = atoi("--+-300");
+	printf("%d\n", value);
+	value = ft_atoi("--+-300");
+	printf("%d\n", value);
+
+	value = atoi("   300");
+	printf("%d\n", value);
+	value = ft_atoi("   300");
+	printf("%d\n", value);
+	
+	value = atoi("+300");
+	printf("%d\n", value);
+	value = ft_atoi("+300");
+	printf("%d\n", value);
+
+	value = atoi("-2147483648");
+	printf("%d\n", value);
+	value = ft_atoi("-2147483648");
+	printf("%d\n", value);
+	
+	value = atoi(" ");
+	printf("%d\n", value);
+	value = ft_atoi(" ");
+	printf("%d\n", value);
+}*/
