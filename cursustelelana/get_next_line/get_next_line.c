@@ -1,58 +1,76 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 12:32:02 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/03/15 15:07:37 by snunez-z         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <unistd.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include "get_next_line.h"
+
+#define MALLOC_SIZE 10
+
+static char	*free_buffer(char	*buffer)
+{
+	free(buffer);
+	return (NULL);
+}
+
+char	*terminate_and_reduce(char	*buffer, size_t used_chars,
+			size_t buffer_size)
+{
+	buffer[used_chars + 1] = '\0';
+	if(used_chars < buffer_size)
+		buffer = ft_reduce(buffer, used_chars + 2);
+	return (buffer);
+}
+
+char	*get_next_line(int fd)
+{
+	char	*buffer;
+	size_t	current_size;
+	size_t	used_chars;
+	int		bytes_read;
+	char	ch;
+
+	if((buffer = malloc ((MALLOC_SIZE + 1) * sizeof (char))) == NULL)
+		return (NULL);
+	if ((bytes_read = read_one_char(fd, buffer)) <= 0)
+		return free_buffer(buffer);
+	current_size = MALLOC_SIZE;
+	used_chars = 0;
+	while (bytes_read > 0 && buffer[used_chars] != '\n')
+	{
+		if ((bytes_read = read_one_char (fd, &ch)) == -1)
+			return free_buffer(buffer);
+		if (bytes_read > 0)
+		{
+			if ((++used_chars) >= current_size)
+				if ((buffer = ft_realloc(buffer, &current_size))  == NULL)
+					return (NULL);
+			buffer[used_chars] = ch;
+		}
+	}
+	return (terminate_and_reduce(buffer, used_chars, current_size));
+}
+/*
+
 #include <fcntl.h>
 #include <stdio.h>
-
-#define BUFFER_SIZE 1
-
-int	read_one_char (int fd, char *buffer)
-{
-	char	c;
-	ssize_t read_bytes;
-
-	read_bytes = read (fd, &c, 1);
-	if (read_bytes == 1)
-	{
-		*buffer = c;
-		return (1);
-	}
-	else if (read_bytes == 0)
-		return (0);
-	else
-		return (-1);
-}
-
-int main(void)
+int	main(int argc, char **argv)
 {
 	int	fd;
-	char buffer [BUFFER_SIZE];
-	int	result;
+	char	*line;
 
-	fd = open ("static_var_exercises.c", O_RDONLY);
-	if (fd == -1)
-		return (-1);
-	result = read_one_char (fd, buffer);
-	if (result ==  -1)
+	if (argc < 2)
 	{
-		close (fd);
-		return (-1);
+		printf("Error\n");
+		return (1);
 	}
-	while ((result = read_one_char(fd, buffer)) > 0)
+
+	fd = open(argv[1], O_RDONLY);
+	line = get_next_line (fd);
+	while(line != NULL)
 	{
-		printf("El caracter leido es %c\n", buffer[0]);
-		result++;
+		printf("[%s]\n", line);
+		free (line);
+		line = get_next_line (fd);
 	}
-		close (fd);
-		return (0);	
-}
+	close (fd);
+	return (0);
+} */
