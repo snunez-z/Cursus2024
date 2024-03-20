@@ -1,12 +1,47 @@
+int read_char(int fd, char *pch)
+{
+    // Escribe esta función:
+    // Tiene que leer un byte (char) del file descriptor "fd" y guardarlo dentro
+    // del puntero "pch" ("pch" es la abreviatura de "pointer to char")
+    // * Si puede leer el carácter, tiene que retornar 1 (y guardarlo dentro de "pch")
+    // * Si no hay nada más que leer (se ha llegado al final del fichero), tiene que retornar
+    //   cero Y NO GUARDAR NADA EN "pch"
+    // * Si hay un error al leer, tiene que retornar -1
+}
 
 int copy_file(int src_fd, int dest_fd)
 {
-    // Escribir esta función que:
-    // Lea carácter a carácter del fichero de origen y lo guarde en el fichero de destino
-    //
-    // Si todo va bien, tiene que retornar el número de bytes que se han copiado
-    // Si hay un error al leer del fichero de origen, tiene que retornar -3
-    // Si hay un error al escribir en el fichero de destino, tiene que retornar -4
+    int     read_result;
+    int     write_result;
+    char    byte;
+    size_t  num_bytes;
+
+    num_bytes = 0;
+    io_result = read_char(src_fd);
+    while(read_result > 0)
+    {
+        write_result = write(dest_fd, &byte, 1);
+        if (write_result <= 0)
+        {
+            // Fallo al escribir, así es que la documentación dice que retornemos -4
+            return (-4);
+        }
+        // Si llegamos hasta aquí, significa que la escritura ha ido bien
+        // En este bucle, el "incremento" es leer el siguiente carácter y asignar el
+        // resultado a "read_result" que es lo que va a chequear la condición del "while"
+        read_result = read_char(src_fd, &byte);
+        num_bytes++;
+    }
+
+    // Si hemos llegado aquí, significa que todo se ha escrito bien y se ha salido del bucle
+    // porque, al leer, ha fallado (<0) o ha llegado al final (==0)
+    // Tenemos que distinguir los dos casos
+    if (read_result < 0)
+    {
+        // Fallo al leer, así es que la documentación dice que retornemos -3
+        return (-3);
+    }
+    return (numBytes);
 }
 
 int main(int argc, char **argv)
