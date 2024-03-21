@@ -61,6 +61,8 @@ dstr_t  *dstr_append_char(dstr_t    *dest_dstr, char ch)
 int main(int argc, char **argv)
 {
     dstr_t  *dstr;
+    char    *buffer;
+    char    ch;
 
     if (argc < 2)
     {
@@ -68,7 +70,8 @@ int main(int argc, char **argv)
         return (-1);
     }
 
-    dstr = dstr_create();
+    dstr = dstr_create("Miguel");
+    dstr = dstr_append_char (buffer, ch);
 
     // Lo que vamos a hacer es añadir carácter a carácter cada uno de los caracteres del primer
     // parámetro que pasen al programa (argv[1])
@@ -80,3 +83,5 @@ int main(int argc, char **argv)
     dstr_destroy(dstr);
     return (0);
 }
+//estas funciones permiten crear, manipular y destruir cadenas dinámicas representadas 
+//por la estructura dstr_t, gestionando la asignación y liberación de memoria de manera dinámica según sea necesario.

@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
 int copy_file(const char *src_file_name, const char *dest_file_name)
 {
     // Escribir esta función que:
@@ -10,6 +14,31 @@ int copy_file(const char *src_file_name, const char *dest_file_name)
     // Si hay un error al abrir el fichero de destino, tiene que retornar -2
     // Si hay un error al leer del fichero de origen, tiene que retornar -3
     // Si hay un error al escribir en el fichero de destino, tiene que retornar -4
+int     fd_src;
+int     fd_dst;
+char    *buffer;
+size_t  bytes_read;
+
+fd_src = open (src_file_name, O_RDONLY);
+if (fd_src == -1)
+    return (-1);
+fd_dst = open (dest_file_name, O_WRONLY | O_CREAT | O_TRUNC);
+if (fd_dst == -1)
+    return (-2);
+buffer = 0;
+bytes_read = read (fd_src, buffer, 1);
+if ((int)bytes_read == -1)
+    return (- 3);
+while (bytes_read > 0)
+{
+    bytes_read = write(fd_dst, buffer, 1);
+    if ((int)bytes_read == -1)
+        return (-4);
+    bytes_read = read (fd_dst, buffer, 1);
+}
+close (fd_src);
+close (fd_dst);
+return (0);
 }
 
 int main(int argc, char **argv)
@@ -28,7 +57,25 @@ int main(int argc, char **argv)
         printf("%s successfully copied to %s\n", argv[1], argv[2]);
         return (0);
     }
-
-    // Mostrar un mensaje de error (usando printf) adecuado al error que se haya producido
-    return (-1);
+    else if (copy_result == -1)
+    {
+        printf("There have been an error opening the source file %s\n", argv [1]);
+        return (-1);
+    }
+    else if (copy_result == -2)
+    {
+        printf("There have been an error opening the destiny file %s\n", argv [2]);
+        return (-2);
+    }
+    else if (copy_result == -3)
+    {
+        printf("There have been an error reading the source file %s\n", argv [1]);
+        return (-3);
+    }
+    else if (copy_result == -4)
+    {
+        printf("There have been an error reading the file%s\n", argv [2]);
+        return (-4);
+    }
+    return (0);
 }

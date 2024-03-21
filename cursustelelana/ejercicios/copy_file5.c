@@ -1,5 +1,19 @@
+#include <stdio.h>
+#include <unistd.h>
+
+
 int read_char(int fd, char *pch)
 {
+    size_t  bytes_read;
+
+    bytes_read = read (fd, pch, 1);
+    if (bytes_read == -1)
+        return (-1);
+    else if (bytes_read == 0)
+        return (0);
+    {
+    return (1);
+}   
     // Escribe esta función:
     // Tiene que leer un byte (char) del file descriptor "fd" y guardarlo dentro
     // del puntero "pch" ("pch" es la abreviatura de "pointer to char")
