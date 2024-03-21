@@ -17,7 +17,7 @@ int copy_file(int src_fd, int dest_fd)
     size_t  num_bytes;
 
     num_bytes = 0;
-    read_result = read_char(src_fd);
+    read_result = read_char(src_fd, &byte);
     while(read_result > 0)
     {
         write_result = write(dest_fd, &byte, 1);
