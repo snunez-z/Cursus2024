@@ -23,8 +23,15 @@ dstr_t  *dstr_create()
 {
     dstr_t  *pdstr;
 
-    pdstr = malloc(1 * sizeof(dstr));
-    pdstr->buffer = malloc(11 * sizeof(char)));
+    pdstr = malloc(1 * sizeof(dstr_t));
+    if (pdstr == NULL)
+        return (NULL);
+    pdstr->buffer = malloc(11 * sizeof(char));
+    if (pdstr == NULL)
+    {
+        free (NULL);
+        return (NULL);
+    }
     pdstr->buffer[0] = '\0';
     pdstr->buffer_size = 10;
     pdstr->str_len = 0;
@@ -61,18 +68,27 @@ dstr_t  *dstr_append_char(dstr_t    *dest_dstr, char ch)
 int main(int argc, char **argv)
 {
     dstr_t  *dstr;
-    char    *buffer;
-    char    ch;
+    int index;
 
     if (argc < 2)
     {
         printf("Pasa como parámetro al menos una palabra!!!\n");
         return (-1);
     }
+    index = 0;
+    dstr = dstr_create();
 
-    dstr = dstr_create("Miguel");
-    dstr = dstr_append_char (buffer, ch);
-
+    // printf("%s\n", argv[1]);
+    // printf("%c\n", argv[1][0]);
+    // printf("%c\n", argv[1][1]);
+    // printf("%c\n", argv[1][2]);
+    while (argv[1][index] != '\0')
+    {
+        dstr = dstr_append_char (dstr, argv[1][index]);
+        index++;
+    }    
+    
+    // dstr = dstr_append_char (dstr, ch);
     // Lo que vamos a hacer es añadir carácter a carácter cada uno de los caracteres del primer
     // parámetro que pasen al programa (argv[1])
     // Para añadir un carácter, ya sabes, usa "dstr_append_char"
@@ -83,5 +99,4 @@ int main(int argc, char **argv)
     dstr_destroy(dstr);
     return (0);
 }
-//estas funciones permiten crear, manipular y destruir cadenas dinámicas representadas 
-//por la estructura dstr_t, gestionando la asignación y liberación de memoria de manera dinámica según sea necesario.
+

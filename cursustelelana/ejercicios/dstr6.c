@@ -23,8 +23,8 @@ dstr_t  *dstr_create()
 {
     dstr_t  *pdstr;
 
-    pdstr = malloc(1 * sizeof(dstr));
-    pdstr->buffer = malloc(11 * sizeof(char)));
+    pdstr = malloc(1 * sizeof(dstr_t));
+    pdstr->buffer = malloc(11 * sizeof(char));
     pdstr->buffer[0] = '\0';
     pdstr->buffer_size = 10;
     pdstr->str_len = 0;
@@ -60,7 +60,8 @@ dstr_t  *dstr_append_char(dstr_t    *dest_dstr, char ch)
 
 int main(int argc, char **argv)
 {
-    int     index;
+    int index;
+    int index2;
     dstr_t  *dstr;
 
     if (argc < 2)
@@ -70,18 +71,26 @@ int main(int argc, char **argv)
     }
 
     dstr = dstr_create();
-
+    
     // Cambia el programa anterior para, no sólo añadir cada carácter del primer
     // parámetro, sino de todos los parámetros que pasen
     index = 1; // Porque el índice 0 no es un parámetro, es el nombre del programa
-    while (index < argc)
+     while (index < argc && argv[index]!= 0)
     {
-        // Aquí lo que tienes que hacer tú
-    }
-
+        index2 = 0;
+        while(argv[index][index2]!= 0)
+        {
+            dstr = dstr_append_char(dstr, argv[index][index2]);
+            index2++;
+        }
+        dstr = dstr_append_char(dstr, ' ');
+    index++;
+    }    
     // Después de hacerlo, te debería salir la concatenación de todos los parámetros
     // que pases... ocupen lo que ocupen!!! sin más límite que la memoria del ordenador
     printf("%s\n", dstr->buffer);
     dstr_destroy(dstr);
     return (0);
 }
+
+

@@ -13,14 +13,28 @@ static void copy_buffer(char *dest, char *source, size_t len)
     // * Copie "len" caracteres desde "source" a "dest"
     // * Tiene que hacerlo uno a uno
     // * SIEMPRE tiene que copiar "len" caracteres SIN FIJARSE en el '\0'
-}
+    size_t index;
 
+    index = 0;
+    while (index < len )
+    {
+        dest[index] = source[index];
+        index++;
+    }
+}
 dstr_t  *dstr_create()
 {
     dstr_t  *pdstr;
 
-    pdstr = malloc(1 * sizeof(dstr));
-    pdstr->buffer = malloc(11 * sizeof(char)));
+    pdstr = malloc(1 * sizeof(dstr_t));
+    if (pdstr == NULL)
+        return (NULL);
+    pdstr->buffer = malloc(11 * sizeof(char));
+    if (pdstr == NULL)
+    {
+            free (pdstr);
+            return (NULL);
+    }
     pdstr->buffer[0] = '\0';
     pdstr->buffer_size = 10;
     pdstr->str_len = 0;
@@ -36,6 +50,8 @@ dstr_t  *dstr_destroy(dstr_t *pdstr)
 
 dstr_t  *dstr_append_char(dstr_t    *dest_dstr, char ch)
 {
+    char    *newdest_dstr;
+    
     // Vamos a mejorar esta función:
     // Antes de añadir el carácter al buffer, vamos a ver si cabe o no:
     // * En el buffer caben "buffer_size" caracteres (sin contar el '\0' final)
@@ -43,6 +59,7 @@ dstr_t  *dstr_append_char(dstr_t    *dest_dstr, char ch)
     // * Cómo sabemos si nos cabe uno más? Si "str_len" ha alcanzado a "buffer_size"
     //   significa que ya hemos ocupado todos los caracteres y, por lo tanto, tenemos
     //   que agrandar el buffer
+
     // Tienes que detectar si ya no caben más y, si no caben:
     // * Reservar un nuevo buffer de 10 + 1 caracteres más que el actual (el tamaño actual
     //   te lo dice el valor actual de "buffer_size"
@@ -53,10 +70,17 @@ dstr_t  *dstr_append_char(dstr_t    *dest_dstr, char ch)
     // * Incrementar el 10 el campo "buffer_size" (porque ahora caben 10 caracteres más)
 
     // Después de hacer lo de arriba, ya puedes hacer esto:
-    dest_dstr->buffer[dest_dstr->str_len] = ch;
-    dest_dstr->buffer[dest_dstr->str_len + 1] = '\0';
-    dest_dstr->str_len++;
-
+    if (dest_dstr->buffer_size < dest_dstr->str_len)
+    {
+        newdest_dstr = malloc ((dest_dstr->buffer_size +10 + 1) * sizeof (char));
+        copy_buffer(newdest_dstr, dest_dstr->buffer, dest_dstr->buffer_size + 1);
+        free (dest_dstr->buffer);
+        dest_dstr->buffer = newdest_dstr;
+        dest_dstr->buffer_size = dest_dstr->buffer_size + 10;
+    }    
+        dest_dstr->buffer[dest_dstr->str_len] = ch;
+        dest_dstr->buffer[dest_dstr->str_len + 1] = '\0';
+        dest_dstr->str_len++;
     return (dest_dstr);
 }
 

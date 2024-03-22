@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 
 typedef struct dstr {
     char    *buffer;
@@ -20,10 +21,29 @@ dstr_t  *dstr_create()
     // * Ponga un '\0' en la primera posición del buffer (con esto conseguimos que en el buffer haya
     //   una cadena vacía)
     // * Retorne el puntero al dstr_t que has hecho malloc en el primer paso.
+    dstr_t  *name;
+
+    name = malloc (1 * sizeof (dstr_t));
+    if (name == NULL)
+        return (NULL);
+    name->buffer = malloc(11 * sizeof (char));
+    if (name->buffer == NULL)
+    {
+        free (name);
+        return (NULL);
+    }
+    name->buffer_size = 10;
+    name->str_len = 0;
+    name->buffer[0] = '\0';
+    return (name);
 }
 
 dstr_t  *dstr_destroy(dstr_t *dstr)
 {
+    free(dstr->buffer);
+    free(dstr);
+    return (NULL);
+    
     // Implementa esta función que:
     // 1. Libere el campo "buffer"
     // 2. Libere el propio "dstr"
@@ -34,7 +54,9 @@ int main(void)
 {
     dstr_t  *dstr;
 
-    dstr = dstr_create(dstr);
+    dstr = NULL;
+    dstr = dstr_create();
     printf("%s\n", dstr->buffer);
-    dst_destroy(dstr);
+    dstr_destroy(dstr);
+    return (0);
 }

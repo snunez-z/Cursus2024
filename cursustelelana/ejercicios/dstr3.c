@@ -11,8 +11,15 @@ dstr_t  *dstr_create()
 {
     dstr_t  *pdstr;
 
-    pdstr = malloc(1 * sizeof(dstr));
-    pdstr->buffer = malloc(11 * sizeof(char)));
+    pdstr = malloc(1 * sizeof(dstr_t));
+    if (pdstr == NULL)
+        return (NULL);
+    pdstr->buffer = malloc(11 * sizeof(char));
+    if (pdstr == NULL)
+    {
+        free (pdstr);
+        return (NULL);
+    }
     pdstr->buffer[0] = '\0';
     pdstr->buffer_size = 10;
     pdstr->str_len = 0;
@@ -44,6 +51,11 @@ dstr_t  *dstr_append_char(dstr_t    *dest_dstr, char ch)
 
 
     // Más adelante por qué es bueno retornar "dest_dstr"
+
+    dest_dstr->buffer[dest_dstr-> str_len] = ch;
+    dest_dstr->buffer[dest_dstr->str_len + 1]= '\0';
+    dest_dstr->str_len++;  
+
     return (dest_dstr);
 }
 

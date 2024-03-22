@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <unistd.h>
-
+#include <fcntl.h>
 
 int read_char(int fd, char *pch)
 {
     size_t  bytes_read;
 
     bytes_read = read (fd, pch, 1);
-    if (bytes_read == -1)
+    if ((int)bytes_read == -1)
         return (-1);
     else if (bytes_read == 0)
         return (0);
     {
-    return (1);
+    return (0);
 }   
     // Escribe esta función:
     // Tiene que leer un byte (char) del file descriptor "fd" y guardarlo dentro
@@ -55,7 +55,7 @@ int copy_file(int src_fd, int dest_fd)
         // Fallo al leer, así es que la documentación dice que retornemos -3
         return (-3);
     }
-    return (numBytes);
+    return (num_bytes);
 }
 
 int main(int argc, char **argv)
@@ -70,6 +70,12 @@ int main(int argc, char **argv)
         return (-1);
     }
 
+    fd_to_read = open("el_principito.txt", O_RDONLY);
+    if (fd_to_read == -1)
+        return (-1);
+    fd_to_write = open ("el_principito_copy.txt", O_WRONLY | O_CREAT | O_TRUNC);
+    if (fd_to_write == -1)
+        return (-1);    
     // Abrir el fichero de origen (argv[1])
     // Si falla, mostrar un mensaje de error y retornar -1
 
@@ -82,7 +88,9 @@ int main(int argc, char **argv)
         printf("%d bytes %s successfully copied to %s\n", bytes_copied, argv[1], argv[2]);
         return (0);
     }
-
+    else 
+        printf(" No bytes has been copied from %s to %s\n", argv [1], argv [2]);
+        return (-1);
     // Mostrar un mensaje de error (usando printf) adecuado al error que se haya producido
     return (-1);
 }
