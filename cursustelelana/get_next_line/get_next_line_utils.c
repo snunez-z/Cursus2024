@@ -1,71 +1,88 @@
-#include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <stddef.h>
+#include "get_next_line.h"
 
 #define MALLOC_SIZE 10
 
-char	*ft_reduce(char *buffer, size_t buffer_size)
+static void	copy_buffer(char *dest, char *source, size_t len)
 {
-	char	*result;
 	size_t	index;
 
-	result = malloc(buffer_size * sizeof(char));
-	if (result == NULL)
-	{
-		free (buffer);
-		return (NULL);
-	}
 	index = 0;
-	while (index < buffer_size)
+	while (index < len)
 	{
-		result[index] = buffer[index];
+		dest[index] = source[index];
 		index++;
 	}
-	free(buffer);
-	return (result);
 }
 
-char	*ft_realloc(char *old_buffer, size_t *buffer_size)
+t_dstr	*dstr_create(void)
 {
-	char	*result;
-	size_t  new_buffer_size;
-	size_t	index;
+	t_dstr	*pdstr;
 
-	new_buffer_size = *buffer_size + MALLOC_SIZE; 
-	result = malloc((new_buffer_size + 1) * sizeof(char));
-	if (result == NULL)
+	pdstr = malloc(1 * sizeof(t_dstr));
+	if (pdstr == NULL)
+		return (NULL);
+	pdstr->buffer = malloc((MALLOC_SIZE + 1) * sizeof(char));
+	if (pdstr->buffer == NULL)
 	{
-		free (old_buffer);
+		free(pdstr);
 		return (NULL);
 	}
-	index = 0;
-	while (index < *buffer_size)
-	{
-		result[index] = old_buffer[index];
-		index++;
-	}
-	free(old_buffer);
-	*buffer_size = new_buffer_size;
-	return (result);
+	pdstr->buffer[0] = '\0';
+	pdstr->buffer_size = MALLOC_SIZE;
+	pdstr->str_len = 0;
+	return (pdstr);
 }
 
-int	read_one_char(int fd, char *buffer)
+char	*dstr_destroy(t_dstr *pdstr)
 {
-	static char		persistent_buffer[BUFFER_SIZE];
-	static int		bytes_stored = 0;
-	static ssize_t	bytes_read = 0;
+	free(pdstr->buffer);
+	free(pdstr);
+	return (NULL);
+}
 
-	if (bytes_stored >= bytes_read)
+char	*dstr_reduce(t_dstr	*pdstr)
+{
+	char	*reduced_buffer;
+
+	if (pdstr->str_len == pdstr->buffer_size)
 	{
-		bytes_read = read (fd, persistent_buffer, BUFFER_SIZE);
-		bytes_stored = 0;
-		if (bytes_read == 0)
-			return (0);
-		else if (bytes_read == -1)
-			return (-1);
+		reduced_buffer = pdstr->buffer;
+		free(pdstr);
+		return (reduced_buffer);
 	}
-	*buffer = persistent_buffer[bytes_stored];
-	bytes_stored++;
-	return (1);
+	reduced_buffer = malloc((pdstr->str_len + 1) * sizeof(char));
+	if (reduced_buffer == NULL)
+	{
+		dstr_destroy(pdstr);
+		return (NULL);
+	}
+	copy_buffer(reduced_buffer, pdstr->buffer, pdstr->str_len + 1);
+	dstr_destroy(pdstr);
+	return (reduced_buffer);
+}
+
+t_dstr	*dstr_append_char(t_dstr *dest_dstr, char ch)
+{
+	char	*new_buffer;
+
+	if (dest_dstr->str_len >= dest_dstr->buffer_size)
+	{
+		new_buffer = malloc((dest_dstr->buffer_size + MALLOC_SIZE + 1)
+				* sizeof(char));
+		if (new_buffer == NULL)
+		{
+			dstr_destroy(dest_dstr);
+			return (NULL);
+		}
+		copy_buffer(new_buffer, dest_dstr->buffer, dest_dstr->buffer_size + 1);
+		free(dest_dstr->buffer);
+		dest_dstr->buffer = new_buffer;
+		dest_dstr->buffer_size = dest_dstr->buffer_size + MALLOC_SIZE;
+	}
+	dest_dstr->buffer[dest_dstr->str_len] = ch;
+	dest_dstr->buffer[dest_dstr->str_len + 1] = '\0';
+	dest_dstr->str_len++;
+	return (dest_dstr);
 }

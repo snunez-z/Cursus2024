@@ -4,9 +4,17 @@
 
 # include <stdlib.h>
 
+typedef struct dstr
+{
+	char	*buffer;
+	size_t	buffer_size;
+	size_t	str_len;
+}	t_dstr;
+
 char	*get_next_line(int fd);
-int		read_one_char(int fd, char	*buffer);
-char	*ft_realloc(char *old_buffer, size_t *buffer_size);
-char	*ft_reduce(char *buffer, size_t buffer_size);
+t_dstr	*dstr_create(void);
+char	*dstr_destroy(t_dstr *pdstr);
+char	*dstr_reduce(t_dstr *pdstr);
+t_dstr	*dstr_append_char(t_dstr *dest_dstr, char ch);
 
 #endif
