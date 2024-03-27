@@ -27,8 +27,8 @@ static int ft_atoi(const char *str)
     int result;
 
     result = 0;
-    index = ft_strlen(str);
-    int position_value = 1;
+    index = ft_strlen(str) -1;
+    position_value = 1;
     while(index >= 0)
     {
         digit = str[index];
@@ -50,6 +50,40 @@ int main(int argc, char **argv)
 {
     int num1;
     int num2;
+    int num3;
+    int result;
+    int index;
+
+    if (argc == 1)
+        printf("0");
+    if (argc == 2)
+    {
+        num1 = ft_atoi(argv[1]);
+        printf ("%d\n", num1);
+    }
+    if (argc == 3)
+    {
+        num1 = ft_atoi(argv[1]);
+        num2 = ft_atoi(argv[2]);
+        result = ft_suma (num1, num2);
+        printf("%d\n", result);
+    }
+
+    if (argc >= 4)
+    {
+        num1 = ft_atoi(argv[1]);
+        num2 = ft_atoi(argv[2]);
+        result = ft_suma (num1, num2);
+        index = 3;
+        while ( index < argc)
+        {
+            result = ft_suma (result, ft_atoi(argv[index]));
+            index++;
+        }
+            printf("%d\n", result);
+    }
+    
+
 
     // Este programa tiene que sumar todos los números que reciba como parámetro
     // Por ejemplo, si no recibe ninguno, tiene que mostrar (printf) cero

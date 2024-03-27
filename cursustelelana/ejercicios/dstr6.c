@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     // Cambia el programa anterior para, no sólo añadir cada carácter del primer
     // parámetro, sino de todos los parámetros que pasen
     index = 1; // Porque el índice 0 no es un parámetro, es el nombre del programa
-     while (index < argc && argv[index]!= 0)
+     while (index < argc)
     {
         index2 = 0;
         while(argv[index][index2]!= 0)

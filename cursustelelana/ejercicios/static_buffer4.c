@@ -1,7 +1,17 @@
-#include <sdtio.h>
+#include <stdio.h>
 
 static char give_me_one_char()
 {
+    static int  index = 0;
+    char str[] = "Hola Sushi";
+    char ch;
+
+    ch = str[index];
+    index++;
+    return ch;
+}
+    
+    
     // Haz esta función que retorne un carácter cada vez de la cadena de caracteres
     // "Hola Sushi"
     // Es decir:
@@ -9,7 +19,6 @@ static char give_me_one_char()
     // * La segunda vez, la 'o'
     // * La tercera vez, la 'l'
     // Así sucesivamente
-}
 
 int main(void)
 {

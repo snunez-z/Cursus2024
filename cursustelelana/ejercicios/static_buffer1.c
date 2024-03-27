@@ -1,68 +1,73 @@
 #include <stdio.h>
 
-static int ft_strlen(const char *str)
+static size_t ft_strlen(const char *str)
 {
-    // Venga, practica este, como repaso
+    size_t  index;
+
+    index = 0;
+    while(str[index]!= '\0')
+    {
+        index++;
+    }
+    return (index);  
+   
 }
 
 static int ft_digit_to_int(char digit)
 {
-    // Implementa esta función que retorna el valor del dígito
-    // Por ejemplo: para '0' tiene que retornar 0 y para '9' tiene que
-    // retornar 9
-}
+    int num;
 
-static int ft_atoi(const char *str)
+    if (digit >= '0' && digit <= '9')
+    {
+        num = digit - '0';
+    }
+    return (num);
+ }
+    
+ static int ft_atoi(const char *str)
 {
     int index;
-    int position_value;
-    char digit;
-    int value_digit;
     int result;
+    int value ;
 
-    // Rellena los huecos en esta función para poder convertir una cadena de
-    // caracteres en número entero
-    // La lógica es: La posición de más a la derecha vale 1, la anterior 10,
-    // la anterior 100, la anterior 1000 y así sucesivamente
-    // Ejemplo: 12345
-    // La posición de más a la derecha vale 1 => 1 * 5 = 5
-    // La anterior vale 10 => 10 * 4 = 40
-    // La anterior vale 100 => 100 * 3 = 300
-    // La anterior vale 1000 => 1000 * 2 = 2000
-    // La anterior vale 10000 => 10000 * 1 = 10000
-    // Es decir, recorremos la cadena de derecha a izquierda y la parte de
-    // "incremento" del bucle son dos cosas:
-    // - Pasar a la posición anterior del bucle
-    // - El valor de esa posición es el valor de la posición anterior * 10
-    result = ...;
-    index = ft_strlen(str);
-    int position_value = 1;
-    while(...)
+    result = 0;
+    index = 0;
+    while (str [index] != '\0')
     {
-        digit = str[...];
-        value_digit = ft_digit_to_int(digit);
-        result = result + ...;
-
-        index--;
-        position_value = position_value * 10;
+        
+       value = ft_digit_to_int (str [index]);
+       result = value + (result * 10);
+       index++;
     }
     return (result);
 }
 
 static int ft_suma(int a, int b)
 {
-    // Implementa esta función. Sencilla :)
+    int result;
+
+    result = a + b;
+    return (result);
 }
 
 int main(int argc, char **argv)
 {
+  
+      
     int num1;
     int num2;
+    int result;
+    
+    if(argc < 3)
+    {
+        printf (" there had been an error");
+        return (-1);
+    }
+ 
+    num1 = ft_atoi (argv [1]);
+    num2 = ft_atoi (argv [2]);
+    result = ft_suma (num1, num2);
+    printf(" Ek resultado es %d\n", result);
+}   
 
-    // Este programa tiene que sumar dos números, así es que si
-    // no recibe como mínimo dos parámetros (además del nombre 
-    // del programa) tiene que sacar un mensaje de error y retornar
 
-    // Vale, tenemos dos parámetros:
-    // Conviértelos a int, súmalos y haz printf del resultado
-}

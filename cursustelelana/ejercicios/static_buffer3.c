@@ -27,14 +27,13 @@ static int ft_atoi(const char *str)
     int result;
 
     result = 0;
-    index = ft_strlen(str);
-    int position_value = 1;
+    index = ft_strlen(str) -1;
+    position_value = 1;
     while(index >= 0)
     {
         digit = str[index];
         value_digit = ft_digit_to_int(digit);
         result = result + (value_digit * position_value);
-
         index--;
         position_value = position_value * 10;
     }
@@ -43,7 +42,10 @@ static int ft_atoi(const char *str)
 
 static int ft_acumular(int a)
 {
-    // Ups!!!! Esta función sólo recibe un parámetro (un número) y tiene que retornar el acumulado
+    static  int accum = 0;
+    accum = accum + a;
+    return (accum);
+     // Ups!!!! Esta función sólo recibe un parámetro (un número) y tiene que retornar el acumulado
     // de todas las veces que se haya llamado. Es decir, si la primera vez llamo con a=10, tiene
     // que retornar 10 (porque es la primera vez que se llama).
     // Si la segunda vez llamamos con a=5, tiene que retornar 15 (10 de antes y 5 de ahora). Si la
@@ -53,18 +55,23 @@ static int ft_acumular(int a)
 
 int main(int argc, char **argv)
 {
-    int acumulado;
-    int index;
     int num;
+    int accum;
+    int index;
 
-    acumulado = 0;
-    index = 1;
-    while (index < argc)
+    if (argc < 3)
     {
-        num = ft_itoa(argv[index]);
-        acumulado = ft_acumular(num);
+        printf ("Error, I need parametres");
+        return (-1);
+    }
+    index = 1;
+    while ( index < argc)
+    {
+        num = ft_atoi (argv[index]);
+        accum = ft_acumular (num);
         index++;
     }
-    printf("El total es: %d\n", acumulado);
-    return (0);
-}
+        printf ("%d\n", accum);
+}  
+    
+ 

@@ -1,7 +1,20 @@
-#include <sdtio.h>
+#include <stdio.h>
 
 static char give_me_one_char()
 {
+    static int  index = 0;
+    char str[] = "Hola Sushi";
+    char ch;
+
+    if (str[index] != '\0')
+    {
+        ch = str[index];
+        index++;
+        return (ch);
+    }
+    else 
+        return ('*');
+
     // Igual que la anterior PERO si se piden más caracteres de los que hay
     // (es decir, si se llama a give_me_one_char más veces que caracteres hay
     // en "Hola Sushi"), tiene que retornar '*'
