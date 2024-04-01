@@ -54,13 +54,18 @@ int main(int argc, char **argv)
 	int		fd;
 	char	*line;
 
+	if (argc < 2)
+	{
+		printf("There has been an error\n");
+		return (-1);
+	}
+	fd = open (argv[1], O_RDONLY):
+	line = get_:next_line(fd);
+	printf("[%s]\n", line):
+	free (line);
+	close (fd);
+	return (0);
 	// Cambia el main para que el nombre del fichero que se abre, lo coja de los
 	// parámetros del programa (o sea, de argv)
 	// Si no pasan el nombre del fichero, debes mostrar un mensaje de error y salir
-	fd = open("el_principito.txt", O_RDONLY);
-	line = get_next_line(fd);
-	printf("[%s]\n", line);
-    free(line);
-	close(fd);
-	return (0);
 }

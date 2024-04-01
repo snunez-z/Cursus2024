@@ -9,10 +9,16 @@ static int read_one_char(int fd, char *buffer)
 
 static char	*get_next_line(int fd)
 {
+	typedef	struct	dstr
+	{
+		char	*buffer;
+		size_t	buffer_size;
+		size_t	str_len;
+	} t_dstr;
+
 	char	ch;
 	int		index;
 	int		read_result;
-	char	*buffer;
 
 	// Esta es una posible solución al ejercicio anterior
 	// En este ejercicio, tienes que modificarlo para usar dstr_t
@@ -23,8 +29,8 @@ static char	*get_next_line(int fd)
 	read_result = read_one_char(fd, &ch);
 	if (read_result <= 0)
 		return (NULL);
-
-	buffer = malloc(1000 * sizeof(char));
+	t_dstr->buffer_size = 10;
+	t_dstr->buffer = malloc(t_dstr->buffer_size + 1 * sizeof(char));
 	if (buffer == NULL)
 		return (NULL);
     buffer[0] = ch;

@@ -18,35 +18,31 @@ static char	*get_next_line(int fd)
 	// En este ejercicio, tienes que modificarlo para que lea hasta
     // el final de línea ('\n') o no haya más que leer (read_one_char
     // retorne cero), lo que sea que ocurra primero
-	read_result = read_one_char(fd, &ch);
+	read_result = read_one_char (fd, &ch);
 	if (read_result <= 0)
 		return (NULL);
-
-	buffer = malloc(1000 * sizeof(char));
+	buffer = malloc (1000 * sizeof (char));
 	if (buffer == NULL)
 		return (NULL);
-    buffer[0] = ch;
+	buffer [0] = ch;
 
 	index = 1;
-	while(index < 10)
+	while (index < 10)
 	{
-		read_result = read_one_char(fd, &ch);
+		read_result = read_one_char(fd, &ch)
 		if (read_result < 0)
 		{
-			free(buffer);
+			free (buffer);
 			return (NULL);
 		}
-        else if (read_result == 0)
-        {
-            buffer[index] = '\0';
-            return (buffer);
-        }
-		buffer[index] = ch;
-		index++;
-	}
-
-	buffer[index] = '\0';
-	return (buffer);
+		else if (read_result == 0)
+		{
+			buffer [index] = '\0';
+			return (buffer);
+		}
+		buffer [index] = ch;
+		index ++;
+		}
 }
 
 #include <stdio.h>

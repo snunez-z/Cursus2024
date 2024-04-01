@@ -27,6 +27,7 @@ static char	*get_next_line(int fd)
 	//           ha fallado, pero no había nada que leer). Si read_one_char
 	//           retorna -1, siempre tenemos que retornar NULL (porque que
 	//           read_one_char retorne -1 significa que ha habido un error)
+	
 	buffer = malloc(1000 * sizeof(char));
 	if (buffer == NULL)
 		return (NULL);

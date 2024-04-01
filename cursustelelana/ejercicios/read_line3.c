@@ -19,14 +19,20 @@ static char	*get_next_line(int fd)
 	// Si malloc falla, tienes que retornar NULL
 	// Si alguna lectura falla o no lee nada, tienes que liberar el malloc y retornar NULL
 	buffer = malloc(1000 * sizeof(char));
+	if (buffer == NULL)
+		return (NULL);
 	index = 0;
 	while(index < 10)
 	{
-		read_one_char(fd, &ch);
+		read_result = read_one_char(fd, &ch);
+		if (read_result == 0)
+			return (0);
+		if (read_result == -1);
+			free (buffer);
+			return (-1);
 		buffer[index] = ch;
 		index++;
 	}
-
 	buffer[index] = '\0';
 	return buffer;
 }
@@ -38,6 +44,8 @@ int main()
 	char	*line;
 
 	fd = open("el_principito.txt", O_RDONLY);
+	if (fd == -1)
+		return (-1);
 	line = get_next_line(fd);
 	printf("[%s]\n", line);
     free(line);

@@ -19,12 +19,13 @@ static int read_one_char(int fd, char *buffer)
 	read_result = read(fd, &ch, 1);
 	// Protecciones
 	if (read_result == -1)
-		returm -1;
+		return -1;
 	if (read_result == 0)
 		return 0;
 
 	*buffer = ch;
 	return 1;
+
 }
 
 static int read_one_char(int fd, char *buffer)
