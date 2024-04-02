@@ -1,8 +1,31 @@
 
 Get_next_line es un programa que lee un archivo linea a linea (tomando el final como el salto de linea) y lo have leyendo char a char y en los bloques de lectura que se le indique de forma externa en el BUFFER_SIZE.I
+[MA] get_next_line no es un programa, es una función (que se puede usar en un programa)
+get_next_line es una función que lee la siguiente línea de un fichero previamente abierto (es decir, get_next_line no abre el fichero, sino que se lo pasan abierto ya), guarda dicha línea en un buffer reservado con malloc y retorna dicho buffer. Dado que el buffer se reserva con malloc y se retorna (es decir, no lo libera la propia función), es responsabilidad de quien llame a esta función liberar (free) dicho buffer cuando ya no sea necesario.
+El contrato de la función es el siguiente:
+* Si hay un error al leer del fichero, retorna NULL
+* Si no hay nada que leer del fichero, retorna NULL
+* En caso contrario, retorna el contenido del fichero desde su posición actual hasta encontrar un salto de línea (\n) o el final del fichero.
+* Si se encuentra el salto de línea (\n) dicho carácter será también incluído en el buffer retornado
+
 Para ello usa variables estaticas a la hora de leer porque necesita recordar los valores anteriores del buffer, del tamaño del mismo y de la posicion. Al leer en linea pero hacerlo char a char y eso guardarlo en un buffer necesita recordar el valor y sumarlo al siguiente.
+[MA] Sé que lo entiendo, pero a quien se lo expliques, será la primera vez que escuche el tamaño y la posición.
+Vamos a darle más contexto.
+Para localizar el final de línea, debemos leer del carácter a carácter hasta que, efectivamente,
+demos con el \n (o con el final del fichero). Sin embargo, ir al disco cada vez para leer sólo un carácter
+es poco óptimo (leer del disco es una operación lenta), sin embargo leer de memoria es mucho más rápido.
+Para optimizar el proceso, lo que haremos será crear una función que retorne el siguiente carácter del
+fichero (la he llamado "read_one_char") pero dicha función, en lugar de leer carácter a carácter del fichero,
+en realidad leerá un bloque, concreatamente leeremos tantos caracteres como nos indique la constante BUFFER_SIZE
+(que se provee cuando se compila la función) y, a partir de ese momento, irá retornando un carácter de dicho bloque,
+uno cada vez. Para poder hacer esto, las llamadas a la función read_one_char tienen que recordar cuántos
+caracteres se han leído del disco (el máximo será, por supuesto, BUFFER_SIZE), qué carácter es el siguiente
+que tendremos que retornar y el propio bloque en sí (donde están todos los caracteres leídos en bloque).
+Dado que la función tiene que "recordar" valores entre llamadas, dichos datos deberán ser variables estáticas.
 
 Para hacer esta lectura usamos dentro del programa principal "get_next_line.c" una funcion estatica "read_one_char) para leer un char.
+[MA] "programa principal" no: función principal
+
 Dentro del "Get_next_line" llamaremos  a esta funcion y a otras 5 mas.
 
 dstr_append_char = añade caracter a caracter a un buffer de destino
@@ -10,12 +33,38 @@ copy_buffer = es una estatica que se la llama para copiar el buffer antiguo, en 
 dstr_create = para reservar memoria para la estructura y el buffer
 dstr_destroy = para liberar la memoria de la estructra y del buffer -> retorno NULL como truco para liberar lineas  en el get_next_line
 dstr_reduce = cuando llegue al final del archivo, ajustar el buffer reservado  a la medida de la ultima linea. 
+[MA] Explicas lo que hace, pero no por qué es necesario esto. A ver qué te parece esto
+Una vez optimizado el proceso de lectura del fichero, tenemos otro problema:
+No sabemos el tamaño del buffer que vamos a necesitar para leer todos los caracteres de la línea actual. Podemos
+tener líneas muy cortas (o incluso vacías, sólo con el \n) o líneas muy largas. Existe la opción de reservar un
+buffer enorme, pero desperdiciaremos mucha memoria en muchos casos (y aún así podemos quedarnos cortos en casos
+extremos) o crear una estructura de datos para crear un buffer inicial e ir haciéndolo crecer si, a base de añadir
+caracteres, se queda corto. He optado por esta segunda solución.
+Para poder tener un buffer que crezca si se queda corto, necesito una estructura de datos con los siguientes datos:
+* buffer: el propio buffer en sí, reservado con malloc. Siempre reservaré un byte extra para el \0
+* buffer_size: cuantos caracteres COMO MAXIMO caben en el buffer (sin contar con el \0 final)
+* str_len: cuantos caracteres llevo ocupados del buffer. de este modo, si str_len alcanza a buffer_size, sabré que
+           antes de añadir un carácter más, tendré que agrandar el buffer
+Para sustentar esta estructura, he creado unas funciones que son:
+* La de inicialización (o creación): dstr_create, que reserva espacio para la estructura y reserva el buffer inicial
+* La de destrucción (o cierre): dstr_destroy, que libera tanto el buffer como la estructura en si
+* dstr_append_char: la que me permite añadir un carácter al buffer y, si es necesario, agrandarlo previamente
+* dstr_truncate: una vez he añadido todos los caracteres hasta llegar al \n (o al final del fichero), lo que hago es
+                 reservar un bloque de memoria con los caracteres que realmente necesito (ni más ni menos), copiar
+                 el contenido del buffer grande y liberarlo (ya que no hace falta más porque se ha copiado al
+                 espacio pequeño). Eso hace esta función
+* copy_buffer: cuando necesito agrandar el buffer o cuando creo el pequeño con el tamaño exacto necesario (ver
+               dstr_truncate) tengo que copiar el contenido del antiguo buffer al nuevo. Eso hace esta función
+
 
 1.- GET_NEXT_LINE.C (Recibe el fd y retorna el puntero a un string)
 
 	Voy a llamar a read_one_char para leer asi que necesito una variable de tipo int donde recoger lo que retorne.
+    [MA] ... donde recoger lo que retorne, que me va a indicar si la lectura ha ido bien, ha ocurrido un error
+             o se ha llegado al final del fichero.
 	Lo que leo es un char, asi que tengo que declararme una variable de tipo char
-	Voy a leer linea a linea asi que me declaro la linea de tipo structura t_dstr
+	Voy a leer linea a linea asi que me declaro la linea de tipo structura t_dstr [MA] para poder almacenar tantos
+    caracteres como necesite
 
 	Pasos  
 	1.1 Leo un char de un file descriptor si esta vacio o falla la lectura retorno  NULL
