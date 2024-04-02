@@ -1,64 +1,102 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stddef.h>
 
+typedef	struct dstr
+{
+	char	*buffer;
+	size_t	buffer_size;
+	size_t	str_len;
+}t_dstr;
+
+t_dstr	*dstr_create()
+{
+	t_dstr	*reservation;
+
+	reservation = malloc (1 * sizeof(t_dstr));
+	if (reservation == NULL)
+		return (NULL);
+	reservation->buffer = malloc (11 * sizeof (char));
+	if (reservation->buffer == NULL)
+		return (NULL);
+	reservation->buffer [0]  = '\0';
+	reservation->buffer_size = 10;
+	reservation->str_len = 0;
+	return (reservation);
+}
+t_dstr	*dstr_destroy(t_dstr	*reservation)
+{
+	free (reservation->buffer);
+	free (reservation);
+	return (NULL);
+}
 static int read_one_char(int fd, char *buffer)
 {
 	return read(fd, buffer, 1);
 }
-
-static char	*get_next_line(int fd)
+t_dstr  *dstr_append_char(t_dstr    *dest_dstr, char ch)
 {
-	typedef	struct	dstr
-	{
-		char	*buffer;
-		size_t	buffer_size;
-		size_t	str_len;
-	} t_dstr;
+    char *new_buffer;
 
+    if (dest_dstr->str_len >= dest_dstr->buffer_size)
+    {
+        new_buffer = malloc((dest_dstr->buffer_size + 10 + 1) * sizeof(char)); 
+        copy_buffer(new_buffer, dest_dstr->buffer, dest_dstr->buffer_size + 1);
+        free(dest_dstr->buffer);
+        dest_dstr->buffer = new_buffer;
+        dest_dstr->buffer_size = dest_dstr->buffer_size + 10;
+    }
+
+    dest_dstr->buffer[dest_dstr->str_len] = ch;
+    dest_dstr->buffer[dest_dstr->str_len + 1] = '\0';
+    dest_dstr->str_len++;
+
+    return (dest_dstr);
+}
+void copy_buffer(char *dest, char *source, size_t len)
+{
+    size_t index;
+
+    index = 0;
+    while(index < len)
+    {
+        dest[index] = source[index];
+        index++;
+    }
+}
+char	*get_next_line(int	fd)
+{
 	char	ch;
-	int		index;
 	int		read_result;
+	t_dstr	*reservation;
+	int		index;
 
-	// Esta es una posible solución al ejercicio anterior
-	// En este ejercicio, tienes que modificarlo para usar dstr_t
-	// El hecho de usar dstr_t te va a permitir optimizar la memoria
-	// porque no reservas 1000 caracteres (en el 99% de los casos te
-	// va a sobrar) y además ir creciendo el buffer conforme te vaya
-	// haciendo falta
 	read_result = read_one_char(fd, &ch);
 	if (read_result <= 0)
-		return (NULL);
-	t_dstr->buffer_size = 10;
-	t_dstr->buffer = malloc(t_dstr->buffer_size + 1 * sizeof(char));
-	if (buffer == NULL)
-		return (NULL);
-    buffer[0] = ch;
-
+		return((void *)NULL);
+	dstr_append_char (reservation, ch);
+	reservation->buffer = dstr_create ();
+	
 	index = 1;
 	while(ch != '\n')
 	{
 		read_result = read_one_char(fd, &ch);
 		if (read_result < 0)
-		{
-			free(buffer);
-			return (NULL);
-		}
-        else if (read_result == 0)
+			return (dstr_destroy(reservation->buffer));
+		else if (read_result == 0)
         {
-            buffer[index] = '\0';
-            return (buffer);
+            reservation->buffer[index] = '\0';
+            return (reservation->buffer);
         }
-		buffer[index] = ch;
+		reservation->buffer[index] = ch;
 		index++;
 	}
-
-	buffer[index] = '\0';
-	return (buffer);
+	reservation->buffer[index] = '\0';
+	return (reservation->buffer);
 }
-
 #include <stdio.h>
-int main()
+int main(int	argc, char **argv)
 {
 	int		fd;
 	char	*line;
@@ -68,11 +106,9 @@ int main()
 		printf("Error: You have to indicate the file to read from\n");
 		return (-1);
 	}
-
 	fd = open(argv[1], O_RDONLY);
 	line = get_next_line(fd);
-	printf("[%s]\n", line);
-	free(line);
+	printf("[%s]\n", line);free(line);
 	close(fd);
 	return (0);
 }

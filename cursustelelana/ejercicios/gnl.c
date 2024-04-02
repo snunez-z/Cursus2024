@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 07:36:02 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/03/20 11:45:42 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:37:38 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
+
 #include <stdlib.h>
 #include <stddef.h>
 #include "get_next_line.h"
@@ -66,6 +66,7 @@ char	*get_next_line(int fd)
 
 	return (dstr_reduce(line)); // No hay mas, y lo necesito reducir y retornar. 
 }
+
 /*
 #include <fcntl.h>
 #include <stdio.h>

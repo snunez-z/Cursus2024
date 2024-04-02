@@ -1,0 +1,122 @@
+
+Get_next_line es un programa que lee un archivo linea a linea (tomando el final como el salto de linea) y lo have leyendo char a char y en los bloques de lectura que se le indique de forma externa en el BUFFER_SIZE.I
+Para ello usa variables estaticas a la hora de leer porque necesita recordar los valores anteriores del buffer, del tamaño del mismo y de la posicion. Al leer en linea pero hacerlo char a char y eso guardarlo en un buffer necesita recordar el valor y sumarlo al siguiente.
+
+Para hacer esta lectura usamos dentro del programa principal "get_next_line.c" una funcion estatica "read_one_char) para leer un char.
+Dentro del "Get_next_line" llamaremos  a esta funcion y a otras 5 mas.
+
+dstr_append_char = añade caracter a caracter a un buffer de destino
+copy_buffer = es una estatica que se la llama para copiar el buffer antiguo, en el nuevo, cada vez que se agranda o se reduce en funcion de lo que se necesite.
+dstr_create = para reservar memoria para la estructura y el buffer
+dstr_destroy = para liberar la memoria de la estructra y del buffer -> retorno NULL como truco para liberar lineas  en el get_next_line
+dstr_reduce = cuando llegue al final del archivo, ajustar el buffer reservado  a la medida de la ultima linea. 
+
+1.- GET_NEXT_LINE.C (Recibe el fd y retorna el puntero a un string)
+
+	Voy a llamar a read_one_char para leer asi que necesito una variable de tipo int donde recoger lo que retorne.
+	Lo que leo es un char, asi que tengo que declararme una variable de tipo char
+	Voy a leer linea a linea asi que me declaro la linea de tipo structura t_dstr
+
+	Pasos  
+	1.1 Leo un char de un file descriptor si esta vacio o falla la lectura retorno  NULL
+	1.2 Reservo memoria para la linea llamando a la funcion dstr_create.
+	1.3 La reserva de memoria de lINE PUEDE FALLAR Y NO FALLAR.
+		1.3.1 Mientras no falle y el resultado de la lectura sea positivo entra en el bucle:
+		.- en linea se guarda el resultado de añadir el char llamando a dstr_append_char pasandole los argumentos de linea y de ch.Lo agrandará si es necesario.
+		.- Si falla se retorna null
+		.- Si llega al salto de linea, o sea ha acabado la linea, se retorna el resultado con la reduccion de memoria hecha llamando a dstr_reduce.
+		.- si no, se vuelve a leer.
+		Se saldra del bucle cuando falle o cuando no haya mas que leer.
+
+		1.3.2 Si falla la reserva de memoria de Line se returna NULL
+		1.3.3 Si no hay nada que leer se retorna el resultado de llamar a dstr_destry (line) que libera toda la memoria usada, tanto del buffer como de la estructura.
+	1.4 Retorno lo leido hasta ese momento con la reduccion de memoria ajustada llamando a la funcion dstr_reduce (line).
+
+2.- READ_ONE_CHAR (Recibe el fd y un char  * destino y retorna un int = 1 si ha leido)
+
+Se declara :
+	Un buffer de tipo char * cuya memoria sera la del tamaño del BUFFER_SIZE que me pasen.
+	un int buffer_size y un int buffer_index que van a ayudarme en la lectura .
+
+	Pasos 
+
+	2.1 Para inicializar la primera lectura equiparo el el tamaño del buffer a la posicion que al estar inicializados a cero ambos me permiten usarlos como condicion y hacer la primera lectura.
+    	Si e buffer_size >= buffer_index, buffer_size = la primera lectura del file descriptr, metiendolo en el buffer  y del tamaño que me pasen en BUFFER_SIZE.
+    	Si falla la lectura se retorna 1-1, Si esta vacio se retorna 0.
+		Buffer_index = 0; porque se vuelve a coocar en la suiguiente linea en la posicion cero dodne va a empezar a leer de nuevo.
+	2.2 Ahora ya en el buffer de destino guardará en la posicion que se encuentre el carcater que vaya leyendo.
+	2.3 Index itera.
+	2.4	Retorna 1 indicando que ha leido un caracter.
+
+	3.- DSTR_APPEND_CHAR (recibe el buffer de destino de tipo struct y el char a añadir y retorna el puntero a la estructura).
+
+	3.1 Comprobar si el tamaño  de lo leido es mayor o igual que el buffer reservado.
+    	Eso  se sabe si el el tamaño de lo leido(str_len) >= que el buffer_size 
+		en ese caso hay que agrandar el buffer y para ello .
+	3.1.1 Declalar un char  * new_buffer. 
+		  Rreservar memoria para el actual buffer_size + Malloc size + 1 (\0)
+		  Si falla se llama a dstr_destroy para liberr la memoria y se retorna NULL.
+		  Si no falla se llama a copy_buffer para copiar el buffer antiguo, en el nuevo con el tamaño del buffer_size + 1.
+		  Libera el antiguo buffer
+		  El buffer ahora es igual al nuevo buffer
+		  Y el buffer_size = buffer size que habia + malloc size (la nueva medida que se le da de reserva)
+	3.2 Ahora que el tamaño ya se ha agrandado
+		Buffer en la posicion libre que tenga str_len = ch, al carcater nuevo que se vaya a copiar
+		Buffer en la psocion libre que tenga str_len + 1 se pondra el barra cero
+		str_len sumara 1
+	3.3 (Retorna destino)
+
+4.- DSTR_CREATE (No recibe nada y retorna puntero a donde reserva memoria )
+
+	Pasos 
+
+	4.1 Se  declara un puntero de tipo struct
+	4.2 Se hace la reserva de la structura y si falla se retorna NULL.
+	4.3 Si no falla, se hace la reserva del buffer  medida de MALLOC_SIZE + 1
+    	Si falla esta reserva se libera la anterior y se retorna NULL
+	4.4 Se  pone en la osicion del buffer 0 el \0 para  asegurar que acaba bien.
+	4.5 buffer_size sera igual a MALLOC_SIZE
+	4.6 Str_len será igual a \0 para indicar que es uan cadena vacia y el \0 es un carcater no imprimible.
+	4.7 Se retorna el puntero de tipo struct.
+
+5.- DSTR_DESTROY ( recibe el untero a la struct a liberar y retorna el puntero a la string.
+	5.1 Libera primero el buffer y luego la struct. Retorna NULL para  reducir el espacio del GET_NEXT_LINE.
+
+6.- DSTR_REDUCE ( recibe el struct puntero y retorna el char * )
+
+El caso  especial seria si coincidese que el tamaño de lo leido y el buffer reservado coincidiesen. no seria muy habitual pero hay que contemplarlo asi que empemos contemplando que pasaria en ese caso.
+Nos declaramos una variable de tipo char * y la llamamos, reduced_buffer.
+	6.1 SSabemos que si str_len = a buuffer_size son iguales y en ese caso hacemos los iguiente:
+		Reduced_buffer = buffer actual
+		Liberamos la estructura, el buffer no porque me sirve al ser igual 
+		Retorno el buffer reducido que coincide con el que tenia.
+		Reservo memoria para el reduced_buffer que sera el str_len + 1 * sizeof de char
+	6.2	Si falla llamamos a str_destroy para liberar la reserva y se retorna NULL
+	6.3	Si no falla llamamos a cpy_buffer para copiar el buffer antiguo, en el reducido psandole str_len + 1 como medida.
+	6.4 Se llama a str_destroy para liberar todo, la estriictura y el buffer antiguo
+	6.5	Se retorna el buffer reducido.
+
+ 7.- COPY_BUFFER (recibe la fuente, el destino y un size_t con los caracteres a copiar y no retora nada)
+
+ 	7.1 Se  declara un index de tipo size_t
+	7.2 Bucle mientras index que se inicializa en cero sea mas grande.
+ 	7.3	En la posiciónn que este en destino se copiará lo que hay en la fuente en la misma posicion.
+ 	7.4 Index ++; 
+
+8.- MAIN	
+
+ Vamos a leer de un fd linea a linea.
+ 	Pasos
+ 	8.1  Declaramos un int fd
+ 	8.2  Declaramos un char * line
+ 	8.3	if argc > 2  - printf error y retornar - 1
+ 	8.4 Se abre el arhivo de lectura
+ 	8.5 Se llama a la funcion get_next_line y se recge en line.
+ 	8.6 Mientras line no falle se mete en el bucle
+ 		Printea line
+ 		Libera line
+ 		y vuelve a llamar a get_next__line
+ 		Sale del bucle 
+ 	8.7 Cierra fichero
+ 	8.8 Retorna (0);
+
