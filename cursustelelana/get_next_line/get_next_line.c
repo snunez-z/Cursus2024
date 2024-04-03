@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 07:36:02 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/03/20 11:45:42 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/04/03 09:32:14 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -40,13 +40,15 @@ char	*get_next_line(int fd)
 {
 	t_dstr	*line;
 	char	ch;
-	int	read_result;
+	int		read_result;
 
 	read_result = read_one_char(fd, &ch);
 	if (read_result <= 0)
 		return (NULL);
 	line = dstr_create();
-	while (line != NULL && read_result > 0)
+	if (line == NULL)
+		return (NULL);
+	while (read_result > 0)
 	{
 		line = dstr_append_char(line, ch);
 		if (line == NULL)
@@ -55,8 +57,6 @@ char	*get_next_line(int fd)
 			return (dstr_reduce(line));
 		read_result = read_one_char(fd, &ch);
 	}
-	if (line == NULL)
-		return (NULL);
 	if (read_result < 0)
 		return (dstr_destroy(line));
 	return (dstr_reduce(line));
