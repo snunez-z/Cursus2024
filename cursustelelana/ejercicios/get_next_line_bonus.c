@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stddef.h>
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 #define MALLOC_SIZE 10
 
@@ -16,32 +16,51 @@
 static t_gnl_bonus	*search_fd(int fd)
 {
 	// Define una estática de ese tipo
-    static open_files	array_of_openfiles = {
+    static t_open_files	fd_to_open = {
 		.fd_num = 0 // Lo inicializamos a cero porque todavía no hemos leído
 					// de ningún fichero
 	};
+
 	int	index;
+    t_gnl_bonus *one_file_data;
 
     // Busca en el array (campo "buffer" del struct "open_files") el elemento
     // que pertenezca al "fd" que te pasan como parámetro.
     // Si lo encuentras, devuelve el puntero a ese elemento del array
     // Si no lo encuentras, retorna NULL
 	index = 0;
-	while (index < array_of_openfiles.fd_num) // El array tiene 10240 elementos, pero no todos
+	while (index < fd_to_open.fd_num) // El array tiene 10240 elementos, pero no todos
 											  // están ocupados, sólo los elementos que indique
 											  // el campo "fd_num", así es que el bucle va has
 											  // "fd_num" no hasta el 10240
 	{
-		if (array_of_openfiles[index].fd_num == fd)
+        one_file_data = &(fd_to_open.buffer[index]);
+		if (one_file_data->fd == fd)
 		{
 			// ENCONTRADO!!
-			return &(array_of_openfiles[index]);
+			return (one_file_data);
 		}
-		index++
+		index++;
 	}
 
 	// Si salimos del bucle, es porque no lo hemos encontrado
-	return (NULL);
+    // Ocupamos un hueco libre. Cuál? El que indique fd_num, así es que, para no escribir
+    // todo el rato "fd_to_open.fd_num" que es muy largo y no se entiende, hacemos esto:
+    index = fd_to_open.fd_num;
+    one_file_data = &(fd_to_open.buffer[index]);
+
+    // Ahora inicializamos esa posición del array (a la que apunta "one_file_data")
+    one_file_data->buffer_size = 0;
+    one_file_data->buffer_index = 0;
+    // Esta inicialización es importante, porque el campo "fd" es el que luego vamos
+    // a usar para buscar
+    one_file_data->fd = fd;
+
+    // Hemos ocupado una posición más del array, así es que incrementamos fd_num
+    fd_to_open.fd_num++;
+
+    // Y, finalmente, retornamos el puntero a la posición que acabamos de inicializar
+	return (one_file_data);
 }
 
 static int	read_one_char(int fd, char *dest)
@@ -54,18 +73,19 @@ static int	read_one_char(int fd, char *dest)
 
 	fd_data = search_fd(fd);
 
-	// Adapta este código para que use fd_data
-	if (buffer_index >= buffer_size)
+	// Adaptamos el código que tenías hecho para que use fd_data en lugar de las
+    // tres variables sueltas
+	if (fd_data->buffer_index >= fd_data->buffer_size)
 	{
-		buffer_size = read(fd, buffer, BUFFER_SIZE);
-		if (buffer_size == -1)
+		fd_data->buffer_size = read(fd, fd_data->buffer, BUFFER_SIZE);
+		if (fd_data->buffer_size == -1)
 			return (-1);
-		if (buffer_size == 0)
+		if (fd_data->buffer_size == 0)
 			return (0);
-		buffer_index = 0;
+		fd_data->buffer_index = 0;
 	}
-	*dest = buffer[buffer_index];
-	buffer_index++;
+	*dest = fd_data->buffer[fd_data->buffer_index];
+	fd_data->buffer_index++;
 	return (1);
 }
 
@@ -94,7 +114,7 @@ char	*get_next_line(int fd)
 		return (dstr_destroy(line));
 	return (dstr_reduce(line));
 }
-/*#include <fcntl.h>
+#include <fcntl.h>
 #include <stdio.h>
 int	main(int argc, char **argv)
 {
@@ -116,4 +136,4 @@ int	main(int argc, char **argv)
 	}
 	close (fd);
 	return (0);
-}*/
+}
