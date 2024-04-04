@@ -6,12 +6,31 @@
 
 #define MALLOC_SIZE 10
 
+// Esta función va a retornar el t_gnl_bonus para el fd que nos indiquen,
+// porque como viste ayer, si no tenemos separados los buffer's de cada
+// fd, acabamos mezclando (recuerda lo que pasó ayer en la última prueba
+// que hiciste antes de irte a casa)
+// Esta función recibe el fd del que queremos leer y va a retornar el t_gnl_bonus
+// con el buffer, size e index específico de ese fd
+// Pero vamos a ir haciéndola paso a paso
+static t_gnl_bonus	*search_fd(int fd)
+{
+	// Esta va a ser la función que tenga la única estática que nos permiten, que
+	// es el array de ficheros abiertos... o sea, la nueva estructura
+	// Define una estática de ese tipo. Por ahora, nada más
+}
+
 static int	read_one_char(int fd, char *dest)
 {
-	static char	buffer[BUFFER_SIZE];
-	static int	buffer_size = 0;
-	static int	buffer_index = 0;
+    // Vamos a usar una variable solo, de tipo t_gnl_bonus
+	// static char	buffer[BUFFER_SIZE];
+	// static int	buffer_size = 0;
+	// static int	buffer_index = 0;
+    t_gnl_bonus		*fd_data;
 
+	fd_data = search_fd(fd);
+
+	// Adapta este código para que use fd_data
 	if (buffer_index >= buffer_size)
 	{
 		buffer_size = read(fd, buffer, BUFFER_SIZE);
