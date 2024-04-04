@@ -16,11 +16,32 @@
 static t_gnl_bonus	*search_fd(int fd)
 {
 	// Define una estática de ese tipo
+    static open_files	array_of_openfiles = {
+		.fd_num = 0 // Lo inicializamos a cero porque todavía no hemos leído
+					// de ningún fichero
+	};
+	int	index;
 
     // Busca en el array (campo "buffer" del struct "open_files") el elemento
     // que pertenezca al "fd" que te pasan como parámetro.
     // Si lo encuentras, devuelve el puntero a ese elemento del array
     // Si no lo encuentras, retorna NULL
+	index = 0;
+	while (index < array_of_openfiles.fd_num) // El array tiene 10240 elementos, pero no todos
+											  // están ocupados, sólo los elementos que indique
+											  // el campo "fd_num", así es que el bucle va has
+											  // "fd_num" no hasta el 10240
+	{
+		if (array_of_openfiles[index].fd_num == fd)
+		{
+			// ENCONTRADO!!
+			return &(array_of_openfiles[index]);
+		}
+		index++
+	}
+
+	// Si salimos del bucle, es porque no lo hemos encontrado
+	return (NULL);
 }
 
 static int	read_one_char(int fd, char *dest)
