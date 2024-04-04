@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 07:36:02 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/04/03 09:32:14 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:35:59 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
+
 #include <stdlib.h>
 #include <stddef.h>
 #include "get_next_line.h"
@@ -61,7 +61,7 @@ char	*get_next_line(int fd)
 		return (dstr_destroy(line));
 	return (dstr_reduce(line));
 }
-/*#include <fcntl.h>
+#include <fcntl.h>
 #include <stdio.h>
 int	main(int argc, char **argv)
 {
@@ -83,4 +83,4 @@ int	main(int argc, char **argv)
 	}
 	close (fd);
 	return (0);
-} */
+} 

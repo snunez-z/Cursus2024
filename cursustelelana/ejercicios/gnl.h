@@ -8,12 +8,12 @@ typedef struct dstr {
 	char    *buffer;
 	size_t  buffer_size;
 	size_t  str_len;
-} dstr_t;
+} t_dstr;
 
 char	*get_next_line(int fd);
-dstr_t	*dstr_create();
+t_dstr	*dstr_create();
 char	*dstr_destroy(dstr_t *pdstr);
 char	*dstr_reduce(dstr_t	*pdstr);
-dstr_t	*dstr_append_char(dstr_t    *dest_dstr, char ch);
+t_dstr	*dstr_append_char(dstr_t    *dest_dstr, char ch);
 
 #endif
