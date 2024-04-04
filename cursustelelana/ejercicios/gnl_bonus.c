@@ -15,9 +15,12 @@
 // Pero vamos a ir haciéndola paso a paso
 static t_gnl_bonus	*search_fd(int fd)
 {
-	// Esta va a ser la función que tenga la única estática que nos permiten, que
-	// es el array de ficheros abiertos... o sea, la nueva estructura
-	// Define una estática de ese tipo. Por ahora, nada más
+	// Define una estática de ese tipo
+
+    // Busca en el array (campo "buffer" del struct "open_files") el elemento
+    // que pertenezca al "fd" que te pasan como parámetro.
+    // Si lo encuentras, devuelve el puntero a ese elemento del array
+    // Si no lo encuentras, retorna NULL
 }
 
 static int	read_one_char(int fd, char *dest)
