@@ -1,10 +1,14 @@
 
 Get_next_line  es una función (que se puede usar en un programa), que lee la siguiente línea de un fichero previamente abierto (es decir, get_next_line no abre el fichero, sino que se lo pasan abierto ya), guarda dicha línea en un buffer reservado con malloc y retorna dicho buffer. Dado que el buffer se reserva con malloc y se retorna (es decir, no lo libera la propia función), es responsabilidad de quien llame a esta función liberar (free) dicho buffer cuando ya no sea necesario.
+
 El contrato de la función es el siguiente:
-* Si hay un error al leer del fichero, retorna NULL
-* Si no hay nada que leer del fichero, retorna NULL
-* En caso contrario, retorna el contenido del fichero desde su posición actual hasta encontrar un salto de línea (\n) o el final del fichero.
-* Si se encuentra el salto de línea (\n) dicho carácter será también incluído en el buffer retornado
+* Recibe el file descriptor de donde tiene que leer
+* Retorna el puntero a la direccion de memoria donde esta el buffer.
+Condicines generales :
+	* Si hay un error al leer del fichero, retorna NULL
+	* Si no hay nada que leer del fichero, retorna NULL
+	* En caso contrario, retorna el contenido del fichero desde su posición actual hasta encontrar un salto de línea (\n) o el final del fichero.
+	* Si se encuentra el salto de línea (\n) dicho carácter será también incluído en el buffer retornado
 
 Para localizar el final de línea, debemos leer del carácter a carácter hasta que, efectivamente,
 demos con el \n (o con el final del fichero). Sin embargo, ir al disco cada vez para leer sólo un carácter
@@ -155,3 +159,39 @@ Nos declaramos una variable de tipo char * y la llamamos, reduced_buffer.
  	8.7 Cierra fichero
  	8.8 Retorna (0);
 
+
+BONUS
+
+La funcion se trata de leer un archivo linea a linea, pero si desde el main, se abriesen mas archivos, leeria de forma aleatoria. 
+Es necesario registrar nuevos file descriptors, no solo añadir nuevos sino que ver si hay mas de uno, si ya hay otros file descriptors.
+Para localizarnos necesitamos un dato que identifique el file descriptor para poder buscarlos, lo que reporta open de un fd es distinto de los que retorna open de otro fd. 
+Ese dato hay que incoporarlo dentro de la estructura t_gnl_bonus para poder usarlo para buscar y leer de forma ordenada de cada file descriptor. pRa ir desde el primer file descriptor hasta el ultimo que hay, de forma consecutiva ir buscandolo. 
+Ese dato hay que añadirlo a la estructura para tener el dato que cuando venga Read_one_char y nos diga que nos estan pidiendo que lea un caracter del fd x si no esta incluido dentro de cada posicion de la estructura no vamos a ser capaces de inicializar el tamaño, la posicion y el buffer de ese file descriptor en concreto. Se deja anotsdo y asi la segunda vez que nos pidan otra linea, saber en que posicion del array está.
+Asi se evita mezclar las lineas de uno y de otro archivo. 
+
+Para la busqueda de ese file descriptor, tenemos la funcion "Search_fd"
+
+1.- Funcion SEARCH-FD
+
+Como solo podemos usar una estatica, hemos metido tanto el array buffer donde se van a ir metiendo la lectura de cada fd y el resto de datos del struct que se necesitan tener en cuenta para la lectura de cada fd. El tamaño, la posicion, el buffer de ese fd y el fd al que pertenece.Lo suyo seria tener dos estaticas, una para el buffer y otra para la estructura pero como solo nos permiten una estatica, se ha solucionado de esta forma.
+
+* struct t_open_files (buffer y el fd_num)
+* struct t_gnl_bonus (buffer, buffer_size, buffer_index y el fd)
+
+Search_fd va a ser llamado por read_one_char, va a necesitar que search_fd le de el tamaño y la posicion espècifico de ese fd, con lo que devuelva "search_fd" hara lo mismo que hacia en el caso de la parte obligatoria, leer un caracterr de ese fd.
+
+Como funciona , que hace, como busca? 
+
+Recorre el array (fd_to_open.fd_num) con un bucle: Desde la posicion  (Index = 0) hasta la ultima que indique (fd_num).
+1.- Condicion = Mientras la posicion sea menor que ese fd_num de la variable fd_to_open va a entrar en el bucle. 
+    .- Por cada posicion del array como tenemos que retornar el puntero me voy a coger el puntero a lo que hay en cada posicion.
+	de ahí, que la variable de tipo t_gnl_bonus one_file_data va a indicar donde esta, la direccion de memoria el indice index del array buffer que esta dentro de fd_to_open.
+	.- Ahora tenego que contrastar el dato que me dan con el fd que me pasan, de ahi la condicion de si los datos del campo fd (one_file_data) son iguales al fd que te pasan, lo has encontrado y por lo tanto hay que retornar donde esta, el puntero a one:-file_data.
+2.- Itera la posicion, siguiente posicion.
+3.- Si se sale es que no lo ha encontrado, o sea que el fd que nso piden es nuevo, aun no ha ledio nada de ese fd.
+    que tenemos  que hacer? Ocupar una posicion nueva y para eso nos sirve la variable fd_num.
+4.- La nueva posicion va a ser la siguiente libre (fd_to_open.fd_num).
+5.- Buffer_size y el buffer_index se inicializan a cero.
+6.- Inicizializamos el campo fd de one_file_data al fd 
+7.- Como hemos ocupado una nueva psocion del array fd_num tiene que iterar al siguiente.
+8.- Retornamos el puntero a la posicion que acabamos de inicializar.
