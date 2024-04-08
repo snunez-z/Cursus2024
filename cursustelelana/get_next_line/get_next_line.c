@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include "get_next_line.h"
+#include <unistd.h>
 
 #define MALLOC_SIZE 10
 
