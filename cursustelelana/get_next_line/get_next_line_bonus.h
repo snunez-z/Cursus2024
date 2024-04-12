@@ -1,15 +1,18 @@
-// Pon las cabeceras propias de un .h
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/05 12:51:43 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/04/12 12:32:38 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// Declara la constante para cuántos ficheros simultaneos podemos tratar
+#ifndef GET_NEXT_LINE_BONUS_H
 
-// Necesitamos un struct gnl_bonus porque para cada fichero distinto del que
-// queremos leer, necesitamos los tres datos que teníamos como static en la
-// parte no bonus: el buffer, cuánto está ocupado y qué carácter hemos retornado
-// Además, necesitamos un campo más para identificar a qué fd pertenece esta
-// estructura
-#ifndef GET_NEXT_LINE_H
-
-# define GET_NEXT_LINE_H
+# define GET_NEXT_LINE_BONUS_H
 
 # define MAX_OP_FD 10240
 
@@ -18,6 +21,9 @@
 # include <unistd.h>
 # include <ctype.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
 
 typedef struct gnl_bonus
 {
@@ -30,9 +36,8 @@ typedef struct gnl_bonus
 typedef struct open_files
 {
 	t_gnl_bonus	buffer[MAX_OP_FD];
-	size_t	fd_num;
-
-} t_open_files;
+	size_t		fd_num;
+}	t_open_files;
 
 typedef struct dstr
 {

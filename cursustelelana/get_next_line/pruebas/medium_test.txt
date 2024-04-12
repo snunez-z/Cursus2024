@@ -1,0 +1,246 @@
+Que hace:
+
+Get_next_line  es una función (que se puede usar en un programa), que lee la siguiente línea de un fichero previamente abierto (es decir, get_next_line no abre el fichero, sino que se lo pasan abierto ya), guarda dicha línea en un buffer reservado con malloc y retorna dicho buffer. Dado que el buffer se reserva con malloc y se retorna (es decir, no lo libera la propia función), es responsabilidad de quien llame a esta función liberar (free) dicho buffer cuando ya no sea necesario.
+
+El contrato de la función es el siguiente:
+* Recibe el file descriptor de donde tiene que leer
+* Retorna el puntero a la direccion de memoria donde esta el buffer.
+Condicines generales :
+	* Si hay un error al leer del fichero, retorna NULL
+	* Si no hay nada que leer del fichero, retorna NULL
+	* En caso contrario, retorna el contenido del fichero desde su posición actual hasta encontrar un salto de línea (\n) o el final del fichero.
+	* Si se encuentra el salto de línea (\n) dicho carácter será también incluído en el buffer retornado
+
+Como lo hace:
+
+Para localizar el final de línea, debemos leer el carácter a carácter hasta que, efectivamente,
+demos con el \n (o con el final del fichero). Sin embargo, ir al disco cada vez para leer sólo un carácter
+es poco óptimo (leer del disco es una operación lenta), sin embargo leer de memoria es mucho más rápido.
+Para optimizar el proceso, lo que haremos será crear una función que retorne el siguiente carácter del
+fichero (la he llamado "read_one_char") pero dicha función, en lugar de leer carácter a carácter del fichero,
+en realidad leerá un bloque, concreatamente leeremos tantos caracteres como nos indique la constante BUFFER_SIZE
+(que se provee cuando se compila la función) y, a partir de ese momento, irá retornando un carácter de dicho bloque,
+uno cada vez. Para poder hacer esto, las llamadas a la función read_one_char tienen que recordar cuántos
+caracteres se han leído del disco (el máximo será, por supuesto, BUFFER_SIZE), qué carácter es el siguiente
+que tendremos que retornar y el propio bloque en sí (donde están todos los caracteres leídos en bloque).
+Dado que la función tiene que "recordar" valores entre llamadas, dichos datos deberán ser variables estáticas.
+
+Para hacer esta lectura usamos dentro de la funcion principal "get_next_line.c" una funcion estatica "read_one_char) para leer un char.
+
+Dentro del "Get_next_line" llamaremos a esta funcion y a otras 5 mas.
+
+Una vez optimizado el proceso de lectura del fichero, tenemos otro problema:
+No sabemos el tamaño del buffer que vamos a necesitar para leer todos los caracteres de la línea actual. Podemos
+tener líneas muy cortas (o incluso vacías, sólo con el \n) o líneas muy largas. 
+Existe la opción de reservar un buffer enorme, pero desperdiciaremos mucha memoria en muchos casos (y aún así podemos quedarnos cortos en casos
+extremos) o 
+crear una estructura de datos (dstr) para crear un buffer inicial e ir haciéndolo crecer agrandandolo en funcion se lo que voy necesitando.(append_char).
+
+Para poder tener un buffer que crezca si se queda corto, necesito una estructura de datos con los siguientes datos:
+* buffer: el propio buffer en sí, reservado con malloc. Siempre reservaré un byte extra para el \0
+* buffer_size: cuantos caracteres COMO MAXIMO caben en el buffer (sin contar con el \0 final)
+* str_len: cuantos caracteres llevo ocupados del buffer. de este modo, si str_len alcanza a buffer_size, sabré que
+           antes de añadir un carácter más, tendré que agrandar el buffer
+Para sustentar esta estructura, he creado unas funciones que son:
+* La de inicialización (o creación): dstr_create, que reserva espacio para la estructura y reserva el buffer inicial
+* La de destrucción (o cierre): dstr_destroy, que libera tanto el buffer como la estructura en si
+* dstr_append_char: la que me permite añadir un carácter al buffer y, si es necesario, agrandarlo previamente
+* dstr_truncate: una vez he añadido todos los caracteres hasta llegar al \n (o al final del fichero), lo que hago es
+                 reservar un bloque de memoria con los caracteres que realmente necesito (ni más ni menos), copiar
+                 el contenido del buffer grande y liberarlo (ya que no hace falta más porque se ha copiado al
+                 espacio pequeño). Eso hace esta función
+* copy_buffer: cuando necesito agrandar el buffer o cuando creo el pequeño con el tamaño exacto necesario (ver
+               dstr_truncate) tengo que copiar el contenido del antiguo buffer al nuevo. Eso hace esta función
+
+1.- GET_NEXT_LINE.C (Recibe el fd y retorna el puntero a un string)
+
+	Voy a llamar a read_one_char para leer asi que necesito una variable de tipo int donde recoger lo que retorne
+    que me va a indicar si la lectura ha ido bien, ha ocurrido un error o se ha llegado al final del fichero.
+	Lo que leo es un char, asi que tengo que declararme una variable de tipo char
+	Voy a leer linea a linea asi que me declaro la linea de tipo structura t_dstr para poder almacenar tantos
+    caracteres como necesite
+
+	Pasos  
+	1.1 Leo un char de un file descriptor si esta vacio o falla la lectura retorno  NULL
+	1.2 Reservo memoria para la linea llamando a la funcion dstr_create.
+		Si la memoria falla retorna NULL y se sale.
+	1.3 Mientras el resultado de la lectura sea positivo entra en el bucle:
+		.- En la variable line se guarda el resultado de añadir el char llamando a dstr_append_char pasandole los argumentos de linea y de ch.Lo agrandará si es necesario.
+		.- Si falla el agrandamiento  de memoria, se retorna NULL y sale.
+		.- Si llega al salto de linea, o sea ha acabado la linea, se retorna el resultado con la reduccion de memoria hecha llamando a dstr_reduce.La funcion dstr_reduce, se encarga de la prteccion de fallo de memoria.
+		.- Si todo ha ido bien, se vuelve a leer llamando de nuevo a la funcion read_one_char.
+		Se saldra del bucle cuando falle o cuando no haya mas que leer.
+	1.4 Si no hay nada que leer se retorna el resultado de llamar a dstr_destroy (line) que libera toda la memoria usada, tanto del buffer como de la estructura.
+	1.5 Retorno lo leido hasta ese momento con la reduccion de memoria ajustada llamando a la funcion dstr_reduce (line).
+
+2.- READ_ONE_CHAR (Recibe el fd y un char  * destino y retorna un int = 1 si ha leido)
+
+	Read_one_char es una funcion que hemos creado para optimizar la lectura. Para no ir a disco a leer caracter a caracter y hacerlo en bloque.
+
+Se declara :
+	Un buffer de tipo char array cuya memoria sera la del tamaño del BUFFER_SIZE que me pasen.
+	un int buffer_size y un int buffer_index que van a ayudarme en la lectura .
+
+	Pasos 
+
+	2.1 Para inicializar la primera lectura equiparo el tamaño del buffer a la posicion que al estar inicializados a cero ambos me permiten usarlos como condicion y hacer la primera lectura.
+    	Si el buffer_size >= buffer_index, buffer_size = la primera lectura del file descriptor, metiendolo en el buffer  y del tamaño que me pasen en BUFFER_SIZE.
+    	Si falla la lectura se retorna -1, Si esta vacio se retorna 0.
+		Buffer_index = 0; porque se vuelve a colocar en la siguiente linea en la posicion cero donde va a empezar a leer de nuevo.
+	2.2 Ahora ya en el buffer de destino guardará en la posicion que se encuentre el caracter que vaya leyendo.
+	2.3 Index itera.
+	2.4	Retorna 1 indicando que ha leido un caracter.
+
+3.- DSTR_APPEND_CHAR (recibe el buffer de destino de tipo struct y el char a añadir y retorna el puntero a la estructura).
+
+Que hace?
+Una vez leido un bloque de memoria que le pasan en BUFFER_SIZE, añade caracter a caracter en el buffer que va a retornar.
+
+Como lo hace?
+Para eso establece un buffer de tamaño medio (ni grande , ni pequeño) y lo va a agrandando, hasta el final de la lectura, en el que termina ajustado el buffer al tamaño exacto de lo leido en el ultimo bloque.
+Comprueba el tamaño de lo que tiene que reservar, lo agranda en funcion de la necesidad que tiene, copia lo que habia en el y lo traslada al nuevo , libera elantiguo y retorna la nueva lectura.
+
+	3.1 Comprobar si el tamaño de lo leido es mayor o igual que el buffer reservado.
+    	Eso se sabe si el tamaño de lo leido(str_len) >= que el buffer_size 
+		en ese caso hay que agrandar el buffer y para ello .
+	3.1.1 Declalar un char  * new_buffer. 
+		  Reservar memoria para el actual buffer_size + Malloc size + 1 (\0)
+		  Si falla se llama a dstr_destroy para liberar la memoria y se retorna NULL.
+		  Si no falla se llama a copy_buffer para copiar el buffer antiguo, en el nuevo con el tamaño del buffer_size + 1.
+		  Libera el antiguo buffer
+		  El buffer ahora es igual al nuevo buffer
+		  Y el buffer_size = buffer size que habia + malloc size (la nueva medida que se le da de reserva)
+	3.2 Ahora que el tamaño ya se ha agrandado
+		Buffer en la posicion libre que tenga str_len = ch, al carcater nuevo que se vaya a copiar
+		Buffer en la psocion libre que tenga str_len + 1 se pondra el barra cero
+		str_len sumara 1
+	3.3 (Retorna destino)
+
+4.- DSTR_CREATE (No recibe nada y retorna puntero a donde reserva memoria ).
+
+que hace? 
+Es la funcion de inicializacion, reserva espacio para la estructura y reserva espacio para el buffer inicial. Asi que no recibe nada nada, porque en este caso, no necesita nada.)
+
+Porque lo hace?
+Necesitamos reserva un espacio mediano que lo establecemos con la variable MALLOX_ZISE, en el que ir recogiendo la lectura que vamos haciendo.
+Para retornar lo leido necesitamos tres datos (el puntero de donde vamos a copiar, lo que podemos ocupar y par posicion que vamos ocupando),por eso necesitamos un struct. con esos tres datos.
+Como las cadenas de caracteres han de terminar en \0 para gestionarlo de manera optima,en esta funcion en la primera posicion con el \0.Como si fuese una cadena vacia, de esta forma get_next_line no tiene que ocuparse de eso.
+
+Como lo hace?
+Reservar el espacio para la estructura que se necesita, reservar el espacio para el buffer,informar que en ese buffer caben MALLOC_SIZE caracteres e inicializa a cero la posicion (str_len).
+
+Pasos 
+
+	4.1 Se  declara un puntero de tipo struct.
+	4.2 Se hace la reserva de la structura y si falla se retorna NULL.
+	4.3 Si no falla, se hace la reserva del buffer medida de MALLOC_SIZE + 1
+    	Si falla esta reserva se libera la anterior y se retorna NULL
+	4.4 Se pone en la posicion del buffer 0 el \0 para  asegurar que acaba bien.
+	4.5 buffer_size sera igual a MALLOC_SIZE
+	4.6 Str_len será igual a \0 para indicar que es una cadena vacia,\0 es lo que usa en C para indicar el final de la cadena.
+	4.7 Se retorna el puntero de tipo struct.
+
+5.- DSTR_DESTROY (recibe el puntero a la struct a liberar y retorna el puntero a la string).
+	5.1 Libera primero el buffer y luego la struct. Retorna NULL para reducir el espacio del GET_NEXT_LINE.
+
+6.- DSTR_REDUCE ( recibe el struct puntero y retorna el char * )
+
+Que hace y porque?
+
+Cuando ya ha terminado la lectura, no hay mas que leer,para no malgastar memoria, esta funcion lo que hace es ajustar lo leido al buffer reservado.
+
+Como lo hace? 
+
+El caso especial seria si coincidese que el tamaño de lo leido y el buffer reservado fuesen iguales.No seria muy habitual pero hay que contemplarlo, asi que comenzamos contemplando que pasaria en ese caso.
+Nos declaramos una variable de tipo char * y la llamamos, reduced_buffer.
+	6.1 Sabemos que si str_len = a buffer_size son iguales y en ese caso hacemos lo siguiente:
+		Reduced_buffer = buffer actual
+		Liberamos la estructura, el buffer no porque me sirve al ser igual 
+		Retorno el buffer reducido que coincide con el que tenia.
+		Reservo memoria para el reduced_buffer que sera el str_len + 1 * sizeof de char
+	6.2	Si falla llamamos a str_destroy para liberar la reserva y se retorna NULL
+	6.3	Si no falla llamamos a copy_buffer para copiar el buffer antiguo, en el reducido pasandole str_len + 1 como medida.
+	6.4 Se llama a str_destroy para liberar todo, la estructura y el buffer antiguo
+	6.5	Se retorna el buffer reducido.
+
+ 7.- COPY_BUFFER (recibe la fuente, el destino y un size_t con los caracteres a copiar y no retora nada)
+
+Que hace?
+Copia la informacion que hay en el buffer  antiguo al nuevo buffer.
+¿ Por que lo hace?
+Porque como va a necesitar meter cosas nuevas en un nuevo buffer, necesita copiar lo antiguo y a continuacion meter lo nuevo.
+
+ 	7.1 Se  declara un index de tipo size_t
+	7.2 Bucle mientras index que se inicializa en cero sea mas pequeño.
+ 	7.3	En la posiciónn que este en destino se copiará lo que hay en la fuente en la misma posicion.
+ 	7.4 Index ++; 
+
+8.- MAIN	
+
+ Vamos a leer de un fd linea a linea.
+ 	Pasos
+ 	8.1  Declaramos un int fd
+ 	8.2  Declaramos un char * line
+ 	8.3	if argc > 2  - printf error y retornar - 1
+ 	8.4 Se abre el arhivo de lectura
+ 	8.5 Se llama a la funcion get_next_line y se recoge en line.
+ 	8.6 Mientras line no falle se mete en el bucle
+ 		Printea line
+ 		Libera line
+ 		y vuelve a llamar a get_next__line
+ 		Sale del bucle 
+ 	8.7 Cierra fichero
+ 	8.8 Retorna (0);
+
+
+BONUS
+Que y por qué?
+
+Esta funcion lee linea a linea de un fd que recibimos abierto previamente.
+Si esta funcion fuese llamada con mas de un fd distinto y abierto, querriamos que leyese una linea de cada fd pero no lo hace.
+La responsable de esto es READ_ONE_CHAR.
+Por que?
+La funcion tal y como la tenemos ahora se rige por BUFFER_SIZE. Lee todo el bloque de memoria que BUFFER_SIZE le indica y no tiene en cuenta el fd, hasta que no acaba. Por lo tanto lo que lee son bloques del fichero, no lineas.
+Para arreglar esa carencia que tiene la funcion read_one_char, sin tocar el contrato entre GNL y READ_O_C, vamos a modificar solo ROC.
+
+Como ?
+
+Ahora mismo tenemos una estructura de datos que recoge los datos de un fd. Ahora necesitamos para cada file descriptor una estructura que recoga esos datos, por lo tanto necesitaremos una estructura nueva con esos datos mas el fd especifico de cada fd que recibamos.
+Lo ideal seria ir añadiendo estructuras en funcion de necesidad pero tendriamos leak de memorias, asi que no podemos hacerlo con lineas, lo tenemos que hacer con un array.
+Como un array tiene que reservar un espacio de memoria fijo, necesitamos una constante que indique el maximo fd que podemos recibir.
+Y como ahora cada posicion de ese array va a recoger la estructura nueva, necesitamos un index (fd_num) desde el que inicializarlo a cero y que vaya desde esa posicion hasta el numero x de file descriptor que nos abran.
+Hay dos datos estaticos cuya informacion necesitamos que se recuerde, el numero de file descriptors abiertos (fd_num = index) y el array donde estan todos los fd abiertos. 
+Por por peticion exclusiva de la documentacion, solo podemos usar una estatica, asi que tenemos que crear una estructura nueva con esos dos datos y convertir en estatico ese struct.
+
+Para la busqueda de ese file descriptor, tenemos la funcion "Search_fd"
+
+1.- Funcion SEARCH-FD
+
+Las nuevas estructuras que se necesitan son :
+
+	* struct t_open_files (buffer- array de fd y el fd_num - posicion que van ocupando)
+	* struct t_gnl_bonus (buffer, buffer_size, buffer_index y el fd)
+
+Search_fd va a ser llamado por read_one_char, va a necesitar que search_fd le devuelva (el tamaño de lo que puedes leer, cuantos vas leyendo y la posicion por donde vas leyendo ) pero de cada fd. con lo que devuelva "search_fd" hara lo mismo que hacia en el caso de la parte obligatoria, leer un caracterr de ese fd.
+
+Como funciona , que hace, como busca? 
+
+En general esta funcion buscar el file descriptor que le proporciona read_one_char recorriendo el array de fd para devolverle los datos que correspondan a ese fd.
+La primera vez que se lea de ese file despriptor que le pasa el read_one_char. no lo va a encontrar porque aun no se ha leido nada.
+Asi que le asigna la primera posicion libre (para eso usa fd_num), inicializando a cero.
+
+1ª Condicion:
+
+Mientras un index ( inicialiada a cero ) no alcance el numero de fd maximo que nos pasan).
+Desde la posicion  (Index = 0) hasta la ultima que indique (fd_num).
+
+Cada vez que un fd ocupe por primera vez una posicion del array (la primera vez que nos pidan leer de ese fd), no entrara en ese bucle y :
+
+.- Declara index como igual a la primera posicion libre.
+.- Metera en esa posicion los datos de la estructura
+.- Inicializara a cero el buffer_size y el buffer_index a cero
+.- El campo fd que retornamos es el mismo que el que nos pasan
+.- Avanzamos  en la posicion (fd_num)
+.- Retornamos el puntero a esa posicion.
+
+

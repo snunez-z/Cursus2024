@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/05 13:03:15 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/04/05 13:03:52 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -87,5 +98,3 @@ t_dstr	*dstr_append_char(t_dstr *dest_dstr, char ch)
 	dest_dstr->str_len++;
 	return (dest_dstr);
 }
-
-
