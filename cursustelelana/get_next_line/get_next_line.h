@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 07:29:26 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/04/12 12:35:45 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:43:24 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 30
 # endif
 
 typedef struct dstr

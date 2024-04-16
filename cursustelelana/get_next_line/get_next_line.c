@@ -6,15 +6,16 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 07:36:02 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/04/12 12:52:00 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/04/16 07:39:05 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stddef.h>
+#include <unistd.h>
 #include "get_next_line.h"
 
-#define MALLOC_SIZE 10
+#define MALLOC_SIZE 30
 
 static int	read_one_char(int fd, char *dest)
 {
@@ -61,8 +62,8 @@ char	*get_next_line(int fd)
 		return (dstr_destroy(line));
 	return (dstr_reduce(line));
 }
-
-/*#include <fcntl.h>
+/*
+#include <fcntl.h>
 #include <stdio.h>
 int	main(int argc, char **argv)
 {
@@ -71,8 +72,8 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 	{
-		printf("usage:%s <file> ...\n");
-		return (1);
+		printf("usage %s <file> ...\n", argv[0]);
+		return (-1);
 	}
 	fd = open(argv[1], O_RDONLY);
 	line = get_next_line (fd);
@@ -84,4 +85,4 @@ int	main(int argc, char **argv)
 	}
 	close (fd);
 	return (0);
-}*/
+/*/

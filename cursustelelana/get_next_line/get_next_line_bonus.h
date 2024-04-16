@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 12:51:43 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/04/12 12:32:38 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:46:57 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define GET_NEXT_LINE_BONUS_H
 
-# define MAX_OP_FD 10240
+# define MAX_OP_FD 1024
 
 # include <stddef.h>
 # include <stdlib.h>

@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 12:23:24 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/04/12 12:27:38 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:19:32 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stddef.h>
 #include "get_next_line_bonus.h"
 
-#define MALLOC_SIZE 10
+#define MALLOC_SIZE 30
 
 static t_gnl_bonus	*search_fd(int fd)
 {
@@ -98,7 +98,7 @@ int	main (int argc, char **argv)
 
 	if (argc < 2)
 	{
-		printf("usage:%s<file> ...\n", argv [0]);
+		printf("usage:%s <file> ...\n", argv [0]);
 		return (-1);
 	}	
 	index = 1;
