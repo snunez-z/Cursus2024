@@ -1,0 +1,320 @@
+BORN TO BE ROOT
+
+Instalarse una maquina virtual "Virtual Box".
+El proyecto consiste en configurar un servidor siguiendo una serie de reglas especificas que nos dan en la documentacion.
+Virtual vox es un programa de virtualizacion, un software que simula un hardware, que instala distintos sistemas operativos dentro de esa maquina y dentro de un mismo ordenador pero de forma simulada.
+Tiene su propio sistema operativo.y administra los recursos-funciona como hypervisor, permite ejecutar una o varias maquinas virtuales de forma simultanea, asignando memoria y cpu a ambas, sin que lesinterfieran la una con la otra. 
+Se usa mucho para probar programas con antelacion antes de instalarlos definitivamente en un ordenador, para ejecutar aplicaciones que contengan o puedan contener un malware, para emular sistemas que se usen poco y no merezca la pena su instalacion etc.
+No afectan a la computadora real.
+
+El archivo a entregar en el repositorio es signature.txt
+
+* Se va a usar el comando sudo para poder operar como root(denominacion que se da al usuario administrador)
+* Se va a usar el comando apt (LINUX) para:
+    *instalar, desinstalar, buscar y mostrar informacion sobre los programas que soporta linux.
+PASOS
+DESCARGAR LA IMAGEN VIRTUAL Y LA MAQUINA VIRTUAL
+
+1.-) Descargar la imagen de la maquina virtual
+	En realidad lo que me estoy descargando es el fichero de instalacion del sistema operativo.
+	El fichero ISO es el instalador del sistema operativo y el instalador que me bajo tiene que ser compatible con la CPU que utilizo, en este caso amd64 que es compatible con intel.
+
+Se hace desde la pagina de virtual voz.org
+    Descargar el programa.
+    Desde la carpeta de descargas.
+    Copiamos el nombre y ejecutamos la instalacion dentro de Bash
+    * sudo apt install <nombre del programa>
+        sudo = convierte en root y ejecuta lo siguiente que pongas como root.
+        apt = comando que te permite la instalación.
+Conceptos importantes:
+    .- HOST = Dueño el que ejecuta el Virtual vox. = ejemplo de host MAC oS
+    .- GUEST = Invitado, lo que instalas.= ejemplo de guest Linux.
+2.- ) Instalar Debian como una maquina virtual dentro de Virtual Vox.
+      Cada máquina funciona con un sistema operativo (SO), que es un conjunto de programas que permiten ejecutar y controlar una máquina. 
+      En otras palabras, es la interfaz entre el usuario, los programas y los componentes de la computadora. 
+      Por ejemplo, las máquinas Apple funcionan principalmente con macOS. Otras máquinas pueden ejecutarse en Windows o Linux, que son otros dos sistemas operativos conocidos.
+      Nuestar maquina virtual utilizara como sistema operativo Debian.
+      Una máquina virtual es una máquina que está dentro de una máquina host. 
+      Se comportará exactamente igual que cualquier otra máquina; Tiene un sistema operativo y algunas aplicaciones.
+      Existen varias ventajas de tener una máquina virtual:
+        .- Barato
+        .- Ahorra espacio físico (stock)
+        .- Menos mantenimiento que una máquina física
+        .- Copia de seguridad de datos simplificada
+        .- Seguridad incrementada
+    La instalación si se hace en sgoinfre podremos acceder a ella desde cualquier computadora, si la instalamos en goinfre, solo podremos acceder de la computadora donde esta. Habria que llevarsela de un ordenador a otra a traves de la carpeta Debian 12 que tiene la simulacion de hardware.
+    Buscar debian version 12
+    Vamos a instalarlo con las siguientes reglas :
+    .- Nombre = Debian.- Utilidades del sistema.ISO - Fichero de instalacion
+
+3.-) Se nos pide : Crear 2 particiones cifradas usando LVM.
+     ES importante tener /home en una particion separada.
+	 Los archivos d eusuario se guardab en una subcarpeta dentro de la carpeta home. Si el home no esta en una particion separada, cuando resintalamos el sistema operativo (ejemplo poner versiones nuevas, probar otro slinux, se te ha corrompido el sistema y necesita re- instalacion), si home esta en la misma particion que el sistema operativo, se perderan lso archivos.
+	 Sin embargo, si el home esta en uan particion distinta, yo puedo reinstalar ell sistema operativo sin afectar a mis archivos.
+
+	 En caso que se vayan hacer solo pruebas temporales, la particion no seria necesaria.
+	 En los casos de que hay encriptacion, es necesario tener el /boot ( sistema de arranque) en una particion separada para que pueda arrancar siempre.
+
+    Es debian el encargado de hacer las particiones, el usuario es el que decide cuales van a ser las particiones y LVM (LOGICAL VOLUME MANAGER)
+    es el que se encarga de las subparticiones.
+    Pueden ser cifradas y sin cifrar. Con contraseña o sin contraseña.
+
+    Crear partes en el disco de forma que no se vean afectadas unas por otras en caso de cambios en las mismas, actualizaciones etc...
+    En este caso, necesitaremos una particion 
+    .- para Boot, que es el sistema de arranque y que no puede estar encriptado porque si no, no arrancaría.
+    y otra particion para home y para / ( dos sub particiones) que si que se necesita que esten encriptadas y con contraseña.
+    Ademas del SWAP = se usa cuando el sistema operativo se da cuenta que se esta quedando sin memoria RAM. Es una especie de memoria RAM pero en disco.
+    Una especie de almacen temporal en el que se envian a los programas mientras estan abiertos pero no se estan usando y asi optimizar el espacio.
+    Cada vez se usa menos porque el disco es lento y cada vez las memorias RAM son mas grandes, asi que se necesita menos usar SWAP.
+
+INSTALACION DE SUDO Y CONFIGURACION DE USUARIOS Y DE GRUPOS
+
+* Diferencia entre su root y su - root
+	su root cambia el usuario pero no carga el entorno (entre otras cosas la variable de entorno PATH).
+	su - root cambiar el usuario y el entorno (coge el entorno del usuario al que se cambia).
+GID es el identificador de grupo.
+Los usuarios tienen un grupo principal y varios grupos secundarios.
+El principal aparece en el fichero /etc/passwd
+Los grupos secundarios aparecen en el fichero /etc /group
+el comando getent group te muestra que usarios tienen en el grupo que tu le pongas como grupo secundario.
+Si quieres ver todos lso grupos tanto el principal como lso secundarios puedes usar el comando groups seguido del nombre de un usuario.
+El primero que muestra es el grupo principal , el resto son lso secundarios.
+SE puede crear un usuario de una sola vez haciendolo siguiente:
+sudo useradd -g users - G cdrom,sudo -m -d /home/test test
+-g grupo principal
+-G grupos secundarios (separados por coma)
+-m crea las carpetas que se pongan en -d
+-d la direccion donde van a estar lso archivos del nuevo usuariotest el nombredel nuevo usuario.
+
+• Este usuario debe pertenecer a los grupos user42 y sudo.
+   Se nos pide que creemos un nuevo usuario.
+    Primero hemos de crear el grupo al que va a pertener ese grupo si no existe.
+    Se crea un grupo con el comando groupadd
+    .-sudo groupadd user42
+    Se crea un usuario con el comando useradd.
+    Un usuario tiene 1 solo grupo principal y varios grupos secundarios.
+        useradd -g -> para el grupo principal.
+        useradd -G -> para los grupos secundarios.
+        useradd -m -> crea el dir /home de ese usuario
+        useradd -d -> hay que indicar el directorio home para ese usuario.
+    .   - sudo useradd -g user 42 -G sudo,users -d /home/test -m test
+. crear una pasword a un usuario.
+    .-sudo passwd test
+comprobar que se ha creado bien.
+    .-su - test (test es el nombre del usuario que quieres ser)
+    .-whoami ( te dice que usuario eres en ese momento)
+
+4.-) apt vs aptitude
+     Durante la instalacion de VM se usan los compandos aptitude y apt, herramientas populares que se encargan de la gestión de paquetes. 
+     En este proyecto utilizamos apt en lugar de aptitude. Ambos ofrecen la misma funcionalidad básica, instalando y eliminando paquetes desde la línea de comandos.
+     Su principal diferencia es :
+     .- Aptitude recuerda qué paquetes se solicitaron explícitamente y cuáles sólo se instalaron debido a dependencias. 
+        Desinstalará automáticamente los paquetes que no se solicitaron explícitamente cuando ya no sean necesarios.
+     .- apt sólo hará explícitamente lo que se le indique en la línea de comando
+    
+    Mi nivel es de nobel, por lo tanto considero que no me voy a pasar mucho tiempo instalando programas y ademas me van a decir cuales son, asi que he elegido apt.
+    Tiene menos dependencias que aptitude,si sabes lo que quieres hacer apt es mas concisa, solo tienes que escribir detras lo que tienes que hacer 
+    (ejemplo install + nombre del programa).
+    Aptitude funciona mas de la forma tradicional de las apps. La tienes que abrir, te sale la ventana en modo texto etc. 
+    Es verdad que si no sabes lo que tienes que hacer, el nombre de la accion, puede ser que aptitude te de mas informacion. 
+    Ejemplo = No se si virtual box está dentro de los paquetes debian....es mas facil buscar dentro de aptitude esa informacion.
+    
+5.- ) SELinux y AppArmor
+    Son sistemas de seguridad internos del Linux. Se preocupan de definir permisos de accion de un usuario en linux. 
+    AppArmor se usa por defecto con Debian. Ejecute aa-status para comprobar si se está ejecutando.
+    SELinux
+        .- Proporciona un control muy detallado sobre el acceso a los recursos del sistema.
+        .- Le permite especificar diferentes politicas de seguridad a distintos usuarios, grupos y procesos. 
+        .- Es compatible con el sistema de control basado en roles (RBAC), lo que facilita la gestion de las politicas de seguridad complejas.
+        .- Puede proteger contra ataques dirigidos a vulnerabilidades en el kernel ( es el corazon del sistema operativo, el nucleo, el minimo necesario para que ese sistema operativo funcione)
+           de Linux. El kerner de linux es un fichero que esta en el /boot.
+        .- Está disponible en una amplia gama de distribuciones de Linux, como RedHat, Debian, CentOS, Rocky Linux e incluso Android.
+
+    AppArmor
+        .- AppArmor es más fácil de configurar e implementar que SELinux.
+        .- Proporciona un lenguaje de políticas de seguridad más simple e intuitivo.
+        .- Requiere menos mantenimiento porque tiene menos reglas.
+        .- Tiene un buen rendimiento e impone una sobrecarga mínima en el sistema.
+        .- Está bien documentado y tiene una gran comunidad de usuarios y desarrolladores. 
+           Las distribuciones que lo pueden usar son Debian, Ubuntu, SUSE y derivados de todas las anteriores.
+    
+    Necesitaras usar Vim y git, asi que han de estar instaladas en tu VM para usarlas.
+INSTALACION Y CONFIGURACION DE SHH
+
+6.-)SSH 
+
+El el nombre de un protocolo y del programa que lo impementa cuya principal funcion es el acceso remoto a un servidor por un canal seguro porque la informacion esta cifrada.
+
+Es un comando que te permite conectarte a la terminal de otro equipo a traves del servidor (SSHD).El uso del protocolo SSH te permitirá conectarte de forma remota a tus servidores para gestionarlos. Por ejemplo, puedes estar en Nueva York y gestionar tu ordenador en París con unos pocos clics.
+Ejemplos = Servicios de correo - outlook se conecta a este servicio a traves del servidor de Correos que tiene instalado otro ordenador publico que proporciona ese servicio en concreto.
+SE conecta a otro ordenador de forma segura, a traves del puerto ( puerta a la que llaman los que quieres conectarse a diferentes servidores).
+Los puertos son codigos numericos establecidos por convenio. Pero una medida de seguridad es saltarse el convenio y cambiar el numero de puerto.
+
+Se nos pide que cambiemos ese puerto a 4242 y lo vamos a hacer de la siguiente forma:
+.- Meterse en el vim /etc/ssh/sshd_config
+   dentro hemos cambiado el que hay que sera 22 por 4242 (descomentandolo).
+   cambio el PermitRootLogin no
+Por que?
+A traves de SSH un servidor se conecta a otro servidor de forma encriptada. Antiguamente no habia encriptacion y el sistema TELNET se conectaba buscando rutas y un hacker podia interceptar en el camino al servidor, escuchar la informacion y copiar las contraseñas. Ahora eso no pasa pero sigue siendo peligroso conectarse a otro servidor siendo root, es mejor hacerlo a traves de un usuario. Asi si pilla la contraseña solo  pilla la del usuario. No la de root.
+
+INSTALACION Y CONFIGURACION DE UFW
+      
+7.-) FIREWALL UFW- es el que trae debian.
+    Es un programa de seguridad, que controla tanto las conexiones que recibe el ordenador desde fuera como las que el ordenador emite desde dentro.
+    Desde fuera -> a veces nos instalamos programas que por defecto y sin darnos cuenta, escuchan en algun puerto . 
+    El servidor de ese programa es inseguro. Si tu no eres consciente de su vulnerabilidad lo pueden utilizar los hakers para entrar en tu ordenador
+    sin que te des cuenta.
+    Por eso es importante que la politica de permiso de conexiones entrantes por defecto sea rechazar. En UFW es DROP.
+    De esta forma solo lo que tu pones de regla de permiso ALLOW funciona como permiso de entrada.
+    Root es el super usuario con permiso para hacer cualquier cosa en el sistema. 
+    Para que un usuario no ROOT pueda hacer acciones que solo a ROOT se le permite, existe el comando sudo.
+    Para que funcione sudo tienen que cumplirse dos cosas:
+        * Se pide la contraseña del usuario actual.
+        * Usuario que esta haciendo sudo tiene que pertenecer al grupo wheel - es decir anteriormente ha sido metido dentro de este grupo de confianza por ROOT.  
+
+    .- sudo apt install ufw -> instalar el firewall
+    .- sudo ufw enable -> activar el firewall 
+    .- sudo ufw allow4242 -> dandole permiso solo a la entrada delpuerto 4242 ( SSH)- cambiado anteriormente.
+    .- sudo ufw status verbose -> compruebo que las incoming estan deny por defecto.Puedo ver las reglas.
+
+Durante la instalacion se hace lo siguiente :
+    .-El hostname de tu máquina virtual debe ser tu login terminado en 42 (snunez-z42).
+
+CONFIGURACION CONTRASEÑA FUERTE SUDO
+.- Vamos a crear un fichero en la ruta /etc /sudoers.d/ 
+.- Se puede llamar como se quiera y se crea con el comando touch /etc/sudoers.d/sudo_config
+.- Creamos el directorio en la ruta /var/log/ para que el inout como el output queden almacenados en este directorio.
+.- EDitar el fichero con vim /etc/sudoers.d/sudo_config
+Defaults passwd_tries=3  -> Nº intentos en caso de contraseña erronea
+Defaults badpass_message="Mensaje de error personalizado" -> Mensaje de texto avisando que la contraseña es erronea.
+Defaults logfile="/var/log/sudo/sudo_config --> Archivo en el que quedaron registrados todos los comandos sudo
+Defaults log_input, log_output  -> para que cada comando ejecutado con sudo sea in o out este en el mismo directorio.
+Defaults iolog_dir="/var/log/sudo"
+Defaults requiretty --> Activar el TTY
+Defaults secure_pat ="/usr/local/sbin:/usr/local/bin:/usr/sbin:usr/bin:/snap/bin"
+   para restringir los direcotrios utilizables por sudo.
+
+
+7.1.-Deberás modificar este hostname durante tu evaluación.
+
+
+CONFIGURACION DE POLITICA DE CONTRASEÑAS FUERTE
+
+7.2. Debes implementar una política de contraseñas fuerte.
+     Una política de contraseñas es un conjunto de reglas diseñadas para mejorar la seguridad al alentar a los usuarios a utilizar contraseñas mas seguras y a utilizarlas correctamente.
+     Tambien sirve para servidores donde acceden decenas de personas con sus credenciales de usuario.
+     PAM (modulo d elinux que se encarga de gestionar los accesos a linux).
+     LO hace a traves de reglas que son ficheros de configuracion que estan en /etc/pam.d
+
+    Pasos :
+    Editar el fichero login.Defs.
+    dentro de este fichero podremos cambiar reglas para lso nuevos usuarios que se creen a partir de aqui. Lo susuarios antiguos seguiran con la politica de contraseñas anteriores.
+    PASS_MAX_DAYS : Tiempo de expiracion de la contraseña en dias.
+    PASS_MIN_DAYS : el nº de dias min que se permite volver a cambiar la contraseña.
+    PASS_WARN_AGE : el usuario recibirá un mensaje alertando x dias antes de la expiracion.:W
+
+     7.2.1 Instalar libreria libpam-pwquality - Verifica quue la contraseña que vamos a incluir no forma parte de un diccionario.
+           Comprueba que la contraseña nueva no es igual que la anterior, el cambio sea minimo o poco compleja.
+           sudo apt install libpam - pwquality
+    7.2.2 Editar el fichero de configuracion. 
+          Recomendable hacer una copia de seguridad                 sudo cp /etc/pam.d/common-password /root/
+          Abrir el fichero con permisos de super usuario con vim    sudo vim /etc/pam.d/common-pasword
+          Dentro del editor, localizar:
+            .- "password requisite pam_cracklib.so retry=3 minlen=8 difok=3  aqui vamos a poner nuestors propios requisitos, vamos a cambiar los que hay por defecto por los que nos dice la documentacion.
+                retry = n% de intentos antes de que el sistema devuleva error.
+                minlen = longitud minima de la contraseña.
+                difok= cambio de caracteres que tiene que tener una contraseña nueva vs vieja.
+                ucredit= - 1 Significa que como MIN debe tener 1 caracter.
+                          + 1 Significa que como MAX debe tener 1 caracter.
+                lcredit= nº de caracteres en minúscula que debe tener.
+                dcredit= nº de digitos que debe tener una contraseña nueva.
+                ocredit= el nª de creditos que debe tener la contraseña.
+                los numeros en negativo siempre significan como mínimo y los positivos como máximo.
+    Nuestra practica nos pide lo siguiente :
+    retry=3 minlen010 difok=7 ucredit=-1 dcredit0-1 maxrepeat=3
+
+    7.3 Comprobacion de la nueva politica de claves
+    Para los usuarios antoguos si se le quiere aplicar la politica de login.defs o cualquier otra hay que usar el comando chage.
+    Ejecutando "passwd <nombre_usuario> podremos cambiar la contraseña de nuestro sistema operativo.
+    passwd  gestiona la contraseña de la cuenta.
+    passwd -e asigna una contraseña de un solo uso para la activacion de la cuenta.
+    chage gestion de la informacion de la vejez de la contraseña.
+    .- sudo passwd snunez-z
+    .- sudo chage -W 7 snunez-z  - regla para decir que 7 dias antes de que expire la contraseña dara aviso el sistema
+    .- sudo chage -m 2 snunez-z  - regla para indicar que no se puede volver a cambiar la contraseña hastapasados dos dias
+    .- sudo chage -M 30 snunez-z - regla para indicar que la contraseña caduca cada 30 días.
+    .- La regla de no usar en la contraseña el username viene por defecto.
+    .- su - test (test es el nombre que se ha creado para hacer las pruebas) (su significa swicher user - cambiar de usuario)
+CONECTARSE VIA SSH
+
+Para conectarnos por SSH debemos cerrar la maquina, abrir Virtual Box y darle a configuracion. ssh
+Nos conectamos desde una terminal a una maquina.
+Dentro del terminal hay que conectarse a traves del terminal poniendo:
+ssh -p snunez-z@localhost
+ssh -p <a que usuario te quieres conectar> @ <significa at> localhost <nombre de la maquina>
+localhost es el nombre de la maquina por defecto.
+SCRIPT
+Es una secuencia de comandos guardada en un fichero que cuando se ejecuta hara la funcion de cada comando y en el orden establecido dentro del fichero.
+Arquitectura del sistema operativo es que procesador usa el (amd64)
+
+Los scripts tambien usan variables que con =$ y los () se usan para ejecutar la orden.
+ejemplo = 
+arch=$(uname -a)
+arch es el nombre de la variable, $ significa lo que vale y entre () la orden que se va a ejecturar.
+El Kernel es el corazon del sistema operativo, la parte principal, es el que hace de mediador entre el hardware del ordenador y lso programas.
+
+Los procesadores actuales son varios procesadores juntos ()
+ara aumentar a potencia) y cada procesador puede ejecutar varias cosas al mismo tiempo.
+Cada prcoesador tiene un numero x de nucleos fisicos (hicps fisicos) y cada nuecleo fisico puede hacer un numero x de subprocesos o tareas.
+Ejemplo : un procesador tiene 6 nucleos x 12 subprocesos. capacidad para 72 tareas.
+el comando grep "physical id" / proc/cpuinfo | wc - l 
+
+Los nucleos virtuales son los subprocesos .
+
+el comando grep processor /proc/cpuinfo | wc -l
+Para mostrar la memoria ram usaremos comando free. Informacion sobre free en free --help.
+free --mega nos da la informacion en megabytes.
+para mostrar la memoria usada el comando awk.
+free --mega | awk '$1 == "Mem:" {printd $3}'
+para mostrarla memoria total del comando
+free --mega | awk '$1 == "Mem:" {printf $2}
+para calcular el % de memoria usadafree --mega |  Memoria en MB flag -m. awk '$1 == "Mem:" {printf("(%.2f%%)\n)", $3/$2+100)}'
+para ver la memoria del disco usaremos el comando df "disk filesystem" resumen completo del uso del espacio.
+df -m | grep -v "/boot" | awk '{memory_use += $3} END {printf memory_use}' 
+para ver la memoria total df -m | grep "/dev/" | grep -v /boot" | awk 'awk '{memory_result += $2} END {printf ("%0fgb\n), memory_result/1024}'
+% Memoria usada df -m | grep "/dev/" | grep -v /boot" | awk '{use += $3} {total += $2} END {printf ("(%d%%)\n"), use_total*100}'.
+porcentaje de uso de la cpu se necesita el comando vmstat que muestra en general los procesos.
+comando tail para que solo printee la ultima 
+vmstat 1 3| tail -1 | awk '{printf $15}'
+Para ver la fecha y hora de nuestro reinicio el ,comando es who con el falg -b (muestra el tiempo del ultio arranque)
+para filtrar la informacion que queremos usamos comando awk.
+who -b | awk '$1 == "system" {print $3 " " $4}'
+para chequear si LVM esta activo o no haremos uso del comando lsblk, este nos muestra informacion de todos los dispositivos de bloque (discos duros, SSD, memorias, etc) 
+if [ $(lsblk | grep "lvm" | wc -l) -gt 0 ]; then echo yes; else echo no;fi
+para mirar el numero de conexiones activas utlizaremos el comando ss -ta para que solo se muestren las conexiones TCP.
+ss -ta | grep ESTAB | wc -l
+el numero de usuarios se saca con el comando users | wc -w 
+el numero de comandos usados por sudo usaremos el comando journalctl se encarga de recopilar y administrar los registros del sistema. 
+_COMM porque hac=e referencia a un script ejecutable.
+journalctl _COMM=sudo |grep COMMAND | wc -l.
+
+CRON 
+Un conjunto de herramientas que se encargan de ejecutar acciones programas.
+crontab es uno d elos programas para configurar el cron.
+sudo crontab -u root -e
+Cada usuario tiene su cron,porque puede querer hacer cosas personales.
+comando para el script es que se ejectute cada 10 minutos */10**** sh /ruta del script.
+*/10**** sh /home/snunez-z/monitoring.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
