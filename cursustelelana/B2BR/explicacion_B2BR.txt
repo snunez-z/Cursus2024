@@ -261,7 +261,7 @@ Los scripts tambien usan variables que con =$ y los () se usan para ejecutar la 
 ejemplo = 
 arch=$(uname -a)
 arch es el nombre de la variable, $ significa lo que vale y entre () la orden que se va a ejecturar.
-El Kernel es el corazon del sistema operativo, la parte principal, es el que hace de mediador entre el hardware del ordenador y lso programas.
+El Kernel es el corazon del sistema operativo, la parte principal, es el que hace de mediador entre el hardware del ordenador y los programas.
 
 Los procesadores actuales son varios procesadores juntos ()
 ara aumentar a potencia) y cada procesador puede ejecutar varias cosas al mismo tiempo.
@@ -294,21 +294,52 @@ if [ $(lsblk | grep "lvm" | wc -l) -gt 0 ]; then echo yes; else echo no;fi
 para mirar el numero de conexiones activas utlizaremos el comando ss -ta para que solo se muestren las conexiones TCP.
 ss -ta | grep ESTAB | wc -l
 el numero de usuarios se saca con el comando users | wc -w 
-el numero de comandos usados por sudo usaremos el comando journalctl se encarga de recopilar y administrar los registros del sistema. 
+el numero de comandos usados por sudo usaremos el comando journalist se encarga de recopilar y administrar los registros del sistema. 
 _COMM porque hac=e referencia a un script ejecutable.
 journalctl _COMM=sudo |grep COMMAND | wc -l.
 
 CRON 
 Un conjunto de herramientas que se encargan de ejecutar acciones programas.
-crontab es uno d elos programas para configurar el cron.
+crontab es uno de los programas para configurar el cron.
 sudo crontab -u root -e
 Cada usuario tiene su cron,porque puede querer hacer cosas personales.
 comando para el script es que se ejectute cada 10 minutos */10**** sh /ruta del script.
 */10**** sh /home/snunez-z/monitoring.sh
+m ➤ Corresponde al minuto en que se va a ejecutar el script, el valor va de 0 a 59.
+h ➤ La hora exacta, se maneja el formato de 24 horas, los valores van de 0 a 23, siendo 0 las 12:00 de la medianoche. dom ➤ hace referencia al día del mes, por ejemplo se puede especificar 15 si se quiere ejecutar cada día 15.
+dow ➤ Significa el día de la semana, puede ser numérico (0 a 7, donde 0 y 7 son domingo) o las 3 primeras letras del día en inglés: mon, tue, wed, thu, fri, sat, sun.
+user ➤ Define el usuario que va a ejecutar el comando, puede ser root, u otro usuario diferente siempre y cuando tenga permisos de ejecución del script.
+command ➤ Refiere al comando o a la ruta absoluta del script a ejecutar.
 
+Qué es shasum❓
+Es un comando que permite identificar la integridad de un fichero mediante la suma de comprobación del hash SHA-1 de un archivo.
 
+PARTE BONUS
 
+Instalar la maquina con una serie de particiones especiales y ademas agregarle unos servicios adicionales a la maquina.
 
+/boot   = sistema de arranque que va sin encriptar
+/       = raiz, donde esta todo, el sistema operativo.
+SWAP    = almacen temporal para aprovechamiento de la memoria.
+/home   = donde se almacenan los arhivos del ususario
+/var    = donde estan los archivos de estado de las aplicacioens del sistema.
+/var/log= trazas del sistema, que ha ocurrido durante la ejecucion del programa.
+/srv    = directorio donde se confinan los archivos a los que se puede acceder con servicios de acceso a archivos por ruta. HTTP permite acceder a ficheros HTML y FTP es otro servicioq ue permite leer y escribir otros archivos en otra maquina. 
+        Para tener esos accesos en un sitio no vulnerable se confinan en /srv y se permite el acceso, pero solo siguiendo esa ruta.
+
+Wordpress es una aplicacion que te permite hacer facilmente sitios web y utiliza servicios para su funcionamientos.
+Para poder exponer ese sitio web necesitas un servvidor web y unod e ellso es lighttpd.
+Usa tambien una base de datos por lo que necesita tambien un servicio que es MariaDB.
+Como wordpress usa como lenguaje PHP necesitamos instalarlo para que interprete.
+* Como eleccion de  servicio extra vamos a instalar FTP (file transfer protocol). Lo hemos elegido porque a la ghora de hacer un sitio web vamos a tener que subir ficheros de todo tipo, principalmente imagenes.
+   Por eso nos parece imprescindible tenerlo instalado. 
+* en el momento de la instalacion hemos abierto mas puertos que el 4242. 
+  Cada servicio tiene sus puertos y habra que abrirlo en el FIREWALL.
+  /etc/services - ahi podre ver que puerto y que puertos tienen por defecto los servicios que voy a abriri luego en el FIREWALL
+  
+Participacion primaria: ES un tipod e participacion en la que solo pueden estar los sistemas operativos. Hay 4 particiones como maximo primariasde disco duro o 3 primaria sy una extendida.
+Participaciones secundaras: SE crearon para romper la limitacion de 4 participaciones y solo hay 15 en linux.
+Particiones logicas : Dentro de la extendida se puedne hacer mas particiones (hasta 15 en linux) y asi ampliar disco.
 
 
 
