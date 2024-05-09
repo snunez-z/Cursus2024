@@ -1,0 +1,76 @@
+COMANDOS EVALUACION
+
+1.- Comprobar que no haya ninguna interfaz gráfica en uso.
+    ls /usr/bin*session 
+    Nos debe salir /usr/bin/dbus-run-session
+2.- Comprobar que el servicio UFW está en uso
+    sudo service ufw status
+    Me tiene que salir que esta active en color verde
+3.- Comprobar que el SSH está activo.
+    sudo service ssh status
+4.- Comprobar que se utiliza el sistema operativo Debian
+    uname -v o uname --kernel-version
+5.- Comprobar que tu usuario este dentro de lso grupos sudo y user42
+    getent group sudo
+    getent group user42
+6.- Craer un nuevo usuario y mostrar que sigue la politica de contraseñas que hemos creado.
+    sudo adduser nombre del usuario e introducimos la politica de contraseñas que hemso creado.
+7.- Creamos un nuevo grupo llamado xxxx
+    sudo addgroup xxxx
+8.- Añadimos un nuevo usuario
+    sudo adduser nombre del nuevo usuario xxxx
+    Para comprobar que se haya unido bien
+    getent group xxxx
+9.- Comprobar que el hostname de la maquina es correcto login42
+    hostname
+    Debe salir snunez-z42
+10.- Modificar hostname para reemplazar tu login por el del evaluador. Lo remplazaremos por snunez-z42
+    sudo vim /etc/hostname snunez-z42
+    sudo vim /etc/hosts
+    Cuando nos logeamos otra vez podemso verificar que se ha cambiado correctamente el hostname
+11.- Comprobar que todas las particiones son como las indica el subject 
+    lsblk 
+12.- Comprobar que sudo esta instalado
+    which sudo o dpkg -s sudo 
+
+13.-Introducir el nuevo usuario al grupo sudo 
+    sudo adduser nombre del usuario sudo
+    Para comprobar que esta dentro
+    getent grop sudo
+14.- Muestra la aplicacion de las reglas impuestas por el subject
+    /var/log/sudo· vim /etc/sudoers.d/sudo_config
+15.- Muestra que la ruta /var/log/sudo existe y contiene al menos un fichero y el historial de comandos usados.
+    /var/log/sudo# cd 
+    cd /var/log/sudo
+    /var/log/sudo# ls
+    /var/log/sudo#
+    Ejecuta un comando con sudo y comprueba que se actualiza el fichero
+    /var/log/sudo# sudo vim hello42world
+16.- Comprueba que el programa UFW está instalado en la máquina virtual y comprueba que funciona correctamente.
+    dpkg -s ufw
+    sudo service ufw status
+17.- Lista las reglas activas de UFW.Si no esta hecha la parte bonus no deberá aparecer la regla para el puerto 4242
+    sudo ufw status numbered
+18.- Crea an nueva reglapara el puerto 8080.
+    sudo ufw allow 8080
+    sudo ufw status numbered
+    Para borrar la regla 
+    sudo ufw delete numero que tenga la regla al principio, en la primera columna
+    comprobar que las reglas que nos piden en el subject son las que están.
+19.- Comprueba que el servicio ssh esta instalado en la maquina virtual, que funciona correcta,ente y que solo funciona por el puerto 4242.
+    which ssh
+    sudo service ssh status
+20.- Usa SSH para iniciar sesion con el usuario recien creado. 
+    Para comprobar que el nuevo usuario no puede funcionar como root.
+    ssh root@localhost -p 4242 
+    me pedira contraseña y despues debe decirme permiso denegado.
+    sudo service ssh status 
+    debe estar activo.
+21.- Modifica el tiempo de ejecucion del script de 10 minutos a 1.
+    Hay que modificar el fichero crontab 
+    sudo crontab -u root -e
+    En lugar de 10 ponemso un minuto para poder hacer la comprobacion.
+22.- Haz que el sript deje de ejecutarse cuando el servidor se haya iniciado pero sin modificarse el script.
+     sud /etc/init.d/cron stop
+    Para volver a ejecutarse 
+    sudo /etc/init.d/cron start

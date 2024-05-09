@@ -1,0 +1,95 @@
+MINI TALK
+Programa de comunicacion entre un cliente y un server, el que van a intercambiar datos usando UNIX.
+
+
+
+SEÑALES - SIGNALS
+Las señales son interrupciones de software que se utilizan para interrumpir un proceso en ejecución y ejecutar otra acción.
+Estas interrupciones se encuentran a menudo en diversas situaciones, como errores de bus o fallas de segmento, 
+y al intentar finalizar un programa con el comando ctrl+c.
+
+Cuando se activa una señal, el proceso envía una señal al kernel que luego utiliza la función sig_handler() para realizar una de tres acciones posibles: 
+ignorar, capturar o predeterminar.
+
+Vamos a usar SIGUSR1 Y SIGUSR2 que permiten hacer la programador lo que desee.
+
+Un proceso es un programa en ejecución que, por lo general, no desaparece hasta que dicho programa finaliza su cometido o es detenido. 
+Cualquier programa que esté en ejecución tiene cómo mínimo un proceso activo
+Un proceso puede estar en varios estados:
+
+    *En ejecución en modo usuario.
+    *En ejecución en modo núcleo.
+    *En espera.
+    *Dormido.
+    *Listo para ser ejecutado(pero sin ejecutarse aún).
+    *Dormido en el swap.
+    *Zombie(finalizando).
+
+PID = Un dato identificativo de los procesos que un programa hace.
+Cada proceso posee varios datos identificativos que ayudan mucho a una administrador a la hora de realizar cualquier tipo de control y/o gestión. 
+El número de proceso, denominado cómo PID (Process ID): Este número es un número único no repetible. 
+El primer proceso es el PID 1, y va aumentando progresivamente a medida que van generándose nuevos procesos. 
+En caso de que un programa fuese ejecutado varias veces, cada ejecución tendría un PID correspondiente.
+
+
+
+Convertir los digitos a binario en positivo.
+
+"H">>n
+where n is the number of times we are shifting
+
+***********************************
+| 128| 64| 32| 16|  8|  4|  2|  1 |
+|   0|  1|  0|  0|  1|  0|  0|  0 |
+***********************************
+|   0|  0|  0|  0|  0|  0|  0|  0 |  // shifting by 7 sums up to 0
+|   0|  0|  0|  0|  0|  0|  0|  1 |  // shifting by 6 sums up to 1
+|   0|  0|  0|  0|  0|  0|  1|  0 |  // shifting by 5 sums up to 2
+|   0|  0|  0|  0|  0|  1|  0|  0 |  // shifting by 4 sums up to 4
+|   0|  0|  0|  0|  1|  0|  0|  1 |  // shifting by 3 sums up to 9
+|   0|  0|  0|  1|  0|  0|  1|  0 |  // shifting by 2 sums up to 18
+|   0|  0|  1|  0|  0|  1|  0|  0 |  // shifting by 1 sums up to 36
+|   0|  1|  0|  0|  1|  0|  0|  0 |  // shifting by 0 sums up to 72
+***********************************
+
+From top down, you would realise that when you line up the rightmost value
+it will be 01001000, which is the binary value of our H.It is this right-most 
+value we will be saving everytime we shift
+
+
+
+
+Convertir lso numeros a binario (negativos)
+
+For example let's say we wanna convert -16 to binary
+Step 1: We would find the binary value of +ve 16 -> 00010000
+Step 2: We flip the digits to the opposite of what it was -> 11101111
+Step 3: Then we would add 1. Note: 1 + 1 = 10, you will leave zero 
+        and carry the one, while 1 + 1 + 1 = 11, leave 1 and carry 1
+        therefore we will get 11110000
+
+-128| 64| 32| 16|  8|  4|  2|  1|
+   1|  1|  1|  1|  0|  0|  0|  0|
+*********************************
+The left most is is negative 128
+Therefore, -128 + 64 + 32 + 16 = -16
+
+Note: when right shifting you don't touch the bit at -128, and
+you replace the void shifted with 1
+
+***********************************
+|-128| 64| 32| 16|  8|  4|  2|  1 |
+|   1|  1|  1|  1|  0|  0|  0|  0 |
+***********************************
+|   1|  1|  1|  1|  1|  1|  1|  1 |  // shifting by 7 sums up to -1  (-128+64+32+16+8+4+2+1)
+|   1|  1|  1|  1|  1|  1|  1|  1 |  // shifting by 6 sums up to -1  (-128+64+32+16+8+4+2+1)
+|   1|  1|  1|  1|  1|  1|  1|  1 |  // shifting by 5 sums up to -1  (-128+64+32+16+8+4+2+1)
+|   1|  1|  1|  1|  1|  1|  1|  1 |  // shifting by 4 sums up to -1  (-128+64+32+16+8+4+2+1)
+|   1|  1|  1|  1|  1|  1|  1|  0 |  // shifting by 3 sums up to -2  (-128+64+32+16+8+4+2)
+|   1|  1|  1|  1|  1|  1|  0|  0 |  // shifting by 2 sums up to -4  (-128+64+32+16+8+4)
+|   1|  1|  1|  1|  1|  0|  0|  0 |  // shifting by 1 sums up to -8  (-128+64+32+16+8)
+|   1|  1|  1|  1|  0|  0|  0|  0 |  // shifting by 0 sums up to -16 (-128+64+32+16)
+***********************************
+
+From top down, you would realise that when you line up the rightmost value
+it will be 11110000, which is the binary value of -16.
