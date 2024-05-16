@@ -3,8 +3,10 @@ BORN TO BE ROOT
 Instalarse una maquina virtual "Virtual Box".
 El proyecto consiste en configurar un servidor siguiendo una serie de reglas especificas que nos dan en la documentacion.
 Virtual vox es un programa de virtualizacion, un software que simula un hardware, que instala distintos sistemas operativos dentro de esa maquina y dentro de un mismo ordenador pero de forma simulada.
-Tiene su propio sistema operativo.y administra los recursos-funciona como hypervisor, permite ejecutar una o varias maquinas virtuales de forma simultanea, asignando memoria y cpu a ambas, sin que lesinterfieran la una con la otra. 
-Se usa mucho para probar programas con antelacion antes de instalarlos definitivamente en un ordenador, para ejecutar aplicaciones que contengan o puedan contener un malware, para emular sistemas que se usen poco y no merezca la pena su instalacion etc.
+Tiene su propio sistema operativo.y administra los recursos-funciona como hypervisor, permite ejecutar una o varias maquinas virtuales de forma simultanea, 
+asignando memoria y cpu a ambas, sin que les interfieran la una con la otra. 
+Se usa mucho para probar programas con antelacion antes de instalarlos definitivamente en un ordenador, para ejecutar aplicaciones que contengan 
+o puedan contener un malware, para emular sistemas que se usen poco y no merezca la pena su instalacion etc.
 No afectan a la computadora real.
 
 El archivo a entregar en el repositorio es signature.txt
@@ -13,13 +15,14 @@ El archivo a entregar en el repositorio es signature.txt
 * Se va a usar el comando apt (LINUX) para:
     *instalar, desinstalar, buscar y mostrar informacion sobre los programas que soporta linux.
 PASOS
+
 DESCARGAR LA IMAGEN VIRTUAL Y LA MAQUINA VIRTUAL
 
 1.-) Descargar la imagen de la maquina virtual
-	En realidad lo que me estoy descargando es el fichero de instalacion del sistema operativo.
-	El fichero ISO es el instalador del sistema operativo y el instalador que me bajo tiene que ser compatible con la CPU que utilizo, en este caso amd64 que es compatible con intel.
+	 En realidad lo que me estoy descargando es el fichero de instalacion del sistema operativo.
+	 El fichero ISO es el instalador del sistema operativo y el instalador que me bajo tiene que ser compatible con la CPU que utilizo, en este caso amd64 que es compatible con intel.
 
-Se hace desde la pagina de virtual voz.org
+Se hace desde la pagina de virtual vox.org
     Descargar el programa.
     Desde la carpeta de descargas.
     Copiamos el nombre y ejecutamos la instalacion dentro de Bash
@@ -29,6 +32,7 @@ Se hace desde la pagina de virtual voz.org
 Conceptos importantes:
     .- HOST = Dueño el que ejecuta el Virtual vox. = ejemplo de host MAC oS
     .- GUEST = Invitado, lo que instalas.= ejemplo de guest Linux.
+
 2.- ) Instalar Debian como una maquina virtual dentro de Virtual Vox.
       Cada máquina funciona con un sistema operativo (SO), que es un conjunto de programas que permiten ejecutar y controlar una máquina. 
       En otras palabras, es la interfaz entre el usuario, los programas y los componentes de la computadora. 
@@ -42,15 +46,19 @@ Conceptos importantes:
         .- Menos mantenimiento que una máquina física
         .- Copia de seguridad de datos simplificada
         .- Seguridad incrementada
-    La instalación si se hace en sgoinfre podremos acceder a ella desde cualquier computadora, si la instalamos en goinfre, solo podremos acceder de la computadora donde esta. Habria que llevarsela de un ordenador a otra a traves de la carpeta Debian 12 que tiene la simulacion de hardware.
+    La instalación si se hace en sgoinfre podremos acceder a ella desde cualquier computadora, si la instalamos en goinfre, solo podremos acceder de la computadora donde esta. 
+    Habria que llevarsela de un ordenador a otra a traves de la carpeta Debian 12 que tiene la simulacion de hardware.
     Buscar debian version 12
     Vamos a instalarlo con las siguientes reglas :
     .- Nombre = Debian.- Utilidades del sistema.ISO - Fichero de instalacion
 
 3.-) Se nos pide : Crear 2 particiones cifradas usando LVM.
+     Las particiones es la division lógica de almacenamiento.
      ES importante tener /home en una particion separada.
-	 Los archivos d eusuario se guardab en una subcarpeta dentro de la carpeta home. Si el home no esta en una particion separada, cuando resintalamos el sistema operativo (ejemplo poner versiones nuevas, probar otro slinux, se te ha corrompido el sistema y necesita re- instalacion), si home esta en la misma particion que el sistema operativo, se perderan lso archivos.
-	 Sin embargo, si el home esta en uan particion distinta, yo puedo reinstalar ell sistema operativo sin afectar a mis archivos.
+	 Los archivos de usuario se guardan en una subcarpeta dentro de la carpeta home. Si el home no esta en una particion separada, 
+     cuando resintalamos el sistema operativo (ejemplo poner versiones nuevas, probar otro slinux, se te ha corrompido el sistema y necesita re- instalacion), 
+     si home esta en la misma particion que el sistema operativo, se perderan los archivos.
+	 Sin embargo, si el home esta en una particion distinta, yo puedo reinstalar el sistema operativo sin afectar a mis archivos.
 
 	 En caso que se vayan hacer solo pruebas temporales, la particion no seria necesaria.
 	 En los casos de que hay encriptacion, es necesario tener el /boot ( sistema de arranque) en una particion separada para que pueda arrancar siempre.
@@ -77,14 +85,14 @@ Los usuarios tienen un grupo principal y varios grupos secundarios.
 El principal aparece en el fichero /etc/passwd
 Los grupos secundarios aparecen en el fichero /etc /group
 el comando getent group te muestra que usarios tienen en el grupo que tu le pongas como grupo secundario.
-Si quieres ver todos lso grupos tanto el principal como lso secundarios puedes usar el comando groups seguido del nombre de un usuario.
-El primero que muestra es el grupo principal , el resto son lso secundarios.
+Si quieres ver todos los grupos tanto el principal como los secundarios puedes usar el comando groups seguido del nombre de un usuario.
+El primero que muestra es el grupo principal , el resto son los secundarios.
 SE puede crear un usuario de una sola vez haciendolo siguiente:
 sudo useradd -g users - G cdrom,sudo -m -d /home/test test
 -g grupo principal
 -G grupos secundarios (separados por coma)
 -m crea las carpetas que se pongan en -d
--d la direccion donde van a estar lso archivos del nuevo usuariotest el nombredel nuevo usuario.
+-d la direccion donde van a estar los archivos del nuevo usuario test el nombre del nuevo usuario.
 
 • Este usuario debe pertenecer a los grupos user42 y sudo.
    Se nos pide que creemos un nuevo usuario.
@@ -107,6 +115,7 @@ comprobar que se ha creado bien.
 4.-) apt vs aptitude
      Durante la instalacion de VM se usan los compandos aptitude y apt, herramientas populares que se encargan de la gestión de paquetes. 
      En este proyecto utilizamos apt en lugar de aptitude. Ambos ofrecen la misma funcionalidad básica, instalando y eliminando paquetes desde la línea de comandos.
+     
      Su principal diferencia es :
      .- Aptitude recuerda qué paquetes se solicitaron explícitamente y cuáles sólo se instalaron debido a dependencias. 
         Desinstalará automáticamente los paquetes que no se solicitaron explícitamente cuando ya no sean necesarios.
@@ -120,6 +129,7 @@ comprobar que se ha creado bien.
     Ejemplo = No se si virtual box está dentro de los paquetes debian....es mas facil buscar dentro de aptitude esa informacion.
     
 5.- ) SELinux y AppArmor
+
     Son sistemas de seguridad internos del Linux. Se preocupan de definir permisos de accion de un usuario en linux. 
     AppArmor se usa por defecto con Debian. Ejecute aa-status para comprobar si se está ejecutando.
     SELinux
@@ -143,9 +153,10 @@ INSTALACION Y CONFIGURACION DE SHH
 
 6.-)SSH 
 
-El el nombre de un protocolo y del programa que lo impementa cuya principal funcion es el acceso remoto a un servidor por un canal seguro porque la informacion esta cifrada.
+El el nombre de un protocolo y del programa que lo implementa cuya principal funcion es el acceso remoto a un servidor por un canal seguro porque la informacion esta cifrada.
 
-Es un comando que te permite conectarte a la terminal de otro equipo a traves del servidor (SSHD).El uso del protocolo SSH te permitirá conectarte de forma remota a tus servidores para gestionarlos. Por ejemplo, puedes estar en Nueva York y gestionar tu ordenador en París con unos pocos clics.
+Es un comando que te permite conectarte a la terminal de otro equipo a traves del servidor (SSHD).El uso del protocolo SSH te permitirá conectarte de forma remota a tus servidores para gestionarlos. 
+Por ejemplo, puedes estar en Nueva York y gestionar tu ordenador en París con unos pocos clics.
 Ejemplos = Servicios de correo - outlook se conecta a este servicio a traves del servidor de Correos que tiene instalado otro ordenador publico que proporciona ese servicio en concreto.
 SE conecta a otro ordenador de forma segura, a traves del puerto ( puerta a la que llaman los que quieres conectarse a diferentes servidores).
 Los puertos son codigos numericos establecidos por convenio. Pero una medida de seguridad es saltarse el convenio y cambiar el numero de puerto.
@@ -155,7 +166,9 @@ Se nos pide que cambiemos ese puerto a 4242 y lo vamos a hacer de la siguiente f
    dentro hemos cambiado el que hay que sera 22 por 4242 (descomentandolo).
    cambio el PermitRootLogin no
 Por que?
-A traves de SSH un servidor se conecta a otro servidor de forma encriptada. Antiguamente no habia encriptacion y el sistema TELNET se conectaba buscando rutas y un hacker podia interceptar en el camino al servidor, escuchar la informacion y copiar las contraseñas. Ahora eso no pasa pero sigue siendo peligroso conectarse a otro servidor siendo root, es mejor hacerlo a traves de un usuario. Asi si pilla la contraseña solo  pilla la del usuario. No la de root.
+A traves de SSH un servidor se conecta a otro servidor de forma encriptada. Antiguamente no habia encriptacion y el sistema TELNET se conectaba buscando rutas 
+y un hacker podia interceptar en el camino al servidor, escuchar la informacion y copiar las contraseñas. Ahora eso no pasa pero sigue siendo peligroso conectarse 
+a otro servidor siendo root, es mejor hacerlo a traves de un usuario. Asi si pilla la contraseña solo  pilla la del usuario. No la de root.
 
 INSTALACION Y CONFIGURACION DE UFW
       
@@ -185,40 +198,40 @@ CONFIGURACION CONTRASEÑA FUERTE SUDO
 .- Se puede llamar como se quiera y se crea con el comando touch /etc/sudoers.d/sudo_config
 .- Creamos el directorio en la ruta /var/log/ para que el inout como el output queden almacenados en este directorio.
 .- EDitar el fichero con vim /etc/sudoers.d/sudo_config
-Defaults passwd_tries=3  -> Nº intentos en caso de contraseña erronea
-Defaults badpass_message="Mensaje de error personalizado" -> Mensaje de texto avisando que la contraseña es erronea.
-Defaults logfile="/var/log/sudo/sudo_config --> Archivo en el que quedaron registrados todos los comandos sudo
-Defaults log_input, log_output  -> para que cada comando ejecutado con sudo sea in o out este en el mismo directorio.
-Defaults iolog_dir="/var/log/sudo"
-Defaults requiretty --> Activar el TTY
-Defaults secure_pat ="/usr/local/sbin:/usr/local/bin:/usr/sbin:usr/bin:/snap/bin"
-   para restringir los direcotrios utilizables por sudo.
-
+    Defaults passwd_tries=3  -> Nº intentos en caso de contraseña erronea
+    Defaults badpass_message="Mensaje de error personalizado" -> Mensaje de texto avisando que la contraseña es erronea.
+    Defaults logfile="/var/log/sudo/sudo_config --> Archivo en el que quedaron registrados todos los comandos sudo
+    Defaults log_input, log_output  -> para que cada comando ejecutado con sudo sea in o out este en el mismo directorio.
+    Defaults iolog_dir="/var/log/sudo"
+    Defaults requiretty --> Activar el TTY
+    Defaults secure_pat ="/usr/local/sbin:/usr/local/bin:/usr/sbin:usr/bin:/snap/bin"
+   para restringir los directorios utilizables por sudo.
 
 7.1.-Deberás modificar este hostname durante tu evaluación.
-
 
 CONFIGURACION DE POLITICA DE CONTRASEÑAS FUERTE
 
 7.2. Debes implementar una política de contraseñas fuerte.
      Una política de contraseñas es un conjunto de reglas diseñadas para mejorar la seguridad al alentar a los usuarios a utilizar contraseñas mas seguras y a utilizarlas correctamente.
      Tambien sirve para servidores donde acceden decenas de personas con sus credenciales de usuario.
-     PAM (modulo d elinux que se encarga de gestionar los accesos a linux).
+     PAM (modulo de linux que se encarga de gestionar los accesos a linux).
      LO hace a traves de reglas que son ficheros de configuracion que estan en /etc/pam.d
 
     Pasos :
     Editar el fichero login.Defs.
-    dentro de este fichero podremos cambiar reglas para lso nuevos usuarios que se creen a partir de aqui. Lo susuarios antiguos seguiran con la politica de contraseñas anteriores.
+    dentro de este fichero podremos cambiar reglas para los nuevos usuarios que se creen a partir de aqui. Lo susuarios antiguos seguiran con la politica de contraseñas anteriores.
+    
     PASS_MAX_DAYS : Tiempo de expiracion de la contraseña en dias.
     PASS_MIN_DAYS : el nº de dias min que se permite volver a cambiar la contraseña.
-    PASS_WARN_AGE : el usuario recibirá un mensaje alertando x dias antes de la expiracion.:W
+    PASS_WARN_AGE : el usuario recibirá un mensaje alertando x dias antes de la expiracion.
 
-     7.2.1 Instalar libreria libpam-pwquality - Verifica quue la contraseña que vamos a incluir no forma parte de un diccionario.
+     7.2.1 Instalar libreria libpam-pwquality - Verifica que la contraseña que vamos a incluir no forma parte de un diccionario.
            Comprueba que la contraseña nueva no es igual que la anterior, el cambio sea minimo o poco compleja.
            sudo apt install libpam - pwquality
     7.2.2 Editar el fichero de configuracion. 
           Recomendable hacer una copia de seguridad                 sudo cp /etc/pam.d/common-password /root/
-          Abrir el fichero con permisos de super usuario con vim    sudo vim /etc/pam.d/common-pasword
+          Abrir el fichero con permisos de super usuario con vim    sudo vim /etc/pam.d/common-password
+          
           Dentro del editor, localizar:
             .- "password requisite pam_cracklib.so retry=3 minlen=8 difok=3  aqui vamos a poner nuestors propios requisitos, vamos a cambiar los que hay por defecto por los que nos dice la documentacion.
                 retry = n% de intentos antes de que el sistema devuleva error.
@@ -229,12 +242,13 @@ CONFIGURACION DE POLITICA DE CONTRASEÑAS FUERTE
                 lcredit= nº de caracteres en minúscula que debe tener.
                 dcredit= nº de digitos que debe tener una contraseña nueva.
                 ocredit= el nª de creditos que debe tener la contraseña.
+
                 los numeros en negativo siempre significan como mínimo y los positivos como máximo.
     Nuestra practica nos pide lo siguiente :
     retry=3 minlen010 difok=7 ucredit=-1 dcredit0-1 maxrepeat=3
 
     7.3 Comprobacion de la nueva politica de claves
-    Para los usuarios antoguos si se le quiere aplicar la politica de login.defs o cualquier otra hay que usar el comando chage.
+    Para los usuarios antiguos si se le quiere aplicar la politica de login.defs o cualquier otra hay que usar el comando chage.
     Ejecutando "passwd <nombre_usuario> podremos cambiar la contraseña de nuestro sistema operativo.
     passwd  gestiona la contraseña de la cuenta.
     passwd -e asigna una contraseña de un solo uso para la activacion de la cuenta.
@@ -245,14 +259,16 @@ CONFIGURACION DE POLITICA DE CONTRASEÑAS FUERTE
     .- sudo chage -M 30 snunez-z - regla para indicar que la contraseña caduca cada 30 días.
     .- La regla de no usar en la contraseña el username viene por defecto.
     .- su - test (test es el nombre que se ha creado para hacer las pruebas) (su significa swicher user - cambiar de usuario)
+
 CONECTARSE VIA SSH
 
 Para conectarnos por SSH debemos cerrar la maquina, abrir Virtual Box y darle a configuracion. ssh
 Nos conectamos desde una terminal a una maquina.
 Dentro del terminal hay que conectarse a traves del terminal poniendo:
-ssh -p snunez-z@localhost
-ssh -p <a que usuario te quieres conectar> @ <significa at> localhost <nombre de la maquina>
-localhost es el nombre de la maquina por defecto.
+    *ssh -p snunez-z@localhost
+    *ssh -p <a que usuario te quieres conectar> @ <significa at> localhost <nombre de la maquina>
+    localhost es el nombre de la maquina por defecto.
+
 SCRIPT
 Es una secuencia de comandos guardada en un fichero que cuando se ejecuta hara la funcion de cada comando y en el orden establecido dentro del fichero.
 Arquitectura del sistema operativo es que procesador usa el (amd64)
@@ -272,46 +288,47 @@ el comando grep "physical id" / proc/cpuinfo | wc - l
 Los nucleos virtuales son los subprocesos .
 
 el comando grep processor /proc/cpuinfo | wc -l
-Para mostrar la memoria ram usaremos comando free. Informacion sobre free en free --help.
-free --mega nos da la informacion en megabytes.
-para mostrar la memoria usada el comando awk.
-free --mega | awk '$1 == "Mem:" {printd $3}'
-para mostrarla memoria total del comando
-free --mega | awk '$1 == "Mem:" {printf $2}
-para calcular el % de memoria usadafree --mega |  Memoria en MB flag -m. awk '$1 == "Mem:" {printf("(%.2f%%)\n)", $3/$2+100)}'
-para ver la memoria del disco usaremos el comando df "disk filesystem" resumen completo del uso del espacio.
-df -m | grep -v "/boot" | awk '{memory_use += $3} END {printf memory_use}' 
-para ver la memoria total df -m | grep "/dev/" | grep -v /boot" | awk 'awk '{memory_result += $2} END {printf ("%0fgb\n), memory_result/1024}'
-% Memoria usada df -m | grep "/dev/" | grep -v /boot" | awk '{use += $3} {total += $2} END {printf ("(%d%%)\n"), use_total*100}'.
-porcentaje de uso de la cpu se necesita el comando vmstat que muestra en general los procesos.
-comando tail para que solo printee la ultima 
-vmstat 1 3| tail -1 | awk '{printf $15}'
-Para ver la fecha y hora de nuestro reinicio el ,comando es who con el falg -b (muestra el tiempo del ultio arranque)
-para filtrar la informacion que queremos usamos comando awk.
-who -b | awk '$1 == "system" {print $3 " " $4}'
-para chequear si LVM esta activo o no haremos uso del comando lsblk, este nos muestra informacion de todos los dispositivos de bloque (discos duros, SSD, memorias, etc) 
-if [ $(lsblk | grep "lvm" | wc -l) -gt 0 ]; then echo yes; else echo no;fi
-para mirar el numero de conexiones activas utlizaremos el comando ss -ta para que solo se muestren las conexiones TCP.
-ss -ta | grep ESTAB | wc -l
-el numero de usuarios se saca con el comando users | wc -w 
-el numero de comandos usados por sudo usaremos el comando journalist se encarga de recopilar y administrar los registros del sistema. 
-_COMM porque hac=e referencia a un script ejecutable.
-journalctl _COMM=sudo |grep COMMAND | wc -l.
+* Para mostrar la memoria ram usaremos comando free. Informacion sobre free en free --help.
+    free --mega nos da la informacion en megabytes.
+*para mostrar la memoria usada el comando awk.
+    free --mega | awk '$1 == "Mem:" {printd $3}'
+*   para mostrarla memoria total del comando
+    free --mega | awk '$1 == "Mem:" {printf $2}
+*para calcular el % de memoria usadafree --mega |  Memoria en MB flag -m. awk '$1 == "Mem:" {printf("(%.2f%%)\n)", $3/$2+100)}'
+*para ver la memoria del disco usaremos el comando df "disk filesystem" resumen completo del uso del espacio.
+    df -m | grep -v "/boot" | awk '{memory_use += $3} END {printf memory_use}' 
+*para ver la memoria total df -m | grep "/dev/" | grep -v /boot" | awk 'awk '{memory_result += $2} END {printf ("%0fgb\n), memory_result/1024}'
+ % Memoria usada df -m | grep "/dev/" | grep -v /boot" | awk '{use += $3} {total += $2} END {printf ("(%d%%)\n"), use_total*100}'.
+*porcentaje de uso de la cpu se necesita el comando vmstat que muestra en general los procesos.
+ comando tail para que solo printee la ultima 
+    vmstat 1 3| tail -1 | awk '{printf $15}'
+* Para ver la fecha y hora de nuestro reinicio el ,comando es who con el flag -b (muestra el tiempo del ultimo arranque)
+  para filtrar la informacion que queremos usamos comando awk.
+    who -b | awk '$1 == "system" {print $3 " " $4}'
+*para chequear si LVM esta activo o no haremos uso del comando lsblk, este nos muestra informacion de todos los dispositivos de bloque (discos duros, SSD, memorias, etc) 
+    if [ $(lsblk | grep "lvm" | wc -l) -gt 0 ]; then echo yes; else echo no;fi  
+*para mirar el numero de conexiones activas utilizaremos el comando ss -ta para que solo se muestren las conexiones TCP.
+    ss -ta | grep ESTAB | wc -l
+    el numero de usuarios se saca con el comando users | wc -w 
+    el numero de comandos usados por sudo usaremos el comando journalist se encarga de recopilar y administrar los registros del sistema. 
+    _COMM porque hac=e referencia a un script ejecutable.
+    journalctl _COMM=sudo |grep COMMAND | wc -l.
 
 CRON 
 Un conjunto de herramientas que se encargan de ejecutar acciones programas.
 crontab es uno de los programas para configurar el cron.
-sudo crontab -u root -e
+    sudo crontab -u root -e
 Cada usuario tiene su cron,porque puede querer hacer cosas personales.
-comando para el script es que se ejectute cada 10 minutos */10**** sh /ruta del script.
-*/10**** sh /home/snunez-z/monitoring.sh
-m ➤ Corresponde al minuto en que se va a ejecutar el script, el valor va de 0 a 59.
-h ➤ La hora exacta, se maneja el formato de 24 horas, los valores van de 0 a 23, siendo 0 las 12:00 de la medianoche. dom ➤ hace referencia al día del mes, por ejemplo se puede especificar 15 si se quiere ejecutar cada día 15.
-dow ➤ Significa el día de la semana, puede ser numérico (0 a 7, donde 0 y 7 son domingo) o las 3 primeras letras del día en inglés: mon, tue, wed, thu, fri, sat, sun.
-user ➤ Define el usuario que va a ejecutar el comando, puede ser root, u otro usuario diferente siempre y cuando tenga permisos de ejecución del script.
-command ➤ Refiere al comando o a la ruta absoluta del script a ejecutar.
+    comando para el script es que se ejectute cada 10 minutos */10**** sh /ruta del script.
+    */10**** sh /home/snunez-z/monitoring.sh
+    m ➤ Corresponde al minuto en que se va a ejecutar el script, el valor va de 0 a 59.
+    h ➤ La hora exacta, se maneja el formato de 24 horas, los valores van de 0 a 23, siendo 0 las 12:00 de la medianoche. dom ➤ hace referencia al día del mes, por ejemplo se puede especificar 15 si se quiere ejecutar cada día 15.
+    dow ➤ Significa el día de la semana, puede ser numérico (0 a 7, donde 0 y 7 son domingo) o las 3 primeras letras del día en inglés: mon, tue, wed, thu, fri, sat, sun.
+    user ➤ Define el usuario que va a ejecutar el comando, puede ser root, u otro usuario diferente siempre y cuando tenga permisos de ejecución del script.
+    command ➤ Refiere al comando o a la ruta absoluta del script a ejecutar.
 
 Qué es shasum❓
+
 Es un comando que permite identificar la integridad de un fichero mediante la suma de comprobación del hash SHA-1 de un archivo.
 
 PARTE BONUS
@@ -322,24 +339,64 @@ Instalar la maquina con una serie de particiones especiales y ademas agregarle u
 /       = raiz, donde esta todo, el sistema operativo.
 SWAP    = almacen temporal para aprovechamiento de la memoria.
 /home   = donde se almacenan los arhivos del ususario
-/var    = donde estan los archivos de estado de las aplicacioens del sistema.
+/var    = donde estan los archivos de estado de las aplicaciones del sistema.
 /var/log= trazas del sistema, que ha ocurrido durante la ejecucion del programa.
-/srv    = directorio donde se confinan los archivos a los que se puede acceder con servicios de acceso a archivos por ruta. HTTP permite acceder a ficheros HTML y FTP es otro servicioq ue permite leer y escribir otros archivos en otra maquina. 
+/srv    = directorio donde se confinan los archivos a los que se puede acceder con servicios de acceso a archivos por ruta.
+        HTTP permite acceder a ficheros HTML y FTP es otro servicioq ue permite leer y escribir otros archivos en otra maquina. 
         Para tener esos accesos en un sitio no vulnerable se confinan en /srv y se permite el acceso, pero solo siguiendo esa ruta.
 
 Wordpress es una aplicacion que te permite hacer facilmente sitios web y utiliza servicios para su funcionamientos.
-Para poder exponer ese sitio web necesitas un servvidor web y unod e ellso es lighttpd.
+Para poder exponer ese sitio web necesitas un servidor web y uno de ellos es lighttpd.
 Usa tambien una base de datos por lo que necesita tambien un servicio que es MariaDB.
 Como wordpress usa como lenguaje PHP necesitamos instalarlo para que interprete.
-* Como eleccion de  servicio extra vamos a instalar FTP (file transfer protocol). Lo hemos elegido porque a la ghora de hacer un sitio web vamos a tener que subir ficheros de todo tipo, principalmente imagenes.
+* Como eleccion de  servicio extra vamos a instalar FTP (file transfer protocol). Lo hemos elegido porque a la hora de hacer un sitio web vamos a tener que subir ficheros de todo tipo, principalmente imagenes.
    Por eso nos parece imprescindible tenerlo instalado. 
 * en el momento de la instalacion hemos abierto mas puertos que el 4242. 
   Cada servicio tiene sus puertos y habra que abrirlo en el FIREWALL.
-  /etc/services - ahi podre ver que puerto y que puertos tienen por defecto los servicios que voy a abriri luego en el FIREWALL
+  /etc/services - ahi podre ver que puerto y que puertos tienen por defecto los servicios que voy a abrir luego en el FIREWALL
   
-Participacion primaria: ES un tipod e participacion en la que solo pueden estar los sistemas operativos. Hay 4 particiones como maximo primariasde disco duro o 3 primaria sy una extendida.
+Participacion primaria: ES un tipo de participacion en la que solo pueden estar los sistemas operativos. Hay 4 particiones como maximo primarias de disco duro o 3 primarias y una extendida.
 Participaciones secundaras: SE crearon para romper la limitacion de 4 participaciones y solo hay 15 en linux.
-Particiones logicas : Dentro de la extendida se puedne hacer mas particiones (hasta 15 en linux) y asi ampliar disco.
+Particiones logicas : Dentro de la extendida se pueden hacer mas particiones (hasta 15 en linux) y asi ampliar disco.
+
+El servicio extra que he instalado es FTP y su server vsftpd sirve para transferir ficheros de tu PC a otro (con el comando put) o de ese otro a tu PC (con el comando get)
+FTPserver por es facil de instalar, facil de configurar, fuente abierta, solo tiene un fichero de configuracion, bien documentada en wiki y el codigo y el software pueden usarse en aplicaciones comerciales.
+
+Instalar el FTP
+* apt-get install vsftpd
+* vim /etc/vsftpd.conf
+* DEscomentar : chroot_list_enables=YES chroot_list_file=/etc/vsftpd.chroot_list write_enable=YES allow_writeable_chroot=YES chroot_local_user=YES
+* sudo systemctl enable vsftpd
+* sudo systemctl restart vsftpd --> systemctl es un comando que controla los programas que se ejecutan al arrancar la maquina (por ejmeplo el servidor web y el servidor FTP).
+
+Pruebas de que funciona:
+DEsde la VB
+Habilitar los puertos
+
+  *sudo ufw allow 20
+ * sudo ufw allow 21
+ sudo apt install ftp
+ * ftp localhost
+ nombre de usuario snunez-z contraseña la de la maquina 
+ * systemctl status vsftpd
+ * sudo systemctl restart vsftpd 
+ * sudo /usr/sbin/vsftpd/etc/vsftpd.conf 
+
+ Ejemplo:
+ 
+ Desde la terminal con la maquina virtual encendida
+
+ which fpt -> mirar si esta instalado el FTP en el pc.
+ ftp -p localhost 2121
+ ftp localhost -> nos metemos dentro del programa
+ usuario y contraseña
+ get <nombre del fichero>.txt
+ put <nombre del fichero>.txt
+ exit del ftp
+ ls -l -> en a terminal debe aparecer ese fichero que nos hemos trasferido.
+ luego lo borramos
+ 
+
 
 
 
