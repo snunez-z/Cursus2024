@@ -22,7 +22,7 @@ DESCARGAR LA IMAGEN VIRTUAL Y LA MAQUINA VIRTUAL
 	 En realidad lo que me estoy descargando es el fichero de instalacion del sistema operativo.
 	 El fichero ISO es el instalador del sistema operativo y el instalador que me bajo tiene que ser compatible con la CPU que utilizo, en este caso amd64 que es compatible con intel.
 
-Se hace desde la pagina de virtual vox.org
+Se hace desde la pagina de virtualbox.org
     Descargar el programa.
     Desde la carpeta de descargas.
     Copiamos el nombre y ejecutamos la instalacion dentro de Bash
@@ -52,7 +52,12 @@ Conceptos importantes:
     Vamos a instalarlo con las siguientes reglas :
     .- Nombre = Debian.- Utilidades del sistema.ISO - Fichero de instalacion
 
-3.-) Se nos pide : Crear 2 particiones cifradas usando LVM.
+3.-) 
+    Particionar es dividir el disco duro en partes distintas para usos distintos de forma que peudas modificar una, sin afectar a las otras.
+
+     Se nos pide : Crear 2 particiones cifradas usando LVM.
+     LVM es un programa (logical volume manager) que permite (no obliga) especificar una participacion que tiene almacenaimiento en mas de 1 disco duro fisico. 
+     Ejemplo --> necesito 150 gigas y tengo dos discos de 100,. Comn LVM puedo definir una particion que almacene 100 y en el otro 50. 
      Las particiones es la division lógica de almacenamiento.
      ES importante tener /home en una particion separada.
 	 Los archivos de usuario se guardan en una subcarpeta dentro de la carpeta home. Si el home no esta en una particion separada, 
@@ -77,10 +82,18 @@ Conceptos importantes:
 
 INSTALACION DE SUDO Y CONFIGURACION DE USUARIOS Y DE GRUPOS
 
+Bajo /etc estan todos los ficheros de configuracion del sistema operativo - ejemplo (ufw, ssh, contraseñas, servidor web ....)
+
 * Diferencia entre su root y su - root
 	su root cambia el usuario pero no carga el entorno (entre otras cosas la variable de entorno PATH).
 	su - root cambiar el usuario y el entorno (coge el entorno del usuario al que se cambia).
-GID es el identificador de grupo.
+
+El pc tiene instalado una serie de programas pero cada usuario tiene su entorno, usa esos programas pero puede tener configuraciones distintas.
+Variables de entorno es una de las formas para configurar los programas, otras podrian ser con ficheros en al carpeta .config. 
+PATH = ...... son las carpetas en las que al escribir el nombre d eun programa busca ese programa en esas carpetas.
+PS1 = Prompt de la pantalla de la shell, que en nuestro caso es snunez-z.
+
+GID es el identificador de grupo. ESta en /etc/group. 
 Los usuarios tienen un grupo principal y varios grupos secundarios.
 El principal aparece en el fichero /etc/passwd
 Los grupos secundarios aparecen en el fichero /etc /group
@@ -114,15 +127,18 @@ comprobar que se ha creado bien.
 
 4.-) apt vs aptitude
      Durante la instalacion de VM se usan los compandos aptitude y apt, herramientas populares que se encargan de la gestión de paquetes. 
+     Un paquete es el nombre que recibe un componente del sistema. Puede ser un programa o una libreria.
      En este proyecto utilizamos apt en lugar de aptitude. Ambos ofrecen la misma funcionalidad básica, instalando y eliminando paquetes desde la línea de comandos.
      
      Su principal diferencia es :
      .- Aptitude recuerda qué paquetes se solicitaron explícitamente y cuáles sólo se instalaron debido a dependencias. 
-        Desinstalará automáticamente los paquetes que no se solicitaron explícitamente cuando ya no sean necesarios.
+        Ejemplo: Instalo un programa y a la vez se instala una libreria de ese programa, o sea dos cosas. Aptitude recuerda ese hecho y cuando desinstala, 
+        desinstala las dos cosas. 
      .- apt sólo hará explícitamente lo que se le indique en la línea de comando
     
     Mi nivel es de nobel, por lo tanto considero que no me voy a pasar mucho tiempo instalando programas y ademas me van a decir cuales son, asi que he elegido apt.
-    Tiene menos dependencias que aptitude,si sabes lo que quieres hacer apt es mas concisa, solo tienes que escribir detras lo que tienes que hacer 
+    Tiene menos dependencias que aptitude ( si te preocupa que se te instala, prefieres apt),si sabes lo que quieres hacer apt es mas concisa, 
+    solo tienes que escribir detras lo que tienes que hacer 
     (ejemplo install + nombre del programa).
     Aptitude funciona mas de la forma tradicional de las apps. La tienes que abrir, te sale la ventana en modo texto etc. 
     Es verdad que si no sabes lo que tienes que hacer, el nombre de la accion, puede ser que aptitude te de mas informacion. 
@@ -131,20 +147,22 @@ comprobar que se ha creado bien.
 5.- ) SELinux y AppArmor
 
     Son sistemas de seguridad internos del Linux. Se preocupan de definir permisos de accion de un usuario en linux. 
-    AppArmor se usa por defecto con Debian. Ejecute aa-status para comprobar si se está ejecutando.
+    AppArmor se usa por defecto con Debian. Ejecute sudo aa-status (seguido)para comprobar si se está ejecutando.
+    
+    Linux-viene de UNix los permisos eran para usuario, grupo y others --> rwxrwxr-x  2 snunez-z snunez-z 4096 abr  5 23:17 autostart
+    Eso se quedó pequeño, sobre por las corporaciones que necesitan definir por departamentos, no solo para ficheros sino para otras cosas.
+    de ahi la necesidad de estos dos sistemas.
+    
     SELinux
-        .- Proporciona un control muy detallado sobre el acceso a los recursos del sistema.
-        .- Le permite especificar diferentes politicas de seguridad a distintos usuarios, grupos y procesos. 
+        .- Permite meter mas reglas y mas detallas para cada usuario.
         .- Es compatible con el sistema de control basado en roles (RBAC), lo que facilita la gestion de las politicas de seguridad complejas.
-        .- Puede proteger contra ataques dirigidos a vulnerabilidades en el kernel ( es el corazon del sistema operativo, el nucleo, el minimo necesario para que ese sistema operativo funcione)
-           de Linux. El kerner de linux es un fichero que esta en el /boot.
-        .- Está disponible en una amplia gama de distribuciones de Linux, como RedHat, Debian, CentOS, Rocky Linux e incluso Android.
+        - Está disponible en una amplia gama de distribuciones de Linux, como RedHat, Debian, CentOS, Rocky Linux e incluso Android.
 
     AppArmor
         .- AppArmor es más fácil de configurar e implementar que SELinux.
         .- Proporciona un lenguaje de políticas de seguridad más simple e intuitivo.
         .- Requiere menos mantenimiento porque tiene menos reglas.
-        .- Tiene un buen rendimiento e impone una sobrecarga mínima en el sistema.
+        .- Tiene un buen rendimiento e impone una sobrecarga mínima en el sistema. El tiempo que consumo en chear cosas es menor.
         .- Está bien documentado y tiene una gran comunidad de usuarios y desarrolladores. 
            Las distribuciones que lo pueden usar son Debian, Ubuntu, SUSE y derivados de todas las anteriores.
     
@@ -153,9 +171,15 @@ INSTALACION Y CONFIGURACION DE SHH
 
 6.-)SSH 
 
-El el nombre de un protocolo y del programa que lo implementa cuya principal funcion es el acceso remoto a un servidor por un canal seguro porque la informacion esta cifrada.
+Es un protocolo que te permite conectarte a la terminal de otra maquina usando una comunicacion encriptada.
+La diferencia entre encriptacion y contraseña, es que la encriptacion es un lenguaje ofuscado que dificulta 
+la entrada a ficheros aunque la contraseña haya sido violada.
+Ejemplo codigos cifrados de guerra.
 
-Es un comando que te permite conectarte a la terminal de otro equipo a traves del servidor (SSHD).El uso del protocolo SSH te permitirá conectarte de forma remota a tus servidores para gestionarlos. 
+SSH se conecta a un servidor (SSHD) donde está un servicio sshd.Cada servicio al que se puede conectar desde fuera lo hace conectandose a ese ordenador y a un puerto.
+Un puerto es cada uno de los servicios que esta ofreciendo un mismo ordenador.
+
+El uso del protocolo SSH te permitirá conectarte de forma remota a tus servidores para gestionarlos. 
 Por ejemplo, puedes estar en Nueva York y gestionar tu ordenador en París con unos pocos clics.
 Ejemplos = Servicios de correo - outlook se conecta a este servicio a traves del servidor de Correos que tiene instalado otro ordenador publico que proporciona ese servicio en concreto.
 SE conecta a otro ordenador de forma segura, a traves del puerto ( puerta a la que llaman los que quieres conectarse a diferentes servidores).
@@ -169,7 +193,8 @@ Por que?
 A traves de SSH un servidor se conecta a otro servidor de forma encriptada. Antiguamente no habia encriptacion y el sistema TELNET se conectaba buscando rutas 
 y un hacker podia interceptar en el camino al servidor, escuchar la informacion y copiar las contraseñas. Ahora eso no pasa pero sigue siendo peligroso conectarse 
 a otro servidor siendo root, es mejor hacerlo a traves de un usuario. Asi si pilla la contraseña solo  pilla la del usuario. No la de root.
-
+El ssh te permite entrar en la terminal del ordenador, o sea, que da libre acceso a todo lo que el usuario tenga, por eso 
+es especialmente importante en este servicio incrementar la seguridad cambiando de puerto.
 INSTALACION Y CONFIGURACION DE UFW
       
 7.-) FIREWALL UFW- es el que trae debian.
@@ -194,6 +219,7 @@ Durante la instalacion se hace lo siguiente :
     .-El hostname de tu máquina virtual debe ser tu login terminado en 42 (snunez-z42).
 
 CONFIGURACION CONTRASEÑA FUERTE SUDO
+
 .- Vamos a crear un fichero en la ruta /etc /sudoers.d/ 
 .- Se puede llamar como se quiera y se crea con el comando touch /etc/sudoers.d/sudo_config
 .- Creamos el directorio en la ruta /var/log/ para que el inout como el output queden almacenados en este directorio.
@@ -214,11 +240,13 @@ CONFIGURACION DE POLITICA DE CONTRASEÑAS FUERTE
 7.2. Debes implementar una política de contraseñas fuerte.
      Una política de contraseñas es un conjunto de reglas diseñadas para mejorar la seguridad al alentar a los usuarios a utilizar contraseñas mas seguras y a utilizarlas correctamente.
      Tambien sirve para servidores donde acceden decenas de personas con sus credenciales de usuario.
-     PAM (modulo de linux que se encarga de gestionar los accesos a linux).
+    PAM (modulo de linux que se encarga de gestionar los accesos a linux).
+        PAM controla los accesos desde dentro.
+        Firewall los accesos desde fuera.
      LO hace a traves de reglas que son ficheros de configuracion que estan en /etc/pam.d
 
     Pasos :
-    Editar el fichero login.Defs.
+    Editar el fichero /etc/login.defs.
     dentro de este fichero podremos cambiar reglas para los nuevos usuarios que se creen a partir de aqui. Lo susuarios antiguos seguiran con la politica de contraseñas anteriores.
     
     PASS_MAX_DAYS : Tiempo de expiracion de la contraseña en dias.
@@ -273,6 +301,10 @@ SCRIPT
 Es una secuencia de comandos guardada en un fichero que cuando se ejecuta hara la funcion de cada comando y en el orden establecido dentro del fichero.
 Arquitectura del sistema operativo es que procesador usa el (amd64)
 
+#! /bin/bash --> ESto significa desde donde se va a ejecturar y quien lo va a ejecutar.
+en este caso es bashm, pero podria ser python, php, lua que son lenguajes de script, lenguajes interpretados.
+C es un lenguaje compilado, no interpretado.
+
 Los scripts tambien usan variables que con =$ y los () se usan para ejecutar la orden.
 ejemplo = 
 arch=$(uname -a)
@@ -320,16 +352,17 @@ crontab es uno de los programas para configurar el cron.
     sudo crontab -u root -e
 Cada usuario tiene su cron,porque puede querer hacer cosas personales.
     comando para el script es que se ejectute cada 10 minutos */10**** sh /ruta del script.
-    */10**** sh /home/snunez-z/monitoring.sh
-    m ➤ Corresponde al minuto en que se va a ejecutar el script, el valor va de 0 a 59.
-    h ➤ La hora exacta, se maneja el formato de 24 horas, los valores van de 0 a 23, siendo 0 las 12:00 de la medianoche. dom ➤ hace referencia al día del mes, por ejemplo se puede especificar 15 si se quiere ejecutar cada día 15.
-    dow ➤ Significa el día de la semana, puede ser numérico (0 a 7, donde 0 y 7 son domingo) o las 3 primeras letras del día en inglés: mon, tue, wed, thu, fri, sat, sun.
-    user ➤ Define el usuario que va a ejecutar el comando, puede ser root, u otro usuario diferente siempre y cuando tenga permisos de ejecución del script.
-    command ➤ Refiere al comando o a la ruta absoluta del script a ejecutar.
-
+    */10 * * * * sh /home/snunez-z/monitoring.sh
+    Cada campo tiene un significado.
+    minutos, horas, dia de la semana, dias del mes, mes.
 Qué es shasum❓
-
+sum es la creacion de un hash.
+un Hash es un codigo alfanumerico que se genera con el contenido de un archivo. Para asegurar que ese contenido no ha sudo modificado accidental
+o voluntariamente esta el hash. Ejemplos documentos legales, ejemplos descargar de ficheros grandes.
 Es un comando que permite identificar la integridad de un fichero mediante la suma de comprobación del hash SHA-1 de un archivo.
+Para calcular el hash 
+shasum signature.txt
+diff signature.txt signature2.txt --< si hay diferencias es que no es integro.
 
 PARTE BONUS
 
@@ -338,30 +371,59 @@ Instalar la maquina con una serie de particiones especiales y ademas agregarle u
 /boot   = sistema de arranque que va sin encriptar
 /       = raiz, donde esta todo, el sistema operativo.
 SWAP    = almacen temporal para aprovechamiento de la memoria.
-/home   = donde se almacenan los arhivos del ususario
+/home   = donde se almacenan los arhivos del usuario
 /var    = donde estan los archivos de estado de las aplicaciones del sistema.
+        ejemplo antivirus- configutacion el /etc, si encuentra un virus, escribe su estado en /var.
 /var/log= trazas del sistema, que ha ocurrido durante la ejecucion del programa.
 /srv    = directorio donde se confinan los archivos a los que se puede acceder con servicios de acceso a archivos por ruta.
-        HTTP permite acceder a ficheros HTML y FTP es otro servicioq ue permite leer y escribir otros archivos en otra maquina. 
+        HTTP permite acceder a ficheros HTML y FTP es otro servicio que permite leer y escribir otros archivos en otra maquina. 
         Para tener esos accesos en un sitio no vulnerable se confinan en /srv y se permite el acceso, pero solo siguiendo esa ruta.
+
+
+WORDPRESS 
+
+Ubicación: /var/www/html$ 
+
 
 Wordpress es una aplicacion que te permite hacer facilmente sitios web y utiliza servicios para su funcionamientos.
 Para poder exponer ese sitio web necesitas un servidor web y uno de ellos es lighttpd.
 Usa tambien una base de datos por lo que necesita tambien un servicio que es MariaDB.
 Como wordpress usa como lenguaje PHP necesitamos instalarlo para que interprete.
-* Como eleccion de  servicio extra vamos a instalar FTP (file transfer protocol). Lo hemos elegido porque a la hora de hacer un sitio web vamos a tener que subir ficheros de todo tipo, principalmente imagenes.
+* Como eleccion de  servicio extra vamos a instalar FTP (file transfer protocol). Lo hemos elegido porque a la hora de hacer un sitio 
+  web vamos a tener que subir ficheros de todo tipo, principalmente imagenes.
    Por eso nos parece imprescindible tenerlo instalado. 
 * en el momento de la instalacion hemos abierto mas puertos que el 4242. 
   Cada servicio tiene sus puertos y habra que abrirlo en el FIREWALL.
   /etc/services - ahi podre ver que puerto y que puertos tienen por defecto los servicios que voy a abrir luego en el FIREWALL
-  
-Participacion primaria: ES un tipo de participacion en la que solo pueden estar los sistemas operativos. Hay 4 particiones como maximo primarias de disco duro o 3 primarias y una extendida.
-Participaciones secundaras: SE crearon para romper la limitacion de 4 participaciones y solo hay 15 en linux.
+  Buscar el puerto puedo usar grep 
+    grep ssh services 
+
+1.- Particiones
+
+Una participacion es dividir el disco en partes para diferentes usos.
+
+Participacion primaria: ES un tipo de participacion en la que solo pueden estar los sistemas operativos. 
+Hay 4 particiones como maximo primarias de disco duro o 3 primarias y una extendida.
+Participaciones secundaras: Se crearon para romper la limitacion de 4 participaciones y solo hay 15 en linux.
 Particiones logicas : Dentro de la extendida se pueden hacer mas particiones (hasta 15 en linux) y asi ampliar disco.
+UNa particion logica (maneja LVM) es una particion que te permite especificar almacenamiento en mas de un disco fisico distinto.
+
+2.- Comprobar que está activo los servicios 
+    sudo systemctl status lighttpd
+    sudo systemctl status mariadb
+3.- Wordpress
+    dentro del navegador
+    localhost:8008 -> con esto veo el sitio web
+    localhost:8008/wp-admin
+    usuario= wp-snunez
+    pass = 12345
+    meterme en paginas
+    dentro del ejemplo- cambair cosas -> actualizar 
+    comprobar que se ha hecho los cambios.
+4.- Ftp 
 
 El servicio extra que he instalado es FTP y su server vsftpd sirve para transferir ficheros de tu PC a otro (con el comando put) o de ese otro a tu PC (con el comando get)
 FTPserver por es facil de instalar, facil de configurar, fuente abierta, solo tiene un fichero de configuracion, bien documentada en wiki y el codigo y el software pueden usarse en aplicaciones comerciales.
-
 Instalar el FTP
 * apt-get install vsftpd
 * vim /etc/vsftpd.conf
@@ -369,8 +431,6 @@ Instalar el FTP
 * sudo systemctl enable vsftpd
 * sudo systemctl restart vsftpd --> systemctl es un comando que controla los programas que se ejecutan al arrancar la maquina (por ejmeplo el servidor web y el servidor FTP).
 
-Pruebas de que funciona:
-DEsde la VB
 Habilitar los puertos
 
   *sudo ufw allow 20
@@ -381,28 +441,15 @@ Habilitar los puertos
  * systemctl status vsftpd
  * sudo systemctl restart vsftpd 
  * sudo /usr/sbin/vsftpd/etc/vsftpd.conf 
+Pruebas de que funciona:
 
- Ejemplo:
- 
- Desde la terminal con la maquina virtual encendida
-
- which fpt -> mirar si esta instalado el FTP en el pc.
- ftp -p localhost 2121
- ftp localhost -> nos metemos dentro del programa
- usuario y contraseña
- get <nombre del fichero>.txt
- put <nombre del fichero>.txt
- exit del ftp
- ls -l -> en a terminal debe aparecer ese fichero que nos hemos trasferido.
- luego lo borramos
- 
-
-
-
-
-
-
-
-
-
+En Bash 
+which ftp
+1.- Maquina abierta
+2.- Desde la terminal
+3.- ftp snunez-z@localhost -p 2121
+4.- dir ( veo lo que hay dentro de dodne me he conectado, en este caso la mauina virtual)
+5.- get <fichero que quiero trarme a la terminal desde la maquina virtual)
+6.- put > fichero que quiero trasferir a la maquina virtual>
+7.- ¡ ls (despues de la admitracion lo que se ejectura es en donde estas- no dodne te conectas)
 
