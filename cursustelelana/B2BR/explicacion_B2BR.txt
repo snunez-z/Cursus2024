@@ -363,6 +363,14 @@ Es un comando que permite identificar la integridad de un fichero mediante la su
 Para calcular el hash 
 shasum signature.txt
 diff signature.txt signature2.txt --< si hay diferencias es que no es integro.
+Desde la terminal :
+Busco /home/snunez/Virtualbox/BTBR/ fichero vdi.
+genero el hash del ficherovdi.
+shasum -> genera un hash de lo que llegue por STDIN(teclado)
+< redirige la entrada 
+> redirige la salida STDOUT 
+
+shasum < fichero vdi > signature.txt
 
 PARTE BONUS
 
