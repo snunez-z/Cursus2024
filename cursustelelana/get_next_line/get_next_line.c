@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 07:36:02 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/04/16 07:39:05 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:21:11 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,4 @@ int	main(int argc, char **argv)
 	}
 	close (fd);
 	return (0);
-/*/
+}*/

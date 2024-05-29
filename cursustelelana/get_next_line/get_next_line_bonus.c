@@ -86,7 +86,7 @@ char	*get_next_line(int fd)
 		return (dstr_destroy(line));
 	return (dstr_reduce(line));
 }
-/*
+
 #include <fcntl.h>
 #include <stdio.h>
 int	main (int argc, char **argv)
@@ -132,4 +132,4 @@ int	main (int argc, char **argv)
 		close(fd_num[index]);
 		index++;
 	}
-}*/
+}

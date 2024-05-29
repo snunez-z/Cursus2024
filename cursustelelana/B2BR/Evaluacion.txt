@@ -1,13 +1,16 @@
 COMANDOS EVALUACION
 
+Comprobar la integridad de la signature 
+diff signature.txt signature2-txt
+
 1.- Comprobar que no haya ninguna interfaz gráfica en uso.
-    ls /usr/bin*session 
+    ls /usr/bin/*session 
     Nos debe salir /usr/bin/dbus-run-session
 2.- Comprobar que el servicio UFW está en uso
-    sudo service ufw status
+    sudo systenctl status ufw
     Me tiene que salir que esta active en color verde
 3.- Comprobar que el SSH está activo.
-    sudo service ssh status
+    sudo ssystemctl status ssh
 4.- Comprobar que se utiliza el sistema operativo Debian
     uname -v o uname --kernel-version
 5.- Comprobar que tu usuario este dentro de lso grupos sudo y user42
@@ -27,7 +30,7 @@ COMANDOS EVALUACION
 10.- Modificar hostname para reemplazar tu login por el del evaluador. Lo remplazaremos por snunez-z42
     sudo vim /etc/hostname snunez-z42
     sudo vim /etc/hosts
-    Cuando nos logeamos otra vez podemso verificar que se ha cambiado correctamente el hostname
+    Cuando nos logeamos otra vez podemos verificar que se ha cambiado correctamente el hostname
 11.- Comprobar que todas las particiones son como las indica el subject 
     lsblk 
 12.- Comprobar que sudo esta instalado
@@ -48,7 +51,7 @@ COMANDOS EVALUACION
     /var/log/sudo# sudo vim hello42world
 16.- Comprueba que el programa UFW está instalado en la máquina virtual y comprueba que funciona correctamente.
     dpkg -s ufw
-    sudo service ufw status
+    sudo systemctl status ufw
 17.- Lista las reglas activas de UFW.Si no esta hecha la parte bonus no deberá aparecer la regla para el puerto 4242
     sudo ufw status numbered
 18.- Crea an nueva reglapara el puerto 8080.
@@ -59,12 +62,12 @@ COMANDOS EVALUACION
     comprobar que las reglas que nos piden en el subject son las que están.
 19.- Comprueba que el servicio ssh esta instalado en la maquina virtual, que funciona correcta,ente y que solo funciona por el puerto 4242.
     which ssh
-    sudo service ssh status
+    sudo systemctl status ssh
 20.- Usa SSH para iniciar sesion con el usuario recien creado. 
     Para comprobar que el nuevo usuario no puede funcionar como root.
     ssh root@localhost -p 4242 
     me pedira contraseña y despues debe decirme permiso denegado.
-    sudo service ssh status 
+    sudo systemctl status ssh  
     debe estar activo.
 21.- Modifica el tiempo de ejecucion del script de 10 minutos a 1.
     Hay que modificar el fichero crontab 
@@ -74,3 +77,71 @@ COMANDOS EVALUACION
      sud /etc/init.d/cron stop
     Para volver a ejecutarse 
     sudo /etc/init.d/cron start
+
+PARTE BONUS
+
+Instalar la maquina con una serie de particiones especiales y ademas agregarle unos servicios adicionales a la maquina.
+
+/boot   = sistema de arranque que va sin encriptar
+/       = raiz, donde esta todo, el sistema operativo.
+SWAP    = almacen temporal para aprovechamiento de la memoria.
+/home   = donde se almacenan los arhivos del ususario
+/var    = donde estan los archivos de estado de las aplicaciones del sistema.
+/var/log= trazas del sistema, que ha ocurrido durante la ejecucion del programa.
+/srv    = directorio donde se confinan los archivos a los que se puede acceder con servicios de acceso a archivos por ruta.
+        HTTP permite acceder a ficheros HTML y FTP es otro servicioq ue permite leer y escribir otros archivos en otra maquina. 
+        Para tener esos accesos en un sitio no vulnerable se confinan en /srv y se permite el acceso, pero solo siguiendo esa ruta.
+
+Wordpress es una aplicacion que te permite hacer facilmente sitios web y utiliza servicios para su funcionamientos.
+Para poder exponer ese sitio web necesitas un servidor web y uno de ellos es lighttpd.
+Usa tambien una base de datos por lo que necesita tambien un servicio que es MariaDB.
+Como wordpress usa como lenguaje PHP necesitamos instalarlo para que interprete.
+* Como eleccion de  servicio extra vamos a instalar FTP (file transfer protocol). Lo hemos elegido porque a la hora de hacer un sitio web vamos a tener que subir ficheros de todo tipo, principalmente imagenes.
+   Por eso nos parece imprescindible tenerlo instalado. 
+* en el momento de la instalacion hemos abierto mas puertos que el 4242. 
+  Cada servicio tiene sus puertos y habra que abrirlo en el FIREWALL.
+  /etc/services - ahi podre ver que puerto y que puertos tienen por defecto los servicios que voy a abrir luego en el FIREWALL
+  
+Participacion primaria: ES un tipo de participacion en la que solo pueden estar los sistemas operativos. Hay 4 particiones como maximo primarias de disco duro o 3 primarias y una extendida.
+Participaciones secundaras: SE crearon para romper la limitacion de 4 participaciones y solo hay 15 en linux.
+Particiones logicas : Dentro de la extendida se pueden hacer mas particiones (hasta 15 en linux) y asi ampliar disco.
+
+El servicio extra que he instalado es FTP y su server vsftpd sirve para transferir ficheros de tu PC a otro (con el comando put) o de ese otro a tu PC (con el comando get)
+FTPserver por es facil de instalar, facil de configurar, fuente abierta, solo tiene un fichero de configuracion, bien documentada en wiki y el codigo y el software pueden usarse en aplicaciones comerciales.
+
+Instalar el FTP
+* apt-get install vsftpd
+* vim /etc/vsftpd.conf
+* DEscomentar : chroot_list_enables=YES chroot_list_file=/etc/vsftpd.chroot_list write_enable=YES allow_writeable_chroot=YES chroot_local_user=YES
+* sudo systemctl enable vsftpd
+* sudo systemctl restart vsftpd --> systemctl es un comando que controla los programas que se ejecutan al arrancar la maquina (por ejmeplo el servidor web y el servidor FTP).
+
+Pruebas de que funciona:
+DEsde la VB
+Habilitar los puertos
+
+  *sudo ufw allow 20
+ * sudo ufw allow 21
+ sudo apt install ftp
+ * ftp localhost
+ nombre de usuario snunez-z contraseña la de la maquina 
+ * systemctl status vsftpd
+ * sudo systemctl restart vsftpd 
+ * sudo /usr/sbin/vsftpd/etc/vsftpd.conf 
+
+ Ejemplo:
+ 
+ Desde la terminal con la maquina virtual encendida
+
+ which fpt -> mirar si esta instalado el FTP en el pc.
+ ftp -p localhost 2121
+ ftp localhost -> nos metemos dentro del programa
+ usuario y contraseña
+ get <nombre del fichero>.txt  
+ put <nombre del fichero>.txt
+ exit del ftp
+ ls -l -> en a terminal debe aparecer ese fichero que nos hemos trasferido.
+ luego lo borramos
+ 
+https://www.youtube.com/watch?v=Kebz3P-35q4
+

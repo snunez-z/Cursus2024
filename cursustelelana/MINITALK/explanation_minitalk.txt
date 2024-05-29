@@ -10,6 +10,7 @@ Solo se puede usar una variable global por persona
 Son 2 programas. Uno es el cliente que envia un mensaje y otro es el server que se queda a la espera de recibirlo.
 El problema es que no sabe cuando va a recibir el mensaje y cuanto tiene que esperar.
 El server se queda tranquilo , a la espera, sin hacer nada, sin consumir recursos porque cuando le llegue algo le van a despertar con una señal.
+Por lo tanto el server tiene una parte sincrona ( se ejecuta en orden, linea tras linea) y otra asincrona, que se ejectura cuando sea llamada, el server no sabe cuando se va a ejecutar.
 
 Nuestra aplicación consta de dos procesos, uno que espera leer cada carácter (el servidor) y el otro que enviará el carácter al servidor (el cliente). 
 La cuestión clave es que el segundo proceso deberá señalar de alguna manera al primero cada nuevo personaje encontrado.

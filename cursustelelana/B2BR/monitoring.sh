@@ -3,19 +3,19 @@ arch=$(uname -a)
 
 # CPU PHYSICAL El número de núcleos físicos e informacion del procesador (tipo,marca ...)
 # Miro en Fichero (/proc....) toda la informacion relativa a physical id y como me va a salir uan linea por cada nucleo fisico lo que haga paso esa salida al wc que lo que me hace es contar las lineas.
-cpuf=$(grep "physical id" /proc/cpuinfo | wc -l) # word count - l (cuenta lineas) 
+cpuf=$(grep "physical id" /proc/cpuinfo | sort -u | wc -l) # word count - l (cuenta lineas) 
 
 # CPU VIRTUAL  El número de núcleos virtuales- los subprocesos
 cpuv=$(grep "processor" /proc/cpuinfo | wc -l)
-
+ 
 # RAM La memoria RAM disponible actualmente en tu servidor y su porcentaje de uso . Para filtar la info e imprimir solo unos datos concreto usamos awk
 ram_total=$(free --mega | awk '$1 == "Mem:" {print $2}') 
-ram_use=$(free --mega | awk '$1 == "Mem:" {print $3}')
+ram_available=$(free --mega | awk '$1 == "Mem:" {print $7}')
 ram_percent=$(free --mega | awk '$1 == "Mem:" {printf("%.2f"), $3/$2*100}')
 
 # DISK La memoria disco duro disponible actualmente en tu servidor y su utilización como un %.
 disk_total=$(df -m | grep "/dev/" | grep -v "/boot" | awk '{disk_t += $2} END {printf ("%.1fGb\n"), disk_t/1024}') # total se queda con los dev, excluye los boot suma todo lo que haya en la columna 2 
-disk_use=$(df -m | grep "/dev/" | grep -v "/boot" | awk '{disk_u += $3} END {print disk_u}') # Ver memoria usada, comando df (disk file sytem)
+disk_ava=$(df -m | grep "/dev/" | grep -v "/boot" | awk '{disk_u += $3} END {print disk_u/1000}') # Ver memoria usada, comando df (disk file sytem)
 disk_percent=$(df -m | grep "/dev/" | grep -v "/boot" | awk '{disk_u += $3} {disk_t+= $2} END {printf("%d"), disk_u/disk_t*100}') # porcentaje de la memoria usada 
 
 # CPU LOAD El porcentaje actual de uso de tus núcleos.
@@ -33,7 +33,7 @@ lvmu=$(if [ $(lsblk | grep "lvm" | wc -l) -gt 0 ]; then echo yes; else echo no; 
 tcpc=$(ss -ta | grep ESTAB | wc -l)
 
 # USER LOG El número de usuarios del servidor.
-ulog=$(users | wc -w)
+ulog=$(getent passwd | grep /bin | wc -l)
 
 # NETWORK la dirección IPv4 de tu servidor y su MAC (Media Access Control)
 ip=$(hostname -I)
@@ -45,8 +45,8 @@ cmnd=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
 wall "	Architecture: $arch
 	CPU physical: $cpuf
 	vCPU: $cpuv
-	Memory Usage: $ram_use/${ram_total}MB ($ram_percent%)
-	Disk Usage: $disk_use/${disk_total} ($disk_percent%)
+	Memory Available: $ram_available/${ram_total}MB ($ram_percent% used)
+	Disk Available: $disk_ava/${disk_total} ($disk_percent% used)
 	CPU load: $cpu_fin%
 	Last boot: $lb
 	LVM use: $lvmu
