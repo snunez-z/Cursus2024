@@ -7,22 +7,24 @@
 
 void client(const char *pid_str) 
 {
-    pid_t pid = atoi(pid_str);
-    
-    if (pid <= 0)
+    int pid = atoi(pid_str);
+    if (pid == 0)
     {
         printf("PID inválido.\n");
-        return (NULL);
+        return;
     }
 
     if(kill(pid, SIGUSR1) == -1)
-        return (NULL);  
+    {
+        printf("No he podido enviar la señal.\n");
+        return;  
+    }
     printf("Señal SIGUSR1 enviada al proceso con PID %d\n", pid);
 }
 
 int main(int argc, char *argv[])
  {
-   if (argc <= 2) 
+   if (argc < 2) 
     {
         printf("usage %s <file> ...\n", argv[0]);
 		return (-1);

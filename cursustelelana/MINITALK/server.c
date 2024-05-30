@@ -12,25 +12,31 @@
 #include <unistd.h>
 #include <string.h>
 
-void handle_sigusr1(int sig, void*siginfo, void *context)
+void handle_sigusr1(int sig, siginfo_t* siginfo, void *context)
 {
     (void)context; 
     (void)siginfo;
     if (sig == SIGUSR1)
-        printf("Hola");
+        printf("Hola\n");
    
 }
 
 int main() 
 {
-    struct sigaction_sa sa;
-    memset(&sa, 0, sizeof(sa)); 
-    sa.sa_sigaction = handle_sigusr1;
-    if (sigaction(SIGUSR1, &sa, NULL) == -1) 
-        return (NULL);
+    struct sigaction sign;
+    memset(&sign, 0, sizeof(sign)); 
+    sign.sa_sigaction = handle_sigusr1;
+
+    if (sigaction(SIGUSR1, &sign, NULL) == -1) 
+        return -1;
     printf("Server PID: %d\n", getpid());
     while (1) 
-        pause(); 
+    {
+        usleep(1000000); 
+        // pause();
+        // printf("Soy %d: Sigo esperando...\n", getpid());
+        printf(".\n");
+    }
     return 0;
 }
 
