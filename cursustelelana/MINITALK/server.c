@@ -32,10 +32,8 @@ int main()
     printf("Server PID: %d\n", getpid());
     while (1) 
     {
-        usleep(1000000); 
-        // pause();
-        // printf("Soy %d: Sigo esperando...\n", getpid());
-        printf(".\n");
+        pause();
+        printf("Parece que he recibido una señal!! Seguiré durmiendo un rato más\n");
     }
     return 0;
 }
