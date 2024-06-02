@@ -1,11 +1,14 @@
-// mostrar el PID (PRINTF) decir cuando le llegue una señal y a dormir
-// Cada vez que le llegue la señal SIGUSR1 tiene que sacar por pantalla Hola
-/* SIGUSR1 y SIGUSR2 son señales definidas por el usuario para cualquier propósito.
-    No tienen un significado predefinido por el sistema operativo.
-    Se usan para la comunicación entre procesos o dentro del mismo proceso.
-    Se identifican normalmente con los números 10 y 12.
-    Se pueden enviar usando el comando kill y se manejan programáticamente mediante funciones específicas.*/
-
+/* Mi server que esta en pausa cuando reciba una señal tiene que ejecutar una accion.
+ Antes de que entre en pausa necesito que llame a la funcion sigaction, que es la que me permite decirle que tiene que hacer cuando llegue la señal.
+ Para esa funcion necesito declarar una estructura tipo sigaction que llamaré sign
+ Declarar todos sus campos a cero para evitar basura en las zonas de memoria, llamo a memset.
+ El unico campo que necesito inizializar es sa_sigaction que es el que indica a que funcion hay que llamar "handle_sigusr1" 
+ Con esas variables declaradas, puedo llamar a la funcion sigaction, pasandole lso argumentos que necesita.
+ señal " SIGUSR1", donde estan los campos de la estructura, pongo NULL en el tercer parametro para indicar que no voy a usarla.
+ Este argumento es opcional, es solo para guardar la configuracion anterior de la señal.
+ Llamamos a getpid paara que nos de el pid y nos los printee.
+ A partir de aqui ya puede el server irse a dormir.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -18,8 +21,7 @@ void handle_sigusr1(int sig, siginfo_t* siginfo, void *context)
     (void)context; 
     (void)siginfo;
 
-    if (sig == SIGUSR1)
-        printf("Hola");
+    if (sig == SIGUSR1)        printf("Hola");
 }
 
 int main() 
@@ -32,17 +34,8 @@ int main()
         return -1;
     printf("Server PID: %d\n", getpid());
 
-    // Como habrás podido comprobar del ejercicio inicial (server.c)
-    // la función "pause()" duerme el proceso HASTA QUE LLEGA UNA SEÑAL
-    // Cuando una señal llega, y después de que la función handler la
-    // haya procesado, "pause()" acaba.
-    // EJERCICIO: Cambia este bucle de manera que sólo se reciban 5 señales
-    //            Después de 5 señales, el programa debe acabar
-    // RECUERDA: "Tu programa" es el main. El handler es "parte" de tu
-    //           programa, pero es una parte asíncrona. Tu PROGRAMA-PROGRAMA
-    //           es el main.
     int signal_count = 0;
-    while (signal_count <= 5)
+    while (signal_count < 5)
     {
         pause();
         printf("Parece que he recibido una señal!! Seguiré durmiendo un rato más\n");
@@ -50,9 +43,4 @@ int main()
     }
     printf("Has llegado al limite de las 5 señales\n");
     return 0;
-}
-
-    // PREGUNTA: Qué pasa si desde el cliente intentas mandar una señal y tu programa
-    //           ha terminado ya?
-
-
+}    

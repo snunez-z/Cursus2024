@@ -1,26 +1,7 @@
-/* que hace ? El programa server es un proceso que esta siendo ejecutado por la computadora.
-Este programa server lo que hace es esperar dormido y cuando le llega una señal SIGUSR1, ejecuta algo.
-En ese caso printea Hola y sigue durmiendo.
-como lo hace? 
-Una señal es enviarle hacer algo a un proceso y para ello se necesita el PID de ese proceso, en este caso el PID del server.
-En este caso cuando le llegue una señal va a escrirbir hola. 
-El programa main es sincrono, que se ejecuta una orden detras de otra de forma sincrona, como un scrit. 
-En este caso hay una parte que es sincrona y otrra que es asincrona. Se va a ejecturar cuando le llegue un señal, pero el server no sabe cuando.
-
-Necesitamos una estructura sigaction a la vamos a llamar sa. La estructura sigaction tiene muchos parametros pero nosotos vamos a usar el handler que es 
-el que le dice que accion tomar al server cuando reciba la señal.
-
-struct sigaction {
-                  void (*sa_handler)(int);
-                  void (*sa_sigaction)(int, siginfo_t *, void *);
-                  sigset_t sa_mask;
-                  int sa_flags;
-                  void (*sa_restorer)(void);
-Vamos a usar la funcion sigacion para la accion y los parametros que recibe por contrato son la señal SIGUSR1, el valor de los parametros de la struct sa y el NULL.
-el tercer parametro es la posib le accion que se hubiese prefijado anteriormente. En nuestro caso como e sninguna seria NULL, pero podria darse el caso que hibiese
-una y para no perderla se guardaria en ese parametro.
-Getpid() = es uan  funcion para que te de el numero PID de ese programa.
-pause = deja en pausa, dormido el programa.
+/* En este caso el server que esta dormido cuando recibe una señal, la funcion handler envia una señal 
+al cliente para avisarle de que ha recibido la señal y que ya puede enviar otra, evitando la saturacion.
+Para eso en el main tenemos que incluir el campo sa_flags, que lo que hace es indicarle al SO que tiene 
+que rellenar los campos de la estructura SIGINFO_T. LO necesitamos para saber el remitente (campo si_pid del cliente).
 */
 
 #include <stdio.h>
@@ -34,7 +15,7 @@ int count = 0;
 void handle_sigusr1(int sig, siginfo_t *siginfo, void *context)
 {
     (void)context; 
-    if (kill(siginfo->si_pid, SIGUSR1) < 0)
+    if (kill(siginfo->si_pid, SIGUSR1) < 0) // si el envio de la señal SIGUSR1 al pid del cliente 
         printf("Error replying to PID %d\n", siginfo->si_pid);
     else
         printf("%d from %d\n", count, siginfo->si_pid);

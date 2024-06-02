@@ -1,11 +1,29 @@
 MINI TALK
 
+1.- OBJETIVO DEL PROYECTO Y RETOS QUE PLANTEA 
 Programa de comunicacion entre un cliente y un server, el que van a intercambiar datos usando UNIX.
+Lo mas importante de este proyecto es entender que se comunican a traves de un protocolo, tiene que estar de acuerdo en el lenguaje, 
+en como van a recibir las señales y en el significado de las señales.
 
-Para el envio de datos se hara dos señales; SIGUSR1 y SIGUSR2, que se encargarán de codificar y decodificar el mensaje.
+Teniendo en cuenta las herramientas que nos dan (funciones permitidas), nos encontramos con el primer reto. Tiempo de ejecucion entre un mensaje y otro posible mensaje.
+Aunque el mensaje se reciben y se procesan en microsegundos, si un cliemnte enviase pro ejemplo 1000 señales disitnos seguidos, sin pausa. al server no el daria tiempo a procesarlos todos. 
+Una forma de arreglarlo en poniendo un tiempo de espera, pero esto tiene dos pegas:
+1.- que noe s eficiente porque en algunso casos se desperdicia el tiempo porque el server esta esperando sin hacer nada.
+2.- En otros casos será insuficente porque no en todas las maquinas irá a la misma velocidad..
+La mejor solución es hacer un protocolo entre server y cliente, que hablen entre los dos y el cliente no enviara la siguiente señal, haya que el server no lo haya recibido y procesado.
+El server le va a avisar enviandole una señal al cliente. 
+
+Para enviar un mensaje necesitamos enviar la señal y enviar el mensaje. Con las herramientas que tenemos solo podemos enviar la señal, el comando kill solo envia señal, no informacion.
+No se nos permite usar la funcion sigqueue que no dejaria enviar int ( 4 bytes) que es mas que un char por lo tanto nos daria de sobra para enviar caracter a caracter el mensaje.
+Pero nos permiten enviar dos señales distintas SIGUSR1 Y LA SIGUSR2. Es ahora cuando se ponen de acuerdo en que significa cada una de ellas.
+SIGUSR1 será =0 y SIGUSR2 puede ser = 1 o viceversa. Con la conversion a binarios de cuaquier numero (teniendo en cuenta que en C todos son numeros, ASCII), cada señal implica un bit 
+que será un 1 o un 0 dependiendo de si es SIGUSR1 o SIGUSR2, porque asi lo han decidido ellos.Como un lenguaje codificado o uno de signos.
+
+------------------------------------------------------------------------------------------------------------------------------------
+2.-  CONCEPTOS Y FUNCIONES
 La comunicacion entre servidor y cliente se hará mediante un PID.
 PID = Un dato identificativo de los procesos que un programa hace.
-Solo se puede usar una variable global por persona
+Solo se puede usar una variable global por programa. Una variable global es una variable que pueden usar todoas las funcioens que esten dentro del punto c
 
 Son 2 programas. Uno es el cliente que envia un mensaje y otro es el server que se queda a la espera de recibirlo.
 El problema es que no sabe cuando va a recibir el mensaje y cuanto tiene que esperar.
@@ -17,7 +35,7 @@ La cuestión clave es que el segundo proceso deberá señalar de alguna manera a
 
 Un proceso puede enviar una señal con la llamada kill o risesystem.
 
-1.- SEÑALES - SIGNALS
+3.- SEÑALES - SIGNALS
 
 Las señales son interrupciones de software que se utilizan para interrumpir un proceso en ejecución y ejecutar otra acción.
 Estas interrupciones se encuentran a menudo en diversas situaciones, como errores de bus o fallas de segmento, 
@@ -26,7 +44,6 @@ y al intentar finalizar un programa con el comando ctrl+c.
 Cuando se activa una señal, el proceso envía una señal al kernel que luego utiliza la función sig_handler() para realizar una de tres acciones posibles: 
 ignorar, capturar o predeterminar.
 
-Vamos a usar SIGUSR1 Y SIGUSR2 que permiten hacer la programador lo que desee.
 
 Un proceso es un programa en ejecución que, por lo general, no desaparece hasta que dicho programa finaliza su cometido o es detenido. 
 Cualquier programa que esté en ejecución tiene cómo mínimo un proceso activo
@@ -46,7 +63,7 @@ El primer proceso es el PID 1, y va aumentando progresivamente a medida que van 
 En caso de que un programa fuese ejecutado varias veces, cada ejecución tendría un PID correspondiente.
 
 
-2.- FUNCIONES
+4.- FUNCIONES
 
 libreria signal.h 
 
@@ -67,7 +84,7 @@ sigaction   La función sigaction se utiliza para establecer la acción que se t
 pause       Suspende la ejecucion de un programa hasta que llegue la señal.
 sleep       Suspende la ejecucion del programa durante x segundos que se el debe especificar.
 
-3.COMO FUNCIONA
+5.COMO FUNCIONA
 
 Para compilar el programa seguimos los siguientes pasos:
 

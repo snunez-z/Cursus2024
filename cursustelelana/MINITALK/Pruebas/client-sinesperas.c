@@ -41,7 +41,7 @@ void client(const char *pid_str)
         return;  
     }
 
-    if(kill(pid, SIGUSR1) == -1)
+    if(kill(pid, SIGUSR1) == -1) // Este va a inicializar una vez, el resto seria responsabilidad del handler
     {
         printf("No he podido enviar la señal.\n");
         return;  

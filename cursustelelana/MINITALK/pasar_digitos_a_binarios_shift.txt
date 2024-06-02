@@ -1,4 +1,13 @@
+CONVERSION A BINARIOS.
 
+Binario es base 2 
+Decimal es base 10 
+1 Byte tiene 8 bits, lo que significa que 0000 0000 = 0 en decimal y 1111 1111 = 255 en decimal.
+Lo que significa que 1  
+1 posicion 1 , resto se van multiplicando el resulado * 2 
+Resultado final = 1 2 4 8 16 32 64 128 ( Mascaras)
+En binario todos los bits estan a cero excepto 1 que es el que nos sirve para chequear.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * Convertir los digitos a binario en positivo.
 
 "H">>n
