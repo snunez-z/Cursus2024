@@ -1,0 +1,31 @@
+1. Haz un server que muestre por pantalla (printf) su PID
+   NADA DE SEÑALES. Sólo mostrar su PID y acaba
+
+   Haz un cliente que reciba como parámetro un número (argv[1])
+   Si no lo recibe, tiene que mostrar el usage típo:
+   "usage ... <PID>"
+   Si lo recibe, tiene que mostrar "Connecting to PID <el pid que hayan pasado>"
+
+   NADA DE SEÑALES. Sólo eso
+
+2. Modifica tu server para que pueda recibir señales SIGUSR1
+   Cuando reciba una, tiene que mostrar el mensaje
+   "SIGUSR1 received from PID <el pid del remitente de la señal>"
+   
+   Modifica el cliente para que envíe una señal SIGUSR1 al PID que le han pasado
+   como parámetro
+
+   La vas a cagar en este (en la parte del server). Cuando veas que no te funciona
+   dímelo
+
+3. Modifica tu server para acabe después de haber recibido una señal SIGUSR1
+
+4. Modifica tu server para que responda tanto a señales SIGUSR1 como a SIGUSR2
+   Debes usar la misma función handler para las dos señales.
+   En la función handler, que hasta ahora estabas poniendo "SIGUSR1 received from ..."
+   cámbialo para que diga la señal recibida, es decir:
+   "SIGUSR1/SIGUSR2 received from PID <el pid del remitente>"
+   Debe mostrar SIGUSR1 o SIGUSR2 dependiendo que la que haya recibido
+
+   Modifica tu cliente para que envíe una señal SIGUSR1 y luego una señal SIGUSR2
+
