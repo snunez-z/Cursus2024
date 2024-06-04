@@ -19,7 +19,7 @@ struct sigaction {
 Vamos a usar la funcion sigacion para la accion y los parametros que recibe por contrato son la señal SIGUSR1, el valor de los parametros de la struct sa y el NULL.
 el tercer parametro es la posib le accion que se hubiese prefijado anteriormente. En nuestro caso como e sninguna seria NULL, pero podria darse el caso que hibiese
 una y para no perderla se guardaria en ese parametro.
-Getpid() = es uan  funcion para que te de el numero PID de ese programa.
+Getpid() = es una funcion para que te de el numero PID de ese programa.
 pause = deja en pausa, dormido el programa.
 */
 
