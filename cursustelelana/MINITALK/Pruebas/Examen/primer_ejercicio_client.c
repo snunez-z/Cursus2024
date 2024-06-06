@@ -16,7 +16,10 @@ int main (int argc, char   **argv)
    int pid;
    
    if (argc < 2)
-      printf("usage %s <PID>...", argv [0]);
+   {
+   	printf("usage %s <PID>...", argv [0]);
+   	return (-1);
+   }
    pid = atoi (argv[1]);
    if (pid == 0)
       printf("usage %d <PID>...", pid);

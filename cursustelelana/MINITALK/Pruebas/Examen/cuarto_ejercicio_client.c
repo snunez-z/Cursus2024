@@ -27,13 +27,14 @@ int main(int argc, char **argv)
         printf("PID inválido.\n");
         return 1;
    }
-	
-	if(kill(pid, SIGUSR1) == -1)
-	{
+   if(kill(pid, SIGUSR1) == -1 || kill(pid, SIGUSR2) == -1)
+   {
       printf("No he podido enviar la señal.\n");
       return (1);  
    }
-
-	printf("Señal SIGUSR1 enviada al proceso con PID %d\n", pid);
-   return 0;
+   kill(pid, SIGUSR1);
+   printf("Señal SIGUSR1 enviada al proceso con PID %d\n", pid);
+   kill(pid, SIGUSR2);
+   printf("SEñal SIGUSR2 enviada al proceso con PID %d\n", pid);
+   return (0);
 }
