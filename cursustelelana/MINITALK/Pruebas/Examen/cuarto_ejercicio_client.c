@@ -1,13 +1,12 @@
 
-/* Modifica tu server para que pueda recibir señales SIGUSR1
-   Cuando reciba una, tiene que mostrar el mensaje
-   "SIGUSR1 received from PID <el pid del remitente de la señal>"
-   
-   Modifica el cliente para que envíe una señal SIGUSR1 al PID que le han pasado
-   como parámetro
+/*In the "client.c" file, you will...
+Write a program (main) in which the client takes two parameters/arguments
+The PID of the server to which it wants to send the message
+A message
+Encrypt the message (I did the encryption via bits)
+Send the message to the server (via its PID)
+Create a stop condition so that the server knows when it has finished receiving the message*/
 
-   La vas a cagar en este (en la parte del server). Cuando veas que no te funciona
-   dímelo*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -15,6 +14,7 @@
 int main(int argc, char **argv)
 {
    int pid;
+   char  *str;
 
 	if (argc < 2) 
    {

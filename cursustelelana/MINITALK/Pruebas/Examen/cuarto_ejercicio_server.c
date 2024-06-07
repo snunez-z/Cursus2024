@@ -21,7 +21,6 @@ void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context)
       printf("SIGUSR1 received from PID %d\n", siginfo->si_pid);
    else if (sign == SIGUSR2)
       	printf("SIGUSR2 received from PID %d\n", siginfo->si_pid);
-   exit (0);
 }  
 
 int main()

@@ -1,8 +1,3 @@
-// Recibe el PID del server, lo transforma con atoi en text y envia la señal SIGUSR1
- // Para enviar una señal se usa el comando kill que recibe como parametros el pid de a quien tiene que enviar la señal y la señal a enviar, en este caso el SIGUSR1.
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
 #include <unistd.h>
 
 void client(const char *pid_str) 

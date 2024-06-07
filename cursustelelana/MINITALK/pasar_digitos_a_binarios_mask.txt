@@ -10,7 +10,7 @@ En binario todos los bits estan a cero excepto 1 que es el que nos sirve para ch
 
 1.- COMO VAMOS A CHEQUEAR ? Operaciones logicas
 
-Operaciones logicas - > es una operacion que trabja a nivel de bits, en lugar de numeros, usa bits.
+Operaciones logicas - > es una operacion que trabaja a nivel de bits, en lugar de numeros, usa bits.
 * AND & (un solo aspersan) 
 0 & 0 = 0
 1 & 0 = 0
@@ -23,7 +23,7 @@ Necesitas ser mayor de 18 años y ser socio, solo cuando traes las dos cosas pue
 1 | 0 = 1
 0 | 1 = 1
 1 | 1 = 1 
-Solo cuando traes el dni o autorizacion de tus padres puedes entrar, o una cosa u otra cosa, solo no peudes cuando no traes nada .
+Solo cuando traes el dni o autorizacion de tus padres puedes entrar, o una cosa u otra cosa, solo no puedes cuando no traes nada .
 
 
 2.- COMO FUNCIONA LA OPERACION LOGICA AND 
