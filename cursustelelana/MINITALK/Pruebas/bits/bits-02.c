@@ -12,6 +12,22 @@
 //                  dividiendo entre 2. Y usar la operación & (AND a nivel de bits)
 void print_bits(char ch)
 {
+    int mask;
+    int bits_char;
+
+    mask = 128;
+    bits_char = 0;
+
+    while ( bits_char < 8)
+    {
+        if ((ch & mask) == 0)
+            printf("0");
+        else
+            printf("1");
+        mask = mask / 2;
+        bits_char++;
+    }
+    printf("\n");
 }
 
 int main(int argc, char **argv)
@@ -23,4 +39,3 @@ int main(int argc, char **argv)
     print_bits('\0');
     return (0);
 }
-

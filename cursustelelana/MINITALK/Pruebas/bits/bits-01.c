@@ -9,8 +9,24 @@
 // PISTA: Recuerda: Para pintar los bits de izquierda a derecha, tienes que usar
 //                  una máscara que empiece en 1. Y usar la operación &
 //                  (AND a nivel de bits)
+
 void print_bits(char ch)
 {
+    int char_bits;
+    int mask;
+    
+    char_bits = 0;
+    mask = 1;
+    while (char_bits < 8)
+    {
+        if ((ch & mask) == 0)
+            printf("0");
+        else 
+            printf ("1");
+        mask = mask * 2;
+        char_bits++;
+    }
+    printf("\n");
 }
 
 int main(int argc, char **argv)

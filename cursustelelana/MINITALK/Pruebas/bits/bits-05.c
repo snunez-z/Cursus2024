@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 // Modifica esta función para que, en lugar de guardar los bits siempre desde
 // el índice cero, los guarde desde el indice que se pasa en "start_index"
@@ -11,9 +12,9 @@ void store_bits(char ch, int *buffer, int start_index)
     {
         int bit = (ch & mask);
         if (bit == 0)
-            buffer[index] = 0;
+            buffer[start_index + index] = 0;
         else
-            buffer[index] = 1;
+            buffer[start_index + index] = 1;
 
         index++;
         mask = mask / 2;
@@ -25,7 +26,7 @@ void store_bits(char ch, int *buffer, int start_index)
 void print_bits(int *buffer, int num_bits)
 {
     int n = 0;
-    while (n < 8)
+    while (n < num_bits)
     {
         printf("%d", buffer[n]);
         n++;

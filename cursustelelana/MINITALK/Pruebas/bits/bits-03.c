@@ -17,6 +17,23 @@
 //                  dividiendo entre 2. Y usar la operación & (AND a nivel de bits)
 void store_bits(char ch, int *buffer)
 {
+    int bits_char;
+    int mask;
+    int result;
+     
+    bits_char = 0;
+    mask = 128;
+    while ( bits_char < 8)
+    {
+        result = (ch & mask);
+        if(result == 0)
+            buffer [bits_char] = 0;
+        else 
+            buffer [bits_char] = 1 ;
+        bits_char++;
+        mask = mask / 2;
+    }
+    printf("\n");
 }
 
 void print_bits(int *buffer)

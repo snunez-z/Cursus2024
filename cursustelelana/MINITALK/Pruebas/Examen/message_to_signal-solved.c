@@ -22,6 +22,7 @@
 // +-------+-------+-------+-------+-------+-------+-------+-------+
 // |SIGUSR1|SIGUSR2|SIGUSR1|SIGUSR1|SIGUSR2|SIGUSR1|SIGUSR1|SIGUSR1|
 // +-------+-------+-------+-------+-------+-------+-------+-------+
+
 int* message_to_signals(const char *message)
 {
     // Cuantos caracteres hay que codificar: tantos como diga "strlen" + 1 por el \0

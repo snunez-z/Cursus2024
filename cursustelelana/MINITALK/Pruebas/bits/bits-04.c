@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 void store_bits(char ch, int *buffer)
 {
@@ -28,14 +30,28 @@ void print_bits(int *buffer)
     printf("\n");
 }
 
-// Cambia el main para llamar a store_bits con los caracteres del primer
-// parámetro que reciba el programa (es decir argv[1])
-// Por ejemplo: Si argv[1] es "Hola", tiene que llamar a store_bits con
-// la 'H', luego con la 'o', luego la 'l', luego la 'a' y finalmente el '\0'
 int main(int argc, char **argv)
 {
-    int bits[8];
-
+    int *bits;
+    int num_chars;
+    int char_index;
+    int bit_size;
+    
+    if (argc < 2 )
+        printf("usage %s <file> \n", argv [0]);
+    
+    num_chars = strlen (argv[1] + 1);
+    bit_size = num_chars * 8;
+    bits = malloc ((bit_size)* sizeof(int));
+    if(bits == NULL)
+        return(1);
+    char_index = 0;
+    while (char_index < num_chars)
+    {
+        store_bits (argv[1][char_index], bits);
+        char_index++;
+    }    
+    print_bits(bits);
+    free (bits);
     return (0);
 }
-
