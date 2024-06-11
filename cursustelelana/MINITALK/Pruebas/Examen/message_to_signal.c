@@ -65,7 +65,10 @@
     int index;
 
     if (argc < 2)
+    {
         printf("sin mensaje no hay respuesta\n");
+        return (1);
+    }
 
     signals = message_to_signals (argv[1]);
     if (signals == NULL)
