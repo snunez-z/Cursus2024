@@ -3,43 +3,37 @@
 #include <signal.h>
 #include <string.h>
 
-void store_bits(char ch, int *buffer, int start_index)
+static void char_to_signals(char ch, int *buffer, int start_index)
 {
+    //   0 1 0 0 1 0 0 0 = 72 = 'H'
+    // & 1 0 0 0 0 0 0 0 = 128 = mask
+    //   ---------------
+    //   0 0 0 0 0 0 0 0 = 0
     int mask = 128;
     int index = 0;
+    int bit;
     
     while (index < 8)
     {
-        int bit = (ch & mask);
+        bit = (ch & mask);
         if (bit == 0)
-            buffer[index] = SIGUSR1;
+            buffer[start_index] = SIGUSR1;
         else
-            buffer[index] = SIGUSR2;
+            buffer[start_index] = SIGUSR2;
 
-        buffer[index]++;
+        start_index++;
         mask = mask / 2;
         index++;
     }
 }
 
-void print_bits(int *buffer)
-{
-    int n = 0;
-    while (n < 8)
-    {
-        printf("%d", buffer[n]);
-        n++;
-    }
-    printf("\n");
-}
-
-int* message_to_signals(const char *message)
+static int* message_to_signals(const char *message)
 {
     int num_chars;
     int num_bits ;
     int *buffer;
     int char_index;
-    int bit_index;
+    int start_index;
     
     num_chars = strlen (message) + 1;
     num_bits = num_chars * 8;
@@ -47,21 +41,29 @@ int* message_to_signals(const char *message)
     if (buffer == NULL)
         return (NULL);
     char_index = 0;
-    bit_index= 0;
+    start_index= 0;
     while (char_index < num_chars)
     {
-        store_bits(message, bit_index, char_index);
+        // 1 parámetro: Qué caracter
+        // 2 parámetro: Dónde guardar los bits
+        // 3 parámetro: Desde donde (dentro del array) guardar los bits
+        char_to_signals(message[char_index], buffer, start_index);
+        char_index++;
+        start_index = start_index + 8;
     }
-    char_index++;
-    bit_index = bit_index + 8;
     return (buffer);
 }   
+
 int main(int argc, char **argv)
 {
     int     pid;
-    char    *bits;
+    int    *signals;
+    int     num_chars;
+    int     num_signals;
+    int     index;
+    int     result_send_signal;
      
-    if (argc < 2 )
+    if (argc < 3 )
     {
         printf("usage %s <file> \n", argv [0]);
         return (1);
@@ -72,16 +74,26 @@ int main(int argc, char **argv)
       printf("PID Invalido\n");
       return (-1);
    }
-    bits = message_to_signals (argv[2]);
-    if (kill (pid, SIGUSR1 == -1) || kill (pid, SIGUSR2 == -1));
-    { 
-        printf("No se ha podido enviar la señal");
-        return (1);
-    }                
-    kill (pid, SIGUSR1);
-    printf("Señal SIGUSR1 enviada al proceso con pid %d\n", pid);
-    kill (pid, SIGUSR2);  
-    printf("Señal SIGUSR2 enviada al proceso con pid %d\n", pid);
-    free (bits);
+    signals = message_to_signals (argv[2]);
+
+
+    // BIEN
+    // En la variable "pid" tenemos el PID del server
+    // En la variable signals tenemos el array con las señales a enviar
+    num_chars = strlen (argv[2]) + 1;
+    num_signals = num_chars * 8;
+    index = 0;
+    while (index < num_signals)
+    {
+        result_send_signal = kill(pid, signals[index]);
+        if (result_send_signal == -1)
+        {
+            printf("No se ha podido enviar la señal");
+            return (1);
+        }                
+        index++;
+    }
+
+    free (signals);
     return (0);
 }
