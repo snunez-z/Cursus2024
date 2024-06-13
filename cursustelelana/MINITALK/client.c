@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
+#include <unistd.h>
 
 static void char_to_signals(char ch, int *buffer, int start_index) // Necesita recibir el caracter a convertir, el buffer donde guardar los bits y desde donde dentro del array guarda los bits 
 {
@@ -88,6 +89,7 @@ int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar s
             return (1);
         printf(" Señal enviada al proceso con PID %d\n", pid);                 
         index++;
+        usleep(100);
     }
     free (signals);
     return (0);

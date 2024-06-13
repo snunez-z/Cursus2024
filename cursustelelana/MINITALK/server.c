@@ -11,14 +11,16 @@ int ft_btoi(const char *num)
 {
     char    digit;
     int value;
+    int index;
        
+    index = 0;
     value = 0;
-    while (*num != '\0')
+    while (index < 8)
     {
-        
             digit = (*num - '0');
             value = (value * 2) + digit;
             num++;
+            index++;
     }
     return (value);
 }
@@ -38,7 +40,13 @@ void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context) // bucle asin
    }  
     num_signal++;
     if (num_signal == 8)
-      ft_btoi (signals_received);
+    {
+      // Aunque retorna int, yo se que he decificado un número
+      // entre 0 y 255, así es que me cabe en un char
+      char ch = ft_btoi (signals_received);
+      printf("He recibido la letra %c\n", ch);
+      num_signal = 0;
+    }
 }   
 
 int main()
