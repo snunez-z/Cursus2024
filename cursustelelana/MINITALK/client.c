@@ -3,7 +3,7 @@
 #include <signal.h>
 #include <string.h>
 
-static void char_to_signals(char ch, int *buffer, int start_index)
+static void char_to_signals(char ch, int *buffer, int start_index) // Necesita recibir el caracter a convertir, el buffer donde guardar los bits y desde donde dentro del array guarda los bits 
 {
     //   0 1 0 0 1 0 0 0 = 72 = 'H'
     // & 1 0 0 0 0 0 0 0 = 128 = mask
@@ -54,7 +54,7 @@ static int* message_to_signals(const char *message)
     return (buffer);
 }   
 
-int main(int argc, char **argv)
+int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar señales al server por cada caracter.
 {
     int     pid;
     int    *signals;
@@ -74,10 +74,8 @@ int main(int argc, char **argv)
       printf("PID Invalido\n");
       return (-1);
    }
-    signals = message_to_signals (argv[2]);
+    signals = message_to_signals (argv[2]);  
 
-
-    // BIEN
     // En la variable "pid" tenemos el PID del server
     // En la variable signals tenemos el array con las señales a enviar
     num_chars = strlen (argv[2]) + 1;
@@ -87,13 +85,11 @@ int main(int argc, char **argv)
     {
         result_send_signal = kill(pid, signals[index]);
         if (result_send_signal == -1)
-        {
-            printf("No se ha podido enviar la señal");
             return (1);
-        }                
+        printf(" Señal enviada al proceso con PID %d\n", pid);                 
         index++;
     }
-
     free (signals);
     return (0);
 }
+

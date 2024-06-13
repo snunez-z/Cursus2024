@@ -8,7 +8,9 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <unistd.h> 
+#include <aio.h>
+
 
 void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context)
 {
