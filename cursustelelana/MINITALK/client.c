@@ -4,9 +4,6 @@
 #include <string.h>
 #include <unistd.h>
 
-int pid;
-int     index = 0;
-
 static void char_to_signals(char ch, int *buffer, int start_index) // Necesita recibir el caracter a convertir, el buffer donde guardar los bits y desde donde dentro del array guarda los bits 
 {
     //   0 1 0 0 1 0 0 0 = 72 = 'H'
@@ -86,6 +83,7 @@ int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar s
     num_chars = strlen (argv[2]) + 1;
     num_signals = num_chars * 8;
         
+	index = 0;
     while (index < num_signals)
     {
         result_send_signal = kill(pid, signals[index]);

@@ -29,7 +29,7 @@ void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context) // bucle asin
    char ch;
    
    (void) context;
-   // printf("Signal received from pid %d\n", siginfo->si_pid);
+   printf("Signal received from pid %d\n", siginfo->si_pid);
 
    if (sign == SIGUSR1)
       signals_received [num_signal] = '0';
@@ -48,7 +48,9 @@ void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context) // bucle asin
 	      write(1, &ch, 1);
       num_signal = 0;
     }
-   // printf(" Signal processed from pid %d\n", siginfo->si_pid);   
+   printf(" Signal processed from pid %d\n", siginfo->si_pid);   
+   if (kill(siginfo->si_pid, SIGUSR1) < 0)
+      printf("Signal no processed\n");
 }       
 
 int main()

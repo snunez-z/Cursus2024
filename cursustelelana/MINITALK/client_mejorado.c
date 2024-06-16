@@ -4,8 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 
-int pid;
-int     index = 0;
+int     ind = 1;
 int num_signals;
 int *signals;
 
@@ -16,10 +15,10 @@ static void char_to_signals(char ch, int *buffer, int start_index) // Necesita r
     //   ---------------
     //   0 0 0 0 0 0 0 0 = 0
     int mask = 128;
-    int index = 0;
+    int count = 0;
     int bit;
     
-    while (index < 8)
+    while (count < 8)
     {
         bit = (ch & mask);
         if (bit == 0)
@@ -29,7 +28,7 @@ static void char_to_signals(char ch, int *buffer, int start_index) // Necesita r
 
         start_index++;
         mask = mask / 2;
-        index++;
+        count++;
     }
 }
 
@@ -65,26 +64,24 @@ void handle_sigusr1(int sig, siginfo_t *siginfo, void *context)
     (void)context; 
     int result_send_signal;
 
-    if (index < num_signals)
+    if (ind < num_signals)
     {
-        result_send_signal = kill(pid, signals[index]);
+        result_send_signal = kill(siginfo->si_pid, signals[ind]);
         if (result_send_signal == -1)
-            printf("Failed to send signal\n")
-            exit(1);
-        printf(" Signal sent to process with PID %d\n", pid);                 
-        index++;
+		{	
+            printf("Failed to send signal\n");
+            return;
+		}
+        printf(" Signal sent to process to PID %d\n", siginfo->si_pid);                 
+        ind++;
     }
-    if (kill(siginfo->si_pid, SIGUSR1) < 0) // si el envio de la señal SIGUSR1 al pid del cliente 
-        printf("Error replying to PID %d\n", siginfo->si_pid);
-    else
-        printf("%d from %d\n", siginfo->si_pid);
 }
 
 int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar señales al server por cada caracter.
 {
     int     num_chars;
-    int     num_signals;
     struct sigaction sa;
+	int pid;
          
     if (argc < 3 )
     {
@@ -98,8 +95,8 @@ int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar s
       return (-1);
    }
     memset(&sa, 0, sizeof(sa)); 
-    sa->sigaction sa = handle_sigusr1;
-    sa->sa_flags = SA_SIGINFO; 
+    sa.sa_sigaction = handle_sigusr1;
+    sa.sa_flags = SA_SIGINFO;  
     if(sigaction(SIGUSR1, &sa, NULL) == -1) 
     {
         printf("Handler is not listening\n");
@@ -111,16 +108,14 @@ int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar s
     if (signals == NULL)
         printf("Unable to send initial signal\n"); 
 
-    if(kill(pid, SIGUSR1) == -1) // Este va a inicializar una vez, el resto seria responsabilidad del handler
+    if(kill(pid, signals[0]) == -1) // Este va a inicializar una vez, el resto seria responsabilidad del handler
     {
         printf("No he podido enviar la señal.\n");
-        return;  
+        return (1);  
     }
-    printf("Señal SIGUSR1 enviada al proceso con PID %d\n", pid);
+    printf("Sign send to process PID %d\n", pid);
     while (1)
-        pause()
-
-
+        pause();
     free (signals);
     return (0);
 }
