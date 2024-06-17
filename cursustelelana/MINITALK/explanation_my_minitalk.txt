@@ -41,15 +41,15 @@ Como codifico un caracter en bits? Un char es un numero de 8 bits.
 A = 65 = 01000001
 Asi que codifico un char sacando los bits (0 o 1) del numero que representa cada carcater en la tabla ASCII
 
-Recorre la cadena de caracteres y codifica cada carcater en bits y lo mete en un buffer, asi hasta que llega al final.
+Recorre la cadena de caracteres y codifica cada caracter en bits y lo mete en un buffer, asi hasta que llega al final.
 Y cuando tiene toda cadena convertida en bits. Utiliza ese buffer para enviar cada señal hasta el final siempre que reciba del server la orden de que puede hacerlo.
 
 5.- QUE HACE EL SERVER ?
 
 Está dormido pero necesita estar vivo para ser capaz de despertarse en el momento que reciba una señal.
-Funciona de forma asincrona, su main es sincronom, solo duerme pero para ser capaz de despertarse necesia la funcion sigaction, que es la que le permite recibir señales.
+Funciona de forma asincrona, su main es sincrono, solo duerme pero para ser capaz de despertarse necesita la funcion sigaction, que es la que le permite recibir señales.
 Cuando recibe una señal, se ejecuta en handler_sigusr1, que es la funcion a la que llama cuando recibe una señal.
-Una vez que esta procesada, el mismo handler envia uan señal SIGUSR1 al client, de forma que este, por acuerdo entre ambos, ya sabe que puede enviar la siguiente señal.
+Una vez que esta procesada, el mismo handler envia una señal SIGUSR1 al client, de forma que este, por acuerdo entre ambos, ya sabe que puede enviar la siguiente señal.
 
 3.- FUNCIONES QUE VOY A USAR
 

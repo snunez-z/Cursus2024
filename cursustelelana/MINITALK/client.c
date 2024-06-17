@@ -1,8 +1,21 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/17 16:10:08 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/06/17 16:10:12 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
 #include <unistd.h>
+#include "libftprintf/ft_printf.h"
+#include "libftprintf/libft/libft.h"
 
 static void char_to_signals(char ch, int *buffer, int start_index) // Necesita recibir el caracter a convertir, el buffer donde guardar los bits y desde donde dentro del array guarda los bits 
 {
@@ -66,13 +79,13 @@ int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar s
      
     if (argc < 3 )
     {
-        printf("usage %s <file> \n", argv [0]);
+        ft_printf("usage %s <file> \n", argv [0]);
         return (1);
     }
-    pid =atoi (argv[1]);
+    pid =ft_atoi (argv[1]);
     if (pid == 0)
    {
-      printf("PID Invalido\n");
+      ft_printf("PID Invalido\n");
       return (-1);
    }
         
@@ -89,14 +102,14 @@ int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar s
         result_send_signal = kill(pid, signals[index]);
         if (result_send_signal == -1)
         {
-            // TODO Memory leak!!!!
+            free (signals);
             return (1);
         }
         // En la traza (lo que sale por pantalla) ponemos "index+1" porque la primera señal es la cero
         // pero eso no es muy human-readable... lo normal para un humano de a pie es que la primera sea
         // la uno, no la cero; la segunda la 2, no la 1, etc
-        printf("Signal %d/%d sent to PID %d\n", (index+1), num_signals, pid);                 
-        usleep(100);
+        ft_printf("Signal %d/%d sent to PID %d\n", (index+1), num_signals, pid);                 
+        usleep(150);
         index++;
     } 
     free (signals);
