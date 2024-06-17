@@ -88,10 +88,16 @@ int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar s
     {
         result_send_signal = kill(pid, signals[index]);
         if (result_send_signal == -1)
+        {
+            // TODO Memory leak!!!!
             return (1);
-        printf(" Señal enviada al proceso con PID %d\n", pid);                 
-        index++;
+        }
+        // En la traza (lo que sale por pantalla) ponemos "index+1" porque la primera señal es la cero
+        // pero eso no es muy human-readable... lo normal para un humano de a pie es que la primera sea
+        // la uno, no la cero; la segunda la 2, no la 1, etc
+        printf("Signal %d/%d sent to PID %d\n", (index+1), num_signals, pid);                 
         usleep(100);
+        index++;
     } 
     free (signals);
     return (0);
