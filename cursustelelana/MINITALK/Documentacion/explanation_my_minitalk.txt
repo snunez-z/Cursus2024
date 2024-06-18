@@ -1,0 +1,80 @@
+My Project - MINI TALK
+
+1.- OBJETIVO DEL PROYECTO Y RETOS QUE PLANTEA 
+Programa de comunicacion entre un cliente y un server, el que van a intercambiar datos usando UNIX.
+UNIX es un sistema operativo multiusuario y multiproceso. Ofrece facilidades para programar, y un ambiente propio para las tareas de diseño de software 
+con una gran cantidad de ayuda y utilerías.
+Lo mas importante de este proyecto es entender que se comunican a traves de un protocolo, tiene que estar de acuerdo en el lenguaje, 
+en como van a recibir las señales y en el significado de las señales.
+
+1.- RETO : TIEMPO DE EJECUCION
+
+Teniendo en cuenta las herramientas que nos dan (funciones permitidas), nos encontramos con el primer reto. Tiempo de ejecucion entre un mensaje y otro posible mensaje.
+Aunque el mensaje se reciben y se procesan en microsegundos, si un cliente enviase por ejemplo 1000 señales distintos seguidos, sin pausa. al server no le daria tiempo a procesarlos todos. 
+Una forma de arreglarlo en poniendo un tiempo de espera, pero esto tiene dos pegas:
+1.- que no es eficiente porque en algunos casos se desperdicia el tiempo porque el server esta esperando sin hacer nada.
+2.- En otros casos será insuficente porque no en todas las maquinas irá a la misma velocidad..
+La mejor solución es hacer un protocolo entre server y cliente, que hablen entre los dos y el cliente no enviara la siguiente señal, haya que el server no lo haya recibido y procesado.
+El server le va a avisar enviandole una señal al cliente. 
+
+Para enviar un mensaje necesitamos enviar la señal y enviar el mensaje. Con las herramientas que tenemos solo podemos enviar la señal, el comando kill solo envia señal, no informacion.
+No se nos permite usar la funcion sigqueue que no dejaria enviar int (4 bytes) que es mas que un char por lo tanto nos daria de sobra para enviar caracter a caracter el mensaje.
+Pero nos permiten enviar dos señales distintas SIGUSR1 Y LA SIGUSR2. Es ahora cuando se ponen de acuerdo en que significa cada una de ellas.
+SIGUSR1 será =0 y SIGUSR2 puede ser = 1 o viceversa. Con la conversion a binarios de cuaquier numero (teniendo en cuenta que en C todos son numeros, ASCII), cada señal implica un bit 
+que será un 1 o un 0 dependiendo de si es SIGUSR1 o SIGUSR2, porque asi lo han decidido ellos.Como un lenguaje codificado o uno de signos.
+
+2.-RETO - CODIFICACION 
+
+El cliente tiene que codificar el mensaje paa que el server lo reciba.
+Como en programacion todo son numeros, usamos las señales y el sistema binario con operaciones logicas para codificar el mensaje.
+
+3.- RETO - DESCODIFICACION 
+
+El server lo recibe y tiene que descodificarlo para mostrarlo por pantalla.
+
+4.- QUE HACE EL CLIENT ?
+
+El recibe un argv[1] con el pid del destinatario (server) y necesita convertirlo en un int porque la funcion que va a enviar la señal que es kill necesita como parametro el pid en int.
+Recibe un array de caracteres y para poder enviarlo con dos señales, tenemos que trabajar a nivel de bits. 
+Como codifico una cadena de caracteres en bits? Codificando cada uno de los caracteres en bits.
+Como codifico un caracter en bits? Un char es un numero de 8 bits.
+A = 65 = 01000001
+Asi que codifico un char sacando los bits (0 o 1) del numero que representa cada carcater en la tabla ASCII
+
+Recorre la cadena de caracteres y codifica cada caracter en bits y va a ir imprimiendo carcater a carcater segun lo va codificando.
+Y cuando tiene toda cadena convertida en bits. Utiliza ese buffer para enviar cada señal hasta el final siempre que reciba del server la orden de que puede hacerlo.
+
+5.- QUE HACE EL SERVER ?
+
+Está dormido pero necesita estar vivo para ser capaz de despertarse en el momento que reciba una señal.
+Funciona de forma asincrona, su main es sincrono, solo duerme pero para ser capaz de despertarse necesita la funcion sigaction, que es la que le permite recibir señales.
+Cuando recibe una señal, se ejecuta en handler_sigusr1, que es la funcion a la que llama cuando recibe una señal.
+Una vez que esta procesada, el mismo handler envia una señal SIGUSR1 al client, de forma que este, por acuerdo entre ambos, ya sabe que puede enviar la siguiente señal.
+
+3.- FUNCIONES QUE VOY A USAR
+
+sigaction = me permite recibir señales
+kill = que me permite enviar señales
+get pid = que me permite extraer el pid 
+pause = para dormir hasta recibir la señal
+libft = ft_memset (para inicializar a cero la estructura sigaction
+        ft_strlen (para saber la longitud de la cadena que recibo)
+
+5.COMO FUNCIONA
+
+Para compilar el programa seguimos los siguientes pasos:
+
+git clone https://github.com/gjmacias/minitalk
+cd minitalk
+make
+Luego ejecutamos en una terminal el server:
+
+./server
+Este te dará el PID para comunicarse con los clientes:
+
+SUCCESS!, Server is ready :D! The PID: *VWXYZ*
+Luego ejecutamos desde OTRA terminal el client y le añadimos los parametros de PID y los parametros a pasar:
+
+./client *VWXYZ* "soy un comentario que voy a pasar del cliente al servidor" 
+
+./server soy un comentario que voy a pasar del cliente al servidor

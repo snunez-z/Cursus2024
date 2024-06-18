@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:10:08 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/06/17 16:10:12 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:01:53 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include <signal.h>
 #include <string.h>
 #include <unistd.h>
-#include "libftprintf/ft_printf.h"
-#include "libftprintf/libft/libft.h"
+#include "libft/libft.h"
 
 static void char_to_signals(char ch, int *buffer, int start_index) // Necesita recibir el caracter a convertir, el buffer donde guardar los bits y desde donde dentro del array guarda los bits 
 {
@@ -49,7 +48,7 @@ static int* message_to_signals(const char *message)
     int char_index;
     int start_index;
     
-    num_chars = strlen (message) + 1;
+    num_chars = ft_strlen (message) + 1;
     num_bits = num_chars * 8;
     buffer = malloc (num_bits * sizeof(int));
     if (buffer == NULL)

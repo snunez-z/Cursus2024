@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:09:10 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/06/17 16:09:47 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:39:22 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf/ft_printf.h"
-#include "libftprintf/libft/libft.h"
+#include "libft/libft.h"
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,6 +47,7 @@ void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context) // bucle asin
    char ch;
       
    (void) context;
+   (void)siginfo; 
    // ft_printf("Signal received from pid %d\n", siginfo->si_pid);
 
    if (sign == SIGUSR1)
@@ -76,7 +76,7 @@ int main()
    int   sig_S1;
    int   sig_S2;
 
-   memset (&sa, 0, sizeof(sa)); 
+   ft_memset (&sa, 0, sizeof(sa)); 
    sa.sa_sigaction = handler_sigusr1; //donde, a que funcion hay que llamar cuando llegue la señal
    sa.sa_flags = SA_SIGINFO; // Definimos como queremos que nos llegue la señal, con info o sin info
    signal_control.num_signal = 0;

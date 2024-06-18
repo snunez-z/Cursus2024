@@ -3,54 +3,55 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+         #
+#    By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 16:10:29 by snunez-z          #+#    #+#              #
-#    Updated: 2024/06/17 16:10:34 by snunez-z         ###   ########.fr        #
+#    Updated: 2024/06/18 09:23:53 by snunez-z         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+###################################################
+
 NAME = minitalk
 
-SRC = server.c client.c 
+SERVER = server
+CLIENT = client
 
-OBJ = $(SRC:.c=.o)
+SRC_SERVER = server.c 
+SRC_CLIENT = client.c 
 
-PRINTF_PATH = ./libftprintf
+OBJ_SERVER = $(SRC_SERVER:.c=.o)
+OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 
-PRINTF_OBJ = $(PRINTF_PATH:.c=.o)
+LIBFT = libft/libft.a
 
-#PRINTF_OBJ = $(PRINTF_PATH)/libft/ft_atoi.o $(PRINTF_PATH)/libft/ft_memset.o $(PRINTF_PATH)/libft/ft_strlen.o 
+###################################################
 
-all: libft_all $(NAME)
+all: $(SERVER) $(CLIENT)
+
+$(SERVER) : $(LIBFT) $(OBJ_SERVER)
+	cc $(OBJ_SERVER) -o $(SERVER) -Llibft/ -lft
+
+$(CLIENT) : $(LIBFT) $(OBJ_CLIENT)
+	cc $(OBJ_CLIENT) -o $(CLIENT) -Llibft/ -lft
 
 %.o: %.c
-	cc -Wall -Werror -Wextra -c $<
+	@echo "[ SRC ] Compilando $^"
+	@cc -Wall -Werror -Wextra -c $<
 
-$(NAME): $(OBJ) $(PRINTF_OBJ)
-	ar -cr $(NAME) $(OBJ) $(PRINTF_OBJ)
+$(LIBFT):
+	@make -sC libft all
+	
+###################################################
 
-clean: libft_clean
-	rm -f $(OBJ) 
+clean:
+	@make -sC libft clean
+	@rm -f $(OBJ_SERVER) $(OBJ_CLIENT)
 
-fclean: libft_fclean clean
-	rm -f $(NAME)
+fclean: clean
+	@make -sC libft fclean
+	@rm -f $(NAME)
 
-re: libft_re fclean all
+re: fclean all
 
 .PHONY: all clean fclean re bonus
-
-# Targets para el ft_printf/libft
-libft_all:
-	make -C $(PRINTF_PATH) all
-
-libft_clean:
-	make -C $(PRINTF_PATH) clean
-
-libft_fclean:
-	make -C $(PRINTF_PATH) fclean
-
-libft_re:
-	make -C $(PRINTF_PATH) re
-
-
