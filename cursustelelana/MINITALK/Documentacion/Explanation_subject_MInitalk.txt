@@ -1,0 +1,84 @@
+SEÑALES UNIX
+
+2.-  CONCEPTOS Y FUNCIONES
+La comunicacion entre servidor y cliente se hará mediante un PID.
+PID = Un dato identificativo de los procesos que un programa hace.
+Solo se puede usar una variable global por programa. Una variable global es una variable que pueden usar todoas las funcioens que esten dentro del punto c
+
+Son 2 programas. Uno es el cliente que envia un mensaje y otro es el server que se queda a la espera de recibirlo.
+El problema es que no sabe cuando va a recibir el mensaje y cuanto tiene que esperar.
+El server se queda tranquilo , a la espera, sin hacer nada, sin consumir recursos porque cuando le llegue algo le van a despertar con una señal.
+Por lo tanto el server tiene una parte sincrona ( se ejecuta en orden, linea tras linea) y otra asincrona, que se ejectura cuando sea llamada, el server no sabe cuando se va a ejecutar.
+
+Nuestra aplicación consta de dos procesos, uno que espera leer cada carácter (el servidor) y el otro que enviará el carácter al servidor (el cliente). 
+La cuestión clave es que el segundo proceso deberá señalar de alguna manera al primero cada nuevo personaje encontrado.
+
+Un proceso puede enviar una señal con la llamada kill o risesystem.
+
+3.- SEÑALES - SIGNALS
+
+Las señales son interrupciones de software que se utilizan para interrumpir un proceso en ejecución y ejecutar otra acción.
+Estas interrupciones se encuentran a menudo en diversas situaciones, como errores de bus o fallas de segmento, 
+y al intentar finalizar un programa con el comando ctrl+c.
+
+Cuando se activa una señal, el proceso envía una señal al kernel que luego utiliza la función sig_handler() para realizar una de tres acciones posibles: 
+ignorar, capturar o predeterminar.
+
+
+Un proceso es un programa en ejecución que, por lo general, no desaparece hasta que dicho programa finaliza su cometido o es detenido. 
+Cualquier programa que esté en ejecución tiene cómo mínimo un proceso activo
+Un proceso puede estar en varios estados:
+
+    *En ejecución en modo usuario.
+    *En ejecución en modo núcleo.
+    *En espera.
+    *Dormido.
+    *Listo para ser ejecutado(pero sin ejecutarse aún).
+    *Dormido en el swap.
+    *Zombie(finalizando).
+
+Cada proceso posee varios datos identificativos que ayudan mucho a una administrador a la hora de realizar cualquier tipo de control y/o gestión. 
+El número de proceso, denominado cómo PID (Process ID): Este número es un número único no repetible. 
+El primer proceso es el PID 1, y va aumentando progresivamente a medida que van generándose nuevos procesos. 
+En caso de que un programa fuese ejecutado varias veces, cada ejecución tendría un PID correspondiente.
+
+
+4.- FUNCIONES
+
+libreria signal.h 
+
+malloc	    Solicitar un bloque de memoria del tamaño suministrado como parámetro.
+free	    Desasigna un bloque de memoria que se había asignado previamente mediante una llamada.
+write	    Hace que los bytes que indiques del buffer sean escritos en el file descriptor seleccionado.
+signal	    permite controlar el comportamento de tu programa en funcion de las señales que recibe.
+getpid	    Se utiliza para obtener el ID de proceso (PID)
+kill	    Envia señales a procesos específicos, permitiendo controlar y comunicarse con ellos
+usleep	    Suspende la ejecución de un programa por un período de tiempo expresado en microsegundos.
+exit	    Finaliza inmediatamente el programa liberando la memoria dinamica asignada
+sigemptyset crea un conjunto de señales vacio, lo que significa que ninguna señal está incluida en ese conjunto. 
+            Esto es útil cuando se quiere inicializar un conjunto de señales antes de agregar señales específicas a él utilizando funciones como sigaddset.
+sigaddset   La función sigaddset se utiliza para agregar una señal específica a un conjunto de señales en C. Estos conjuntos de señales son como listas especiales que indican a un programa qué señales debe "escuchar" o estar atento.
+sigaction   La función sigaction se utiliza para establecer la acción que se tomará cuando una señal específica llegue a tu programa. 
+            Esta acción podría ser ignorar la señal, ejecutar una función específica (manejador de señal), o restaurar el comportamiento predeterminado para esa señal.
+
+pause       Suspende la ejecucion de un programa hasta que llegue la señal.
+sleep       Suspende la ejecucion del programa durante x segundos que se el debe especificar.
+
+5.COMO FUNCIONA
+
+Para compilar el programa seguimos los siguientes pasos:
+
+git clone https://github.com/gjmacias/minitalk
+cd minitalk
+make
+Luego ejecutamos en una terminal el server:
+
+./server
+Este te dará el PID para comunicarse con los clientes:
+
+SUCCESS!, Server is ready :D! The PID: *VWXYZ*
+Luego ejecutamos desde OTRA terminal el client y le añadimos los parametros de PID y los parametros a pasar:
+
+./client *VWXYZ* "soy un comentario que voy a pasar del cliente al servidor" 
+
+./server soy un comentario que voy a pasar del cliente al servidor

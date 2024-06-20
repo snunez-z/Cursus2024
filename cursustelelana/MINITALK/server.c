@@ -10,20 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "libft/libft.h"
 
-typedef struct s_sig
+typedef struct s_client
 {
 	int num_signal; // donde ir contando
 	char signals_received [8]; // donde guardar las señales recibidas
+}	t_client;
 
-}	t_sig;
-
-t_sig signal_control;
+t_client signal_control;
 
 int ft_btoi(const char *num)
 {
@@ -57,17 +56,19 @@ void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context) // bucle asin
    signal_control.num_signal++;
    
    if (signal_control.num_signal == 8)
-    {
+   {
       // Aunque retorna int, yo se que he decificado un número
       // entre 0 y 255, así es que me cabe en un char
       ch = ft_btoi (signal_control.signals_received);
       if (ch == '\0')
          write(1, "\n", 1);
       else
-	      write(1, &ch, 1);
+	     write(1, &ch, 1);
       signal_control.num_signal = 0;
-    }
-   // ft_printf(" Signal processed from pid %d\n", siginfo->si_pid);   
+   }
+
+   // Let's tell the client to send the next signal
+   kill(siginfo->si_pid, SIGUSR1);
 }       
 
 int main()
@@ -76,15 +77,17 @@ int main()
    int   sig_S1;
    int   sig_S2;
 
+   signal_control.num_signal = 0;
+
    ft_memset (&sa, 0, sizeof(sa)); 
    sa.sa_sigaction = handler_sigusr1; //donde, a que funcion hay que llamar cuando llegue la señal
    sa.sa_flags = SA_SIGINFO; // Definimos como queremos que nos llegue la señal, con info o sin info
-   signal_control.num_signal = 0;
    sig_S1 = sigaction (SIGUSR1, &sa, NULL);
    sig_S2 = sigaction (SIGUSR2, &sa, NULL);
    if (sig_S1 == -1 || sig_S2 == -1)
       return (-1);
    ft_printf("Server PID: %d\n", getpid());
+
    while (1)
       pause();
    return(0);

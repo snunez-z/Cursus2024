@@ -1,54 +1,91 @@
-/* que hace ? El programa server es un proceso que esta siendo ejecutado por la computadora.
-Este programa server lo que hace es esperar dormido y cuando le llega una señal SIGUSR1, ejecuta algo.
-En ese caso printea Hola y sigue durmiendo.
-como lo hace? 
-Una señal es enviarle hacer algo a un proceso y para ello se necesita el PID de ese proceso, en este caso el PID del server.
-En este caso cuando le llegue una señal va a escrirbir hola. 
-El programa main es sincrono, que se ejecuta una orden detras de otra de forma sincrona, como un scrit. 
-En este caso hay una parte que es sincrona y otrra que es asincrona. Se va a ejecturar cuando le llegue un señal, pero el server no sabe cuando.
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/17 16:09:10 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/06/18 11:39:22 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-Necesitamos una estructura sigaction a la vamos a llamar sa. La estructura sigaction tiene muchos parametros pero nosotos vamos a usar el handler que es 
-el que le dice que accion tomar al server cuando reciba la señal.
-
-struct sigaction {
-                  void (*sa_handler)(int);
-                  void (*sa_sigaction)(int, siginfo_t *, void *);
-                  sigset_t sa_mask;
-                  int sa_flags;
-                  void (*sa_restorer)(void);
-Vamos a usar la funcion sigacion para la accion y los parametros que recibe por contrato son la señal SIGUSR1, el valor de los parametros de la struct sa y el NULL.
-el tercer parametro es la posib le accion que se hubiese prefijado anteriormente. En nuestro caso como e sninguna seria NULL, pero podria darse el caso que hibiese
-una y para no perderla se guardaria en ese parametro.
-Getpid() = es uan  funcion para que te de el numero PID de ese programa.
-pause = deja en pausa, dormido el programa.
-*/
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft/libft.h"
 #include <signal.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-void handle_sigusr1(int sig, siginfo_t *siginfo, void *context)
+typedef struct s_sig
 {
-    (void)context; 
-    (void)siginfo;
-    if (sig == SIGUSR1)
-        printf("Hola");
- 
+	int num_signal; // donde ir contando
+	char signals_received [8]; // donde guardar las señales recibidas
+
+}	t_sig;
+
+t_sig signal_control;
+
+int ft_btoi(const char *num)
+{
+    char    digit;
+    int value;
+    int index;
+       
+    index = 0;
+    value = 0;
+    while (index < 8)
+    {
+            digit = (*num - '0');
+            value = (value * 2) + digit;
+            num++;
+            index++;
+    }
+    return (value);
 }
-
-int main() 
+void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context) // bucle asincrono - el concpeto es igual que un bucle while pero como no sabemos cuando vamos a recbir la señal.Se ejecuta una vez cada vez que recibes la señal cada vez.
 {
-    struct sigaction sa;
-    memset(&sa, 0, sizeof(sa)); 
-    sa.sa_sigaction = handle_sigusr1;
-    if (sigaction(SIGUSR1, &sa, NULL) == -1) 
-        return (-1);
-    printf("Server PID: %d\n", getpid());
-    
-    while (1) 
-       pause();
+   char ch;
       
-    return 0;
+   (void) context;
+   (void)siginfo; 
+   // ft_printf("Signal received from pid %d\n", siginfo->si_pid);
+
+   if (sign == SIGUSR1)
+      signal_control.signals_received [signal_control.num_signal] = '0';
+   else 
+      signal_control.signals_received [signal_control.num_signal] = '1';
+   signal_control.num_signal++;
+   
+   if (signal_control.num_signal == 8)
+    {
+      // Aunque retorna int, yo se que he decificado un número
+      // entre 0 y 255, así es que me cabe en un char
+      ch = ft_btoi (signal_control.signals_received);
+      if (ch == '\0')
+         write(1, "\n", 1);
+      else
+	      write(1, &ch, 1);
+      signal_control.num_signal = 0;
+    }
+   // ft_printf(" Signal processed from pid %d\n", siginfo->si_pid);   
+}       
+
+int main()
+{
+   struct sigaction sa;
+   int   sig_S1;
+   int   sig_S2;
+
+   ft_memset (&sa, 0, sizeof(sa)); 
+   sa.sa_sigaction = handler_sigusr1; //donde, a que funcion hay que llamar cuando llegue la señal
+   sa.sa_flags = SA_SIGINFO; // Definimos como queremos que nos llegue la señal, con info o sin info
+   signal_control.num_signal = 0;
+   sig_S1 = sigaction (SIGUSR1, &sa, NULL);
+   sig_S2 = sigaction (SIGUSR2, &sa, NULL);
+   if (sig_S1 == -1 || sig_S2 == -1)
+      return (-1);
+   ft_printf("Server PID: %d\n", getpid());
+   while (1)
+      pause();
+   return(0);
 }

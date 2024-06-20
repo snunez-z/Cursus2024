@@ -16,43 +16,53 @@
 #include <unistd.h>
 #include "libft/libft.h"
 
-static void char_to_signals(char ch, int *buffer, int start_index) // Necesita recibir el caracter a convertir, el buffer donde guardar los bits y desde donde dentro del array guarda los bits 
+typedef struct s_server
+{
+	int    *signals;
+	int     num_signals;
+	int     signal_index;
+}	t_server;
+
+t_server	signal_control;
+
+static void char_to_signals(char ch, int start_index) // Necesita recibir el caracter a convertir, el buffer donde guardar los bits y desde donde dentro del array guarda los bits 
 {
     //   0 1 0 0 1 0 0 0 = 72 = 'H'
     // & 1 0 0 0 0 0 0 0 = 128 = mask
     //   ---------------
     //   0 0 0 0 0 0 0 0 = 0
     int mask = 128;
-    int index = 0;
+    int bit_index = 0;
     int bit;
     
-    while (index < 8)
+    while (bit_index < 8)
     {
         bit = (ch & mask);
         if (bit == 0)
-            buffer[start_index] = SIGUSR1;
+            signal_control.signals[start_index] = SIGUSR1;
         else
-            buffer[start_index] = SIGUSR2;
+            signal_control.signals[start_index] = SIGUSR2;
 
         start_index++;
         mask = mask / 2;
-        index++;
+        bit_index++;
     }
 }
 
-static int* message_to_signals(const char *message)
+static void message_to_signals(const char *message)
 {
     int num_chars;
-    int num_bits ;
-    int *buffer;
     int char_index;
     int start_index;
     
     num_chars = ft_strlen (message) + 1;
-    num_bits = num_chars * 8;
-    buffer = malloc (num_bits * sizeof(int));
-    if (buffer == NULL)
-        return (NULL);
+    signal_control.num_signals = num_chars * 8;
+    signal_control.signals = malloc (signal_control.num_signals * sizeof(int));
+    if (signal_control.signals == NULL)
+	{
+     	free (signal_control.signals);
+	 	return;
+	}
     char_index = 0;
     start_index= 0;
     while (char_index < num_chars)
@@ -60,21 +70,33 @@ static int* message_to_signals(const char *message)
         // 1 parámetro: Qué caracter
         // 2 parámetro: Dónde guardar los bits
         // 3 parámetro: Desde donde (dentro del array) guardar los bits
-        char_to_signals(message[char_index], buffer, start_index);
+        char_to_signals(message[char_index], start_index);// Variable global signals 
         char_index++;
         start_index = start_index + 8;
     }
-    return (buffer);
 }   
+
+void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context) 
+{
+    (void)sign;
+    (void)context;
+
+    if (signal_control.signal_index >= signal_control.num_signals) // ES el cliente el que tiene que decir ya no mas, si no se pone seg.fault 
+        return;
+
+    usleep(10); // clin clin clin, duermete un poquitin-Asincrono no predecible en el tiempo
+    if (kill(siginfo->si_pid, signal_control.signals[signal_control.signal_index]) < 0)
+    {
+        ft_printf("Error sending signal to server with PID %d\n", siginfo->si_pid);
+        exit(-1);
+    }
+    signal_control.signal_index++;
+}
 
 int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar señales al server por cada caracter.
 {
+   struct sigaction sa;
     int     pid;
-    int    *signals;
-    int     num_chars;
-    int     num_signals;
-    int     index;
-    int     result_send_signal;
      
     if (argc < 3 )
     {
@@ -88,29 +110,29 @@ int main(int argc, char **argv) // Lo que hago es recorrer el mensaje y enviar s
       return (-1);
    }
         
-    signals = message_to_signals (argv[2]);  
+   ft_memset (&sa, 0, sizeof(sa)); 
+   sa.sa_sigaction = handler_sigusr1; //donde, a que funcion hay que llamar cuando llegue la señal
+   sa.sa_flags = SA_SIGINFO; // Definimos como queremos que nos llegue la señal, con info o sin info
+   if(sigaction (SIGUSR1, &sa, NULL) < 0)
+   {
+       ft_printf("Error listening to signals\n");
+       return (-1);
+   }
+   message_to_signals (argv[2]);  
 
     // En la variable "pid" tenemos el PID del server
     // En la variable signals tenemos el array con las señales a enviar
-    num_chars = strlen (argv[2]) + 1;
-    num_signals = num_chars * 8;
-        
-	index = 0;
-    while (index < num_signals)
+	signal_control.signal_index = 1;// la primera ya esta enviada asi que la señal se posiciona en el 1
+					 // Podria estar debajo pero como es asincrono todo,aqui evitamos que se pierda.
+    if (kill(pid, signal_control.signals[0]) < 0)
     {
-        result_send_signal = kill(pid, signals[index]);
-        if (result_send_signal == -1)
-        {
-            free (signals);
-            return (1);
-        }
-        // En la traza (lo que sale por pantalla) ponemos "index+1" porque la primera señal es la cero
-        // pero eso no es muy human-readable... lo normal para un humano de a pie es que la primera sea
-        // la uno, no la cero; la segunda la 2, no la 1, etc
-        ft_printf("Signal %d/%d sent to PID %d\n", (index+1), num_signals, pid);                 
-        usleep(150);
-        index++;
-    } 
-    free (signals);
+        ft_printf("Error sending first signal\n");
+		free (signal_control.signals);
+        return (-1);
+    }
+
+    while (signal_control.signal_index < signal_control.num_signals) // No tiene signal_index++ porque lo tiene el handler de forma asincrona
+        pause();
+    free (signal_control.signals);
     return (0);
 }
