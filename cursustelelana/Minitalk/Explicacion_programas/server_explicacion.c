@@ -18,8 +18,8 @@
 
 typedef struct s_server
 {
-	int num_signal; 
-	char signals_received [8]; 
+	int num_signal; // donde ir contando
+	char signals_received [8]; // donde guardar las señales recibidas
 }	t_server;
 
 t_server signal_control;
@@ -41,13 +41,14 @@ int ft_btoi(const char *num)
     }
     return (value);
 }
-void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context) 
+void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context) // bucle asincrono - el concpeto es igual que un bucle while pero como no sabemos cuando vamos a recbir la señal.Se ejecuta una vez cada vez que recibes la señal cada vez.
 {
-   char byte;
+   char ch;
       
    (void) context;
    (void)siginfo; 
-   
+   // ft_printf("Signal received from pid %d\n", siginfo->si_pid);
+
    if (sign == SIGUSR1)
       signal_control.signals_received [signal_control.num_signal] = '0';
    else 
@@ -56,13 +57,17 @@ void handler_sigusr1 (int sign, siginfo_t *siginfo, void *context)
    
    if (signal_control.num_signal == 8)
    {
-      byte = ft_btoi (signal_control.signals_received);
-      if (byte == '\0')
+      // Aunque retorna int, yo se que he decificado un número
+      // entre 0 y 255, así es que me cabe en un char
+      ch = ft_btoi (signal_control.signals_received);
+      if (ch == '\0')
          write(1, "\n", 1);
       else
-	     write(1, &byte, 1);
+	     write(1, &ch, 1);
       signal_control.num_signal = 0;
    }
+
+   // Let's tell the client to send the next signal
    kill(siginfo->si_pid, SIGUSR1);
 }       
 
@@ -75,8 +80,8 @@ int main()
    signal_control.num_signal = 0;
 
    ft_memset (&sa, 0, sizeof(sa)); 
-   sa.sa_sigaction = handler_sigusr1; 
-   sa.sa_flags = SA_SIGINFO; 
+   sa.sa_sigaction = handler_sigusr1; //donde, a que funcion hay que llamar cuando llegue la señal
+   sa.sa_flags = SA_SIGINFO; // Definimos como queremos que nos llegue la señal, con info o sin info
    sig_S1 = sigaction (SIGUSR1, &sa, NULL);
    sig_S2 = sigaction (SIGUSR2, &sa, NULL);
    if (sig_S1 == -1 || sig_S2 == -1)
