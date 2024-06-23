@@ -1,4 +1,4 @@
-CONVERSION A BINARIOS.
+# CONVERSION A BINARIOS.
 
 Binario es base 2 
 Decimal es base 10 
@@ -8,7 +8,7 @@ Lo que significa que 1
 Resultado final = 128 64 32 16 8 4 2 1 ( Mascaras)
 En binario todos los bits estan a cero excepto 1 que es el que nos sirve para chequear.
 
-1.- PASAR DIGITOS A BINARIOS
+1. **PASAR DIGITOS A BINARIOS**
 
  Estamos trabajando con bloques de 8 bits, con un entero que tiene 4 bytes- 32 bits, abarcariamos el maximo que podemos pasar a binario y el maximo que un ordenador recoger de un entero.
  Al igual que en base 10, en binario el numero más pequeño es el de la derecha y luego se van multiplicando * 2.
@@ -18,7 +18,7 @@ En binario todos los bits estan a cero excepto 1 que es el que nos sirve para ch
   128 64 32 16 8 4 2 1
    1   1  1  0 0 0 0 1 = 225
 
-2.- COMO VAMOS A CHEQUEAR ? Operaciones logicas
+2. **COMO VAMOS A CHEQUEAR ? Operaciones logicas**
 
 Operaciones logicas - > es una operacion que trabaja a nivel de bits, en lugar de numeros, usa bits.
 * AND & (un solo aspersan) 
@@ -36,7 +36,7 @@ Necesitas ser mayor de 18 años y ser socio, solo cuando traes las dos cosas pue
 Solo cuando traes el dni o autorizacion de tus padres puedes entrar, o una cosa u otra cosa, solo no puedes cuando no traes nada .
 
 
-3.- COMO FUNCIONA LA OPERACION LOGICA AND 
+3. **COMO FUNCIONA LA OPERACION LOGICA AND**
 
 Solo cuando el ultimo bit es 1 podemos desplazar a la izquiera la mascara del 1 y dejando a la derecha un bit 0. 
 Con cada una de las mascaras:
@@ -89,12 +89,13 @@ Con cada una de las mascaras:
      --------
      00000000 = octavo bit seria 0  
 
-3.- PARA CODIFICAR CARACTERES Y ENVIARLOS EN BINARIO.
-    USAMOS LAS OPERACIONES LOGICAS
+4. **PARA CODIFICAR CARACTERES Y ENVIARLOS EN BINARIO.
+    USAMOS LAS OPERACIONES LOGICAS**
     
     Si empiezas por la izquierda la mascara es 1000000 y has de dividir / 2 para avanzar Mask = 128
     Si empiezas por la derecha la mascara es 00000001 y has de multiplicar * 2 para avanzar Mask = 1;
 
+```
      0 1 0 0 1 0 0 0 = 72 = 'H'
   &  1 0 0 0 0 0 0 0 = 128 = mask
      ---------------
@@ -135,4 +136,6 @@ Con cada una de las mascaras:
   &  0 0 0 0 0 0 0 1 =  1 = mask
      ---------------
      0 0 0 0 0 0 0 0 = 0  
+```
+
      Resultado final de la codificacion de la H es        
