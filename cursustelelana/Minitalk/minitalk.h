@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_convertion_X.c                                  :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 08:28:37 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/06/24 12:47:31 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/06/21 13:30:56 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/06/24 15:53:34 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#ifndef MINITALK_H
 
-int	printf_convertion_x(va_list args, int count)
+# define MINITALK_H
+
+typedef struct s_server
 {
-	char					*str;
-	unsigned long			ld;
-	int						w_check;
+	char	signals_received [8];
+	int		num_signal;
 
-	ld = va_arg(args, unsigned int);
-	str = ft_htoa(ld);
-	if (str)
-	{
-		count = count + ft_strlen(str);
-		w_check = ft_putstr_printf(str);
-		free(str);
-		if (w_check < 0)
-			return (-1);
-	}
-	return (count);
-}
+}	t_server;
+
+#endif

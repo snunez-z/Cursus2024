@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 16:10:08 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/06/24 15:47:14 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/06/24 13:24:25 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/06/24 14:25:23 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 #include <string.h>
 #include <unistd.h>
 #include "libft/libft.h"
+#include "minitalk_bonus.h"
 
-static void	byte_to_signals(char byte, int *buffer, int start_index)
+t_client	g_sig_cont;
+
+static void	byte_to_signals(char byte, int start_index)
 {
 	int	mask;
 	int	bit_index;
@@ -28,55 +31,58 @@ static void	byte_to_signals(char byte, int *buffer, int start_index)
 	{
 		bit = (byte & mask);
 		if (bit == 0)
-			buffer[start_index] = SIGUSR1;
+			g_sig_cont.signals[start_index] = SIGUSR1;
 		else
-			buffer[start_index] = SIGUSR2;
+			g_sig_cont.signals[start_index] = SIGUSR2;
 		start_index++;
 		mask = mask / 2;
 		bit_index++;
 	}
 }
-static int *message_to_signals(const char *message)
+
+static void	message_to_signals(const char *message)
 {
-	size_t	num_bytes;
-	int	num_bits;
-	int	*buffer;
-	size_t	byte_index;
-	int	start_index;
+	int		num_bytes;
+	int		byte_index;
+	int		start_index;
 
 	num_bytes = ft_strlen (message) + 1;
-	num_bits = num_bytes * 8;
-	buffer = malloc (num_bits * sizeof(int));
-	if (buffer == NULL)
+	g_sig_cont.num_signals = num_bytes * 8;
+	g_sig_cont.signals = malloc (g_sig_cont.num_signals * sizeof(int));
+	if (g_sig_cont.signals == NULL)
 	{
-		free (buffer);
-		return (NULL);
+		free (g_sig_cont.signals);
+		return ;
 	}
 	byte_index = 0;
 	start_index = 0;
 	while (byte_index < num_bytes)
 	{
-		byte_to_signals(message[byte_index], buffer, start_index);
+		byte_to_signals(message[byte_index], start_index);
 		byte_index++;
 		start_index = start_index + 8;
 	}
-	return (buffer);
 }
-void handler_sigusr1(int sig, siginfo_t *siginfo, void *context)
+
+void	handler_sigusr1(int sign, siginfo_t *siginfo, void *context)
 {
-	(void)sig;
-	(void)siginfo;
+	(void)sign;
 	(void)context;
+	if (g_sig_cont.signal_index >= g_sig_cont.num_signals)
+		return ;
+	usleep(10);
+	if (kill(siginfo->si_pid, g_sig_cont.signals[g_sig_cont.signal_index]) < 0)
+	{
+		ft_printf("Error signal to server PID %d\n", siginfo->si_pid);
+		exit(-1);
+	}
+	g_sig_cont.signal_index++;
 }
+
 int	main(int argc, char **argv)
 {
 	struct sigaction	sa;
-	int		pid;
-	int		*signals;
-	int		num_signals;
-	size_t	num_bytes;
-	int		result_send_signals;
-	int		index;
+	int								pid;
 
 	if (argc < 3)
 		return (1);
@@ -88,18 +94,15 @@ int	main(int argc, char **argv)
 	sa.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGUSR1, &sa, NULL) < 0)
 		return (-1);
-	signals =message_to_signals(argv[2]);
-	num_bytes = ft_strlen (argv[2]) + 1;
-	num_signals = num_bytes * 8;
-	index = 0;
-	while ( index < num_signals)
+	message_to_signals(argv[2]);
+	g_sig_cont.signal_index = 1;
+	if (kill(pid, g_sig_cont.signals[0]) < 0)
 	{
-		result_send_signals = kill (pid, signals[index]);
-		if (result_send_signals == -1)
-			return (-1);
-		index++;
-		usleep (300);
+		free (g_sig_cont.signals);
+		return (-1);
 	}
-	free (signals);
+	while (g_sig_cont.signal_index < g_sig_cont.num_signals)
+		pause ();
+	free (g_sig_cont.signals);
 	return (0);
-}	
+}

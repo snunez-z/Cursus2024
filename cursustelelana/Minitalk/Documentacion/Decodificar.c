@@ -36,7 +36,7 @@ int sushi_htoi(const char *num)
         }
         else if (*num >= 'A' && *num <= 'F')
         {
-            digit = (*num - 'A') + 10;
+            digit = (*num - 'A') + 10; // que es donde empieza la primera letra 
             value = (value *16) + digit;
         }
         num++;

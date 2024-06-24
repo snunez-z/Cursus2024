@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:25:57 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/02/28 08:17:46 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/06/21 17:28:57 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <unistd.h>
 # include <ctype.h>
 # include <stdarg.h>
-
 
 typedef struct s_list
 {
