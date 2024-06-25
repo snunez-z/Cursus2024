@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:09:10 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/06/24 14:19:41 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:44:45 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 t_server	g_signal_control;
 
-int	ft_btoi(const char *num)
+static	int	ft_btoi(const char *num)
 {
 	char	digit;
 	int		value;
@@ -63,8 +63,8 @@ void	handler_sigusr1(int sign, siginfo_t *siginfo, void *context)
 int	main(void)
 {
 	struct sigaction	sa;
-	int			sig_s1;
-	int			sig_s2;
+	int					sig_s1;
+	int					sig_s2;
 
 	g_signal_control.num_signal = 0;
 	ft_memset (&sa, 0, sizeof(sa));

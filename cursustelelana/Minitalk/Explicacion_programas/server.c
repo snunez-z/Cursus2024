@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/25 09:29:53 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/06/25 16:40:06 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/06/17 16:09:10 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/06/24 15:03:21 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 t_server	g_signal_control;
 
-static	int	ft_btoi(const char *num)
+int	ft_btoi(const char *num)
 {
 	char	digit;
 	int		value;
@@ -57,19 +57,17 @@ void	handler_sigusr1(int sign, siginfo_t *siginfo, void *context)
 			write(1, &byte, 1);
 		g_signal_control.num_signal = 0;
 	}
-	kill(siginfo->si_pid, SIGUSR1);
 }
 
 int	main(void)
 {
 	struct sigaction	sa;
-	int					sig_s1;
-	int					sig_s2;
+	int			sig_s1;
+	int			sig_s2;
 
 	g_signal_control.num_signal = 0;
 	ft_memset (&sa, 0, sizeof(sa));
 	sa.sa_sigaction = handler_sigusr1;
-	sa.sa_flags = SA_SIGINFO;
 	sig_s1 = sigaction (SIGUSR1, &sa, NULL);
 	sig_s2 = sigaction (SIGUSR2, &sa, NULL);
 	if (sig_s1 == -1 || sig_s2 == -1)

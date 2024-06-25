@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:24:25 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/06/24 14:25:23 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:47:48 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	handler_sigusr1(int sign, siginfo_t *siginfo, void *context)
 int	main(int argc, char **argv)
 {
 	struct sigaction	sa;
-	int								pid;
+	int					pid;
 
 	if (argc < 3)
 		return (1);
