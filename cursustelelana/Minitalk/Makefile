@@ -6,7 +6,7 @@
 #    By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 16:10:29 by snunez-z          #+#    #+#              #
-#    Updated: 2024/06/24 14:15:26 by snunez-z         ###   ########.fr        #
+#    Updated: 2024/06/26 17:44:36 by snunez-z         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,8 @@ $(LIBFT):
 ###################################################
 
 clean:
-	@make -sC libft clean
-	@rm -f $(OBJ_SERVER) $(OBJ_CLIENT)$(OBJ_SERVER_BONUS) $(OBJ_CLIENT_BONUS)
+	make -sC libft clean
+	rm -f $(OBJ_SERVER) $(OBJ_CLIENT)$ (OBJ_SERVER_BONUS) $(OBJ_CLIENT_BONUS)
 
 fclean: clean
 	@make -sC libft fclean
