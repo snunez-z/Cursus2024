@@ -25,7 +25,6 @@ $> ./first_word "  lorem,ipsum  " | cat -e
 lorem,ipsum$
 $>*/
 
-/*
 #include <unistd.h>
 
 int	main (int argc, char **argv)
@@ -35,9 +34,9 @@ int	main (int argc, char **argv)
 	if (argc == 2)
 	{
 		index = 0;
-		while (argv[1][index] == ' ' || argv[1][index] == '\n')
+		while (argv[1][index] == ' ' || argv[1][index] == '\t')
 			++index;
-		while ((argv [1][index] != ' ' || argv[1][index]!= '\n') && argv[1][index])
+		while ((argv [1][index] != ' ' || argv[1][index]!= '\t') && argv[1][index])
 		{
 			write(1, &argv[1][index], 1);
 			index++;

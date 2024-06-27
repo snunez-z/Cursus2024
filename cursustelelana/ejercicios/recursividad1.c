@@ -2,8 +2,9 @@
 // Haz esta función. Lo que tiene que hacer es escribir (write) por pantalla (1)
     // la cadena de caracteres "str", pero tiene que hacerlo carácter a carácter
     // Hazlo con un bucle, te será más fácil, pero luego cambialo a hacerlo de forma
-    // recursiva
-/*#include <unistd.h>
+    // recursivad
+
+#include <unistd.h>
 
 void putstr(const char *str)
 {
@@ -22,7 +23,7 @@ int main(void)
 {
     putstr("Hola Sushi!!\n");
     return (0);
-}*/
+}
 
 #include <unistd.h>
 
@@ -40,4 +41,4 @@ int main(void)
 {
     putstr("Hola Sushi!!\n");
     return (0);
-}
+}*/
