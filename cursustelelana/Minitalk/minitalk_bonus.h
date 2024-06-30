@@ -23,9 +23,10 @@ typedef struct s_server
 
 typedef struct s_client
 {
-	int	*signals;
-	int	num_signals;
-	int	signal_index;
+	int mask;
+	int byte_index;
+	char *message;
+	int is_finished;
 }	t_client;
 
 #endif

@@ -9,7 +9,7 @@
 /*   Updated: 2024/06/25 16:47:48 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
@@ -19,48 +19,26 @@
 
 t_client	g_sig_cont;
 
-static void	byte_to_signals(char byte, int start_index)
+static void	send_next_signal(int pid)
 {
-	int	mask;
-	int	bit_index;
 	int	bit;
 
-	mask = 128;
-	bit_index = 0;
-	while (bit_index < 8)
+	int byte = g_sig_cont.message[g_sig_cont.byte_index];
+	bit = (byte & g_sig_cont.mask);
+	if (bit == 0)
+		kill(pid, SIGUSR1);
+	else
+		kill(pid, SIGUSR2);
+	g_sig_cont.mask = g_sig_cont.mask / 2;
+	if (g_sig_cont.mask == 0)
 	{
-		bit = (byte & mask);
-		if (bit == 0)
-			g_sig_cont.signals[start_index] = SIGUSR1;
+		if (byte == '\0')
+			g_sig_cont.is_finished = 1;
 		else
-			g_sig_cont.signals[start_index] = SIGUSR2;
-		start_index++;
-		mask = mask / 2;
-		bit_index++;
-	}
-}
-
-static void	message_to_signals(const char *message)
-{
-	int		num_bytes;
-	int		byte_index;
-	int		start_index;
-
-	num_bytes = ft_strlen (message) + 1;
-	g_sig_cont.num_signals = num_bytes * 8;
-	g_sig_cont.signals = malloc (g_sig_cont.num_signals * sizeof(int));
-	if (g_sig_cont.signals == NULL)
-	{
-		free (g_sig_cont.signals);
-		return ;
-	}
-	byte_index = 0;
-	start_index = 0;
-	while (byte_index < num_bytes)
-	{
-		byte_to_signals(message[byte_index], start_index);
-		byte_index++;
-		start_index = start_index + 8;
+		{
+			g_sig_cont.mask = 128;
+			g_sig_cont.byte_index++;
+		}
 	}
 }
 
@@ -68,15 +46,10 @@ void	handler_sigusr1(int sign, siginfo_t *siginfo, void *context)
 {
 	(void)sign;
 	(void)context;
-	if (g_sig_cont.signal_index >= g_sig_cont.num_signals)
+	if (g_sig_cont.is_finished)
 		return ;
 	usleep(10);
-	if (kill(siginfo->si_pid, g_sig_cont.signals[g_sig_cont.signal_index]) < 0)
-	{
-		ft_printf("Error signal to server PID %d\n", siginfo->si_pid);
-		exit(-1);
-	}
-	g_sig_cont.signal_index++;
+	send_next_signal(siginfo->si_pid);
 }
 
 int	main(int argc, char **argv)
@@ -94,15 +67,12 @@ int	main(int argc, char **argv)
 	sa.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGUSR1, &sa, NULL) < 0)
 		return (-1);
-	message_to_signals(argv[2]);
-	g_sig_cont.signal_index = 1;
-	if (kill(pid, g_sig_cont.signals[0]) < 0)
-	{
-		free (g_sig_cont.signals);
-		return (-1);
-	}
-	while (g_sig_cont.signal_index < g_sig_cont.num_signals)
+	g_sig_cont.mask = 128;
+	g_sig_cont.byte_index = 0;
+	g_sig_cont.message = argv[2];
+	g_sig_cont.is_finished = 0;
+	send_next_signal(pid);
+	while (!g_sig_cont.is_finished)
 		pause ();
-	free (g_sig_cont.signals);
 	return (0);
 }
