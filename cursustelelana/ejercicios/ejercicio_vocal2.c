@@ -1,36 +1,42 @@
 //Este programa recibe una string y retorna el numero de vocales que tiene 
 // si no recibe ningun parametro tiene que sacar 0
 
-#include <stdio.h>
-#include <unistd.h>
-
-int	main(int argc, char	**argv)
+int	is_vowel (char ch)
 {
-	char	vocales[] = "aeiouAEIOU";
-	int	i;
-	char	*str;
-	int	num_voc;
+	char	vowels []= "aeiouAEIOU";
+	int	index;
 
-	if (argc < 2)
+	index = 0;
+	while (index < 10)
 	{
-		write (1, "0\n", 2);
-		return(0);
+		if(ch == vowels[index])
+			return (1);
+		else
+			index++;
 	}
-	str = argc;
-    index = 1
-	while (index < str)
-	
-	{
-		i = 0;
-		while (i < 10)
-		{
-			if (*str == vocales[i])
-				num_voc++;
-			i++;
-		}
-		str++;
-	}
-	printf("El numero de vocales es : %d\n", num_voc);
 	return (0);
 }
 
+#include <stdio.h>
+
+int main (int	argc, char** argv)
+{
+	int		num_vocals;
+	char	*str;
+
+	if (argc == 1)
+	{
+		printf ("0\n");
+		return (-1);
+	}
+	num_vocals = 0;
+	str = argv [1];
+	while (*str != '\0')
+	{
+		if (is_vowel (*str))
+			num_vocals++;
+		str++;
+	}
+	printf (" Num of vocals is = %d\n", num_vocals);
+	return (0);
+}

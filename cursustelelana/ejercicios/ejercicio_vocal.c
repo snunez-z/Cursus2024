@@ -1,33 +1,43 @@
 
 /* Este programa recibe una string y retorna el numero de vocales que tiene */
 
-#include <stdio.h>
-
-int	vocal_search(char	*str)
+static int is_vowel(char ch)
 {
-	char	vocals[] = "aeiou";
-	int		num_vocals;
-	int		i;
-	
-    num_vocals =0;
-	while (*str != '\0')
+	char vowels [] = "aeiouAEIOU";
+	int	index;
+
+	index = 0;
+	while (index < 10)
 	{
-		i = 0;
-		while (i < 5)
-		{
-			if (*str == vocals [i])
-				num_vocals++;
-			i++; 
-		}
-		str++;
-	}
-	return (num_vocals);
+		if (ch == vowels [index])
+			return (1);
+		else 
+			index++;
+	}   
+	return (0);
 }
+
+#include <stdio.h>
 
 int main (int argc, char**argv)
 {
-	int num_vocales;
-	num_vocales = vocal_search (argv[1]);
-	printf ("El numero de vocales existentes es : %d\n", num_vocales);
+	
+	if (argc < 2)
+		return (-1);
+
+	char	*str;
+	int		num_vocals;
+	int		index;
+
+	str = argv [1];
+	while (*str != '\0')
+	{
+		num_vocals = 0;
+		if (is_vowel(*str))
+			num_vocals++;
+		str++;
+	}
+	printf ("%d\n", num_vocals);
 	return (0);
 }
+
