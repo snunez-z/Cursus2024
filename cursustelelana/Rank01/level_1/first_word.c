@@ -27,21 +27,22 @@ $>*/
 
 #include <unistd.h>
 
-int	main (int argc, char **argv)
+int	main(int argc, char	**argv)
 {
-	int	index;
-
+	
+	char	*str;
+	
 	if (argc == 2)
 	{
-		index = 0;
-		while (argv[1][index] == ' ' || argv[1][index] == '\t')
-			++index;
-		while ((argv [1][index] != ' ' || argv[1][index]!= '\t') && argv[1][index])
-		{
-			write(1, &argv[1][index], 1);
-			index++;
+		str = argv [1];	
+		while (*str == ' ' || *str == '\t')
+			str++;
+		while (*str != ' ' && *str != '\t' && *str != '\0')
+		{	
+			write (1, str, 1);
+			str++;
 		}
-	}
-	write (1, "\n", 1);
+	}	
+	write(1, "\n", 1);
 	return (0);
-}*/
+}

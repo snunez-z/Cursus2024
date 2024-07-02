@@ -10,6 +10,7 @@ Your function must be declared as follows:
 char    *ft_strcpy(char *s1, char *s2);*/
 #include <stdio.h>
 
+/*
 char    *ft_strcpy(char *s1, char *s2)
 {
     int index;
@@ -29,4 +30,4 @@ int main (void)
 
    ft_strcpy (buffer, "Hola buena amiga");
    printf("%s\n", buffer);
-}
+}*/
