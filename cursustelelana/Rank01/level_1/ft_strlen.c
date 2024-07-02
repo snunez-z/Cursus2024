@@ -9,6 +9,8 @@ Your function must be declared as follows:
 
 int	ft_strlen(char *str);*/
 
+#include <stdio.h>
+
 int ft_strlen (char *str)
 {
     int index;
@@ -27,4 +29,5 @@ int main(void)
 {
     printf("%d\n", ft_strlen ("Hola amiga"));
     return (0);
-}  
+}
+
