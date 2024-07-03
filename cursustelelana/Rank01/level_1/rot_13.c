@@ -28,28 +28,111 @@ $
 $>*/
 #include <unistd.h>
 
+int main (int argc, char **argv)
+{
+	char *str;
+	int	i;
+
+	if (argc == 2)
+	{
+		str = argv [1];
+		i = 0;
+		while (str [i] != '\0')
+		{
+			if (str[i] >= 'A' && str[i] <= 'Z')
+				str[i] = (str[i] - 'A' + 13) % 26 - 'A';
+			else if (str[i] >= 'a' && str[i] <= 'z')
+				str[i] = (str[i] - 'a' + 13) % 26 - 'a';
+			write (1, &str[i], 1);
+			i++;
+		}
+	write (1, "\n", 1);
+	return (0);
+	}
+}
+
+
+/*
+int	main(int argc, char **argv)
+{
+	char	*str;
+	int	i;
+
+	if (argc == 2)
+	{
+		str = argv[1];
+		i = 0;
+		while (str[i] != '\0')
+		{	
+			if (str[i] >= 'A' && str[i] <= 'Z')
+			{
+				str[i] += 13;
+				if (str[i] > 'Z')
+					str[i]-= 26;
+			}
+			else if (str[i] >= 'a' && str[i] <= 'z')
+			{
+				str[i] += 13;
+				if (str[i] > 'z')
+					str[i] -= 26;
+			}
+			write(1, &str[i], 1);
+			i++;
+		}
+	
+	}	
+	write (1, "\n", 1);
+	return (0);
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 int main (int argc, char**argv)
 {
-    int index;
-   
-    index = 0;
-    if (argc == 2)
-    {
-        while (argv[1][index] != '\0')
-        {
-            if ( argv[1][index] >= 'a' && argv[1][index] <= 'z')
-                argv [1][index] = (argv[1][index] - 'a' + 13) % 26 + 'a'; 
-            else if (argv[1][index] >= 'A' && argv[1][index] <= 'Z')
-            {
-                argv[1][index] += 13;
-                if (argv[1][index] > 'Z')
-                    argv[1][index] -= 26;
-            }
-            write (1, &argv[1][index], 1);
+    	int 	index;
+	char	*str;	   
+    
+	index = 0;
+	str = argv [1];
+    	if (argc == 2)
+    	{
+        	while (str[index] != '\0')
+        	{
+            	if ( str[index] >= 'a' && str[index] <= 'z')
+                	str[index] = (str[index] - 'a' + 13) % 26 + 'a'; 
+            	else if (str[index] >= 'A' && str[index] <= 'Z')
+            	{	
+                	str[index] += 13;
+                	if (str[index] > 'Z')
+                    		str[index] -= 26;
+            	}
+            write (1, &str[index], 1);
             index++;
         }
         write(1, "\n", 1);
         return (0);
     }
-}
+}*/
 

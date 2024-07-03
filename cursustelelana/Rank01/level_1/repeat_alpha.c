@@ -30,6 +30,7 @@ $>
 $>./repeat_alpha "" | cat -e
 $
 $>*/
+
 #include <unistd.h>
 
 void	ft_putchar( char c, int i)
