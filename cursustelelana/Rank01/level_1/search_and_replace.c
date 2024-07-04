@@ -27,24 +27,24 @@ $>./search_and_replace "wNcOre Un ExEmPle Pas Facilw a Ecrirw " "w" "e" | cat -e
 eNcOre Un ExEmPle Pas Facile a Ecrire $*/
 #include <unistd.h>
 
+
 int main (int argc, char **argv)
 {
-    int index;
 
-    index = 0;
-    if (argc == 4 && !argv[2][1] && !argv[3][1]) //Aquí se verifica si el segundo carácter del tercer argumento (argv[2][1]) es falso, es decir, si es igual a cero o a un valor considerado falso en C 
-    {
-        while (argv[1][index] !='\0')
-        {
-            if (argv[1][index] == argv[2][0]) 
-                argv[1][index] = argv[3][0];
-            write(1, &argv[1][index], 1);
-            index++;
-        }    
-        write (1, "\n", 1);
-        return (0);
-    }
+	int	i;
+
+	if (argc == 4 && argv[2][1] == '\0' && argv[3][1] == '\0')
+	{
+		i = 0;
+		while (argv[1][i] != '\0')
+		{
+			if (argv[1][i] == argv [2][0])
+				argv[1][i] = argv[3][0];
+			write (1, &argv[1][i], 1);
+			i++;
+		}
+	}
+	write (1, "\n", 1);
+	return (0);
 }
-
-
 
