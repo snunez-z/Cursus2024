@@ -16,6 +16,7 @@ NAME = minitalk
 
 SERVER = server
 CLIENT = client
+
 SERVER_BONUS = server_bonus
 CLIENT_BONUS = client_bonus
 
@@ -60,7 +61,7 @@ $(LIBFT):
 
 clean:
 	make -sC libft clean
-	rm -f $(OBJ_SERVER) $(OBJ_CLIENT)$ (OBJ_SERVER_BONUS) $(OBJ_CLIENT_BONUS)
+	rm -f $(OBJ_SERVER) $(OBJ_CLIENT) $(OBJ_SERVER_BONUS) $(OBJ_CLIENT_BONUS)
 
 fclean: clean
 	@make -sC libft fclean
