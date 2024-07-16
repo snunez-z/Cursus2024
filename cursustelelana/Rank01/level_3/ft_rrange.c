@@ -18,52 +18,65 @@ Examples:
 - With (0, 0) you will return an array containing 0.
 - With (0, -3) you will return an array containing -3, -2, -1 and 0.*/
 
-#include <stdlib.h>
-int	*ft_rrange(int	start,int end)
-{
-	int	num_numbers;
-	int	*numbers;
-	int	i;
-
-	if (end > start)
-	{
-		num_numbers = (end - start ) + 1;
-		numbers = (int*) malloc (num_numbers * sizeof(int));
-		i = 0;
-		while (i < num_numbers)
-		{
-			numbers[i] = end;
-			i++;
-			end--;
-		}
-	}
-
-	else 
-	{
-		num_numbers = (start - end )+ 1;
-		numbers = (int*) malloc (num_numbers * sizeof(int));
-		i = 0;
-		while (i < num_numbers)
-		{
-			numbers[i] = end;
-			i++;
-			end++;
-		}
-	}
-	return (numbers);
-}
-
 #include <stdio.h>
-int	main(void)
+#include <stdlib.h>
+
+int *ft_rrange(int start, int end)
 {
-	int	i;
-	int	*result;
-	
-	i = 0;
-	result = ft_rrange (1, -3);
-	while (i < 5)
+	long num_numbers;
+	long i = 0;
+	int *numbers;
+
+	if(start <= end)
+		num_numbers = (long)end - (long)start +1;
+	else
+		num_numbers = (long)start - (long)end +1;
+
+	printf("la longitud es %ld\n", num_numbers);
+
+	numbers = (int *) malloc(num_numbers * sizeof(int));
+	if (numbers == NULL)
+		return(NULL);
+	while(i < num_numbers)
 	{
-		printf("%d\n", result [i]);
-		i++;	
+		if (start <=end)
+		{
+			numbers[i] = end;
+			printf("la posicion %ld, es %d\n", i, end);
+			end--;
+			i++;
+		}
+		else
+		{
+			numbers[i] = end;
+			printf("la posicion %ld, es %d\n", i, end);
+			end++;
+			i++;
+		}
 	}
+	return(numbers);
 }
+
+/*
+int main()
+{
+	int start = 2147483647;
+	int end= -2147483647;
+	int *result;
+
+	result = ft_rrange(start, end);
+	return(0);
+}*/
+/*
+ #include <stdio.h>
+ int	main(void)
+{
+ 	int start = -2147483648;
+ 	int end = 2147483647;
+	int *prueba = ft_rrange(start, end);
+	int i = 0;
+
+ 	while (i < 3)
+ 		printf("%d |", prueba[i++]);
+ 	return (0);
+ }*/
