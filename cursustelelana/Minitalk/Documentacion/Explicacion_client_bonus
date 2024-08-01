@@ -1,0 +1,22 @@
+
+Programa Client_Bonus.
+
+La funcion send_next_file envia la siguiente final si es necesario.
+Para ello necesita saber que byte está codificando, saber que bit se esta codificando , el mesnaje recibido, el pid del server al que se lo tiene que enviar.
+Por eso esta funcion necesita recibir como argumento el pid.
+A esta funcion la va a llamar el Handler y se va a llamar cada vez que haya que enviar una señal, cada vez que se necesite codificar un bit.
+Necesita saber que byte esta codificando, bit, la mascara para poder cofidicar la mascara. Ahora va a ser asincrono.
+Por lo tanto esas cosas han de ser globales, necesita recordarlas por lo tanto tengo que declararme una estructura global t_client y meterlas alli.
+
+Se iniciazan desde el main, nuestro programa .
+Nuestra funcion codifica uno a uno, pero tiene que darse cuenta de que ha codificado 8 . por lo tanto cada 8 se reinicia de nuevo para poder pasarle la mascara 
+de nuevo inicializandolo a 128, inicializar a cero y reinicar el proceso.
+
+El main es el que tiene que inicializar todas las variables globales (mensaje, mascara inicial, el byte index inicial, por cual byte voy).
+Tanto la funcion handler que envia la siguiente señal al server como el main que hace pause y duerme hasta que le llega la siguient señal, los dos necesitan saber si el proceso ha terminado o no.
+Ahora no tenemos array, sigo necesitando saber si he terminado o no para parar el proceso, el main para saber si tiene que seguir durmiendose o no.
+Si ha codificado ocho bits y el ultimo caracter del mensaje, es el barra cero, si la funcion que esta codificado el bit 8 del byte barra cero es que ha terminado.
+Esa informacion si ha acabado o no, la necesitan tanto el handler para finalizar y en el main para darse cuenta que no tiene que dormise mas porque ya se ha acabado el proceso, no va a recibir ninguan señal mas.
+Esta variable ha de ser global tambien, is finished. La necesitan los dos (handler y main) y usando el true (1) y el false (0), pdoemso chequearlo siendo falso hasts que llega al barra 
+cero que va a ser true y ya se para el proceso.
+ 
