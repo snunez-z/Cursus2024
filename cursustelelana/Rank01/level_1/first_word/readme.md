@@ -1,22 +1,16 @@
-# Subject
+## Subject
 
-Assignment name  : first_word
-
-Expected files   : first_word.c
-
-Allowed functions: write
-
+Assignment name  : first_word\
+Expected files   : first_word.c\
+Allowed functions: write\
 --------------------------------------------------------------------------------
 
 Write a program that takes a string and displays its first word, followed by a
-newline.
-
+newline.\
 A word is a section of string delimited by spaces/tabs or by the start/end of
-the string.
-
+the string.\
 If the number of parameters is not 1, or if there are no words, simply display
-a newline.
-
+a newline.\
 Examples:
 
 $> ./first_word "FOR PONY" | cat -e
