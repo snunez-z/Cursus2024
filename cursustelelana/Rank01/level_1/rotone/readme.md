@@ -1,5 +1,6 @@
-# Subject
+## Subject
 
+~~~
 Asigmment name  : rotone
 Expected files   : rotone.c
 Allowed functions: write
@@ -28,4 +29,4 @@ $>
 $>./rotone "" | cat -e
 $
 $>*/
-
+~~~

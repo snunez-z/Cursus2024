@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 This function receives two strings and return the numbers of bytes that there are in the first string that there are too in the second string in the same position.
 

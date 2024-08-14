@@ -1,5 +1,6 @@
-# Subject
+## Subject
 
+~~~
 Assignment name  : ft_swap
 Expected files   : ft_swap.c
 Allowed functions:
@@ -12,4 +13,4 @@ Escribe una funcion que intercambie el contenido de dos enteros cuyos punteros s
 Your function must be declared as follows:
 
 void	ft_swap(int *a, int *b);*/
-
+~~~

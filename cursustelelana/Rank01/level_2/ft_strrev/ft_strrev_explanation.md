@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 1. We need to know the size of str. For this we declare a variable len and initialize to cero.
 2. Loop to run the str till the end.So len = len - 1 , to position in the previous pos before '\0'.

@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 The strpbrk() function returns a pointer to the byte in s that matches one of the bytes in s2. NULL if no such byte is found.
 1. Declare and initialize to 0 an index.

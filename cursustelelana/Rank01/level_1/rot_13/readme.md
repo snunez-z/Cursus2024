@@ -1,5 +1,6 @@
-# Subject
+## Subject
 
+~~~
 Assignment name  : rot_13
 Expected files   : rot_13.c
 Allowed functions: write
@@ -28,3 +29,4 @@ $>
 $>./rot_13 "" | cat -e
 $
 $>*/
+~~~

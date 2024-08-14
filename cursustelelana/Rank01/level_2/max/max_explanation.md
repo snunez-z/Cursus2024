@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 1. While the index doesn't reach the number of bytes in teh array (len).
 2. If the number is this position is bigger than the variable max (initialized to cero), this is the new max till now.

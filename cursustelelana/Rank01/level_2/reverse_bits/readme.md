@@ -1,5 +1,6 @@
-# Subject
+## Subject
 
+~~~
 Assignment name  : reverse_bits
 Expected files   : reverse_bits.c
 Allowed functions:
@@ -21,3 +22,4 @@ _____________
 	 \/
  0110  0100
  */
+~~~

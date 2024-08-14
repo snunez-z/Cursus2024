@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 1. As cero is not a power of 2, exit.
 2. As long as n is divisible by 2 and its remainder is zero.

@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 1. We first contemplate the three scenarios nedded to our program has not to exit after having written a \n.
    we need to check that the arguments are three and the second and third argument is only a letter, no more.

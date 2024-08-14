@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 
 1. Every byte content 8 bits.

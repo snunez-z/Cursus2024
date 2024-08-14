@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 1. Run the string till reach the '\0'.
 2. For each character we should check if the character is between a and z in lower or in upper case.

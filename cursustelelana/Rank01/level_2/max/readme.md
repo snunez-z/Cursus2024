@@ -1,16 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   max.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/01 12:49:58 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 12:50:02 by snunez-z         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+## Subject
 
-/*Assignment name  : max
+~~~
+Assignment name  : max
 Expected files   : max.c
 Allowed functions:
 --------------------------------------------------------------------------------
@@ -25,30 +16,4 @@ the array.
 The function returns the largest number found in the array.
 
 If the array is empty, the function returns 0.*/
-
-
-int	max(int	*tab, unsigned int len)
-{
-	unsigned	int i;
-	int	max;
-
-	i = 0;
-	max = 0;
-	while (i < len)
-	{
-		if (tab[i] >= max)
-		       max = tab[i];
-		i++;
-	}
-	return (max);	
-}
-
-#include <stdio.h>
-
-int	main (void)
-{
-	int	tab[] = {5,10,40,100,8,54,10,9};
-
-	printf("%d\n", max (tab, 8));
-	return (0);
-}
+~~~

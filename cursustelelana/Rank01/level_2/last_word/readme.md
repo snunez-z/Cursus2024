@@ -1,5 +1,6 @@
-# Subject
+## Subject
 
+~~~
 Assignment name  : last_word
 Expected files   : last_word.c
 Allowed functions: write
@@ -25,3 +26,4 @@ $
 $> ./last_word "  lorem,ipsum  " | cat -e
 lorem,ipsum$
 $>*/
+~~~

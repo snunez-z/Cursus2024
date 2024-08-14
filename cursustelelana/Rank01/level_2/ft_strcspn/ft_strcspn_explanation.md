@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 We should compare every position of the both strings and return the number of them there are before they find the first coincidence.
 Examples: "Hola" "ola" return 1, because there is only one character "H" before the first coincidence "o" is founded.

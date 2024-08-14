@@ -1,5 +1,6 @@
-# Subject
+## Subject
 
+~~~
 Assignment naeare	: ft_strspn
 Expected files	: ft_strspn.c
 Allowed functions: None
@@ -11,3 +12,4 @@ Reproduce exactly the behavior of the strn function
 The function should be prototyped as follows:
 
 size_t	ft_strspn(const char *s, const char *accept);*/
+~~~

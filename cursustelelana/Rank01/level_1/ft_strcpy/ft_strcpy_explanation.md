@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 1. We declare an index to use it in the loop.
 2. We need a loop to trasverse the string. As long as the caracter at the index position is not the end of the string. 

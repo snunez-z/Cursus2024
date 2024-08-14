@@ -1,4 +1,4 @@
-# Commented Solution
+## Commented Solution
 
 We are going to return the byte resulting from the bit shift that is made.
 
