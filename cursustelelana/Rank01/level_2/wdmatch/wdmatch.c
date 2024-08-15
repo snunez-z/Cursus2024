@@ -6,36 +6,9 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:53:38 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 12:53:41 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:16:01 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*Assignment name  : wdmatch
-Expected files   : wdmatch.c
-Allowed functions: write
---------------------------------------------------------------------------------
-
-Write a program that takes two strings and checks whether it's possible to
-write the first string with characters from the second string, while respecting
-the order in which these characters appear in the second string.
-
-If it's possible, the program displays the string, followed by a \n, otherwise
-it simply displays a \n.
-
-If the number of arguments is not 2, the program displays a \n.
-
-Examples:
-
-$>./wdmatch "faya" "fgvvfdxcacpolhyghbreda" | cat -e
-faya$
-$>./wdmatch "faya" "fgvvfdxcacpolhyghbred" | cat -e
-$
-$>./wdmatch "forty two" "qfqfsoudf arzgrsayns tsryegftdgs sjytwdekuooixq " | cat -e
-forty two$
-$>./wdmatch "error" rrerrrfiiljdfxjyuifrrvcoojh | cat -e
-$
-$>./wdmatch | cat -e
-$*/
 
 #include <unistd.h>
 
@@ -51,7 +24,7 @@ size_t	ft_strlen(char	*str)
 
 int	is_possible(char *str1, char *str2)
 {
-	int	i;
+	int i;
 	int j;
 	i = 0;
 	j = 0;

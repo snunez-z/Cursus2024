@@ -6,31 +6,10 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:52:31 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 12:52:34 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/08/14 11:54:25 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Assignment name  : swap_bits
-Expected files   : swap_bits.c
-Allowed functions:
---------------------------------------------------------------------------------
-
-Write a function that takes a byte, swaps its halves (like the example) and
-returns the result.
-
-Your function must be declared as follows:
-
-unsigned char	swap_bits(unsigned char octet);
-
-Example:
-
-  1 byte
-_____________
- 0100 | 0001
-     \ /
-     / \
- 0001 | 0100
- */
 unsigned char swap_bits (unsigned char octet)
 {
 	int	mask_and;
@@ -41,8 +20,9 @@ unsigned char swap_bits (unsigned char octet)
 
 	mask_and = 128;
 	mask_or = 8;
-    index = 0;
+	index = 0;
 	result = 0;
+	
 	while (index < 4)
 	{
 		if ((octet & mask_and) != 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 08:47:00 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/07/31 09:41:24 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:22:16 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_strcmp (char	*s1, char *s2)
 	return (*s1 - *s2);
 }
 
-
+/* Main to check the function
 #include <stdio.h>
 
 int	main (int argc, char	**argv)
@@ -40,4 +40,4 @@ int	main (int argc, char	**argv)
 	result = ft_strcmp (argv[1], argv[2]);
 	printf("%d\n",result);
 	return (0);
-}
+} */

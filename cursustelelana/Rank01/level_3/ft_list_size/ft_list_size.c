@@ -6,31 +6,10 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:55:50 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 12:55:55 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/08/15 11:47:23 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Assignment name  : ft_list_size
-Expected files   : ft_list_size.c, ft_list.h
-Allowed functions:
---------------------------------------------------------------------------------
-
-Write a function that returns the number of elements in the linked list that's
-passed to it.
-
-It must be declared as follows:
-
-int	ft_list_size(t_list *begin_list);
-
-You must use the following structure, and turn it in as a file called
-ft_list.h:
-
-typedef struct    s_list
-{
-    struct s_list *next;
-    void          *data;
-}                 t_list;
-*/
 #include <stddef.h>
 #include "ft_list.h"
 

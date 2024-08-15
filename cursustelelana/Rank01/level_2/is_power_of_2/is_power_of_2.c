@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_power_of_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:45:27 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 16:24:47 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:23:26 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_power_of_2(unsigned int n)
 	else 
 		return (0);
 }
-
+/* main to check teh function
 #include <stdio.h>
 
 int	main(void)

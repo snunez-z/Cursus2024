@@ -3,49 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_range.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:56:27 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 12:56:30 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:26:54 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Assignment name  : ft_range
-Expected files   : ft_range.c
-Allowed functions: malloc
---------------------------------------------------------------------------------
-
-Write the following function:
-
-int     *ft_range(int start, int end);
-
-It must allocate (with malloc()) an array of integers, fill it with consecutive
-values that begin at start and end at end (Including start and end !), then
-return a pointer to the first value of the array.
-
-Examples:
-
-- With (1, 3) you will return an array containing 1, 2 and 3.
-- With (-1, 2) you will return an array containing -1, 0, 1 and 2.
-- With (0, 0) you will return an array containing 0.
-- With (0, -3) you will return an array containing 0, -1, -2 and -3.*/
+#include <stdlib.h>
 
 int		*ft_range(int	start, int end)
 {
 	int	*numbers;
 	int	num_numbers;
-	int inc;
+	int 	inc;
+	int	index;
 
 	if (start > end)
 	{
-		num_numbers = (end - start) + 1; 
-		inc = 1;
+		num_numbers = (start - end) + 1; 
+		inc = -1;
 	}
 	else
 	{
 		// Esto es para el corner case de que start sea MAS PEQUENIO que end
-		num_numbers = (start - end) + 1; 
-		inc = -1;
+		num_numbers = (end - start) + 1; 
+		inc = 1;
 	}
 	numbers = (int *) malloc (num_numbers * sizeof(int));
 	index = 0;
@@ -57,3 +40,20 @@ int		*ft_range(int	start, int end)
 	}
 	return (numbers);	
 }
+/* To check the function
+#include <stdio.h>
+
+int	main(void)
+{
+	int	*numbers;
+	int i;
+
+	numbers = ft_range ( 7, 3);
+	i = 0;
+	while (i < 5 )
+	{
+		printf("%d\n", numbers [i]);
+		i++;
+	}
+	return (0);
+}*/
