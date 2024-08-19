@@ -1,4 +1,4 @@
-#Commented Solution
+## Commented Solution
 
 1. Corner case if they do not pass any parametre, display \n and leave the programme.
 2. As we don´t know how many string we are going to received, we declare an index and while index < argc, we are contemplating as many argvs possible

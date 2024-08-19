@@ -1,10 +1,10 @@
-# Subject
+## Subject
 
+~~~
 Assignment name  : tab_mult
 Expected files   : tab_mult.c
 Allowed functions: write
 --------------------------------------------------------------------------------
-
 Write a program that displays a number's multiplication table.
 
 The parameter will always be a strictly positive number that fits in an int,
@@ -38,3 +38,4 @@ $>
 $>./tab_mult | cat -e
 $
 $>
+~~~

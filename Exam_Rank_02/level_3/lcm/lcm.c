@@ -21,3 +21,16 @@ unsigned int lcm(unsigned int a, unsigned int b)
 		mult++;
 	return (a*mult);
 }
+/* To check the function 
+#include <stdio.h>
+int	main(void)
+{
+	printf("lcm(12,15) = %d\n", lcm (12, 15));
+	printf("lcm(2,2) = %d\n", lcm (2, 2));
+	printf("lcm(10,100) = %d\n", lcm (10,100));
+	printf("lcm(0,0) = %d\n", lcm (0, 0));
+	printf("lcm(11,50) = %d\n", lcm (11, 50));
+	printf("lcm(120,15) = %d\n", lcm (120,15));
+	printf("lcm(15,120) = %d\n", lcm (15,120));
+	return (0);
+}*/

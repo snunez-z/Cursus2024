@@ -29,7 +29,7 @@ void print_bits(unsigned char octet)
 		mask = mask / 2;
 	}
 }	
-
+/* to check the function
 #include <stdio.h>
 
 int	main(void)
@@ -37,4 +37,4 @@ int	main(void)
 	
 	print_bits (2);
 	return (0);
-}
+} */

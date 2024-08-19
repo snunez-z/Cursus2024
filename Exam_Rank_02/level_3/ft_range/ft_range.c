@@ -15,22 +15,24 @@
 int		*ft_range(int	start, int end)
 {
 	int	*numbers;
-	int	num_numbers;
+	long	num_numbers;
 	int 	inc;
-	int	index;
+	long	index;
 
 	if (start > end)
 	{
-		num_numbers = (start - end) + 1; 
+		num_numbers = ((long)start - (long)end) + 1; 
 		inc = -1;
 	}
 	else
 	{
 		// Esto es para el corner case de que start sea MAS PEQUENIO que end
-		num_numbers = (end - start) + 1; 
+		num_numbers = ((long)end - (long)start) + 1; 
 		inc = 1;
 	}
 	numbers = (int *) malloc (num_numbers * sizeof(int));
+	if (numbers == NULL)
+		return (NULL);
 	index = 0;
 	while (index < num_numbers)
 	{

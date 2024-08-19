@@ -1,4 +1,4 @@
-# Commented solution
+## Commented solution
 
 1. Number of arguments is equal to number of argc.
    We have to substract one (-1) because the first argument is always the programme name.

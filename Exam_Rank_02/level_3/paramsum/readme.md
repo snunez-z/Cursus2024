@@ -1,8 +1,10 @@
+## Subject
+
+~~~
 Assignment name  : paramsum
 Expected files   : paramsum.c
 Allowed functions: write
 --------------------------------------------------------------------------------
-
 Write a program that displays the number of arguments passed to it, followed by
 a newline.
 
@@ -17,3 +19,4 @@ $>./paramsum 6 12 24 | cat -e
 $>./paramsum | cat -e
 0$
 $>
+~~~

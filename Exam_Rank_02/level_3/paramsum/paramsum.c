@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-int	putnbr (int	num)
+void	putnbr (int	num)
 {
 	char digit;
 
@@ -24,6 +24,8 @@ int	putnbr (int	num)
 
 int main(int argc, char **argv)
 {
+	(void) argv;
 	putnbr(argc-1);
+	write (1, "\n", 1);
 }	
 

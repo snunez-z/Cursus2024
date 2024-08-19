@@ -1,3 +1,5 @@
+## Subject
+~~~
 Assignment name  : print_hex
 Expected files   : print_hex.c
 Allowed functions: write
@@ -18,3 +20,4 @@ $> ./print_hex "5156454" | cat -e
 4eae66$
 $> ./print_hex | cat -e
 $
+~~~

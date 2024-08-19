@@ -12,10 +12,10 @@
 
 #include <unistd.h>
 
-int	putnbr_base (int	num, int base)
+void	putnbr_base (int	num, int base)
 {
 	char conversion_table[] = "0123456789abcdef";
-	char digit;
+	int digit;
 
 	digit = (num % base);
 	if (num > base )
@@ -23,7 +23,7 @@ int	putnbr_base (int	num, int base)
 	write (1 , &conversion_table[digit], 1);
 }
 
-int atoi(char *num)
+int ft_atoi(char *num)
 {
 	int result;
 	result = 0;
@@ -38,8 +38,11 @@ int atoi(char *num)
 int main(int argc, char **argv)
 {
 	int num;
-	num = atoi(argv[1]);
-	putnbr_base(num, 16);
-	write(1, "\n", 1);
-}	
 
+	if (argc == 2)
+	{
+		num = ft_atoi(argv[1]);
+		putnbr_base(num, 16);
+	}	
+	write(1, "\n", 1);
+}
