@@ -1,5 +1,6 @@
-# Subject
+## Subject
 
+~~~
 Assignment name  : flood_fill
 Expected files   : *.c, *.h
 Allowed functions: -
@@ -25,7 +26,8 @@ The t_point structure is prototyped like this:
     int           x;
     int           y;
   }               t_point;
-
+~~~
+~~~
 Example:
 
 $> cat test.c
@@ -85,3 +87,4 @@ F00F000F
 F0FF000F
 FFF0000F
 $>
+~~~

@@ -1,5 +1,6 @@
-# Subject
+## Subject
 
+~~~
 Assignment name  : fprime
 Expected files   : fprime.c
 Allowed functions: printf, atoi
@@ -27,10 +28,10 @@ $> ./fprime 804577 | cat -e
 804577$
 $> ./fprime 42 | cat -e
 2*3*7$
-$> ./fprime 1 | cat -e
+$> ./fprime 1    | cat -e
 1$
 $> ./fprime | cat -e
 $
 $> ./fprime 42 21 | cat -e
 $
-
+~~~
