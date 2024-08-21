@@ -1,5 +1,6 @@
-# Subject
+## Subject
 
+~~~
 Assignment name  : ft_itoa
 Expected files   : ft_itoa.c
 Allowed functions: malloc
@@ -11,3 +12,5 @@ The function returns the result in a char array that you must allocate.
 Your function must be declared as follows:
 
 char	*ft_itoa(int nbr);
+~~~
+

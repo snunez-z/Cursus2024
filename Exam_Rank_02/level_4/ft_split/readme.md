@@ -1,4 +1,6 @@
-# Subject
+## Subject
+
+~~~
 Assignment name  : ft_split
 Expected files   : ft_split.c
 Allowed functions: malloc
@@ -13,3 +15,4 @@ lines, or by the start/end of the string.
 Your function must be declared as follows:
 
 char    **ft_split(char *str);
+~~~ 
