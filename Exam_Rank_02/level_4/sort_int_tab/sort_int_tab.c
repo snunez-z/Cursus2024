@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:38:49 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 14:40:12 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:00:14 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void sort_int_tab (int *tab, unsigned int size)
         
         sort_int_tab(tab, size - 1);
 }
-
+/* To check the function
 #include <stdio.h>
 
 int     main(void)
@@ -63,5 +63,5 @@ int     main(void)
                 i++;
         }
         return (0);
-}
+}*/
 
