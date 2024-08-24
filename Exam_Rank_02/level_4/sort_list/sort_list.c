@@ -9,36 +9,110 @@
 /*   Updated: 2024/08/01 15:10:02 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdio.h>
+#include "sort_list.list.h"
 
-Assignment name  : sort_list
-Expected files   : sort_list.c
-Allowed functions:
---------------------------------------------------------------------------------
-
-Write the following functions:
-
-t_list	*sort_list(t_list* lst, int (*cmp)(int, int));
-
-This function must sort the list given as a parameter, using the function
-pointer cmp to select the order to apply, and returns a pointer to the
-first element of the sorted list.
-
-Duplications must remain.
-
-Inputs will always be consistent.
-
-You must use the type t_list described in the file list.h
-that is provided to you. You must include that file
-(#include "list.h"), but you must not turn it in. We will use our own
-to compile your assignment.
-
-Functions passed as cmp will always return a value different from
-0 if a and b are in the right order, 0 otherwise.
-
-For example, the following function used as cmp will sort the list
-in ascending order:
-
-int ascending(int a, int b)
+static int ascending(int a, int b)
 {
+	if (a <= b)
+		return 1;
+	else
+		return 0;
+}
+
+static int descending(int a, int b)
+{
+	if (a >= b)
+		return 1;
+	else
+		return 0;
+}
+
+static int peers_first(int a, int b)
+{
+	if (a % 2 == 0 && b % 2 == 0)
+		return (a <= b);
+	if (a % 2 == 0)
+		return 1;
+	if (b % 2 == 0)
+		return 0;
 	return (a <= b);
 }
+static t_list	*best_search_order(t_list *list, int (*cmp)(int,int))
+{
+	t_list *aux;
+	
+	aux = list;
+	while(list->next != NULL)
+	{
+		if ((*cmp)(aux->data, list->next->data) == 0)
+			aux = list->next;
+		list = list->next;
+	}
+	return (aux);
+}
+// Con recursividad
+t_list	*sort_list(t_list	*list, int (*cmp)(int,int))
+{
+	t_list	*best;
+	int	aux;
+
+	if (list == NULL)
+		return NULL;
+
+	best = best_search_order(list, cmp);
+	aux = list->data;
+   	list->data = best->data;
+	best->data = aux;
+
+	sort_list(list->next, cmp);
+	return list;
+}
+/* To check the function
+void print_list(t_list *list)
+{
+	t_list	*iter;
+	iter = list;
+	while (iter != NULL)
+	{
+		printf("%d ", iter->data);
+		iter = iter->next;
+	}
+	printf("\n");
+}
+
+
+int main(void)
+{
+	t_list node1;
+	t_list node2;
+	t_list node3;
+	t_list node4;
+	t_list node5;
+	t_list	*sorted;
+
+	node1.data = 3;
+	node1.next = &node2;
+	node2.data = 4;
+	node2.next = &node3;
+	node3.data = 2;
+	node3.next = &node4;
+	node4.data = 5;
+	node4.next = &node5;
+	node5.data = 1;
+	node5.next = NULL;
+
+	print_list(&node1);
+
+	sorted = sort_list(&node1, ascending);
+	print_list(sorted);
+
+	sorted = sort_list(&node1, descending);
+	print_list(sorted);
+
+	sorted = sort_list(&node1, pares_primero);
+	print_list(sorted);
+
+	return (0);
+}*/
+
