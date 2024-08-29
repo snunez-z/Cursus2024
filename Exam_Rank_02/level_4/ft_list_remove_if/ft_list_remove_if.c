@@ -10,26 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-Assignment name  : ft_list_remove_if
-Expected files   : ft_list_remove_if.c
-Allowed functions: free
---------------------------------------------------------------------------------
+#include "ft_list.h"
+#include <stdlib.h>
 
-Write a function called ft_list_remove_if that removes from the
-passed list any element the data of which is "equal" to the reference data.
-
-It will be declared as follows :
-
-void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
-
-cmp takes two void* and returns 0 when both parameters are equal.
-
-You have to use the ft_list.h file, which will contain:
-
-$>cat ft_list.h
-typedef struct      s_list
+void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 {
-    struct s_list   *next;
-    void            *data;
-}                   t_list;
-$>
+	t_list	*new_list;
+	t_list	*to_remove;
+	int	result;
+
+	new_list = *begin_list;
+	while(new_list != NULL && (*cmp)(data_ref, new_list->data) == 0 )
+	{
+		to_remove = new_list;
+		new_list = new_list->next;
+		free (to_remove);
+	}
+	*begin_list = new_list; // lo que apunta el primer nodo es ahora el primero 
+	if(new_list == NULL)
+		return;
+	while(new_list->next != NULL)
+	{
+		result = (*cmp)(data_ref, new_list->next->data);
+		if(result == 0)
+		{
+			to_remove = new_list->next;
+			new_list->next = new_list->next->next;
+			free (to_remove);
+		}
+		else
+			new_list = new_list->next;
+	}
+}
+

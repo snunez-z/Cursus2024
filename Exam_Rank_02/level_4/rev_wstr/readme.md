@@ -1,25 +1,33 @@
-# Subject
+## Subject
 
-Assignment name  : ft_list_remove_if
-Expected files   : ft_list_remove_if.c
-Allowed functions: free
+~~~
+Assignment name  : rev_wstr
+Expected files   : rev_wstr.c
+Allowed functions: write, malloc, free
 --------------------------------------------------------------------------------
 
-Write a function called ft_list_remove_if that removes from the
-passed list any element the data of which is "equal" to the reference data.
+Write a program that takes a string as a parameter, and prints its words in
+reverse order.
 
-It will be declared as follows :
+A "word" is a part of the string bounded by spaces and/or tabs, or the
+begin/end of the string.
 
-void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
+If the number of parameters is different from 1, the program will display
+'\n'.
 
-cmp takes two void* and returns 0 when both parameters are equal.
+In the parameters that are going to be tested, there won't be any "additional"
+spaces (meaning that there won't be additionnal spaces at the beginning or at
+the end of the string, and words will always be separated by exactly one space).
 
-You have to use the ft_list.h file, which will contain:
+Examples:
 
-$>cat ft_list.h
-typedef struct      s_list
-{
-    struct s_list   *next;
-    void            *data;
-}                   t_list;
+$> ./rev_wstr "You hate people! But I love gatherings. Isn't it ironic?" | cat -e
+ironic? it Isn't gatherings. love I But people! hate You$
+$>./rev_wstr "abcdefghijklm"
+abcdefghijklm
+$> ./rev_wstr "Wingardium Leviosa" | cat -e
+Leviosa Wingardium$
+$> ./rev_wstr | cat -e
+$
 $>
+~~~
