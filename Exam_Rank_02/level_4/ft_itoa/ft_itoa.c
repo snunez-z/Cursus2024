@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:52:01 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/21 14:28:15 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/08/30 17:21:47 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ char	*ft_itoa (int nbr)
 	if (num == NULL)
 		return (NULL);
 	num [ft_con_len (nbr) -1] = '\0'
-		if (nbr == 0)
+	if (nbr == 0)
 	{	
 		num [0] = '0';
-		return (num);
+	return (num);
 	}
 	if (nbr < 0)
 		num [0] = '-';
