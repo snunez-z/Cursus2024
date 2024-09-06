@@ -22,7 +22,8 @@ not$
 $> ./last_word "   " | cat -e
 $
 $> ./last_word "a" "b" | cat -e
-$
+$:q!
+
 $> ./last_word "  lorem,ipsum  " | cat -e
 lorem,ipsum$
 $>*/

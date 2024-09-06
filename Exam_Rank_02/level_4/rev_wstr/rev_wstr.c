@@ -13,14 +13,13 @@
 
 int	main(int argc, char **argv)
 {
-	if (argc == 2)
-	{
 		char	*str;
 		int	i;
 		int	start;
 		int	end;
-
-
+		
+	if (argc == 2)
+	{
 		str = argv [1];
 		i = 0;
 		while (str[i] != '\0')

@@ -18,7 +18,7 @@ void	putnbr_base (int	num, int base)
 	int digit;
 
 	digit = (num % base);
-	if (num > base )
+	if (num >= base )
 		putnbr_base(num / base, base);
 	write (1 , &conversion_table[digit], 1);
 }

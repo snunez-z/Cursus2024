@@ -24,7 +24,7 @@ void fprime (int num)
 	}
 
 	factor = 2;
-	while(num > 1)
+	while(num > 1) 
 	{
 		while (num % factor == 0)
 		{

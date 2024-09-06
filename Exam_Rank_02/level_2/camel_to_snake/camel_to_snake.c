@@ -17,22 +17,21 @@ int	main(int argc, char **argv)
 	char	*str;
 	int	i;
 	
-	if (argc < 2)
-		return (-1);
-	str = argv [1];
-	i = 0;
-	while (str[i] != '\0')
+	if (argc == 2)
 	{
-
-		if (str[i] >= 'A' && str[i] <= 'Z' && i == 0)
-		       str[i] = str[i] - ('a' - 'A');	
-		else if (str[i] >= 'A' && str[i] <= 'Z')
+		str = argv [1];
+		i = 0;
+		while (str[i] != '\0')
 		{
-			write (1, "_", 1);
-			str[i] = str[i] + ('a' - 'A');
+			if (str[i] >= 'A' && str[i] <= 'Z' )
+			{
+				str[i] = str[i] + ('a' - 'A');
+				if (i > 0)
+					write (1, "_", 1);
+			}
+			write (1, &str[i], 1);
+			i++;
 		}
-		write (1, &str[i], 1);
-		i++;
 	}
 	write (1, "\n", 1);
 	return (0);
