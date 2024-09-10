@@ -6,11 +6,9 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:55:33 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/15 10:46:01 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:23:45 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-int	ft_atoi_base(const char *str, int str_base);
 
 char to_lower(char ch)
 {

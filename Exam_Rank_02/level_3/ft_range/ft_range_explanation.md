@@ -1,7 +1,7 @@
  ## Commented Solution
 
 t could be that the number of numbers between start and end does not fit in an int, for example if we are given the maximum positive number and the maximum negative number, so we must declare the variable num_numbers and the index as long.
-At the same time we need that the start & end variables to be interpreted as a long to contemplate the case of maximums positive and negative, to make sure that the numbers odf the array numbers has teh capacity to fill all the numbers.
+At the same time we need that the start & end variables to be interpreted as a long to contemplate the case of maximums positive and negative, to make sure that the numbers of the array numbers has the capacity to fill all the numbers.
 1. We are going to declare an array of numbers where to put the result.Protection for memory reservation.
 2. To allocate memory we need to know how many numbers will be contained in that array of numbers that starts with one and ends with another number. We don't know how many numbers there are between the beginning and the end.
 3. How to find out? 

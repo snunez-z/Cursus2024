@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:54:21 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/14 15:01:48 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/10 09:31:24 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_prime (int num)
 {
-	int i;
+	int	i;
 
 	i = 2;
 	while (i < num)
@@ -72,3 +72,4 @@ int	main (int argc, char	**argv)
 	write (1, "\n", 1);
 	return (0);
 }
+
