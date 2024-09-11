@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:00:02 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 13:00:05 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:25:23 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main (int argc, char	**argv)
 		j = 0;
 		while (argv[i][j] != '\0')
 		{
-			if ((j == 0 || is_space (argv [i][j - 1]) && argv [i][j] >= 'a' && argv[i][j] <= 'z'))
+			if ((j == 0 || is_space (argv [i][j - 1])) && (argv [i][j] >= 'a' && argv[i][j] <= 'z'))
 				argv[i][j] = argv[i][j] - ('a' - 'A');
 			else if (j > 0 && !is_space (argv [i][j - 1]) && argv[i][j] >= 'A' && argv [i][j] <= 'Z')
 				argv[i][j] = argv [i][j] - ('A' - 'a');
