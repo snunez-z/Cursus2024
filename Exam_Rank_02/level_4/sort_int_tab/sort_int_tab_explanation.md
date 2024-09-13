@@ -13,7 +13,7 @@ We need the position of this maximum number to be able to exchange numbers in so
 2. We declare a counter i to put it as a condition.
 3. We declare a int variable max that it is starts with the first position of numbers.
 4. While the counter doesn´t reach the quantity of numbers.
-5. If the number is greater than the one is in the max variable, ths vaule is placed into thsi variable.
+5. If the number is greater than the one is in the max variable, ths value is placed into this variable.
 6. the index j = i to indicate that the position of elder for now is that.
 7. Iter the counter to the next position.
 8. When we finishes, display the position.
