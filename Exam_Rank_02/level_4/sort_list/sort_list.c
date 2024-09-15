@@ -66,7 +66,7 @@ t_list	*sort_list(t_list	*list, int (*cmp)(int,int))
 	best->data = aux;
 
 	sort_list(list->next, cmp);
-	return list;
+	return (list);
 }
 /* To check the function
 void print_list(t_list *list)
