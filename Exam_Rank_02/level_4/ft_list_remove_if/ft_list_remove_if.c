@@ -20,13 +20,15 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 	int	result;
 
 	new_list = *begin_list;
+	if(new_list == NULL)
+		return;
 	while(new_list != NULL && (*cmp)(data_ref, new_list->data) == 0 )
 	{
 		to_remove = new_list;
 		new_list = new_list->next;
+		*begin_list = new_list;
 		free (to_remove);
 	}
-	*begin_list = new_list; // lo que apunta el primer nodo es ahora el primero 
 	if(new_list == NULL)
 		return;
 	while(new_list->next != NULL)

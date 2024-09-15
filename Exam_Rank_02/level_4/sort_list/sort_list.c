@@ -40,16 +40,16 @@ static int peers_first(int a, int b)
 }
 static t_list	*best_search_order(t_list *list, int (*cmp)(int,int))
 {
-	t_list *aux;
+	t_list *best;
 	
-	aux = list;
+	best = list;
 	while(list->next != NULL)
 	{
-		if ((*cmp)(aux->data, list->next->data) == 0)
-			aux = list->next;
+		if ((*cmp)(best->data, list->next->data) == 0)
+			best = list->next;
 		list = list->next;
 	}
-	return (aux);
+	return (best);
 }
 // Con recursividad
 t_list	*sort_list(t_list	*list, int (*cmp)(int,int))
