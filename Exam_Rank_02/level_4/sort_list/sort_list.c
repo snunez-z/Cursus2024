@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:09:55 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 15:10:02 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:09:20 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -58,7 +58,7 @@ t_list	*sort_list(t_list	*list, int (*cmp)(int,int))
 	int	aux;
 
 	if (list == NULL)
-		return NULL;
+		return (NULL);
 
 	best = best_search_order(list, cmp);
 	aux = list->data;

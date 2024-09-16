@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:52:01 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/30 17:21:47 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:42:26 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_cont_len (int num)
 	if (num > 0)
 		size_num = 0;
 
-	while (num != '\0')
+	while (num != 0)
 	{
 		num = num / 10;
 		size_num++;
@@ -57,7 +57,7 @@ char	*ft_itoa (int nbr)
 	if (nbr == 0)
 	{	
 		num [0] = '0';
-	return (num);
+		return (num);
 	}
 	if (nbr < 0)
 		num [0] = '-';
