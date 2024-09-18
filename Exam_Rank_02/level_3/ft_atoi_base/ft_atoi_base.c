@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:55:33 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/09/10 11:23:45 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:39:17 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	digit_to_value (char digit)
 			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 int	ft_atoi_base(const char *str, int str_base)
@@ -45,6 +45,8 @@ int	ft_atoi_base(const char *str, int str_base)
 	value = 0;
 	while (str[i] != '\0')
 	{
+		if(digit_to_value(str[i]) < 0)
+			break;
 		value = (value * str_base) + digit_to_value (str [i]);
 		i++;
 	}
@@ -58,6 +60,8 @@ int	main (void)
 {
 	int	value;
 
+	value = ft_atoi_base ("123HOla", 16);
+	printf ("%d\n", value);
 	value = ft_atoi_base ("-123", 4);
 	printf ("%d\n", value);
 	value = ft_atoi_base ("-123", 16);

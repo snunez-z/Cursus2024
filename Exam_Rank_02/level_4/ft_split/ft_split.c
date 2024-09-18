@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:57:46 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/22 15:45:54 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:40:23 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**ft_split (char	*str)
 		words [i_words] = (char *) malloc (sizeof (char) * 4096);
 		if (!words [i_words])
 			return (NULL);
-		while(str[i_str] != ' ' && str[i_str] != '\t' && str[i_str] != '\n')
+		while(str[i_str] != ' ' && str[i_str] != '\t' && str[i_str] != '\n' && str[i_str] != '\0')
 		{	
 			words[i_words][i2_words] = str[i_str];
 			i_str++;

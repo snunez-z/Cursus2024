@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:52:01 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/09/16 17:42:26 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:41:20 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_itoa (int nbr)
 	num = (char *) malloc(ft_cont_len (nbr) * sizeof(char));
 	if (num == NULL)
 		return (NULL);
-	num [ft_con_len (nbr) -1] = '\0'
+	num [ft_cont_len (nbr) -1] = '\0';
 	if (nbr == 0)
 	{	
 		num [0] = '0';

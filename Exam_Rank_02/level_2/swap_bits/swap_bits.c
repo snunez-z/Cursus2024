@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap_bits.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:52:31 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/14 11:54:25 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/17 09:18:14 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,9 @@ int	main(void)
 	printf("%u\n", result);		
 	return (0);
 }
+
+/* version bitwise
+unsigned char swap_bits (unsigned char octet)
+{
+	return (octet >> 4 | octet<< 4);
+}*/

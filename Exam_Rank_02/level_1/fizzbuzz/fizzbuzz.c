@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fizzbuzz.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 09:10:05 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/07/30 09:11:00 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:40:18 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char	**argv)
 		else
 			write_numbers (num);
 		num++;
-	write (1, "\n", 1);
+		write (1, "\n", 1);
  	}
 	return (0);
 }	

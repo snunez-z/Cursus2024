@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_op.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 07:58:31 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/07/31 08:07:19 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:26:03 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ int	main(int argc, char	**argv)
 		num1 = atoi (argv[1]);
 		num2 = atoi (argv[3]);
 		if (argv[2][0] == '+')
-			printf ("%d\n", num1 + num2);
+			printf ("%d", num1 + num2);
 		else if (argv[2][0] == '-')
-			printf("%d\n", num1 - num2);	
+			printf("%d", num1 - num2);	
 		else if (argv[2][0] == '*')
-			printf ("%d\n", num1 + num2);
+			printf ("%d", num1 * num2);
 		else if (argv[2][0] == '%')
-			printf("%d\n", num1 + num2);
+			printf("%d", num1 % num2);
+		else if (argv[2][0] == '/')
+			printf("%d", num1 / num2);
 	}
-	write (1, "\n", 1);
+	printf("\n");
 	return (0);
 }
 

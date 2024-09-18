@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:50:16 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/07/30 10:51:09 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:40:15 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ int ft_strlen (char *str)
 
     index = 0;
     while (str[index] != '\0')
-    {
-        index++;
-    }
+    	index++;
     return (index);
 }
 /*
