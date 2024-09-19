@@ -1,6 +1,4 @@
 ## Commented Solution
-
-
 1. We need to go through all the characters in the first string and see if it is in the second string and if it is repeated or not.
    There are two conditions so we create two functions.
    One to look for a character from the second string in the first.

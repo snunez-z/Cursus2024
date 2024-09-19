@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strspn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:06:42 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/01 09:07:29 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:09:12 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ size_t	ft_strspn(const char *s, const char *accept)
 	i = 0;
 	while (s[i] != '\0')
 	{
-		
 		ocurrence = 0;
 		j = 0;
 		while (accept[j] !='\0')
