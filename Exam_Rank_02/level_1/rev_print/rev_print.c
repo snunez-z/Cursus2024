@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:11:23 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/09/18 13:40:09 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/25 10:14:02 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	main (int argc, char **argv)
 		while (str [index] != '\0')
 			index++;
 		index--;
-		while ( index > 0)
+		while ( index >= 0)
 		{
-			write (1, (&str [index - 1]), 1);
+			write (1, (&str [index]), 1);
 			index --;
 		}
 	}	

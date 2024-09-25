@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 10:35:26 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/07/31 13:38:31 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:56:04 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ size_t	ft_strcspn (const char *s, const char *reject)
 	}
 	return (i);	
 }
-/*
+
+/* to check the function
 #include <stdio.h>
 
 int	main(void)
@@ -47,5 +48,5 @@ int	main(void)
 	result = ft_strcspn ("Hola", "DSC");
 	printf("%d\n", result);
 
-}*/
+}*/ 
 
