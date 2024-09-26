@@ -1,6 +1,6 @@
 # Commented solution
 
-HCD (higest common denominator) is a number so that bonth numbers are divisible by it.
+HCD (higest common denominator) is a number so that both numbers are divisible by it.
 This numbers has to be equals or smaller than both numbers received.
 We are going to start by the smallest number reveived.
 1. First thing we should do is to convert the two arguments into positive numbers using atoi function.
