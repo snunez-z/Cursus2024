@@ -9,6 +9,15 @@
 #include "util.h"
 
 #define RATE 10000
+#define KEY_ESC	65307
+#define KEY_W	119
+#define KEY_A	97
+#define KEY_S	115
+#define KEY_D	100
+#define KEY_UP	65362
+#define KEY_DOWN	65364
+#define KEY_LEFT	65361
+#define KEY_RIGHT	65363
 
 static int close_window(game_t *game)
 {
@@ -24,7 +33,7 @@ static void draw_map_cell(game_t *game, size_t x, size_t y)
 	char	cell;
 	void	*image;
 
-	cell = map_at(game->map, y, x);
+	cell = map_at(game->map, x, y);
 	if (cell == '1')
 		image = game->images->wall;
 	else if (cell == 'C')
@@ -82,6 +91,14 @@ static int	key_press_hook(int key, game_t *game)
 {
 	if (key == 65307)
 		close_window(game);
+	else if (key == KEY_UP || key == KEY_W)
+		map_move_player(game->map, 0, -1);
+	else if (key == KEY_DOWN || key == KEY_S)
+		map_move_player(game->map, 0, 1);
+	else if (key == KEY_RIGHT || key == KEY_D)
+		map_move_player(game->map, 1, 0);
+	else if (key == KEY_LEFT || key == KEY_A)
+		map_move_player(game->map, -1, 0);
 	return (0);
 }
 
@@ -132,7 +149,10 @@ void	game_destroy(game_t *game)
 	if (game->window != NULL)
 		mlx_destroy_window(game->mlx, game->window);
 	if (game->mlx != NULL)
+	{
 		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
 	free(game);
 }
 
@@ -141,7 +161,7 @@ void	game_run(game_t *game)
 	game->frames = 0;
 	if (!mlx_loop_hook(game->mlx, draw_map, game)
 		|| !mlx_hook(game->window, DestroyNotify, 0, close_window, game)
-		|| !mlx_key_hook(game->window, key_press_hook, game))
+		|| !mlx_hook(game->window, KeyPress, KeyPressMask, key_press_hook, game))
 	{
 		util_write_line("Error initializing MLX loop");
 		game_destroy(game);

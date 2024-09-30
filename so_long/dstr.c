@@ -45,6 +45,15 @@ char	dstr_char_at(dstr_t *dstr, size_t pos)
 	return (dstr->buffer[pos]);
 }
 
+char	dstr_set_char_at(dstr_t *dstr, size_t pos, char ch)
+{
+	char	previous;
+
+	previous = dstr->buffer[pos];
+	dstr->buffer[pos] = ch;
+	return previous;
+}
+
 int	dstr_append_char(dstr_t *dstr, char ch)
 {
 	char	*new_buffer;
