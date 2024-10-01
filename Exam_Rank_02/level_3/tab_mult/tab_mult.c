@@ -1,30 +1,16 @@
 #include <unistd.h>
-static int	ft_isdigit (char  digit)
-{
-	if (digit >= '0' && digit <= '9')
-		return (1);
-	else
-		return (0);
-}
-
 int 	ft_atoi(const char	*num)
 {
 	int	value;
 	int	i;
 
-	if (num[0] == '-')
-		i = 1;
-	else
-		i = 0;
+	i = 0;
 	value = 0;
-	while (ft_isdigit(num[i]) != '\0')
+	while (num [i] != 0)
 	{
 		value = (value * 10) + (num[i] - '0');
 		i++;
 	}
-	
-	if (num[0] == '-')
-		value = value *-1;
 	return (value);
 }
 

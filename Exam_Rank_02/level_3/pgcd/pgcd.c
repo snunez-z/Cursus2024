@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 		cd = a;
 	else
 		cd = b;
-	while (cd > 1)
+	while (cd >= 1)
 	{
 		if ((a % cd) == 0 && (b % cd) == 0)
 		{
@@ -41,7 +41,5 @@ int main(int argc, char **argv)
 		}
 		cd--;
 	}
-
-	printf("1\n");
 	return (0);
 }
