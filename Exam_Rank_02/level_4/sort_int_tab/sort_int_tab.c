@@ -14,22 +14,22 @@ int     search_max(int  *numbers, int num_num)
 {
         int     i;
         int     max;
-        int     j;
+        int    	pos_max;
 
         i = 0;
-        j = 0;
-        max = numbers[j];
+        pos_max = 0;
+        max = numbers[pos_max];
         while (i < num_num)
         {
 
                 if (numbers[i] >= max)
                 {
                         max = numbers[i];
-                        j = i;
+                        pos_max = i;
                 }
                 i++;
         }
-        return (j);
+        return (pos_max);
 }
 
 

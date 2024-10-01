@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int	write_numbers(int	num)
+void 	write_numbers(int	num)
 {
 	char	numbers[10] = "0123456789";
 	
@@ -22,7 +22,7 @@ int	write_numbers(int	num)
 	write (1,&numbers[num % 10], 1);
 }
 
-int	main(int argc, char	**argv)
+int	main(void)
 {
 	int	num;
 

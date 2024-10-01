@@ -33,17 +33,19 @@ char	**ft_split (char	*str)
 		i2_words = 0;
 		words [i_words] = (char *) malloc (sizeof (char) * 4096);
 		if (!words [i_words])
+		{
+			free(words);
 			return (NULL);
+		}
 		while(str[i_str] != ' ' && str[i_str] != '\t' && str[i_str] != '\n' && str[i_str] != '\0')
 		{	
 			words[i_words][i2_words] = str[i_str];
 			i_str++;
 			i2_words++;	
 		}	
-
+		words[i_words][i2_words] = '\0';
 		while(str[i_str] == ' ' || str[i_str] == '\t' || str[i_str] == '\n')
 			i_str++;
-		words[i_words][i2_words] = '\0';
 		i_words++;
 	}
 	words[i_words] = NULL;
