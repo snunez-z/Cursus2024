@@ -29,12 +29,13 @@ static int close_window(game_t *game)
 	return (0);
 }
 
-static void draw_map_cell(game_t *game, size_t x, size_t y)
+static int draw_map_cell(map_t *map, int x, int y, char cell, void *data)
 {
-	char	cell;
+	game_t	*game;
 	void	*image;
 
-	cell = map_at(game->map, x, y);
+	(void)map;
+	game = (game_t*)data;
 	if (cell == '1')
 		image = game->images->wall;
 	else if (cell == 'C')
@@ -47,35 +48,14 @@ static void draw_map_cell(game_t *game, size_t x, size_t y)
 		image = game->images->empty;
 
 	mlx_put_image_to_window(game->mlx, game->window, image, IMAGE_SIZE * x, IMAGE_SIZE * y);
+	return (1);
 }
 
 static int	draw_map(game_t *game)
 {
-	size_t	x;
-	size_t	y;
-	size_t	width;
-	size_t	height;
-
-	game->frames++;
-	if (game->frames < RATE)
+	if (!game->window)
 		return (0);
-	game->frames = 0;
-
-	ft_printf("Painting\n");
-	y = 0;
-	width = map_get_width(game->map);
-	height = map_get_height(game->map);
-	while (y < height)
-	{
-		x = 0;
-		while (x < width)
-		{
-			draw_map_cell(game, x, y);
-			x++;
-		}
-		y++;
-	}
-
+	map_loop(game->map, draw_map_cell, game);
 	return (0);
 }
 
@@ -88,21 +68,43 @@ static int initialized_correctly(game_t *game)
 			&& (game->window != NULL);
 }
 
-static int	key_press_hook(int key, game_t *game)
+static int	is_game_over(game_t *game)
 {
-	if (key == 65307)
-		close_window(game);
-	else if (key == KEY_UP || key == KEY_W)
-		map_move_player(game->map, 0, -1);
-	else if (key == KEY_DOWN || key == KEY_S)
-		map_move_player(game->map, 0, 1);
-	else if (key == KEY_RIGHT || key == KEY_D)
-		map_move_player(game->map, 1, 0);
-	else if (key == KEY_LEFT || key == KEY_A)
-		map_move_player(game->map, -1, 0);
-	return (0);
+	int food_left = map_count_chars(game->map, 'C');
+	ft_printf("Food left: %d\n", food_left);
+	return (game->map->at_player == 'E') && (food_left == 0);
 }
 
+static int	key_press_hook(int key, game_t *game)
+{
+	int move_ok;
+
+	if (key == 65307)
+	{
+		close_window(game);
+		return (0);
+	}
+
+	if (key == KEY_UP || key == KEY_W)
+		move_ok = map_move_player(game->map, 0, -1);
+	else if (key == KEY_DOWN || key == KEY_S)
+		move_ok = map_move_player(game->map, 0, 1);
+	else if (key == KEY_RIGHT || key == KEY_D)
+		move_ok = map_move_player(game->map, 1, 0);
+	else if (key == KEY_LEFT || key == KEY_A)
+		move_ok = map_move_player(game->map, -1, 0);
+	else
+		return (0);
+
+	if (move_ok)
+	{
+		game->move_count++;
+		if (is_game_over(game))
+			close_window(game);
+	}
+
+	return (0);
+}
 
 game_t	*game_create(const char *map_file_name)
 {
@@ -112,6 +114,9 @@ game_t	*game_create(const char *map_file_name)
 	game = (game_t*)util_calloc(sizeof(game_t));
 	if (game != NULL)
 	{
+		game->move_count = 0;
+		game->game_over = 0;
+
 		ft_printf("Creating map\n");
 		game->map = map_read(map_file_name);
 		if (game->map != NULL)

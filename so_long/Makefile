@@ -1,6 +1,7 @@
 NAME = so_long
 
 PWD = $(shell pwd)
+INC_DIR = ./inc
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 
@@ -10,7 +11,7 @@ FT_PRINTF = ./ft_printf
 MINILIBX = ./minilibx
 
 CC = cc
-CFLAGS = -Werror -Wall -Wextra -I $(LIBFT) -I $(FT_PRINTF) -I $(MINILIBX) -I ./inc
+CFLAGS = -Werror -Wall -Wextra -I $(INC_DIR) -I $(LIBFT) -I $(FT_PRINTF) -I $(MINILIBX) -I ./inc
 LDFLAGS = -L $(LIB) -lftprintf -lft -lX11 -lXext -lmlx
 
 SRC = dstr.c game.c images.c list.c main.c map.c util.c
@@ -40,5 +41,5 @@ $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -I $(INCLUDE_DIR) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 

@@ -7,6 +7,12 @@
 #include "map.h"
 #include "util.h"
 
+struct count_data_s
+{
+	char	char_to_find;
+	int	count;
+};
+
 static void	destroy_line(void *line)
 {
 	dstr_destroy((dstr_t*) line);
@@ -68,7 +74,7 @@ static list_t	*read_file(int fd)
 	return (rows);
 }
 
-static int	find_player(map_t *map, size_t x, size_t y, char ch, void *data)
+static int	find_player(map_t *map, int x, int y, char ch, void *data)
 {
 	(void)data;
 	if (ch == 'P')
@@ -82,10 +88,23 @@ static int	find_player(map_t *map, size_t x, size_t y, char ch, void *data)
 	return (1);
 }
 
-static char set_char_at(map_t *map, size_t x, size_t y, char ch)
+static char set_char_at(map_t *map, int x, int y, char ch)
 {
 	dstr_t *row = list_get(map->rows, y);
 	return dstr_set_char_at(row, x, ch);
+}
+
+static int	count_char_function(map_t *map, int x, int y, char ch, void *data)
+{
+	struct count_data_s	*count_data;
+
+	(void)map;
+	(void)x;
+	(void)y;
+	count_data = (struct count_data_s*)data;
+	if (ch == count_data->char_to_find)
+		count_data->count++;
+	return (1);
 }
 
 map_t	*map_read(const char *file_name)
@@ -122,17 +141,17 @@ void	map_destroy(map_t *map)
 	free(map);
 }
 
-size_t	map_get_width(map_t *map)
+int	map_get_width(map_t *map)
 {
-	return dstr_length((dstr_t*)list_get(map->rows, 0));
+	return (int)dstr_length((dstr_t*)list_get(map->rows, 0));
 }
 
-size_t	map_get_height(map_t *map)
+int	map_get_height(map_t *map)
 {
-	return list_size(map->rows);
+	return (int)list_size(map->rows);
 }
 
-char	map_at(map_t *map, size_t column, size_t row)
+char	map_at(map_t *map, int column, int row)
 {
 	return dstr_char_at((dstr_t*)list_get(map->rows, row), column);
 }
@@ -149,30 +168,45 @@ void	map_write(map_t *map, int fd)
 	}
 }
 
-void	map_move_player(map_t *map, int inc_x, int inc_y)
+int	map_move_player(map_t *map, int inc_x, int inc_y)
 {
-	size_t	new_x;
-	size_t	new_y;
+	int	new_x;
+	int	new_y;
 
 	new_x = map->player_x + inc_x;
 	new_y = map->player_y + inc_y;
-	if (map_at(map, new_x, new_y) != '1')
-	{
-		set_char_at(map, map->player_x, map->player_y, map->at_player);
-		map->player_x = new_x;
-		map->player_y = new_y;
-		map->at_player = set_char_at(map, map->player_x, map->player_y, 'P');
-		if (map->at_player == 'C')
-			map->at_player = '0';
-	}
+	if (new_x < 0 || new_y < 0
+		|| new_x >= map_get_width(map) || new_y >= map_get_height(map)
+		|| map_at(map, new_x, new_y) == '1')
+		return (0);
+
+	set_char_at(map, map->player_x, map->player_y, map->at_player);
+	map->player_x = new_x;
+	map->player_y = new_y;
+	map->at_player = set_char_at(map, map->player_x, map->player_y, 'P');
+	if (map->at_player == 'C')
+		map->at_player = '0';
+
+	return (1);
 }
 
-void	map_loop(map_t *map, int (*fn)(map_t*,size_t, size_t, char, void*), void *data)
+int	map_count_chars(map_t *map, char ch)
 {
-	size_t	x;
-	size_t	y;
-	size_t	width;
-	size_t	height;
+	struct count_data_s	count_data;
+
+	count_data.char_to_find = ch;
+	count_data.count = 0;
+
+	map_loop(map, count_char_function, &count_data);
+	return count_data.count;
+}
+
+void	map_loop(map_t *map, int (*fn)(map_t*, int, int, char, void*), void *data)
+{
+	int	x;
+	int	y;
+	int	width;
+	int	height;
 	char	ch;
 
 	width = map_get_width(map);

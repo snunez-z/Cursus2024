@@ -7,9 +7,11 @@ typedef struct game_s
 {
 	map_t	*map;
 	images_t	*images;
+	int	move_count;
+	int	game_over;
 	void	*mlx;
 	void	*window;
-	size_t	frames;
+	int	frames;
 } game_t;
 
 game_t	*game_create(const char *map_file_name);
