@@ -1,6 +1,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "ft_printf.h"
 #include "dstr.h"
 #include "list.h"
 #include "map.h"
@@ -20,15 +21,12 @@ static int	read_line_into_buffer(int fd, dstr_t *line)
 	while(read_result == 1 && ch != '\n')
 	{
 		if (!dstr_append_char(line, ch))
-		{
-			util_write_line("Not enough memory");
 			return (0);
-		}
 		read_result = read(fd, &ch, 1);
 	}
 	if (read_result < 0)
 	{
-		util_write_line("Error reading map file");
+		ft_printf("Error\nError reading map file\n");
 		dstr_destroy(line);
 		return (0);
 	}
@@ -41,10 +39,7 @@ static dstr_t	*read_line(int fd)
 
 	line = dstr_create();
 	if (!line)
-	{
-		util_write_line("Not enough memory");
 		return (NULL);
-	}
 	if(!read_line_into_buffer(fd, line))
 		return (NULL);
 	return (line);
@@ -73,36 +68,18 @@ static list_t	*read_file(int fd)
 	return (rows);
 }
 
-static int	find_player(map_t	*map)
+static int	find_player(map_t *map, size_t x, size_t y, char ch, void *data)
 {
-	size_t	x;
-	size_t	y;
-	size_t	width;
-	size_t	height;
-	char	ch;
-
-	width = map_get_width(map);
-	height = map_get_height(map);
-	y = 0;
-	while (y < height)
+	(void)data;
+	if (ch == 'P')
 	{
-		x = 0;
-		while (x < width)
-		{
-			ch = map_at(map, x, y);
-			if (ch == 'P')
-			{
-				map->player_x = x;
-				map->player_y = y;
-				map->at_player = '0';
-				return (1);
-			}
-			x++;
-		}
-		y++;
+		map->player_x = x;
+		map->player_y = y;
+		map->at_player = '0';
+		return (0);
 	}
 
-	return (0);
+	return (1);
 }
 
 static char set_char_at(map_t *map, size_t x, size_t y, char ch)
@@ -116,29 +93,23 @@ map_t	*map_read(const char *file_name)
 	map_t	*map;
 	int	fd;
 
-	fd = open(file_name, O_RDONLY);
-	if (fd < 0)
+	if ((fd = open(file_name, O_RDONLY)) < 0)
 	{
-		util_write("Unable to open map file: ");
-		util_write_line(file_name);
+		ft_printf("Error\nUnable to open map file: %s\n", file_name);
 		return (NULL);
 	}
 
 	map = (map_t*)util_calloc(sizeof(map_t));
 	if (map != NULL)
-	{
-		util_write("Reading map file: ");
-		util_write_line(file_name);
 		map->rows = read_file(fd);
-	}
 	close(fd);
 
-	if (!map->rows)
+	if (!map || !map->rows)
 	{
 		map_destroy(map);
 		return (NULL);
 	}
-	find_player(map);
+	map_loop(map, find_player, NULL);
 	return (map);
 }
 
@@ -195,6 +166,32 @@ void	map_move_player(map_t *map, int inc_x, int inc_y)
 			map->at_player = '0';
 	}
 }
+
+void	map_loop(map_t *map, int (*fn)(map_t*,size_t, size_t, char, void*), void *data)
+{
+	size_t	x;
+	size_t	y;
+	size_t	width;
+	size_t	height;
+	char	ch;
+
+	width = map_get_width(map);
+	height = map_get_height(map);
+	y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < width)
+		{
+			ch = map_at(map, x, y);
+			if (!fn(map, x, y, ch, data))
+				return;
+			x++;
+		}
+		y++;
+	}
+}
+
 /*
 int main(int argc, char **argv)
 {

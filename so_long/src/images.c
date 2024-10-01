@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "ft_printf.h"
 #include "mlx.h"
 #include "images.h"
 #include "util.h"
@@ -11,10 +12,7 @@ static void	*load_image(void *mlx, char *file_name)
 
 	image = mlx_xpm_file_to_image(mlx, file_name, &width, &height);
 	if (!image)
-	{
-		util_write("Error reading image ");
-		util_write_line(file_name);
-	}
+		ft_printf("Error\nError reading image file '%s'\n", file_name);
 	return (image);
 }
 

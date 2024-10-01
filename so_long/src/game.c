@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <X11/X.h>
+#include "ft_printf.h"
 #include "mlx.h"
 
 #include "game.h"
@@ -21,7 +22,7 @@
 
 static int close_window(game_t *game)
 {
-	util_write_line("Closing game");
+	ft_printf("Closing game\n");
 	if (game->window != NULL)
 		mlx_destroy_window(game->mlx, game->window);
 	game->window = NULL;
@@ -60,7 +61,7 @@ static int	draw_map(game_t *game)
 		return (0);
 	game->frames = 0;
 
-	util_write_line("Painting...");
+	ft_printf("Painting\n");
 	y = 0;
 	width = map_get_width(game->map);
 	height = map_get_height(game->map);
@@ -107,19 +108,19 @@ game_t	*game_create(const char *map_file_name)
 {
 	game_t	*game;
 
-	util_write_line("Creating game");
+	ft_printf("Creating game\n");
 	game = (game_t*)util_calloc(sizeof(game_t));
 	if (game != NULL)
 	{
-		util_write_line("Creating map");
+		ft_printf("Creating map\n");
 		game->map = map_read(map_file_name);
 		if (game->map != NULL)
 		{
-			util_write_line("Creating window");
+			ft_printf("Creating window\n");
 			game->mlx = mlx_init();
 			if (game->mlx)
 			{
-				util_write_line("Loading images");
+				ft_printf("Loading images\n");
 				game->images = images_load(game->mlx);
 				game->window = mlx_new_window(game->mlx,
 				                              IMAGE_SIZE * map_get_width(game->map),
@@ -133,13 +134,13 @@ game_t	*game_create(const char *map_file_name)
 		game_destroy(game);
 		return (NULL);
 	}
-	util_write_line("Game created");
+	ft_printf("Game created\n");
 	return (game);
 }
 
 void	game_destroy(game_t *game)
 {
-	util_write_line("Destroying game");
+	ft_printf("Destroying game\n");
 	if (!game)
 		return;
 	if (game->map != NULL)
@@ -163,13 +164,13 @@ void	game_run(game_t *game)
 		|| !mlx_hook(game->window, DestroyNotify, 0, close_window, game)
 		|| !mlx_hook(game->window, KeyPress, KeyPressMask, key_press_hook, game))
 	{
-		util_write_line("Error initializing MLX loop");
+		ft_printf("Error\nError initializing MLX loop\n");
 		game_destroy(game);
 		return;
 	}
 
-	util_write_line("Starting game");
+	ft_printf("Starting game\n");
 	mlx_loop(game->mlx);
 	game_destroy(game);
-	util_write_line("Exiting game");
+	ft_printf("Exiting game\n");
 }

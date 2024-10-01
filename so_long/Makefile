@@ -1,6 +1,8 @@
 NAME = so_long
 
 PWD = $(shell pwd)
+SRC_DIR = ./src
+OBJ_DIR = ./obj
 
 LIB = ./lib
 LIBFT = ./libft
@@ -8,13 +10,17 @@ FT_PRINTF = ./ft_printf
 MINILIBX = ./minilibx
 
 CC = cc
-CFLAGS = -Werror -Wall -Wextra -I $(LIBFT) -I $(FT_PRINTF) -I $(MINILIBX)
+CFLAGS = -Werror -Wall -Wextra -I $(LIBFT) -I $(FT_PRINTF) -I $(MINILIBX) -I ./inc
 LDFLAGS = -L $(LIB) -lftprintf -lft -lX11 -lXext -lmlx
 
 SRC = dstr.c game.c images.c list.c main.c map.c util.c
-OBJ = $(SRC:.c=.o)
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-all: libs $(NAME)
+all: create_dirs libs $(NAME)
+
+create_dirs:
+	-mkdir lib
+	-mkdir obj
 
 libs:
 	INCLUDE_DIR=$(PWD) make -C $(LIBFT) all
@@ -28,11 +34,11 @@ clean:
 	make -C $(LIBFT) clean
 	make -C $(FT_PRINTF) clean
 	make -C $(MINILIBX) clean
-	rm $(LIB)/* *.o $(NAME)
+	-rm $(LIB)/* $(OBJ_DIR)/*.o $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
 
-%.o: %.c
-	$(CC) -I $(INCLUDE_DIR) $(CFLAGS) -c $<
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -I $(INCLUDE_DIR) $(CFLAGS) -c $< -o $@
 

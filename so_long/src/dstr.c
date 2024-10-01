@@ -1,30 +1,19 @@
-#include <stdlib.h>
-#include <unistd.h>
+#include <stddef.h>
+#include "libft.h"
 #include "dstr.h"
+#include "util.h"
 
 #define BUFFER_CHUNK_SIZE	100
-
-static void copy_buffer(char *dest, char	*source, size_t len)
-{
-	size_t	i;
-
-	i = 0;
-	while(i < len)
-	{
-		dest[i] = source[i];
-		i++;
-	}
-}
 
 dstr_t	*dstr_create()
 {
 	dstr_t *dstr;
 
-	dstr = (dstr_t *) malloc(sizeof(dstr_t));
+	dstr = (dstr_t *) util_calloc(sizeof(dstr_t));
 	if (!dstr)
 		return (NULL);
 	dstr->buffer_size = 10;
-	dstr->buffer =(char *) malloc(dstr->buffer_size * sizeof(char));
+	dstr->buffer =(char *) util_calloc(dstr->buffer_size * sizeof(char));
 	if (!dstr->buffer)
 	{
 		free (dstr);
@@ -60,13 +49,13 @@ int	dstr_append_char(dstr_t *dstr, char ch)
 
 	if (dstr->buffer_index >= dstr->buffer_size)
 	{
-		new_buffer =(char *) malloc ((dstr->buffer_size + BUFFER_CHUNK_SIZE) * (sizeof(char)));
+		new_buffer =(char *) util_calloc ((dstr->buffer_size + BUFFER_CHUNK_SIZE) * (sizeof(char)));
 		if(!new_buffer)
 		{
 			dstr_destroy(dstr);
 			return (0);
 		}
-		copy_buffer(new_buffer, dstr->buffer, dstr->buffer_size);
+		ft_memcpy(new_buffer, dstr->buffer, dstr->buffer_size);
 		free(dstr->buffer);
 		dstr->buffer = new_buffer;
 		dstr->buffer_size = dstr->buffer_size + BUFFER_CHUNK_SIZE;
