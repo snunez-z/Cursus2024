@@ -4,10 +4,12 @@
 #include "ft_printf.h"
 #include "mlx.h"
 
-#include "game.h"
+#include "font.h"
 #include "images.h"
 #include "map.h"
 #include "util.h"
+
+#include "game.h"
 
 #define RATE 10000
 #define KEY_ESC	65307
@@ -51,11 +53,49 @@ static int draw_map_cell(map_t *map, int x, int y, char cell, void *data)
 	return (1);
 }
 
+static int print_text(game_t *game, const char *text, int x, int y)
+{
+	const char	*aux;
+	void	*char_image;
+
+	aux = text;
+	while(*aux)
+	{
+		char_image = font_get(game->font, *aux);
+		if (char_image != NULL)
+			mlx_put_image_to_window(game->mlx, game->window, char_image, x, y);
+		x += IMAGE_SIZE;
+		aux++;
+	}
+
+	return x;
+}
+
+static int print_number(game_t *game, int number, int x, int y)
+{
+	char	digit;
+	void	*char_image;
+
+	if (number > 9)
+		x = print_number(game, number / 10, x, y);
+
+	digit = (number % 10) + '0';
+	char_image = font_get(game->font, digit);
+	if (char_image != NULL)
+		mlx_put_image_to_window(game->mlx, game->window, char_image, x, y);
+
+	return x + IMAGE_SIZE;
+}
+
 static int	draw_map(game_t *game)
 {
 	if (!game->window)
 		return (0);
 	map_loop(game->map, draw_map_cell, game);
+	int x = IMAGE_SIZE;
+	int y = IMAGE_SIZE * map_get_height(game->map);
+	x = print_text(game, "Moves: ", x, y);
+	print_number(game, game->move_count, x, y);
 	return (0);
 }
 
@@ -63,6 +103,7 @@ static int initialized_correctly(game_t *game)
 {
 	return (game != NULL)
 			&& (game->map != NULL)
+			&& (game->font != NULL)
 			&& (game->images != NULL)
 			&& (game->mlx != NULL)
 			&& (game->window != NULL);
@@ -73,6 +114,11 @@ static int	is_game_over(game_t *game)
 	int food_left = map_count_chars(game->map, 'C');
 	ft_printf("Food left: %d\n", food_left);
 	return (game->map->at_player == 'E') && (food_left == 0);
+}
+
+static int	verify_map(game_t *game)
+{
+
 }
 
 static int	key_press_hook(int key, game_t *game)
@@ -125,11 +171,11 @@ game_t	*game_create(const char *map_file_name)
 			game->mlx = mlx_init();
 			if (game->mlx)
 			{
-				ft_printf("Loading images\n");
 				game->images = images_load(game->mlx);
+				game->font = font_load(game->mlx);
 				game->window = mlx_new_window(game->mlx,
 				                              IMAGE_SIZE * map_get_width(game->map),
-				                              IMAGE_SIZE * map_get_height(game->map),
+				                              IMAGE_SIZE * (map_get_height(game->map) + 1),
 				                              "So Long");
 			}
 		}
@@ -152,6 +198,8 @@ void	game_destroy(game_t *game)
 		map_destroy(game->map);
 	if (game->images != NULL)
 		images_destroy(game->images);
+	if (game->font != NULL)
+		font_destroy(game->font);
 	if (game->window != NULL)
 		mlx_destroy_window(game->mlx, game->window);
 	if (game->mlx != NULL)

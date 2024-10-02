@@ -14,7 +14,7 @@ CC = cc
 CFLAGS = -Werror -Wall -Wextra -I $(INC_DIR) -I $(LIBFT) -I $(FT_PRINTF) -I $(MINILIBX) -I ./inc
 LDFLAGS = -L $(LIB) -lftprintf -lft -lX11 -lXext -lmlx
 
-SRC = dstr.c game.c images.c list.c main.c map.c util.c
+SRC = dstr.c font.c game.c images.c list.c main.c map.c util.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 all: create_dirs libs $(NAME)
