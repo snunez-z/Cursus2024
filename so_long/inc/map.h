@@ -15,7 +15,12 @@
 
 # include "list.h"
 
-typedef struct map_s
+# define MAP_EXIT_CHAR	'E'
+# define MAP_FOOD_CHAR	'C'
+# define MAP_PLAYER_CHAR	'P'
+# define MAP_WALL_CHAR	'1'
+
+typedef struct s_map
 {
 	t_list	*rows;
 	int		player_x;
@@ -28,7 +33,7 @@ void	map_destroy(t_map *map);
 void	map_write(t_map *map, int fd);
 int		map_get_width(t_map *map);
 int		map_get_height(t_map *map);
-char	map_at(t_map *map, int x, int y);
+char	map_at(t_map *map, int x, int y, char ch);
 int		map_move_player(t_map *map, int inc_x, int inc_y);
 int		map_count_chars(t_map *map, char ch);
 void	map_loop(t_map *map, int (*fn)(t_map*, int, int, char, void *), void *data);

@@ -129,11 +129,6 @@ static int	is_game_over(t_game *game)
 	return ((game->map->at_player == 'E') && (food_left == 0));
 }
 
-static int	verify_map(t_game *game)
-{
-
-}
-
 static int	key_press_hook(int key, t_game *game)
 {
 	int	move_ok;

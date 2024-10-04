@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dstr.h                                             :+:      :+:    :+:   */
+/*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/04 09:16:25 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/04 09:49:09 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/10/04 09:18:57 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/10/04 10:35:17 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DSTR_H
+#ifndef MAP_VERIFICATIONS_H
+# define MAP_VERIFICATIONS_H
 
-# define DSTR_H
+# include "map.h"
 
-typedef struct s_dstr
+typedef struct s_map_way_verify
 {
-	char	*buffer;
-	size_t	buffer_size;
-	size_t	buffer_index;
-}	t_dstr;
+	int		food_left;
+	int		passed_exit;
+}	t_map_way_verify;
 
-t_dstr	*dstr_create(void);
-void	dstr_destroy(t_dstr *dstr);
-char	dstr_char_at(t_dstr *dstr, size_t pos, char ch);
-int		dstr_append_char(t_dstr *dstr, char ch);
-size_t	dstr_length(t_dstr *dstr);
-void	dstr_write(t_dstr *dstr, int fd, int new_line);
+int	map_verify_square(t_map *map);
+int	map_verify_walls(t_map *map);
+int	map_verify_items(t_map *map);
+int	map_verify_player_position(t_map *map);
+int	map_verify_way(t_map *map);
 
 #endif

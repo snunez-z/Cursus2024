@@ -17,6 +17,7 @@
 #include "dstr.h"
 #include "list.h"
 #include "map.h"
+#include "map_verifications.h"
 #include "util.h"
 #include "count_data.h"
 
@@ -81,27 +82,6 @@ static t_list	*read_file(int fd)
 	return (rows);
 }
 
-static	int	find_player(t_map *map, int x, int y, char ch, void *data)
-{
-	(void)data;
-	if (ch == 'P')
-	{
-		map->player_x = x;
-		map->player_y = y;
-		map->at_player = '0';
-		return (0);
-	}
-	return (1);
-}
-
-static char	set_char_at(t_map *map, int x, int y, char ch)
-{
-	t_dstr	*row;
-
-	row = list_get(map->rows, y);
-	return (dstr_set_char_at(row, x, ch));
-}
-
 static int	count_char_function(t_map *map, int x, int y, char ch, void *data)
 {
 	struct s_count_data	*count_data;
@@ -113,6 +93,37 @@ static int	count_char_function(t_map *map, int x, int y, char ch, void *data)
 	count_data = (struct s_count_data *)data;
 	if (ch == count_data->char_to_find)
 		count_data->count++;
+	return (1);
+}
+
+static int	verify_map(t_map *map)
+{
+	if (!map_verify_square(map))
+	{
+		ft_printf("Error\nMap is not rectangular\n");
+		return 0;
+	}
+		
+	if (!map_verify_walls(map))
+	{
+		ft_printf("Error\nMap is not surrounded by walls\n");
+		return 0;
+	}
+	if (!map_verify_items(map))
+	{
+		ft_printf("Error\nMap does not have the required elements\n");
+		return 0;
+	}
+	if (!map_verify_player_position(map))
+	{
+		ft_printf("Error\nInvalid initial player position\n");
+		return 0;
+	}
+	if (!map_verify_way(map))
+	{
+		ft_printf("Error\nMap does not have a valid way\n");
+		return 0;
+	}
 	return (1);
 }
 
@@ -130,12 +141,11 @@ t_map	*map_read(const char *file_name)
 	if (map != NULL)
 		map->rows = read_file(fd);
 	close(fd);
-	if (!map || !map->rows)
+	if (!verify_map(map))
 	{
 		map_destroy(map);
 		return (NULL);
 	}
-	map_loop(map, find_player, NULL);
 	return (map);
 }
 
@@ -158,9 +168,9 @@ int	map_get_height(t_map *map)
 	return ((int)list_size(map->rows));
 }
 
-char	map_at(t_map *map, int column, int row)
+char	map_at(t_map *map, int column, int row, char ch)
 {
-	return (dstr_char_at((t_dstr*)list_get(map->rows, row), column));
+	return (dstr_char_at(list_get(map->rows, row), column, ch));
 }
 
 void	map_write(t_map *map, int fd)
@@ -184,14 +194,14 @@ int	map_move_player(t_map *map, int inc_x, int inc_y)
 	new_y = map->player_y + inc_y;
 	if (new_x < 0 || new_y < 0
 		|| new_x >= map_get_width(map) || new_y >= map_get_height(map)
-		|| map_at(map, new_x, new_y) == '1')
+		|| map_at(map, new_x, new_y, 0) == MAP_WALL_CHAR)
 		return (0);
 
-	set_char_at(map, map->player_x, map->player_y, map->at_player);
+	map_at(map, map->player_x, map->player_y, map->at_player);
 	map->player_x = new_x;
 	map->player_y = new_y;
-	map->at_player = set_char_at(map, map->player_x, map->player_y, 'P');
-	if (map->at_player == 'C')
+	map->at_player = map_at(map, map->player_x, map->player_y, MAP_PLAYER_CHAR);
+	if (map->at_player == MAP_FOOD_CHAR)
 		map->at_player = '0';
 
 	return (1);
@@ -224,7 +234,7 @@ void	map_loop(t_map *map, int (*fn)(t_map *, int, int, char, void*), void *data)
 		x = 0;
 		while (x < width)
 		{
-			ch = map_at(map, x, y);
+			ch = map_at(map, x, y, 0);
 			if (!fn(map, x, y, ch, data))
 				return ;
 			x++;

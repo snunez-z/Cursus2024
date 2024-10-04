@@ -41,17 +41,13 @@ void	dstr_destroy(t_dstr *dstr)
 	free (dstr);
 }
 
-char	dstr_char_at(t_dstr *dstr, size_t pos)
-{
-	return (dstr->buffer[pos]);
-}
-
-char	dstr_set_char_at(t_dstr *dstr, size_t pos, char ch)
+char	dstr_char_at(t_dstr *dstr, size_t pos, char ch)
 {
 	char	previous;
 
 	previous = dstr->buffer[pos];
-	dstr->buffer[pos] = ch;
+	if (ch)
+		dstr->buffer[pos] = ch;
 	return (previous);
 }
 
