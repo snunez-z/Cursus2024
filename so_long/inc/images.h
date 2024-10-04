@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   images.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/04 09:18:15 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/10/04 09:58:52 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef IMAGES_H
- #define IMAGES_H
+# define IMAGES_H
 
-#define IMAGE_SIZE	32
+# define IMAGE_SIZE	32
 
-typedef struct images_s
+typedef struct s_images
 {
 	void	*mlx;
 	void	*empty;
@@ -11,9 +23,9 @@ typedef struct images_s
 	void	*player;
 	void	*food;
 	void	*exit;
-} images_t;
+}	t_images;
 
-images_t	*images_load(void	*mlx);
-void	images_destroy(images_t *images);
+t_images	*images_load(void	*mlx);
+void		images_destroy(t_images *images);
 
 #endif

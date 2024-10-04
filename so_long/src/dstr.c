@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dstr.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/04 09:20:13 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/10/04 10:58:01 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stddef.h>
 #include "libft.h"
 #include "dstr.h"
@@ -5,15 +17,15 @@
 
 #define BUFFER_CHUNK_SIZE	100
 
-dstr_t	*dstr_create()
+t_dstr	*dstr_create(void)
 {
-	dstr_t *dstr;
+	t_dstr	*dstr;
 
-	dstr = (dstr_t *) util_calloc(sizeof(dstr_t));
+	dstr = (t_dstr *) util_calloc(sizeof(t_dstr));
 	if (!dstr)
 		return (NULL);
 	dstr->buffer_size = 10;
-	dstr->buffer =(char *) util_calloc(dstr->buffer_size * sizeof(char));
+	dstr->buffer = (char *) util_calloc(dstr->buffer_size * sizeof(char));
 	if (!dstr->buffer)
 	{
 		free (dstr);
@@ -23,34 +35,34 @@ dstr_t	*dstr_create()
 	return (dstr);
 }
 
-void	dstr_destroy(dstr_t *dstr)
+void	dstr_destroy(t_dstr *dstr)
 {
 	free (dstr->buffer);
 	free (dstr);
 }
 
-char	dstr_char_at(dstr_t *dstr, size_t pos)
+char	dstr_char_at(t_dstr *dstr, size_t pos)
 {
 	return (dstr->buffer[pos]);
 }
 
-char	dstr_set_char_at(dstr_t *dstr, size_t pos, char ch)
+char	dstr_set_char_at(t_dstr *dstr, size_t pos, char ch)
 {
 	char	previous;
 
 	previous = dstr->buffer[pos];
 	dstr->buffer[pos] = ch;
-	return previous;
+	return (previous);
 }
 
-int	dstr_append_char(dstr_t *dstr, char ch)
+int	dstr_append_char(t_dstr *dstr, char ch)
 {
 	char	*new_buffer;
 
 	if (dstr->buffer_index >= dstr->buffer_size)
 	{
-		new_buffer =(char *) util_calloc ((dstr->buffer_size + BUFFER_CHUNK_SIZE) * (sizeof(char)));
-		if(!new_buffer)
+		new_buffer = (char *) util_calloc ((dstr->buffer_size + BUFFER_CHUNK_SIZE) * (sizeof(char)));
+		if (!new_buffer)
 		{
 			dstr_destroy(dstr);
 			return (0);
@@ -65,12 +77,12 @@ int	dstr_append_char(dstr_t *dstr, char ch)
 	return (1);
 }
 
-size_t	dstr_length(dstr_t * dstr)
+size_t	dstr_length(t_dstr *dstr)
 {
 	return (dstr->buffer_index);
 }
 
-void	dstr_write(dstr_t *dstr, int fd, int new_line)
+void	dstr_write(t_dstr *dstr, int fd, int new_line)
 {
 	if (dstr->buffer_index > 0)
 		write(fd, dstr->buffer, dstr->buffer_index);

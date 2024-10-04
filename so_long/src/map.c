@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/04 09:22:54 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/10/04 14:07:59 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -6,25 +18,20 @@
 #include "list.h"
 #include "map.h"
 #include "util.h"
-
-struct count_data_s
-{
-	char	char_to_find;
-	int	count;
-};
+#include "count_data.h"
 
 static void	destroy_line(void *line)
 {
-	dstr_destroy((dstr_t*) line);
+	dstr_destroy ((t_dstr *) line);
 }
 
-static int	read_line_into_buffer(int fd, dstr_t *line)
+static int	read_line_into_buffer(int fd, t_dstr *line)
 {
 	ssize_t	read_result;
-	char ch;
+	char	ch;
 
 	read_result = read(fd, &ch, 1);
-	while(read_result == 1 && ch != '\n')
+	while (read_result == 1 && ch != '\n')
 	{
 		if (!dstr_append_char(line, ch))
 			return (0);
@@ -39,26 +46,26 @@ static int	read_line_into_buffer(int fd, dstr_t *line)
 	return (1);
 }
 
-static dstr_t	*read_line(int fd)
+static t_dstr	*read_line(int fd)
 {
-	dstr_t	*line;
+	t_dstr	*line;
 
 	line = dstr_create();
 	if (!line)
 		return (NULL);
-	if(!read_line_into_buffer(fd, line))
+	if (!read_line_into_buffer(fd, line))
 		return (NULL);
 	return (line);
 }
 
-static list_t	*read_file(int fd)
+static t_list	*read_file(int fd)
 {
-	list_t	*rows;
-	dstr_t	*line;
+	t_list	*rows;
+	t_dstr	*line;
 
 	rows = NULL;
 	line = read_line(fd);
-	while(line != NULL && dstr_length(line) > 0)
+	while (line != NULL && dstr_length(line) > 0)
 	{
 		rows = list_append(rows, line, destroy_line);
 		if (!rows)
@@ -74,7 +81,7 @@ static list_t	*read_file(int fd)
 	return (rows);
 }
 
-static int	find_player(map_t *map, int x, int y, char ch, void *data)
+static	int	find_player(t_map *map, int x, int y, char ch, void *data)
 {
 	(void)data;
 	if (ch == 'P')
@@ -84,45 +91,45 @@ static int	find_player(map_t *map, int x, int y, char ch, void *data)
 		map->at_player = '0';
 		return (0);
 	}
-
 	return (1);
 }
 
-static char set_char_at(map_t *map, int x, int y, char ch)
+static char	set_char_at(t_map *map, int x, int y, char ch)
 {
-	dstr_t *row = list_get(map->rows, y);
-	return dstr_set_char_at(row, x, ch);
+	t_dstr	*row;
+
+	row = list_get(map->rows, y);
+	return (dstr_set_char_at(row, x, ch));
 }
 
-static int	count_char_function(map_t *map, int x, int y, char ch, void *data)
+static int	count_char_function(t_map *map, int x, int y, char ch, void *data)
 {
-	struct count_data_s	*count_data;
+	struct s_count_data	*count_data;
 
 	(void)map;
 	(void)x;
 	(void)y;
-	count_data = (struct count_data_s*)data;
+
+	count_data = (struct s_count_data *)data;
 	if (ch == count_data->char_to_find)
 		count_data->count++;
 	return (1);
 }
 
-map_t	*map_read(const char *file_name)
+t_map	*map_read(const char *file_name)
 {
-	map_t	*map;
-	int	fd;
+	t_map	*map;
+	int		fd;
 
 	if ((fd = open(file_name, O_RDONLY)) < 0)
 	{
 		ft_printf("Error\nUnable to open map file: %s\n", file_name);
 		return (NULL);
 	}
-
-	map = (map_t*)util_calloc(sizeof(map_t));
+	map = (t_map *)util_calloc(sizeof(t_map));
 	if (map != NULL)
 		map->rows = read_file(fd);
 	close(fd);
-
 	if (!map || !map->rows)
 	{
 		map_destroy(map);
@@ -132,43 +139,43 @@ map_t	*map_read(const char *file_name)
 	return (map);
 }
 
-void	map_destroy(map_t *map)
+void	map_destroy(t_map *map)
 {
 	if (!map)
-		return;
+		return ;
 	if (map->rows != NULL)
 		list_destroy(map->rows, destroy_line);
 	free(map);
 }
 
-int	map_get_width(map_t *map)
+int	map_get_width(t_map *map)
 {
-	return (int)dstr_length((dstr_t*)list_get(map->rows, 0));
+	return ((int)dstr_length((t_dstr *)list_get(map->rows, 0)));
 }
 
-int	map_get_height(map_t *map)
+int	map_get_height(t_map *map)
 {
-	return (int)list_size(map->rows);
+	return ((int)list_size(map->rows));
 }
 
-char	map_at(map_t *map, int column, int row)
+char	map_at(t_map *map, int column, int row)
 {
-	return dstr_char_at((dstr_t*)list_get(map->rows, row), column);
+	return (dstr_char_at((t_dstr*)list_get(map->rows, row), column));
 }
 
-void	map_write(map_t *map, int fd)
+void	map_write(t_map *map, int fd)
 {
-	list_t	*node;
+	t_list	*node;
 
 	node = map->rows;
-	while(node != NULL)
+	while (node != NULL)
 	{
-		dstr_write((dstr_t*)node->data, fd, 1);
+		dstr_write((t_dstr *)node->data, fd, 1);
 		node = node->next;
 	}
 }
 
-int	map_move_player(map_t *map, int inc_x, int inc_y)
+int	map_move_player(t_map *map, int inc_x, int inc_y)
 {
 	int	new_x;
 	int	new_y;
@@ -190,18 +197,18 @@ int	map_move_player(map_t *map, int inc_x, int inc_y)
 	return (1);
 }
 
-int	map_count_chars(map_t *map, char ch)
+int	map_count_chars(t_map *map, char ch)
 {
-	struct count_data_s	count_data;
+	struct s_count_data	count_data;
 
 	count_data.char_to_find = ch;
 	count_data.count = 0;
 
 	map_loop(map, count_char_function, &count_data);
-	return count_data.count;
+	return (count_data.count);
 }
 
-void	map_loop(map_t *map, int (*fn)(map_t*, int, int, char, void*), void *data)
+void	map_loop(t_map *map, int (*fn)(t_map *, int, int, char, void*), void *data)
 {
 	int	x;
 	int	y;
@@ -219,7 +226,7 @@ void	map_loop(map_t *map, int (*fn)(map_t*, int, int, char, void*), void *data)
 		{
 			ch = map_at(map, x, y);
 			if (!fn(map, x, y, ch, data))
-				return;
+				return ;
 			x++;
 		}
 		y++;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/04 09:21:08 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/10/04 12:28:30 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <X11/X.h>
@@ -22,7 +34,7 @@
 #define KEY_LEFT	65361
 #define KEY_RIGHT	65363
 
-static int close_window(game_t *game)
+static int	close_window(t_game *game)
 {
 	ft_printf("Closing game\n");
 	if (game->window != NULL)
@@ -31,13 +43,13 @@ static int close_window(game_t *game)
 	return (0);
 }
 
-static int draw_map_cell(map_t *map, int x, int y, char cell, void *data)
+static int	draw_map_cell(t_map *map, int x, int y, char cell, void *data)
 {
-	game_t	*game;
+	t_game	*game;
 	void	*image;
 
 	(void)map;
-	game = (game_t*)data;
+	game = (t_game *)data;
 	if (cell == '1')
 		image = game->images->wall;
 	else if (cell == 'C')
@@ -48,18 +60,17 @@ static int draw_map_cell(map_t *map, int x, int y, char cell, void *data)
 		image = game->images->player;
 	else
 		image = game->images->empty;
-
 	mlx_put_image_to_window(game->mlx, game->window, image, IMAGE_SIZE * x, IMAGE_SIZE * y);
 	return (1);
 }
 
-static int print_text(game_t *game, const char *text, int x, int y)
+static int	print_text(t_game *game, const char *text, int x, int y)
 {
 	const char	*aux;
-	void	*char_image;
+	void		*char_image;
 
 	aux = text;
-	while(*aux)
+	while (*aux)
 	{
 		char_image = font_get(game->font, *aux);
 		if (char_image != NULL)
@@ -67,63 +78,65 @@ static int print_text(game_t *game, const char *text, int x, int y)
 		x += IMAGE_SIZE;
 		aux++;
 	}
-
-	return x;
+	return (x);
 }
 
-static int print_number(game_t *game, int number, int x, int y)
+static int	print_number(t_game *game, int number, int x, int y)
 {
 	char	digit;
 	void	*char_image;
 
 	if (number > 9)
 		x = print_number(game, number / 10, x, y);
-
 	digit = (number % 10) + '0';
 	char_image = font_get(game->font, digit);
 	if (char_image != NULL)
 		mlx_put_image_to_window(game->mlx, game->window, char_image, x, y);
-
-	return x + IMAGE_SIZE;
+	return (x + IMAGE_SIZE);
 }
 
-static int	draw_map(game_t *game)
+static int	draw_map(t_game *game)
 {
+	int	x;
+	int	y;
+
 	if (!game->window)
 		return (0);
 	map_loop(game->map, draw_map_cell, game);
-	int x = IMAGE_SIZE;
-	int y = IMAGE_SIZE * map_get_height(game->map);
+	x = IMAGE_SIZE;
+	y = IMAGE_SIZE * map_get_height(game->map);
 	x = print_text(game, "Moves: ", x, y);
 	print_number(game, game->move_count, x, y);
 	return (0);
 }
 
-static int initialized_correctly(game_t *game)
+static int	initialized_correctly(t_game *game)
 {
-	return (game != NULL)
+	return ((game != NULL)
 			&& (game->map != NULL)
 			&& (game->font != NULL)
 			&& (game->images != NULL)
 			&& (game->mlx != NULL)
-			&& (game->window != NULL);
+			&& (game->window != NULL));
 }
 
-static int	is_game_over(game_t *game)
+static int	is_game_over(t_game *game)
 {
-	int food_left = map_count_chars(game->map, 'C');
+	int	food_left;
+
+	food_left = map_count_chars(game->map, 'C');
 	ft_printf("Food left: %d\n", food_left);
-	return (game->map->at_player == 'E') && (food_left == 0);
+	return ((game->map->at_player == 'E') && (food_left == 0));
 }
 
-static int	verify_map(game_t *game)
+static int	verify_map(t_game *game)
 {
 
 }
 
-static int	key_press_hook(int key, game_t *game)
+static int	key_press_hook(int key, t_game *game)
 {
-	int move_ok;
+	int	move_ok;
 
 	if (key == 65307)
 	{
@@ -141,23 +154,21 @@ static int	key_press_hook(int key, game_t *game)
 		move_ok = map_move_player(game->map, -1, 0);
 	else
 		return (0);
-
 	if (move_ok)
 	{
 		game->move_count++;
 		if (is_game_over(game))
 			close_window(game);
 	}
-
 	return (0);
 }
 
-game_t	*game_create(const char *map_file_name)
+t_game	*game_create(const char *map_file_name)
 {
-	game_t	*game;
+	t_game	*game;
 
 	ft_printf("Creating game\n");
-	game = (game_t*)util_calloc(sizeof(game_t));
+	game = (t_game *)util_calloc(sizeof(t_game));
 	if (game != NULL)
 	{
 		game->move_count = 0;
@@ -189,11 +200,11 @@ game_t	*game_create(const char *map_file_name)
 	return (game);
 }
 
-void	game_destroy(game_t *game)
+void	game_destroy(t_game *game)
 {
 	ft_printf("Destroying game\n");
 	if (!game)
-		return;
+		return ;
 	if (game->map != NULL)
 		map_destroy(game->map);
 	if (game->images != NULL)
@@ -207,10 +218,10 @@ void	game_destroy(game_t *game)
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
-	free(game);
+	free (game);
 }
 
-void	game_run(game_t *game)
+void	game_run(t_game *game)
 {
 	game->frames = 0;
 	if (!mlx_loop_hook(game->mlx, draw_map, game)
@@ -219,9 +230,8 @@ void	game_run(game_t *game)
 	{
 		ft_printf("Error\nError initializing MLX loop\n");
 		game_destroy(game);
-		return;
+		return ;
 	}
-
 	ft_printf("Starting game\n");
 	mlx_loop(game->mlx);
 	game_destroy(game);

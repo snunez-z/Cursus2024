@@ -1,18 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   images.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/04 09:21:29 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/10/04 12:34:31 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include "ft_printf.h"
 #include "mlx.h"
 #include "images.h"
 #include "util.h"
 
-images_t	*images_load(void *mlx)
+t_images	*images_load(void *mlx)
 {
-	images_t	*images;
+	t_images	*images;
 
 	ft_printf("Loading images\n");
-	images = (images_t*)util_calloc(sizeof(images_t));
+	images = (t_images *) util_calloc(sizeof(t_images));
 	if (!images)
 		return (NULL);
-
 	images->mlx = mlx;
 	images->empty = util_load_image(mlx, "images/empty.xpm");
 	images->wall = util_load_image(mlx, "images/wall.xpm");
@@ -25,11 +36,10 @@ images_t	*images_load(void *mlx)
 		images_destroy(images);
 		return (NULL);
 	}
-
-	return images;
+	return (images);
 }
 
-void	images_destroy(images_t *images)
+void	images_destroy(t_images *images)
 {
 	util_destroy_image(images->mlx, images->empty);
 	util_destroy_image(images->mlx, images->wall);

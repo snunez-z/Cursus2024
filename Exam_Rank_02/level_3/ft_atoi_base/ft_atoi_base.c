@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:55:33 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/09/17 10:39:17 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:32:46 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_atoi_base(const char *str, int str_base)
 		value = value *-1;
 	return (value);
 }
-
+/* to check the function 
 #include <stdio.h>
 int	main (void)
 {
@@ -73,5 +73,6 @@ int	main (void)
 	value = ft_atoi_base ( "123", 10);
 	printf ("%d\n", value);
 }
+*/
 
 

@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:52:31 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/09/17 09:18:14 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:04:12 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ unsigned char swap_bits (unsigned char octet)
 	}	
 	return (result);
 }
-
+/*
 #include <stdio.h>
 
 int	main(void)

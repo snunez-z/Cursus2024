@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   snake_to_camel.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:52:10 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/08/14 10:17:19 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:51:45 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 	{
 		str = argv[1];
 		i = 0;
-		while (str[i] == '_' || str[i] == '\t')
+		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		while (str [i] != '\0')
 		{
