@@ -14,16 +14,17 @@
 # define LIST_H
 
 # include <stddef.h>
+# include "dstr.h"
 
 typedef struct s_list
 {
-	void			*data;
+	t_dstr			*data;
 	struct s_list	*next;
 }	t_list;
 
-t_list	*list_append(t_list *list, void *data, void (*free_data)(void*));
-void	list_destroy(t_list *list, void (*free_data)(void*));
+t_list	*list_append(t_list *list, t_dstr *data);
+void	list_destroy(t_list *list);
 size_t	list_size(t_list *list);
-void	*list_get(t_list *list, size_t pos);
+t_dstr	*list_get(t_list *list, size_t pos);
 
 #endif

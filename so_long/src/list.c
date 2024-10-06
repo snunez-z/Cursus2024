@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "dstr.h"
 #include "list.h"
 
 static t_list	*create_node(void *data)
@@ -25,7 +26,7 @@ static t_list	*create_node(void *data)
 	return (node);
 }
 
-t_list	*list_append(t_list *list, void *data, void (*free_data)(void*))
+t_list	*list_append(t_list *list, t_dstr *data)
 {
 	t_list	*new_node;
 	t_list	*last_node;
@@ -33,8 +34,8 @@ t_list	*list_append(t_list *list, void *data, void (*free_data)(void*))
 	new_node = create_node(data);
 	if (!new_node)
 	{
-		free_data(data);
-		list_destroy(list, free_data);
+		dstr_destroy(data);
+		list_destroy(list);
 		return (NULL);
 	}
 	if (list == NULL)
@@ -46,13 +47,13 @@ t_list	*list_append(t_list *list, void *data, void (*free_data)(void*))
 	return (list);
 }
 
-void	list_destroy(t_list *list, void (*free_data)(void*))
+void	list_destroy(t_list *list)
 {
 	t_list	*aux;
 
 	while (list != NULL)
 	{
-		free_data(list->data);
+		dstr_destroy(list->data);
 		aux = list;
 		list = list->next;
 		free(aux);
@@ -72,7 +73,7 @@ size_t	list_size(t_list *list)
 	return (size);
 }
 
-void	*list_get(t_list *list, size_t pos)
+t_dstr	*list_get(t_list *list, size_t pos)
 {
 	while (list != NULL && pos > 0)
 	{

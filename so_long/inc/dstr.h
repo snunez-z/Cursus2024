@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #ifndef DSTR_H
-
 # define DSTR_H
+
+# include <stddef.h>
 
 typedef struct s_dstr
 {
@@ -26,6 +27,5 @@ void	dstr_destroy(t_dstr *dstr);
 char	dstr_char_at(t_dstr *dstr, size_t pos, char ch);
 int		dstr_append_char(t_dstr *dstr, char ch);
 size_t	dstr_length(t_dstr *dstr);
-void	dstr_write(t_dstr *dstr, int fd, int new_line);
 
 #endif

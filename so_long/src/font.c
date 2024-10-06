@@ -24,20 +24,17 @@ static int	get_char_index(char ch)
 	return (ch - ' ' - 1);
 }
 
-static void	itoa(char ch, char *buffer)
-{
-	buffer[0] = (ch / 100) + '0';
-	buffer[1] = ((ch % 100) / 10) + '0';
-	buffer[2] = (ch % 10) + '0';
-	buffer[3] = 0;
-}
-
-static char	*get_char_file_name(char ch)
+static char	*get_char_file_name(char ch) // ./font/***.xpm
 {
 	static char	buffer[FILE_NAME_SIZE + 1];
+	char	*char_num;
 
 	ft_strlcpy(buffer, "./font/", FILE_NAME_SIZE);
-	itoa(ch, buffer + ft_strlen(buffer));
+	char_num = buffer + ft_strlen(buffer);
+	char_num[0] = (ch / 100) + '0';
+	char_num[1] = ((ch % 100) / 10) + '0';
+	char_num[2] = (ch % 10) + '0';
+	char_num[3] = 0;
 	ft_strlcat(buffer, ".xpm", FILE_NAME_SIZE);
 	return (buffer);
 }

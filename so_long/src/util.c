@@ -45,3 +45,8 @@ void	util_destroy_image(void *mlx, void *image)
 		mlx_destroy_image(mlx, image);
 }
 
+int		util_display_error(const char *message, int return_code)
+{
+	ft_printf("Error\n%s\n", message);
+	return (return_code);
+}

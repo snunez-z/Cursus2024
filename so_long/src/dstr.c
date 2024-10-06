@@ -53,11 +53,13 @@ char	dstr_char_at(t_dstr *dstr, size_t pos, char ch)
 
 int	dstr_append_char(t_dstr *dstr, char ch)
 {
+	size_t	malloc_size;
 	char	*new_buffer;
 
 	if (dstr->buffer_index >= dstr->buffer_size)
 	{
-		new_buffer = (char *) util_calloc ((dstr->buffer_size + BUFFER_CHUNK_SIZE) * (sizeof(char)));
+		malloc_size = (dstr->buffer_size + BUFFER_CHUNK_SIZE) * (sizeof(char));
+		new_buffer = (char *) util_calloc (malloc_size);
 		if (!new_buffer)
 		{
 			dstr_destroy(dstr);
@@ -77,40 +79,3 @@ size_t	dstr_length(t_dstr *dstr)
 {
 	return (dstr->buffer_index);
 }
-
-void	dstr_write(t_dstr *dstr, int fd, int new_line)
-{
-	if (dstr->buffer_index > 0)
-		write(fd, dstr->buffer, dstr->buffer_index);
-	if (new_line)
-		write(fd, "\n", 1);
-}
-
-/*
-int	main(void)
-{
-	dstr_t * dstr;
-	char ch;
-
-	dstr = create ();
-
-	ch = 'a';
-	while (ch <= 'z')
-	{
-		append_char(dstr, ch);
-		ch++;
-	}
-
-	printf("%ld\n", lenght(dstr));
-
-	ch = 'a';
-	while (ch <= 'z')
-	{
-		printf("%c", char_at (dstr, ch - 'a'));
-		ch++;
-	}
-
-	destroy(dstr);
-	return (0);
-}
-*/

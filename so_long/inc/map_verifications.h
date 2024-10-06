@@ -15,6 +15,12 @@
 
 # include "map.h"
 
+typedef struct s_count_data
+{
+	int		exit_count;
+	int		player_count;
+}	t_count_data;
+
 typedef struct s_map_way_verify
 {
 	int		food_left;
@@ -22,9 +28,9 @@ typedef struct s_map_way_verify
 }	t_map_way_verify;
 
 int	map_verify_square(t_map *map);
+int	map_verify_fits_into_screen(t_map *map);
 int	map_verify_walls(t_map *map);
 int	map_verify_items(t_map *map);
-int	map_verify_player_position(t_map *map);
 int	map_verify_way(t_map *map);
 
 #endif

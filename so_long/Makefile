@@ -26,7 +26,9 @@ CC = cc
 CFLAGS = -Werror -Wall -Wextra -I $(INC_DIR) -I $(LIBFT) -I $(FT_PRINTF) -I $(MINILIBX) -I ./inc
 LDFLAGS = -L $(LIB) -lftprintf -lft -lX11 -lXext -lmlx
 
-SRC = dstr.c font.c game.c images.c list.c main.c map.c map_verifications.c util.c
+SRC = dstr.c font.c game.c game_draw_map.c game_create.c images.c list.c main.c \
+		map.c map_at.c map_read.c map_verifications.c map_verify_walls.c map_verify_way.c \
+		util.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 all: create_dirs libs $(NAME)

@@ -31,6 +31,7 @@ typedef struct game_s
 
 t_game	*game_create(const char *map_file_name);
 void	game_destroy(t_game *game);
+int		game_draw_map(t_game *game);
 void	game_run(t_game *game);
 
 #endif
