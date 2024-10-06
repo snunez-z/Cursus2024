@@ -14,27 +14,44 @@
 #include "dstr.h"
 #include "list.h"
 
-static t_list	*create_node(void *data)
+/*
+ * Allocates a "t_list" instance and initializes its fields in the following way:
+ * - "line" field is assinged the parameter "line"
+ * - "next" is set to NULL
+ *
+ * Returns the allocated and initialized instance or NULL if malloc fails
+ */
+static t_list	*create_node(t_dstr *line)
 {
 	t_list	*node;
 
 	node = malloc(sizeof(t_list));
 	if (!node)
 		return (NULL);
-	node->data = data;
+	node->line = line;
 	node->next = NULL;
 	return (node);
 }
 
-t_list	*list_append(t_list *list, t_dstr *data)
+/*
+ * First creates the new node to hold "line" into.
+ * If it succeeds, then appends the new node at the end of the list.
+ * There are two cases here:
+ * - If "list" is NULL it means the list is empty, so newly created node is
+ *   the first one, so we simply return the newly created node.
+ * - If "list" is NULL, then the list is not empty. In this case, we have to
+ *   go to the end of the list and make the last node point to the newly
+ *   created node.
+ */
+t_list	*list_append(t_list *list, t_dstr *line)
 {
 	t_list	*new_node;
 	t_list	*last_node;
 
-	new_node = create_node(data);
+	new_node = create_node(line);
 	if (!new_node)
 	{
-		dstr_destroy(data);
+		dstr_destroy(line);
 		list_destroy(list);
 		return (NULL);
 	}
@@ -53,7 +70,8 @@ void	list_destroy(t_list *list)
 
 	while (list != NULL)
 	{
-		dstr_destroy(list->data);
+		// We have to free the line AND the node
+		dstr_destroy(list->line);
 		aux = list;
 		list = list->next;
 		free(aux);
@@ -82,5 +100,5 @@ t_dstr	*list_get(t_list *list, size_t pos)
 	}
 	if (!list)
 		return (NULL);
-	return (list->data);
+	return (list->line);
 }

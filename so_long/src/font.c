@@ -19,22 +19,36 @@
 
 #define FILE_NAME_SIZE	100
 
+/*
+ * Returns the index inside the "char_images" array where the image for a
+ * specific character is stored into. For example, '!' (ASCII 33) is stored
+ * in the first position of the array, '"' (ASCII 34) is stored in the
+ * second position of the array, and so on.
+ */
 static int	get_char_index(char ch)
 {
 	return (ch - ' ' - 1);
 }
 
-static char	*get_char_file_name(char ch) // ./font/***.xpm
+/*
+ * The name of the file containing each character uses a specific name format:
+ * "./font/---.xpm", where "---" is the three-digit number of the ASCII value
+ * of the character.
+ * This function stores into "buffer" the name of the file where the image
+ * for character "ch" is stored into.
+ * For example, for '!' (ASCII 33), it will store "./font/033.xpm" into "buffer"
+ */
+static char	*get_char_file_name(char ch, char *buffer) // ./font/***.xpm
 {
-	static char	buffer[FILE_NAME_SIZE + 1];
-	char	*char_num;
-
 	ft_strlcpy(buffer, "./font/", FILE_NAME_SIZE);
-	char_num = buffer + ft_strlen(buffer);
-	char_num[0] = (ch / 100) + '0';
-	char_num[1] = ((ch % 100) / 10) + '0';
-	char_num[2] = (ch % 10) + '0';
-	char_num[3] = 0;
+	// Hundreds
+	buffer[7] = (ch / 100) + '0';
+	// Tenths
+	buffer[8] = ((ch % 100) / 10) + '0';
+	// Units
+	buffer[9] = (ch % 10) + '0';
+	// Always terminate strings with '\0' :)
+	buffer[10] = '\0';
 	ft_strlcat(buffer, ".xpm", FILE_NAME_SIZE);
 	return (buffer);
 }
@@ -42,7 +56,9 @@ static char	*get_char_file_name(char ch) // ./font/***.xpm
 t_font	*font_load(void	*mlx)
 {
 	t_font	*font;
+	char	buffer[FILE_NAME_SIZE + 1];
 	char	ch;
+	int		index;
 
 	ft_printf("Loading font images\n");
 	font = (t_font *) util_calloc(sizeof(t_font));
@@ -52,7 +68,9 @@ t_font	*font_load(void	*mlx)
 	ch = ' ' + 1;
 	while (ch <= FONT_LAST_CHAR)
 	{
-		font->char_images[get_char_index(ch)] = util_load_image(mlx, get_char_file_name(ch));
+		index = get_char_index(ch);
+		font->char_images[index] = util_load_image(mlx,
+			get_char_file_name(ch, buffer));
 		ch++;
 	}
 	return (font);

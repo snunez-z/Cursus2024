@@ -15,6 +15,8 @@
 #include "dstr.h"
 #include "util.h"
 
+/* The number of bytes initially allocated for the internal buffer and also
+ * the ammount if grows if it needs to */
 #define BUFFER_CHUNK_SIZE	100
 
 t_dstr	*dstr_create(void)
@@ -45,12 +47,27 @@ char	dstr_char_at(t_dstr *dstr, size_t pos, char ch)
 {
 	char	previous;
 
+	// We get the caracter in the requested position...
 	previous = dstr->buffer[pos];
+	// ... then, if "ch" is not zero, we replace it
 	if (ch)
 		dstr->buffer[pos] = ch;
+	// Finally, we return the character that we picked in the beginning
 	return (previous);
 }
 
+/*
+ * First, it checks whether the "buffer" has enough room for an additional
+ * character. If "buffer_size" is equals than "buffer_index", it means we have
+ * exhausted the buffer, so we need to grow it.
+ * In order to grow it we have to:
+ * - Allocate the new bigger buffer
+ * - Copy the contents of the old smaller buffer to the new one, then free
+ *   the old one
+ * - If the malloc for the bigger buffer fails, we will not be able to append
+ *   the new character, so if the malloc fails, it will free all the memory
+ *   allocated so far
+ */
 int	dstr_append_char(t_dstr *dstr, char ch)
 {
 	size_t	malloc_size;
@@ -77,5 +94,6 @@ int	dstr_append_char(t_dstr *dstr, char ch)
 
 size_t	dstr_length(t_dstr *dstr)
 {
+	// "buffer_index" is the number of characters appended to the buffer
 	return (dstr->buffer_index);
 }
