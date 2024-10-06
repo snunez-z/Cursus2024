@@ -27,42 +27,39 @@ Cabe recalcar que el mapa debe ser realizable en todo momento, en caso de que se
 
 Por último estos serán los siguientes controles:
 
-|------------------------------------------------|
-|TECLA  |ACCIÓN					|
 |-----------------------------------------------|
-|W	|Mover el personaje hacia arriba	|
+|TECLA  |ACCIÓN					                |
 |-----------------------------------------------|
-|A	|Mover el personaje hacia la izquierda	|	
+|W	    |Mover el personaje hacia arriba        |
 |-----------------------------------------------|
-|S	|Mover el personaje hacia abajo		|
+|A	    |Mover el personaje hacia la izquierda  |	
 |-----------------------------------------------|
-|D	|Mover el personaje hacia la derecha	|
+|S	    |Mover el personaje hacia abajo		    |
 |-----------------------------------------------|
-|ESC	|Cierra el juego sin memory leaks	|
+|D	    |Mover el personaje hacia la derecha    |
 |-----------------------------------------------|
+|ESC    |Cierra el juego sin memory leaks	    |
+|_______________________________________________|
 
 **Que utilizamos?**
 
 En nuestro so_long tenemos solo las siguentes funciones de librerias externas autorizadas:
 
- _______________________________________________________________________________________________________________
-|Función	|Descripción											|	
-|_______________|_______________________________________________________________________________________________|
-| malloc	|Solicitar un bloque de memoria del tamaño suministrado como parámetro.				|
-|---------------|-----------------------------------------------------------------------------------------------|
-| free		|Desasigna un bloque de memoria que se había asignado previamente mediante una llamada. 	|
-|---------------|-----------------------------------------------------------------------------------------------|
-| write		|Hace que los bytes que indiques del buffer sean escritos en el file descriptor seleccionado.	|
-|---------------|-----------------------------------------------------------------------------------------------|
-| open		|Abre el archivo del sistema seleccionado.							|
-|---------------|-----------------------------------------------------------------------------------------------|
-| close		|Cierra el archivo del sistema seleccionado.							|
-|---------------|-----------------------------------------------------------------------------------------------|
-| read		|Lee el contenido del archivo del sistema seleccionado.						|
-|---------------|-----------------------------------------------------------------------------------------------|
-| exit		|Finaliza inmediatamente el programa liberando la memoria dinamica asignada			|
-|_______________|_______________________________________________________________________________________________|
- 
+ ___________________________________________________________________________________________________________
+|Función	|Descripción											                                        |	
+|___________|_______________________________________________________________________________________________|
+| ft_calloc	|Solicitar un bloque de memoria del tamaño suministrado como parámetro.				            |
+|-----------|-----------------------------------------------------------------------------------------------|
+| free		|Desasigna un bloque de memoria que se había asignado previamente mediante una llamada. 	    |
+|-----------|-----------------------------------------------------------------------------------------------|
+| ft_printf	|Hace que los bytes que indiques del buffer sean escritos en el file descriptor seleccionado.	|
+|-----------|-----------------------------------------------------------------------------------------------|
+| open		|Abre el archivo del sistema seleccionado.							                            |
+|-----------|-----------------------------------------------------------------------------------------------|
+| close		|Cierra el archivo del sistema seleccionado.							                        |
+|-----------|-----------------------------------------------------------------------------------------------|
+| read		|Lee el contenido del archivo del sistema seleccionado.						                    |
+|___________|_______________________________________________________________________________________________|
 Tambien necesitaremos OBLIGATORIAMENTE la libreria minilibx para este proyecto.
 
 **Como funciona?**
