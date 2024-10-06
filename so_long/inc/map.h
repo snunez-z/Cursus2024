@@ -28,14 +28,14 @@ typedef struct s_map
 	char	at_player;
 }	t_map;
 
-t_map	*map_read(const char *file_name);
-void	map_destroy(t_map *map);
-void	map_write(t_map *map, int fd);
-int		map_get_width(t_map *map);
-int		map_get_height(t_map *map);
-char	map_at(t_map *map, int x, int y, char ch);
-int		map_move_player(t_map *map, int inc_x, int inc_y);
-int		map_count_chars(t_map *map, char ch);
-void	map_loop(t_map *map, int (*fn)(t_map*, int, int, char, void *), void *data);
+t_map	*map_read(const char *file_name); // creacion devuelve el puntero (que es nu numero) que es lo que van a recibir el resot como argumento.
+void	map_destroy(t_map *map); // libera todo lo que el mapa reserva.
+void	map_write(t_map *map, int fd);// para quitar.
+int		map_get_width(t_map *map); // nos devuelve el ancho del mapa para saber si podemos movernos, si hemos llegado a la pared.
+int		map_get_height(t_map *map);// nos devuelve alto del mapa para saber si hemso llegado al muro.
+char	map_at(t_map *map, int x, int y, char ch); // que caracter en una posicion y te permite ademas cambiarlo.
+int		map_move_player(t_map *map, int inc_x, int inc_y); // Cambia de sitio la p
+int		map_count_chars(t_map *map, char ch);//cuantos caracteres ch hay. Lo necesitamos para detectar cuando hemos comido.
+void	map_loop(t_map *map, int (*fn)(t_map*, int, int, char, void *), void *data);//Recorrer el mapa.Contar carcateres.
 
 #endif

@@ -24,7 +24,7 @@ t_dstr	*dstr_create(void)
 	dstr = (t_dstr *) util_calloc(sizeof(t_dstr));
 	if (!dstr)
 		return (NULL);
-	dstr->buffer_size = 10;
+	dstr->buffer_size = BUFFER_CHUNK_SIZE;
 	dstr->buffer = (char *) util_calloc(dstr->buffer_size * sizeof(char));
 	if (!dstr->buffer)
 	{

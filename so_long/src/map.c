@@ -34,7 +34,7 @@ static int	read_line_into_buffer(int fd, t_dstr *line)
 	read_result = read(fd, &ch, 1);
 	while (read_result == 1 && ch != '\n')
 	{
-		if (!dstr_append_char(line, ch))
+		if (dstr_append_char(line, ch) == NULL)
 			return (0);
 		read_result = read(fd, &ch, 1);
 	}
@@ -47,7 +47,7 @@ static int	read_line_into_buffer(int fd, t_dstr *line)
 	return (1);
 }
 
-static t_dstr	*read_line(int fd)
+static t_dstr	*read_line(int fd) // lee una linea y devuelve el * a dstr, que es una linea.
 {
 	t_dstr	*line;
 
@@ -61,17 +61,17 @@ static t_dstr	*read_line(int fd)
 
 static t_list	*read_file(int fd)
 {
-	t_list	*rows;
-	t_dstr	*line;
+	t_list	*rows; // las lista con cada una de las lineas
+	t_dstr	*line; // una linea
 
-	rows = NULL;
+	rows = NULL; // inicialmente no hay ninguna
 	line = read_line(fd);
-	while (line != NULL && dstr_length(line) > 0)
+	while (line != NULL && dstr_length(line) > 0) // Mientras la linea sea leible y no este vacia- que haya \n al final.
 	{
-		rows = list_append(rows, line, destroy_line);
+		rows = list_append(rows, line, destroy_line);//añade
 		if (!rows)
 			return (NULL);
-		line = read_line(fd);
+		line = read_line(fd); 
 	}
 	if (line == NULL)
 	{
@@ -79,7 +79,7 @@ static t_list	*read_file(int fd)
 		return (NULL);
 	}
 	dstr_destroy(line);
-	return (rows);
+	return (rows); // puede fallar al leer la linea , falla al añadir la linea 
 }
 
 static int	count_char_function(t_map *map, int x, int y, char ch, void *data)
@@ -132,7 +132,8 @@ t_map	*map_read(const char *file_name)
 	t_map	*map;
 	int		fd;
 
-	if ((fd = open(file_name, O_RDONLY)) < 0)
+	fd = open(file_name, O_RDONLY);
+	if (fd < 0)
 	{
 		ft_printf("Error\nUnable to open map file: %s\n", file_name);
 		return (NULL);
@@ -149,7 +150,7 @@ t_map	*map_read(const char *file_name)
 	return (map);
 }
 
-void	map_destroy(t_map *map)
+void	map_destroy(t_map *map) // libera la reserva para el mapa (listas y el calloc)
 {
 	if (!map)
 		return ;
@@ -160,12 +161,12 @@ void	map_destroy(t_map *map)
 
 int	map_get_width(t_map *map)
 {
-	return ((int)dstr_length((t_dstr *)list_get(map->rows, 0)));
+	return ((int)dstr_length((t_dstr *)list_get(map->rows, 0))); // retorna el ancho de la primera fila. 
 }
 
 int	map_get_height(t_map *map)
 {
-	return ((int)list_size(map->rows));
+	return ((int)list_size(map->rows)); // tiene tantas filas como elemntos tenga la lista.
 }
 
 char	map_at(t_map *map, int column, int row, char ch)
@@ -190,18 +191,18 @@ int	map_move_player(t_map *map, int inc_x, int inc_y)
 	int	new_x;
 	int	new_y;
 
-	new_x = map->player_x + inc_x;
-	new_y = map->player_y + inc_y;
+	new_x = map->player_x + inc_x; // nuevas posiciones 
+	new_y = map->player_y + inc_y; // nuevas posiciones
 	if (new_x < 0 || new_y < 0
 		|| new_x >= map_get_width(map) || new_y >= map_get_height(map)
 		|| map_at(map, new_x, new_y, 0) == MAP_WALL_CHAR)
-		return (0);
+		return (0); //no se puede mover
 
-	map_at(map, map->player_x, map->player_y, map->at_player);
-	map->player_x = new_x;
+	map_at(map, map->player_x, map->player_y, map->at_player); //at player se mete lo que habia antes de que pase el jugador 
+	map->player_x = new_x; // nuevo movimiento
 	map->player_y = new_y;
-	map->at_player = map_at(map, map->player_x, map->player_y, MAP_PLAYER_CHAR);
-	if (map->at_player == MAP_FOOD_CHAR)
+	map->at_player = map_at(map, map->player_x, map->player_y, MAP_PLAYER_CHAR); // el jugador pasa a ese nuevo movimiento 
+	if (map->at_player == MAP_FOOD_CHAR) // excepcion comida
 		map->at_player = '0';
 
 	return (1);

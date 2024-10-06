@@ -70,11 +70,11 @@ static int	verify_all_walls(t_dstr *row)
 	index = 0;
 	while(index < width)
 	{
-		if (dstr_char_at(row, index, 0) != MAP_WALL_CHAR)
+		if (dstr_char_at(row, index, 0) != MAP_WALL_CHAR) // Si no se encuentra la constante 1, es falso 
 			return (0);
 		index++;
 	}
-	return (1);
+	return (1); //retorna true si al salir del loop solo se ha encontrado 1
 }
 
 static int	verify_side_walls(t_dstr *row)
@@ -82,8 +82,8 @@ static int	verify_side_walls(t_dstr *row)
 	size_t	width;
 
 	width = dstr_length(row);
-	if (dstr_char_at(row, 0, 0) != MAP_WALL_CHAR
-		|| dstr_char_at(row, width - 1, 0) != MAP_WALL_CHAR)
+	if (dstr_char_at(row, 0, 0) != MAP_WALL_CHAR // 1ª pos ha de ser un 1
+		|| dstr_char_at(row, width - 1, 0) != MAP_WALL_CHAR) // Ultima pos ha de ser un 1
 		return (0);
 	return (1);
 }
@@ -107,22 +107,22 @@ int	map_verify_square(t_map *map)
 	size_t	index;
 	size_t	width;
 
-	if (!map || !map->rows)
+	if (!map || !map->rows) // si el mapa no esta bien
 		return (0);
 	row_count = list_size(map->rows);
-	if (row_count < 3)
+	if (row_count < 3) // si al menos tienes 3 filas
 		return (0);
 
-	width = dstr_length(list_get(map->rows, 0));
+	width = dstr_length(list_get(map->rows, 0));// longitud del primer elemento de la lista dstr
 	index = 1;
 	while (index < row_count)
 	{
-		if (dstr_length(list_get(map->rows, index)) != width)
+		if (dstr_length(list_get(map->rows, index)) != width) //si la siguiente. no tiene la misma long que la primera, es que esta mal
 			return (0);
 		index++;
 	}
 
-	return (1);
+	return (1);// retirno true cuando se sale del bucle, que significa, todas las rows son iguales.
 }
 
 int	map_verify_walls(t_map *map)
@@ -131,9 +131,9 @@ int	map_verify_walls(t_map *map)
 	size_t	index;
 
 	row_count = list_size(map->rows);
-	if (!verify_all_walls((t_dstr*)list_get(map->rows, 0)))
+	if (!verify_all_walls((t_dstr*)list_get(map->rows, 0))) // es al primera 
 		return (0);
-	if (!verify_all_walls((t_dstr*)list_get(map->rows, row_count - 1)))
+	if (!verify_all_walls((t_dstr*)list_get(map->rows, row_count - 1))) // es la ultima, las listas empiezan en cero tambien.
 		return (0);
 
 	index = 1;
@@ -149,10 +149,10 @@ int	map_verify_walls(t_map *map)
 
 int	map_verify_items(t_map *map)
 {
-	if (map_count_chars(map, MAP_FOOD_CHAR) == 0
-		|| map_count_chars(map, MAP_EXIT_CHAR) != 1
-		|| map_count_chars(map, MAP_PLAYER_CHAR) != 1)
-		return (0);
+	if (map_count_chars(map, MAP_FOOD_CHAR) == 0 // si no hay ninguna comida
+		|| map_count_chars(map, MAP_EXIT_CHAR) != 1 // no hay exactamente uan salida
+		|| map_count_chars(map, MAP_PLAYER_CHAR) != 1) // o no hay un solo jugador
+		return (0); // Falso
 	return (1);
 }
 
