@@ -4,5 +4,8 @@
 
 char	map_at(t_map *map, int column, int row, char ch)
 {
-	return (dstr_char_at(list_get(map->rows, row), column, ch));
+	t_dstr	*line;
+	
+	line = list_get(map->rows, row);
+	return (dstr_char_at(line, column, ch));
 }

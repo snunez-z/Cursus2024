@@ -26,7 +26,7 @@
 # define MAP_EMPTY_CHAR	'0'
 # define MAP_EXIT_CHAR	'E'
 # define MAP_FOOD_CHAR	'C'
-# define MAP_PLAYER_CHAR	'P'
+# define MAP_PLAYER_CHAR'P'
 # define MAP_WALL_CHAR	'1'
 
 /*

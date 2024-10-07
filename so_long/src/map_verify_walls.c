@@ -7,14 +7,16 @@
 
 static int	verify_all_walls(t_dstr *row)
 {
-	int	width;
+	int	len;
 	int	index;
+	char	ch;
 
-	width = dstr_length(row);
+	len = dstr_length(row);
 	index = 0;
-	while (index < width)
+	while (index < len)
 	{
-		if (dstr_char_at(row, index, 0) != MAP_WALL_CHAR) // Si no se encuentra la constante 1, es falso 
+		ch = dstr_char_at(row, index, 0);
+		if (ch != MAP_WALL_CHAR) // Si no se encuentra la constante 1, es falso 
 			return (0);
 		index++;
 	}
@@ -34,12 +36,15 @@ static int	verify_side_walls(t_dstr *row)
 
 int	map_verify_walls(t_map *map)
 {
+	t_dstr	*line;
 	int	index;
 
 	ft_printf("Verifying map walls...\n");
-	if (!verify_all_walls(list_get(map->rows, 0))) // es al primera 
+	line = list_get(map->rows, 0);
+	if (verify_all_walls(line) == 0) // es la primera 
 		return (0);
-	if (!verify_all_walls(list_get(map->rows, map->height - 1))) // es la ultima, las listas empiezan en cero tambien.
+	line = list_get(map->rows, map->height - 1);
+	if (verify_all_walls(line) == 0) // es la ultima, las listas empiezan en cero tambien.
 		return (0);
 	index = 1;
 	while (index < (map->height - 1))

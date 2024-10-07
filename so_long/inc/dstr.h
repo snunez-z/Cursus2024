@@ -54,7 +54,7 @@ void	dstr_destroy(t_dstr *dstr);
  * Return one character within a "t_dstr" instance's internal buffer.
  * Optionally it can be changed too.
  * Parameters:
- * "dstr" the "t_dstr" instance to get/change the character from
+ * "dstr" the "t_dstr" instance to get/change the character from.
  * "pos" the index of the character to get/change
  * "ch" if zero, then the character at position "pos" is not modified,
  *      otherwise, the character at position "pos" will be replaced by this one

@@ -63,7 +63,7 @@ size_t	list_size(t_list *list);
 /*
  * Returns the "line" field in one node of the list
  * Parameters:
- * - "list": The list to get the node from
+ * - "list": The list to get the node from.
  * - "pos": The index of the node we want to obtain the line from
  */
 t_dstr	*list_get(t_list *list, size_t pos);

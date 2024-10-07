@@ -26,7 +26,7 @@ void	map_destroy(t_map *map) // libera la reserva para el mapa (listas y el call
 	free(map);
 }
 
-int	map_move_player(t_map *map, int inc_x, int inc_y)
+int	map_move_player(t_map *map, int inc_x, int inc_y) // mover el jugador de sitio 
 {
 	int	new_x;
 	int	new_y;
@@ -58,24 +58,20 @@ int		map_is_over(t_map *map)
 
 void	map_loop(t_map *map, int (*fn)(t_map_loop *), void *data)
 {
-	t_map_loop	map_loop;
-	int	width;
-	int	height;
+	t_map_loop	map_loop; // estructura 
 
-	map_loop.map = map;
-	map_loop.data = data;
-	width = map->width;
-	height = map->height;
-	map_loop.y = 0;
-	while (map_loop.y < height)
+	map_loop.map = map; // campo mapa de la estructura es el mapa 
+	map_loop.data = data; // lo que le pase yo como data
+	map_loop.y = 0; // inicialzo la fila  y a cero
+	while (map_loop.y < map->height)
 	{
-		map_loop.x = 0;
-		while (map_loop.x < width)
+		map_loop.x = 0; // inicilizo las columnas a cero 
+		while (map_loop.x < map->width) 
 		{
-			map_loop.ch = map_at(map, map_loop.x, map_loop.y, 0);
-			if (!fn(&map_loop))
+			map_loop.ch = map_at(map, map_loop.x, map_loop.y, 0); // retorne lo que hay en cada celda sin cambiarlo
+			if (fn(&map_loop) == 0) // si la funcion retorna cero para.
 				return ;
-			map_loop.x++;
+			map_loop.x++; //sigue a la sigiente celda 
 		}
 		map_loop.y++;
 	}
