@@ -23,7 +23,6 @@
 
 #include "game.h"
 
-#define RATE 10000
 #define KEY_ESC	65307
 #define KEY_W	119
 #define KEY_A	97
@@ -45,28 +44,21 @@ static int	close_window(t_game *game)
 
 static int	key_press_hook(int key, t_game *game)
 {
-	int	move_ok;
-
-	if (key == 65307)
+	if (key == KEY_ESC)
 	{
 		close_window(game);
 		return (0);
 	}
 	if (key == KEY_UP || key == KEY_W)
-		move_ok = map_move_player(game->map, 0, -1);
+		map_move_player(game->map, 0, -1);
 	else if (key == KEY_DOWN || key == KEY_S)
-		move_ok = map_move_player(game->map, 0, 1);
+		map_move_player(game->map, 0, 1);
 	else if (key == KEY_RIGHT || key == KEY_D)
-		move_ok = map_move_player(game->map, 1, 0);
+		map_move_player(game->map, 1, 0);
 	else if (key == KEY_LEFT || key == KEY_A)
-		move_ok = map_move_player(game->map, -1, 0);
-	else
-		return (0);
-	if (move_ok)
-	{
-		if (map_is_over(game->map))
-			close_window(game);
-	}
+		map_move_player(game->map, -1, 0);
+	if (map_is_over(game->map))
+		close_window(game);
 	return (0);
 }
 
@@ -93,7 +85,6 @@ void	game_destroy(t_game *game)
 
 void	game_run(t_game *game)
 {
-	game->frames = 0;
 	if (!mlx_loop_hook(game->mlx, game_draw_map, game)
 		|| !mlx_hook(game->window, DestroyNotify, 0, close_window, game)
 		|| !mlx_hook(game->window, KeyPress, KeyPressMask, key_press_hook, game))

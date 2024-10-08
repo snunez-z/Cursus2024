@@ -24,7 +24,6 @@ typedef struct game_s
 	t_font		*font;
 	void		*mlx;
 	void		*window;
-	int			frames;
 }	t_game;
 
 t_game	*game_create(const char *map_file_name);
