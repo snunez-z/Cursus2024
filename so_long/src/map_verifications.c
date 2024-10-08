@@ -37,6 +37,7 @@ int	map_verify_square(t_map *map)
 	if (map->height < 3) 
 		return (0);
 	map->width = dstr_length(list_get(map->rows, 0));
+	if (map->width < 3)
 		return(0);
 	index = 1;
 	while (index < map->height)
