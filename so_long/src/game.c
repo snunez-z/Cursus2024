@@ -64,7 +64,6 @@ static int	key_press_hook(int key, t_game *game)
 		return (0);
 	if (move_ok)
 	{
-		game->move_count++;
 		if (map_is_over(game->map))
 			close_window(game);
 	}

@@ -26,6 +26,11 @@ void	map_destroy(t_map *map)
 	free(map);
 }
 
+int	map_get_move_count(t_map *map)
+{
+	return map->move_count;
+}
+
 int	map_move_player(t_map *map, int inc_x, int inc_y) 
 {
 	int	new_x;
@@ -42,6 +47,7 @@ int	map_move_player(t_map *map, int inc_x, int inc_y)
 	map->player_x = new_x; 
 	map->player_y = new_y;
 	map->at_player = map_at(map, map->player_x, map->player_y, MAP_PLAYER_CHAR); 
+	map->move_count++;
 	if (map->at_player == MAP_FOOD_CHAR) 
 	{
 		map->at_player = MAP_EMPTY_CHAR;

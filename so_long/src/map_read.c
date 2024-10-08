@@ -77,6 +77,8 @@ static t_list	*read_file(int fd)
 
 static int	verify_map(t_map *map)
 {
+	if (map == NULL || map->rows == NULL)
+		return (0);
 	if (!map_verify_square(map))
 		return (util_display_error("Map is not rectangular", 0));
 	if (!map_verify_walls(map))

@@ -22,8 +22,6 @@ typedef struct game_s
 	t_map		*map;
 	t_images	*images;
 	t_font		*font;
-	int			move_count;
-	int			game_over;
 	void		*mlx;
 	void		*window;
 	int			frames;

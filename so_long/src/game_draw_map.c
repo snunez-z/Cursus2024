@@ -81,13 +81,15 @@ int	game_draw_map(t_game *game)
 {
 	int	x;
 	int	y;
+	int	move_count;
 
 	if (!game->window)
 		return (0);
 	map_loop(game->map, draw_map_cell, game);
 	x = IMAGE_SIZE;
 	y = IMAGE_SIZE * game->map->height;
+	move_count = map_get_move_count(game->map);
 	x = print_text(game, "Moves: ", x, y);
-	print_number(game, game->move_count, x, y);
+	print_number(game, move_count, x, y);
 	return (0);
 }

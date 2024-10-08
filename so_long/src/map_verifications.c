@@ -30,8 +30,6 @@ int	map_verify_square(t_map *map)
 	int	index;
 	int row_width;
 
-	if (!map || !map->rows) 
-		return (0);
 	ft_printf("Verifying map is rectangular...\n");
 	map->height = list_size(map->rows);
 	if (map->height < 3) 
