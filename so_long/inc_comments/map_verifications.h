@@ -6,46 +6,31 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:18:57 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 12:43:07 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:35:17 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#ifndef MAP_VERIFICATIONS_H
+# define MAP_VERIFICATIONS_H
 
-# include "list.h"
+# include "map.h"
 
-# define MAP_EMPTY_CHAR	'0'
-# define MAP_EXIT_CHAR	'E'
-# define MAP_FOOD_CHAR	'C'
-# define MAP_PLAYER_CHAR 'P'
-# define MAP_WALL_CHAR	'1'
-
-typedef struct s_map
+typedef struct s_count_data
 {
-	t_list	*rows;
-	int		width;
-	int		height;
-	int		player_x;
-	int		player_y;
-	char	at_player;
+	int		exit_count;
+	int		player_count;
+}	t_count_data;
+
+typedef struct s_map_way_verify
+{
 	int		food_left;
-}	t_map;
+	int		passed_exit;
+}	t_map_way_verify;
 
-typedef struct s_map_loop
-{
-	t_map	*map;
-	int		x;
-	int		y;
-	char	ch;
-	void	*data;
-}	t_map_loop;
-
-t_map	*map_read(const char *file_name);
-void	map_destroy(t_map *map); 
-char	map_at(t_map *map, int column, int row, char ch);
-int		map_move_player(t_map *map, int inc_x, int inc_y);
-int		map_is_over(t_map *map);
-void	map_loop(t_map *map, int (*fn)(t_map_loop*), void *data);
+int	map_verify_square(t_map *map);
+int	map_verify_fits_into_screen(t_map *map);
+int	map_verify_walls(t_map *map);
+int	map_verify_items(t_map *map);
+int	map_verify_way(t_map *map);
 
 #endif

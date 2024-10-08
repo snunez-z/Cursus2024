@@ -5,22 +5,22 @@
 #include "map.h"
 #include "map_verifications.h"
 
-static	int	count_function(t_map_loop *map_loop) // cuenta una celda y se le llamara cuantas veces como celdas haya
+static	int	count_function(t_map_loop *map_loop) 
 {
 	t_count_data	*count_data;
 
 	count_data = (t_count_data *)map_loop->data;
-	if (map_loop->ch == MAP_PLAYER_CHAR) // si me encuentro una p anoto
+	if (map_loop->ch == MAP_PLAYER_CHAR) 
 	{
-		map_loop->map->player_x = map_loop->x; //guardo la posicion (estructura, dentro de la estructura)
+		map_loop->map->player_x = map_loop->x; 
 		map_loop->map->player_y = map_loop->y;
-		map_loop->map->at_player = '0'; // lo que hay debajo este a cero, no haya nada.
+		map_loop->map->at_player = '0'; 
 		count_data->player_count++;
 	}
 	else if (map_loop->ch == MAP_EXIT_CHAR)
 		count_data->exit_count++;
 	else if (map_loop->ch == MAP_FOOD_CHAR)
-		map_loop->map->food_left++; // no anoto la comida porque dentro del mapa ya tenfo una variable que hace recuento de las comidas
+		map_loop->map->food_left++; 
 
 	return (1);
 }
@@ -30,25 +30,24 @@ int	map_verify_square(t_map *map)
 	int	index;
 	int row_width;
 
-	if (!map || !map->rows) // si el mapa no esta bien
+	if (!map || !map->rows) 
 		return (0);
 	ft_printf("Verifying map is rectangular...\n");
 	map->height = list_size(map->rows);
-	if (map->height < 3) // si al menos tienes 3 filas
+	if (map->height < 3) 
 		return (0);
-	map->width = dstr_length(list_get(map->rows, 0));// longitud del primer elemento de la lista dstr
-	if (map->width < 3)
+	map->width = dstr_length(list_get(map->rows, 0));
 		return(0);
 	index = 1;
 	while (index < map->height)
 	{
 		row_width = (int)dstr_length(list_get(map->rows, index));
-		if (row_width != map->width) //si la siguiente. no tiene la misma long que la primera, es que esta mal
+		if (row_width != map->width) 
 			return (0);
 		index++;
 	}
 
-	return (1);// retirno true cuando se sale del bucle, que significa, todas las rows son iguales.
+	return (1);
 }
 
 int	map_verify_items(t_map *map)
@@ -58,10 +57,10 @@ int	map_verify_items(t_map *map)
 	ft_printf("Verifying elements in map...\n");
 	count_data.exit_count = 0;
 	count_data.player_count = 0;
-	map_loop(map, count_function, &count_data);	// map loop y por cada celda va a llamar a count_function y le pasa el puntero a la estructura
-	if (map->food_left == 0 // si no hay ninguna comida
-		|| count_data.exit_count != 1 // no hay exactamente uan salida
-		|| count_data.player_count != 1) // o no hay un solo jugador
-		return (0); // Falso
+	map_loop(map, count_function, &count_data);	
+	if (map->food_left == 0 
+		|| count_data.exit_count != 1 
+		|| count_data.player_count != 1) 
+		return (0); 
 	return (1);
 }

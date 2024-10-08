@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:22:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 09:31:23 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/04 14:07:59 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	read_line_into_buffer(int fd, t_dstr *line)
 	return (1);
 }
 
-static t_dstr	*read_line(int fd) 
+static t_dstr	*read_line(int fd) // lee una linea y devuelve el * a dstr, que es una linea.
 {
 	t_dstr	*line;
 
@@ -54,14 +54,14 @@ static t_dstr	*read_line(int fd)
 
 static t_list	*read_file(int fd)
 {
-	t_list	*rows; 
-	t_dstr	*line; 
+	t_list	*rows; // las lista con cada una de las lineas
+	t_dstr	*line; // una linea
 
-	rows = NULL; 
+	rows = NULL; // inicialmente no hay ninguna
 	line = read_line(fd);
-	while (line != NULL && dstr_length(line) > 0) 
+	while (line != NULL && dstr_length(line) > 0) // Mientras la linea sea leible y no este vacia- que haya \n al final.
 	{
-		rows = list_append(rows, line);
+		rows = list_append(rows, line);//añade
 		if (!rows)
 			return (NULL);
 		line = read_line(fd);
@@ -72,6 +72,7 @@ static t_list	*read_file(int fd)
 		return (NULL);
 	}
 	dstr_destroy(line);
+	// puede fallar al leer la linea , falla al añadir la linea
 	return (rows);
 }
 

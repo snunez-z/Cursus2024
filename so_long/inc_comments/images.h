@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:18:15 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 09:31:23 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/04 09:58:52 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,21 @@ typedef struct s_images
 	void	*exit;
 }	t_images;
 
+/*
+ * Initializes this module by reading all the images.
+ * Parameters:
+ * - "mlx": The MinilibX instance, necessary to read each image
+ *
+ * Returns the allocated "t_images" instance or NULL if memory allocation fails
+ * or there is an error reading any of the images
+ */
 t_images	*images_load(void	*mlx);
+
+/*
+ * Frees all the memory allocated in "images_load"
+ * Parameters:
+ * "font": the "t_font" instance to free
+ */
 void		images_destroy(t_images *images);
 
 #endif

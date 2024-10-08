@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dstr.h                                             :+:      :+:    :+:   */
+/*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/04 09:16:25 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 09:31:23 by snunez-z         ###   ########.fr       */
+/*   Created: 2024/10/04 09:17:55 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/10/04 09:57:02 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DSTR_H
-# define DSTR_H
+#ifndef GAME_H
+# define GAME_H
 
-# include <stddef.h>
+# include "font.h"
+# include "images.h"
+# include "map.h"
 
-typedef struct s_dstr
+typedef struct game_s
 {
-	char	*buffer;
-	size_t	buffer_size;
-	size_t	buffer_index;
-}	t_dstr;
+	t_map		*map;
+	t_images	*images;
+	t_font		*font;
+	int			move_count;
+	int			game_over;
+	void		*mlx;
+	void		*window;
+	int			frames;
+}	t_game;
 
-t_dstr	*dstr_create(void);
-void	dstr_destroy(t_dstr *dstr);
-char	dstr_char_at(t_dstr *dstr, size_t pos, char ch);
-int		dstr_append_char(t_dstr *dstr, char ch);
-size_t	dstr_length(t_dstr *dstr);
+t_game	*game_create(const char *map_file_name);
+void	game_destroy(t_game *game);
+int		game_draw_map(t_game *game);
+void	game_run(t_game *game);
 
 #endif

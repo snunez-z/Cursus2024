@@ -134,14 +134,20 @@ __Estructura s_map_loop_
 
 __Estructura s_map_way_verify_
 
-* int		food_left = los comestibels que quedan
-*	int		passed_exit = la salida
+* int	food_left = los comestibels que quedan
+* int	passed_exit = la salida
 
   1. **int	map_verify_walls(t_map *map)**
-
-  2. static int	verify_side_walls(t_dstr *row)
-  3. static int	verify_all_walls(t_dstr *row)
-
+     El programa verifica la primera linea llamando a la funcion list_get y la ultima linea line - 1.
+  2. **static int	verify_all_walls(t_dstr *row)**
+     Establece la longitud de la linea.
+	 Establece un index que si no llega a esa longitud entra en un bucle.
+	 Le pide a la funcion char_at que es lo que hay en cada celda de esa linea.
+	 Si no es un 1 (pared) es que es falso y sale, sino sigue comprobando, si al acabar el bucle solo ha encontrado 1 es que es true.
+  3. **static int	verify_side_walls(t_dstr *row)**
+    Declaro una variable para el ancho de la linea.
+    Si lo que hay en la primera posicion/celda de la linea no es un 1 o lo que hay en la ultima posicion de la linea no es un 1, error.
+	
 6. **_MAP_VERIFY_WAY_**
    Verifica que el mapa tenga un camino que sea correcto, que pueda realizarse.
 
@@ -226,25 +232,68 @@ __Estructura s_map_way_verify_
      Por lo tanto obtener la fila/linea donde esta el char que queremos obtener/cambiar (una linea es un tdstr) y dentro de esa linea
      le pedimos que nos devuelva, barra cambie. 
 
-
  return (dstr_char_at(list_get(map->rows, row), column, ch));
 9. _GAME_:
+ES quien completa el royecto, el que pone los cimientos del juego.
+Pinta en la pantalla del ordenador y controla los movimientos del juego.
+Modulos se hacen para poder dividir las cosas en piezas.
+"Composición" de modulos-> Unir piezas 
+¿ que piezas componen el Game?
+_Estructura_
+* *map = mapa
+* *images = imagenes que va a usar
+* *font = las imagenes de las letras
+* move_count = contador de movimientos
+* game_over = 
+* *mlx= libreria grafica 
+* *window = ventana que se crea con la mlx
+* frames =
+
   1. static int	close_window(t_game *game)
   2. static int	key_press_hook(int key, t_game *game)
-  3. void	game_destroy(t_game *game)
-  4. void	game_run(t_game *game)
-10. _GAME_CREATE_:
+  3. **void	game_destroy(t_game *game)**
+     Destruye en orden opuesto al que crea. 
+  4. **void	game_run(t_game *game)**
+     Es el que ejecuta el juego. La mxl se basa en funciones call back.
+	 Tu no llamas, te llaman.  
+10. _GAME_CREATE_: 
+
   1. static void	create_map(t_game *game, const char *map_file_name)
-  2. static int	verify_map_fits_into_screen(t_game *game)
-  3. t_game	*game_create(const char *map_file_name)
+  2. **static int	verify_map_fits_into_screen(t_game *game)**
+     El mapa no es el encargado de verificar la pantalla.
+	 Pasamos punteros donde quiero que me guarde el ancho y el alto.
+	 Si tengo el ancho y el alto d ela pantalla, del mapa y cuanto mide cada celda, 
+	 ya puedo verificar si cabe o no , dentro de la pantalla. 
+
+  3. **t_game	*game_create(const char *map_file_name)**
+     Reservo memoria , creo todo lo que necesito y lo guardo en campos de mi estructura.
+	 verifica si cabe en pantalla.
+	 El manejo d ela pantalla lo hacemso con el mlx -> mlx_get_ screen_size
+     
 11. _GAME_DRAW_MAP_
    1. static int	draw_map_cell(t_map_loop *map_loop)
    2. static int	print_text(t_game *game, const char *text, int x, int y)
    3. static int	print_number(t_game *game, int number, int x, int y)
    4. int	game_draw_map(t_game *game)
 12. _IMAGES_: Almacen de imagenes.Las imagenes que tiene el juego.
-   1. t_images	*images_load(void *mlx)
-   2. void	images_destroy(t_images *images)
+Las imagenes se han descargado de internet y con un programa de linux llamado GIMP (photoshop gratis)
+las he ajustado a 32 * 32 y convertirlo XPM.
+__Estructura s_images_
+
+ * "mlx" =  the MinilibX instance
+ * "empty"  imagen de celda vacia
+ * "wall"   imagen de la pared
+ * "player" imagen del jugador
+ * "food"   imagen de la comida
+ * "exit"   imagen de la salida
+   1. **t_images	*images_load(void *mlx)**
+   Inicializa este módulo leyendo todas las imágenes.
+   Parámetros:
+   - "mlx": la instancia de MinilibX, necesaria para leer cada imagen
+   Devuelve la instancia "t_images" asignada o NULL si falla la asignación de memoria
+   o hay un error al leer alguna de las imágenes
+   2. **void	images_destroy(t_images *images)**
+   Liberar cada una de las reservas para cada una de las imagenes.
 
 13. _FONT_: Almacen de imagenes. Imagenes de los caracteres para escribir.
    1. static int	get_char_index(char ch)
@@ -257,6 +306,8 @@ __Estructura s_map_way_verify_
    2. void	*util_load_image(void *mlx, char *file_name)
    3. void	util_destroy_image(void *mlx, void *image)
    4. int	util_display_error(const char *message, int return_code)
-
+15. MINILIBX
+   Es un conjunto de funciones que te permiten crear ventanas en la pantalla y dibujar cosas.
+   Inicializacion init--> creacion  , de cierre destroy 
 
 
