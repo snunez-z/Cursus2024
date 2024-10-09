@@ -17,32 +17,23 @@
 #include "font.h"
 #include "util.h"
 
-#define FILE_NAME_SIZE	100
+#define FONT_SIZE	32
+#define FILE_NAME_SIZE	20
 
-static int	get_char_index(char ch)
-{
-	return (ch - ' ' - 1);
-}
-
-static char	*get_char_file_name(char ch, char *buffer) // ./font/***.xpm
+static void	copy_char_file_name(char ch, char *buffer)
 {
 	ft_strlcpy(buffer, "./font/", FILE_NAME_SIZE);
-	// Hundreds
 	buffer[7] = (ch / 100) + '0';
-	// Tenths
 	buffer[8] = ((ch % 100) / 10) + '0';
-	// Units
 	buffer[9] = (ch % 10) + '0';
-	// Always terminate strings with '\0' :)
-	buffer[10] = '\0';
+	buffer[10] = 0;
 	ft_strlcat(buffer, ".xpm", FILE_NAME_SIZE);
-	return (buffer);
 }
 
 t_font	*font_load(void	*mlx)
 {
 	t_font	*font;
-	char	buffer[FILE_NAME_SIZE + 1];
+	char	file_name[FILE_NAME_SIZE + 1];
 	char	ch;
 	int		index;
 
@@ -51,12 +42,12 @@ t_font	*font_load(void	*mlx)
 	if (!font)
 		return (NULL);
 	font->mlx = mlx;
-	ch = ' ' + 1;
+	ch = FONT_FIRST_CHAR;
 	while (ch <= FONT_LAST_CHAR)
 	{
-		index = get_char_index(ch);
-		font->char_images[index] = util_load_image(mlx,
-			get_char_file_name(ch, buffer));
+		copy_char_file_name(ch, file_name);
+		index = (ch - FONT_FIRST_CHAR);
+		font->char_images[index] = util_load_image(mlx, file_name);
 		ch++;
 	}
 	return (font);
@@ -65,24 +56,27 @@ t_font	*font_load(void	*mlx)
 void	font_destroy(t_font *font)
 {
 	char	ch;
+	int		index;
 
 	ft_printf("Destroying font...\n");
-	ch = ' ' + 1;
+	ch = FONT_FIRST_CHAR;
 	while (ch <= FONT_LAST_CHAR)
 	{
-		util_destroy_image(font->mlx, font->char_images[get_char_index(ch)]);
+		index = (ch - FONT_FIRST_CHAR);
+		util_destroy_image(font->mlx, font->char_images[index]);
 		ch++;
 	}
 	free(font);
 }
 
-void	*font_get(t_font *font, char ch)
+void	*font_get_image_for_char(t_font *font, char ch)
 {
 	int	pos;
 
-	pos = get_char_index(ch);
-	if (pos < 0 || pos >= get_char_index(FONT_LAST_CHAR))
+	// We only have characters from FONT_FIRST_CHAR to FONT_LAST_CHAR
+	if (ch < FONT_FIRST_CHAR || ch > FONT_LAST_CHAR)
 		return (NULL);
+	pos = ch - FONT_FIRST_CHAR;
 	if (font->char_images[pos] == NULL)
 		ft_printf("No image for '%c'\n", ch);
 	return (font->char_images[pos]);

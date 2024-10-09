@@ -54,7 +54,7 @@ static int	print_text(t_game *game, const char *text, int x, int y)
 	aux = text;
 	while (*aux)
 	{
-		char_image = font_get(game->font, *aux);
+		char_image = font_get_image_for_char(game->font, *aux);
 		if (char_image != NULL)
 			mlx_put_image_to_window(game->mlx, game->window, char_image, x, y);
 		x += IMAGE_SIZE;
@@ -71,7 +71,7 @@ static int	print_number(t_game *game, int number, int x, int y)
 	if (number > 9)
 		x = print_number(game, number / 10, x, y);
 	digit = (number % 10) + '0';
-	char_image = font_get(game->font, digit);
+	char_image = font_get_image_for_char(game->font, digit);
 	if (char_image != NULL)
 		mlx_put_image_to_window(game->mlx, game->window, char_image, x, y);
 	return (x + IMAGE_SIZE);
