@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:20:13 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/04 10:58:01 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:01:28 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	dstr_destroy(t_dstr *dstr)
 	free (dstr->buffer);
 	free (dstr);
 }
-
 char	dstr_char_at(t_dstr *dstr, size_t pos, char ch)
 {
 	char	previous;
@@ -50,12 +49,11 @@ char	dstr_char_at(t_dstr *dstr, size_t pos, char ch)
 	// We get the caracter in the requested position...
 	previous = dstr->buffer[pos];
 	// ... then, if "ch" is not zero, we replace it
-	if (ch)
+	if (ch != 0)
 		dstr->buffer[pos] = ch;
 	// Finally, we return the character that we picked in the beginning
 	return (previous);
 }
-
 /*
  * First, it checks whether the "buffer" has enough room for an additional
  * character. If "buffer_size" is equals than "buffer_index", it means we have

@@ -24,9 +24,10 @@ static void	visit_cell(t_map *map, int x, int y, t_map_way_verify *verify)
 	if (ch == MAP_FOOD_CHAR)
 		verify->food_left--; //me quedan por comer una menos
 	else if (ch == MAP_EXIT_CHAR)
-		verify->passed_exit = 1; // hay un canino a la salida
+		verify->passed_exit = 1; // hay un camino a la salida
 
-	map_at(map, x, y, (ch | 128));
+	map_at(map, x, y, (ch | 128)); //Para que el jugador no pase por donde ya ha pasado 
+								  //o borro lo que habia cuando ha pasado o me hago una copia del mapa o pongo una marca. Un bit
 }
 
 static void walk_map(t_map *map, int x, int y, t_map_way_verify *verify)

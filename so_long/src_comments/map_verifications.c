@@ -20,7 +20,7 @@ static	int	count_function(t_map_loop *map_loop) // cuenta una celda y se le llam
 	else if (map_loop->ch == MAP_EXIT_CHAR)
 		count_data->exit_count++;
 	else if (map_loop->ch == MAP_FOOD_CHAR)
-		map_loop->map->food_left++; // no anoto la comida porque dentro del mapa ya tenfo una variable que hace recuento de las comidas
+		map_loop->map->food_left++; // no anoto la comida porque dentro del mapa ya tengo una variable que hace recuento de las comidas
 
 	return (1);
 }
@@ -48,7 +48,7 @@ int	map_verify_square(t_map *map)
 		index++;
 	}
 
-	return (1);// retirno true cuando se sale del bucle, que significa, todas las rows son iguales.
+	return (1);// retorno true cuando se sale del bucle, que significa, todas las rows son iguales.
 }
 
 int	map_verify_items(t_map *map)
@@ -56,7 +56,7 @@ int	map_verify_items(t_map *map)
 	t_count_data	count_data;
 
 	ft_printf("Verifying elements in map...\n");
-	count_data.exit_count = 0;
+	count_data.exit_count = 0; // Inicializo la salida y el jugador a cero
 	count_data.player_count = 0;
 	map_loop(map, count_function, &count_data);	// map loop y por cada celda va a llamar a count_function y le pasa el puntero a la estructura
 	if (map->food_left == 0 // si no hay ninguna comida

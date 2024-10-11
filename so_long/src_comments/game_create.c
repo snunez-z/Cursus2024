@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:21:08 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 11:45:17 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:12:21 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static void	create_map(t_game *game, const char *map_file_name)
 	if (game->map != NULL)
 	{
 		ft_printf("Creating window\n");
-		game->mlx = mlx_init();
+		game->mlx = mlx_init(); // inicializa la mlx
 		if (game->mlx)
 		{
 			game->images = images_load(game->mlx); // Inicializa todo y lo guarda en game 
 			game->font = font_load(game->mlx);
-			game->window = mlx_new_window(game->mlx,
+			game->window = mlx_new_window(game->mlx, // crea la venta
 			                              IMAGE_SIZE * game->map->width,
 			                              IMAGE_SIZE * (game->map->height + 1),
 			                              "So Long");

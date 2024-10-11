@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:22:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/04 14:07:59 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:31:23 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,20 +94,20 @@ t_map	*map_read(const char *file_name)
 	t_map	*map;
 	int		fd;
 
-	fd = open(file_name, O_RDONLY);
+	fd = open(file_name, O_RDONLY); //abre el fichero
 	if (fd < 0)
 	{
 		ft_printf("Error\nUnable to open map file: %s\n", file_name);
 		return (NULL);
 	}
-	map = (t_map *)util_calloc(sizeof(t_map));
+	map = (t_map *)util_calloc(sizeof(t_map)); //reserva memoria para la estructura 
 	if (map != NULL)
-		map->rows = read_file(fd);
-	close(fd);
-	if (!verify_map(map))
+		map->rows = read_file(fd); //mete en rows la lectura de las lineas de la lista
+	close(fd); //cierra el fichero 
+	if (!verify_map(map)) //verifica que el mapa este bien
 	{
 		map_destroy(map);
 		return (NULL);
 	}
-	return (map);
+	return (map); //retorna el mapa
 }

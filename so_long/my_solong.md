@@ -39,13 +39,19 @@ Resto de funciones son de verificación ( modulo map) excepto la verificacion de
   1. **t_dstr	*dstr_create(void)->reserva memoria estructura y buffer.** Crear instancia para la estructura y para el buffer.
   2. **void	dstr_destroy(t_dstr *dstr)** Liberar memoria en sentido inverso
   3. **char	dstr_char_at(t_dstr *dstr, size_t pos, char ch)**
-     Esta funcion hace se llama para hacer tres cosas. Simplemente recorrer el mapa donde tenemos que saber que hay en cada posicion y asi poder 
-     pintarlo. Cuando se mueve el jugador para meter lo que habia antes de ese movimiento. Guardar lo que habia antes y cambiar.
+     Esta funcion hace se llama para hacer tres cosas. Simplemente recorrer el mapa donde tenemos que saber que hay en cada posicion y asi poder pintarlo. Cuando se mueve el jugador para meter lo que habia antes de ese movimiento. Guardar lo que habia antes y cambiar.
      ejemplo = 1EP001 -> previous = E-> ch ->  dstr->buffer[pos]= P.
+	 Devuelve un carácter dentro del búfer interno de una instancia "t_dstr".
+     Opcionalmente, también se puede cambiar.
+     Parámetros:
+    "dstr" la instancia "t_dstr" de la que se obtendrá/cambiará el carácter.
+    "pos" el índice del carácter que se obtendrá/cambiará.
+    "ch" si es cero, entonces el carácter en la posición "pos" no se modifica,de lo contrario, el carácter en la posición "pos" será   reemplazado por este. No tiene sentido cambiar nada por el valor cero y como no tiene sentido, lo usamos para decirle que no cambie nada cuando es cero. Necesito guardarlo antes en previous por si quiero cambiarlo.
+    Devuelve el carácter que ESTABA en la posición "pos" antes de reemplazarlo
 
   4. **int	dstr_append_char(t_dstr *dstr, char ch)**
        LLamamos a esta funcion cuando necesitamos añadir en el buffer todos los caracteres del mapa. Secuencia leo y guardo en funcion del buffer_size.
-       \0 es un convenio para lso arrays, que tambien se usa con * para poder localizar el final de un array de chars. En este caso no lo necesitamos 
+       \0 es un convenio para los arrays, que tambien se usa con * para poder localizar el final de un array de chars. En este caso no lo necesitamos 
        porque tenemos un campo de la estructura buffer_index que ya nos marca el final, nos dice cuantos hay. 
   5. **size_t	dstr_length(t_dstr *dstr)**
      Lo usamos para saber cuantos caracteres comprobemos que el mapa es rentangualar.
@@ -111,19 +117,18 @@ __Estructura s_map_loop_
 *  int		player_count = numero de jugaroes
 
   1. **int	map_verify_square(t_map *map)**
-    Se que es rectangular si las medidas del primer nodo ocinciden con el resto de nodosasi que lo que voy a hacer es comparar.
+    Se que es rectangular si las medidas del primer nodo coinciden con el resto de nodos asi que lo que voy a hacer es comparar.
     Verifico que el mapa este bien.
     compruebo que haya de ancho y de alto al menos 3 para poder jugar. Dos paredes y un camino.
-    Cojo la longitud del primer nodo, declaro un index a 1 para comparar el primero en la posicion cero con el segundo en la posicion 1 y si no son 
-    iguales, me salgo y si son iguales sigo comparando hasta el final.
+    Cojo la longitud del primer nodo, declaro un index a 1 para comparar el primero en la posicion cero con el segundo en la posicion 1 y si no son iguales, me salgo y si son iguales sigo comparando hasta el final.
      
   2. **int	map_verify_items(t_map *map)**
-     Inicializo la salida y el jugador a cero y llamo a la funcion map_loop para recorrer el mapa y le paso como argumentos el mapa, la funcion 
-     count function (que cuenta cuantos items de cada hay y el puntero a la estructura).
+     Inicializo la salida y el jugador a cero y llamo a la funcion map_loop para recorrer el mapa y le paso como argumentos el mapa, la funcion count function (que cuenta cuantos items de cada hay y el puntero a la estructura).
      Con el resultado, especifico:
      . Si no hay al menos una comida y no hay solo un jugador y una salida, error, me salgo.
      en caso contrario, esta ok.
   3. **static	int	count_function(t_map_loop *map_loop)**
+  No hago el recorrido del bucle, es llamado pro map_loop y lo uncio qu ehace es procesar cada uan de las celdas, pero necesita una variable para cada una de las cosas que quiere contar.
   Cuenta una celda y se le llamara cuantas veces se necesite hasta completar todas las celdas del mapa.
   Si me encuentro un jugador , anoto su posicion y añado uno al contador. Y pongo a cero lo que habia antes.
   Si me encuentro una salida cuento y añado uno al contador
@@ -134,7 +139,7 @@ __Estructura s_map_loop_
 
 __Estructura s_map_way_verify_
 
-* int	food_left = los comestibels que quedan
+* int	food_left = los comestibles que quedan
 * int	passed_exit = la salida
 
   1. **int	map_verify_walls(t_map *map)**
@@ -234,43 +239,66 @@ __Estructura s_map_way_verify_
 
  return (dstr_char_at(list_get(map->rows, row), column, ch));
 9. _GAME_:
-ES quien completa el royecto, el que pone los cimientos del juego.
-Pinta en la pantalla del ordenador y controla los movimientos del juego.
-Modulos se hacen para poder dividir las cosas en piezas.
-"Composición" de modulos-> Unir piezas 
+ES quien completa el proyecto, el que pone los cimientos del juego.Lo que aporta este modulo es el hecho de pintar.
+Pinta de forma especifica, en la pantalla del ordenador y controla los movimientos del juego.
+Modulos se hacen para poder dividir las cosas en piezas.en programacion hay una cosa que se llama composicion.
+"Composición" de modulos-> Resolver un problema a base de unir piezas 
 ¿ que piezas componen el Game?
 _Estructura_
 * *map = mapa
 * *images = imagenes que va a usar
 * *font = las imagenes de las letras
-* move_count = contador de movimientos
 * game_over = 
 * *mlx= libreria grafica 
 * *window = ventana que se crea con la mlx
 * frames =
 
-  1. static int	close_window(t_game *game)
-  2. static int	key_press_hook(int key, t_game *game)
-  3. **void	game_destroy(t_game *game)**
-     Destruye en orden opuesto al que crea. 
-  4. **void	game_run(t_game *game)**
+  1. **void	game_run(t_game *game)**
+     Define las tres call backs que se necesitan (pintar, reaccionar cuando se pulse la x, para cuando pulsen una tecla).
+	 mlx_loop estara pendiente de todo lo que ocurra en la venta y llamará a las callback correspondientes.
      Es el que ejecuta el juego. La mxl se basa en funciones call back.
-	 Tu no llamas, te llaman.  
-10. _GAME_CREATE_: 
-
-  1. static void	create_map(t_game *game, const char *map_file_name)
-  2. **static int	verify_map_fits_into_screen(t_game *game)**
-     El mapa no es el encargado de verificar la pantalla.
-	 Pasamos punteros donde quiero que me guarde el ancho y el alto.
-	 Si tengo el ancho y el alto d ela pantalla, del mapa y cuanto mide cada celda, 
-	 ya puedo verificar si cabe o no , dentro de la pantalla. 
-
-  3. **t_game	*game_create(const char *map_file_name)**
+	 Tu no llamas, te llaman. 
+	 Hay tres cosas que tiene que hacer game y las llaman por mi.
+	 Pintar el mapa -> el usuario no sabe cuando hay que pintar. Es linux quien lo sabe o no.
+	 Cuando esta visible te llama para pintar cuando es necesario. 
+	 Primero que hace es llamar a una funcion de la mlx que es "mlx_loop_hook" a la que has de llamar para pintar el mapa.
+	 el primer parametro lo que te retorna la funcion de creacion (Init), luego le llamas a que funcion quieres que te llame para pintar (callback)->draw_map.Le pasas unos datos extra que en este caso es la instancia de t_game (mapa. imagenes, fuente etc...).
+	 que tiene que hacer cuando se cierra la ventana, cuando se pulsa la x, que es liberar la memoria. otra call back, llamame a close window y necesito la instancia del game. Es un patron, cuando se lama una funcion callback suele ser normal necesitar datos extras.
+	 Luego si el usuario pulsa una tecla, me llamas a una callback de la mlx "key_press" y como dato extra game.
+	 Luego llamará a mlx_loop. Funcion de mlx que no retornara nada hasta que la ventana no se cierre. Va a estar pendiente que ocurre en la ventana, mientras exista. Estará pendiente de que se pulse una tecla y empiece el proceso.
+     Luego se destruye el juego.
+	2. **void	game_destroy(t_game *game)**
+     Destruye en orden opuesto al que crea. 
+	3.**static int	close_window(t_game *game)**
+	 Para cerrar la ventana llamar a la funcion de mlx_destroy.
+    4.**static int	key_press_hook(int key, t_game *game)**
+      La mlx funciona tambien funciona con callbacks, las cosas que funcionan de forma asincrona, hay que decirle al modulo que sea cuando pulsen me llamas aqui.
+	  La mlx llama a esta funcion cuando la ventana esta activa y pulsan una tecla.
+	  los argumentos la tecla y el dato extra, que es la instancia del game. queremos manejar el juego.
+	  La numeracion de las teclas son un convenio que se puede encontrar en X11.h del fichero de linux.
+	  Emepzamos cone l corner case de que sea escape en caso cerramos la ventana. 
+	  si no, movimientos arriba, abajo, derecha o izquierda y si la tecla no esta entre las elegidas, no tenemos que hacer nada.La mlx nos llama a esta funcion para cualquier tecla, asi que tenemos que añadir esa parte de ignorar las teclas que no esten entre las que necesitamos.
+	  Si el movimiento ha sido correcto , despeus de cada movimiento pregunto si el juego se ha acabado y seguire en funcion de la respuesta.
+	 10. _GAME_CREATE_: 
+ Crea las cosas que necesita game.
+  1. **t_game	*game_create(const char *map_file_name)**
      Reservo memoria , creo todo lo que necesito y lo guardo en campos de mi estructura.
 	 verifica si cabe en pantalla.
-	 El manejo d ela pantalla lo hacemso con el mlx -> mlx_get_ screen_size
+	 El manejo de la pantalla lo hacemos con el mlx -> mlx_get_ screen_size
      
-11. _GAME_DRAW_MAP_
+  2. **static void	create_map(t_game *game, const char *map_file_name)**
+     Lo he dividido en dos por la norminette.
+	 pero en general reserva memoria para la estructura y luego inicializa y crea todo lo que necesita 
+	 para guardarlo en diferentes campos.
+  3. **static int	verify_map_fits_into_screen(t_game *game)**
+     El mapa no es el encargado de verificar la pantalla, no sabe donde se va a pintar.
+	 Para saber el tamaño de la pantalla llamamos a una funcion de mlx llamando a una funcion que se llama get_screen_size.
+	 Retorna tanto el ancho como el alto y como no puede retornar dos cosas pero le puedo pasar donde quiero 
+	 que me guarde el ancho y el alto.Pasamos punteros donde quiero que me guarde el ancho y el alto.
+	 Si tengo el ancho y el alto de la pantalla, del mapa y cuanto mide cada celda, 
+	 ya puedo verificar si cabe o no , dentro de la pantalla. 
+  
+  11. _GAME_DRAW_MAP_
    1. static int	draw_map_cell(t_map_loop *map_loop)
    2. static int	print_text(t_game *game, const char *text, int x, int y)
    3. static int	print_number(t_game *game, int number, int x, int y)
@@ -296,11 +324,27 @@ __Estructura s_images_
    Liberar cada una de las reservas para cada una de las imagenes.
 
 13. _FONT_: Almacen de imagenes. Imagenes de los caracteres para escribir.
-   1. static int	get_char_index(char ch)
-   2. static char	*get_char_file_name(char ch) // ./font/***.xpm
-   3. t_font	*font_load(void	*mlx)
+  Este módulo define e inicializa una estructura que contiene una imagen por cada
+  carácter ASCII desde ASCII 33 (el siguiente al espacio) hasta '}'127
+* Estas imágenes se utilizarán para escribir texto en una ventana de MinilibX.
+   1. t_font	*font_load(void	*mlx)
+	  Inicializa este módulo leyendo todas las imágenes.
+      Parámetros:
+      "mlx": la instancia de MinilibX, necesaria para leer cada imagen.
+      Devuelve la instancia "t_font" asignada o NULL si falla la asignación de memoria.
+   2. static int	get_char_index(char ch)
+   3. static char	*get_char_file_name(char ch) // ./font/***.xpm
    4. void	font_destroy(t_font *font)
+    Libera toda la memoria asignada en "font_load"
+    Parámetros:
+    "font": la instancia "t_font" a liberar
+  
    5. void	*font_get(t_font *font, char ch)
+      Devuelve la imagen de un personaje específico.
+      Parámetros:
+      - "font" la instancia "t_font" (el resultado de "font_load")
+      - "ch" el personaje para el que queremos la imagen.
+      Devuelve la imagen o NULL si no había una imagen válida para el personaje dado
 14. _UTIL_ 
    1. void	*util_calloc(size_t size)
    2. void	*util_load_image(void *mlx, char *file_name)

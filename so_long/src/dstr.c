@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:20:13 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 09:31:23 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:53:29 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	dstr_char_at(t_dstr *dstr, size_t pos, char ch)
 	char	previous;
 
 	previous = dstr->buffer[pos];
-	if (ch)
+	if (ch != 0)
 		dstr->buffer[pos] = ch;
 	return (previous);
 }

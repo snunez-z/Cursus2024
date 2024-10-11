@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:20:31 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/04 11:32:05 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:55:15 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,24 @@
 
 #define FILE_NAME_SIZE	100
 
-/*
- * Returns the index inside the "char_images" array where the image for a
- * specific character is stored into. For example, '!' (ASCII 33) is stored
- * in the first position of the array, '"' (ASCII 34) is stored in the
- * second position of the array, and so on.
- */
+Devuelve el índice dentro de la matriz "char_images" donde se almacena la imagen de un
+carácter específico. Por ejemplo, '!' (ASCII 33) se almacena
+en la primera posición de la matriz, '"' (ASCII 34) se almacena en la
+segunda posición de la matriz, y así sucesivamente.
+
 static int	get_char_index(char ch)
 {
 	return (ch - ' ' - 1);
 }
 
 /*
- * The name of the file containing each character uses a specific name format:
- * "./font/---.xpm", where "---" is the three-digit number of the ASCII value
- * of the character.
- * This function stores into "buffer" the name of the file where the image
- * for character "ch" is stored into.
- * For example, for '!' (ASCII 33), it will store "./font/033.xpm" into "buffer"
- */
+* El nombre del archivo que contiene cada carácter utiliza un formato de nombre específico:
+* "./font/---.xpm", donde "---" es el número de tres dígitos del valor ASCII
+* del carácter.
+* Esta función almacena en "buffer" el nombre del archivo donde se almacena la imagen
+* del carácter "ch".
+* Por ejemplo, para '!' (ASCII 33), almacenará "./font/033.xpm" en "buffer"
+*/
 static char	*get_char_file_name(char ch, char *buffer) // ./font/***.xpm
 {
 	ft_strlcpy(buffer, "./font/", FILE_NAME_SIZE);

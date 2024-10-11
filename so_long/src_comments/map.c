@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:22:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 08:13:33 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:18:44 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,13 @@ int	map_move_player(t_map *map, int inc_x, int inc_y) // mover el jugador de sit
 		map->at_player = MAP_EMPTY_CHAR;
 		map->food_left--;
 	}
-
 	return (1);
 }
 
 int		map_is_over(t_map *map)
 {
+	 /*Devuelve verdadero (distinto de cero) si el jugador está ubicado en la celda que contiene la salida y no queda comida para ninguno
+     Devuelve falso (cero) en caso contrario*/
 	return ((map->at_player == 'E') && (map->food_left == 0));
 }
 
