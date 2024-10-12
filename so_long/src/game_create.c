@@ -23,40 +23,39 @@
 
 #include "game.h"
 
+static int	verify_map_fits_into_screen(t_game *game)
+{
+	int	width;
+	int	height;
+
+	ft_printf("Verifying map fits into screen\n");
+	mlx_get_screen_size(game->mlx, &width, &height);
+	width = width / IMAGE_SIZE;
+	height = height / IMAGE_SIZE;
+	if ((width < game->map->width) || (height < game->map->height))
+		return util_display_error("Map doesn't fit into screen", 0);
+	return (1);
+}
+
 static void	create_map(t_game *game, const char *map_file_name)
 {
 	ft_printf("Creating map\n");
 	game->map = map_read(map_file_name);
 	if (game->map != NULL)
 	{
-		ft_printf("Creating window\n");
+		ft_printf("Initializing MinilibX\n");
 		game->mlx = mlx_init();
-		if (game->mlx)
+		if (game->mlx && verify_map_fits_into_screen(game))
 		{
 			game->images = images_load(game->mlx);
 			game->font = font_load(game->mlx);
+			ft_printf("Creating window\n");
 			game->window = mlx_new_window(game->mlx,
 			                              IMAGE_SIZE * game->map->width,
 			                              IMAGE_SIZE * (game->map->height + 1),
 			                              "So Long");
 		}
 	}
-}
-
-static int	verify_map_fits_into_screen(t_game *game)
-{
-	int	width;
-	int	height;
-
-	mlx_get_screen_size(game->mlx, &width, &height);
-	width = width / IMAGE_SIZE;
-	height = height / IMAGE_SIZE;
-	if ((width < game->map->width) || (height < game->map->height))
-	{
-		ft_printf("Error\nMap doesn't fit into screen\n");
-		return (0);
-	}
-	return (1);
 }
 
 t_game	*game_create(const char *map_file_name)
@@ -69,7 +68,7 @@ t_game	*game_create(const char *map_file_name)
 		return (NULL);
 	create_map(game, map_file_name);
 	if (!game->map || !game->font || !game->images || !game->mlx
-		|| !game->window || !verify_map_fits_into_screen (game))
+		|| !game->window)
 	{
 		game_destroy(game);
 		return (NULL);

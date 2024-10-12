@@ -45,7 +45,6 @@ static t_list	*read_file(int fd)
 	line = get_next_line(fd);
 	while (line != NULL && ft_strlen(line) > 0) 
 	{
-		ft_printf("Line: %s\n", line);
 		append_line_to_list(&rows, line);
 		if (!rows)
 			return (NULL);

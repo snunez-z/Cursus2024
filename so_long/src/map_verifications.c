@@ -51,11 +51,8 @@ int	map_verify_square(t_map *map)
 	{
 		line = (char*)node->content;
 		line_width = ft_strlen(line);
-		ft_printf("line '%s' is %d vs %d\n", line, ft_strlen(line), map->width);
 		if (line_width != map->width)
-		{
 			return (0);
-		}
 		node = node->next;
 	}
 

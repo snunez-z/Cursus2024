@@ -25,7 +25,15 @@ typedef struct s_map_way_verify
 {
 	int		food_left;
 	int		passed_exit;
+	int		x;
+	int		y;
 }	t_map_way_verify;
+
+typedef struct s_coordinate
+{
+	int	x;
+	int	y;
+}	t_coordinate;
 
 int	map_verify_min_size(t_map *map);
 int	map_verify_square(t_map *map);
