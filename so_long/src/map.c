@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "libft.h"
 #include "ft_printf.h"
 #include "dstr.h"
-#include "list.h"
 #include "map.h"
 #include "util.h"
 
@@ -22,7 +22,7 @@ void	map_destroy(t_map *map)
 	if (!map)
 		return ;
 	if (map->rows != NULL)
-		list_destroy(map->rows);
+		ft_lstclear(&map->rows, free);
 	free(map);
 }
 
@@ -60,25 +60,4 @@ int	map_move_player(t_map *map, int inc_x, int inc_y)
 int		map_is_over(t_map *map)
 {
 	return ((map->at_player == 'E') && (map->food_left == 0));
-}
-
-void	map_loop(t_map *map, int (*fn)(t_map_loop *), void *data)
-{
-	t_map_loop	map_loop; 
-
-	map_loop.map = map; 
-	map_loop.data = data; 
-	map_loop.y = 0; 
-	while (map_loop.y < map->height)
-	{
-		map_loop.x = 0; 
-		while (map_loop.x < map->width) 
-		{
-			map_loop.ch = map_at(map, map_loop.x, map_loop.y, 0); 
-			if (fn(&map_loop) == 0) 
-				return ;
-			map_loop.x++; 
-		}
-		map_loop.y++;
-	}
 }

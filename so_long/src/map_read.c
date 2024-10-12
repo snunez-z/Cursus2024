@@ -11,67 +11,53 @@
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include <unistd.h>
+#include <stdlib.h>
+#include "libft.h"
 #include "ft_printf.h"
-#include "dstr.h"
-#include "list.h"
+#include "get_next_line.h"
 #include "util.h"
 #include "map.h"
 #include "map_verifications.h"
 
-static int	read_line_into_buffer(int fd, t_dstr *line)
+void	append_line_to_list(t_list **list, char *line)
 {
-	ssize_t	read_result;
-	char	ch;
+	int		len;
+	t_list	*line_node;
 
-	read_result = read(fd, &ch, 1);
-	while (read_result == 1 && ch != '\n')
+	len = ft_strlen(line);
+	if (line[len - 1] == '\n')
+		line[len - 1] = 0;
+	line_node = ft_lstnew(line);
+	if (line_node == NULL)
 	{
-		if (!dstr_append_char(line, ch))
-			return (0);
-		read_result = read(fd, &ch, 1);
+		ft_lstclear(list, free);
+		return;
 	}
-	if (read_result < 0)
-	{
-		ft_printf("Error\nError reading map file\n");
-		dstr_destroy(line);
-		return (0);
-	}
-	return (1);
-}
-
-static t_dstr	*read_line(int fd) 
-{
-	t_dstr	*line;
-
-	line = dstr_create();
-	if (!line)
-		return (NULL);
-	if (!read_line_into_buffer(fd, line))
-		return (NULL);
-	return (line);
+	ft_lstadd_back(list, line_node);
 }
 
 static t_list	*read_file(int fd)
 {
 	t_list	*rows; 
-	t_dstr	*line; 
+	char	*line; 
 
 	rows = NULL; 
-	line = read_line(fd);
-	while (line != NULL && dstr_length(line) > 0) 
+	line = get_next_line(fd);
+	while (line != NULL && ft_strlen(line) > 0) 
 	{
-		rows = list_append(rows, line);
+		ft_printf("Line: %s\n", line);
+		append_line_to_list(&rows, line);
 		if (!rows)
 			return (NULL);
-		line = read_line(fd);
+		line = get_next_line(fd);
 	}
 	if (line == NULL)
 	{
-		list_destroy(rows);
+		ft_printf("Error reading file\n");
+		ft_lstclear(&rows, free);
 		return (NULL);
 	}
-	dstr_destroy(line);
+	free(line);
 	return (rows);
 }
 
@@ -79,6 +65,8 @@ static int	verify_map(t_map *map)
 {
 	if (map == NULL || map->rows == NULL)
 		return (0);
+	if (!map_verify_min_size(map))
+		return (util_display_error("Map does not have the minimum size", 0));
 	if (!map_verify_square(map))
 		return (util_display_error("Map is not rectangular", 0));
 	if (!map_verify_walls(map))

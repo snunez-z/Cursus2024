@@ -1,7 +1,7 @@
 #include <stddef.h>
+#include "libft.h"
 #include "ft_printf.h"
 #include "dstr.h"
-#include "list.h"
 #include "map.h"
 #include "map_verifications.h"
 
@@ -25,25 +25,39 @@ static	int	count_function(t_map_loop *map_loop)
 	return (1);
 }
 
-int	map_verify_square(t_map *map)
+int map_verify_min_size(t_map *map)
 {
-	int	index;
-	int row_width;
+	char	*first_line;
 
-	ft_printf("Verifying map is rectangular...\n");
-	map->height = list_size(map->rows);
+	ft_printf("Verifying map is at least 3x3...\n");
+	map->height = ft_lstsize(map->rows);
 	if (map->height < 3) 
 		return (0);
-	map->width = dstr_length(list_get(map->rows, 0));
+	first_line = (char*)map->rows->content;
+	map->width = ft_strlen(first_line);
 	if (map->width < 3)
-		return(0);
-	index = 1;
-	while (index < map->height)
+		return (0);
+	return (1);
+}
+
+int	map_verify_square(t_map *map)
+{
+	t_list	*node;
+	char	*line;
+	int		line_width;
+
+	ft_printf("Verifying map is rectangular...\n");
+	node = map->rows;
+	while (node != NULL)
 	{
-		row_width = (int)dstr_length(list_get(map->rows, index));
-		if (row_width != map->width) 
+		line = (char*)node->content;
+		line_width = ft_strlen(line);
+		ft_printf("line '%s' is %d vs %d\n", line, ft_strlen(line), map->width);
+		if (line_width != map->width)
+		{
 			return (0);
-		index++;
+		}
+		node = node->next;
 	}
 
 	return (1);

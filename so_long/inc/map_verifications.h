@@ -27,6 +27,7 @@ typedef struct s_map_way_verify
 	int		passed_exit;
 }	t_map_way_verify;
 
+int	map_verify_min_size(t_map *map);
 int	map_verify_square(t_map *map);
 int	map_verify_fits_into_screen(t_map *map);
 int	map_verify_walls(t_map *map);

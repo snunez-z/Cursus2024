@@ -13,7 +13,7 @@
 #ifndef MAP_H
 # define MAP_H
 
-# include "list.h"
+# include "libft.h"
 
 # define MAP_EMPTY_CHAR	'0'
 # define MAP_EXIT_CHAR	'E'

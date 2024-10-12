@@ -1,57 +1,52 @@
 #include <stddef.h>
+#include "libft.h"
 #include "ft_printf.h"
 #include "dstr.h"
-#include "list.h"
 #include "map.h"
 #include "map_verifications.h"
 
-static int	verify_all_walls(t_dstr *row)
+static int	verify_all_walls(t_list *node)
 {
-	int	len;
-	int	index;
-	char	ch;
+	char	*buffer;
 
-	len = dstr_length(row);
-	index = 0;
-	while (index < len)
+	buffer = (char*)node->content;
+	while (*buffer)
 	{
-		ch = dstr_char_at(row, index, 0);
-		if (ch != MAP_WALL_CHAR) 
+		if (*buffer != MAP_WALL_CHAR) 
 			return (0);
-		index++;
+		buffer++;
 	}
 	return (1); 
 }
 
-static int	verify_side_walls(t_dstr *row)
+static int	verify_side_walls(t_list *node)
 {
-	int	width;
+	char	*line;
+	int		width;
 
-	width = dstr_length(row);
-	if (dstr_char_at(row, 0, 0) != MAP_WALL_CHAR 
-		|| dstr_char_at(row, width - 1, 0) != MAP_WALL_CHAR) 
+	line = (char*)node->content;
+	width = ft_strlen(line);
+	if (line[0] != MAP_WALL_CHAR || line[width - 1] != MAP_WALL_CHAR)
 		return (0);
 	return (1);
 }
 
 int	map_verify_walls(t_map *map)
 {
-	t_dstr	*line;
-	int	index;
+	t_list	*node;
 
 	ft_printf("Verifying map walls...\n");
-	line = list_get(map->rows, 0);
-	if (verify_all_walls(line) == 0) 
+	node = map->rows;
+	if (!verify_all_walls(node)) 
 		return (0);
-	line = list_get(map->rows, map->height - 1);
-	if (verify_all_walls(line) == 0) 
-		return (0);
-	index = 1;
-	while (index < (map->height - 1))
+	node = node->next;
+	while(node->next != NULL)
 	{
-		if (!verify_side_walls(list_get(map->rows, index)))
+		if (!verify_side_walls(node))
 			return (0);
-		index++;
+		node = node->next;
 	}
+	if (!verify_all_walls(node)) 
+		return (0);
 	return (1);
 }

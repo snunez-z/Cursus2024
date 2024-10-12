@@ -19,15 +19,18 @@ OBJ_DIR = ./obj
 
 LIB = ./lib
 LIBFT = ./libft
+GET_NEXT_LINE = ./get_next_line
 FT_PRINTF = ./ft_printf
 MINILIBX = ./minilibx
 
 CC = cc
-CFLAGS = -Werror -Wall -Wextra -I $(INC_DIR) -I $(LIBFT) -I $(FT_PRINTF) -I $(MINILIBX) -I ./inc
+CFLAGS = -Werror -Wall -Wextra -I $(INC_DIR) -I $(LIBFT) -I $(GET_NEXT_LINE) -I $(FT_PRINTF) -I $(MINILIBX) -I ./inc
 LDFLAGS = -L $(LIB) -lftprintf -lft -lX11 -lXext -lmlx
 
-SRC = dstr.c font.c game.c game_draw_map.c game_create.c images.c list.c main.c \
-		map.c map_at.c map_read.c map_verifications.c map_verify_walls.c map_verify_way.c \
+SRC =	get_next_line.c get_next_line_utils.c \
+		font.c game.c game_draw_map.c game_create.c images.c main.c \
+		map.c map_at.c map_loop.c map_read.c \
+		map_verifications.c map_verify_walls.c map_verify_way.c \
 		util.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
@@ -38,7 +41,7 @@ create_dirs:
 	-mkdir obj
 
 libs:
-	INCLUDE_DIR=$(PWD) make -C $(LIBFT) all
+	INCLUDE_DIR=$(PWD) make -C $(LIBFT) bonus
 	cp $(LIBFT)/libft.a $(LIB)
 	INCLUDE_DIR=$(PWD) make -C $(FT_PRINTF) all
 	cp $(FT_PRINTF)/libftprintf.a $(LIB)
@@ -55,5 +58,8 @@ $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: get_next_line/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
