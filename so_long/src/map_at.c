@@ -1,5 +1,4 @@
 #include "libft.h"
-#include "dstr.h"
 #include "map.h"
 
 static char	*list_node_at_position(t_list *list, int pos)
@@ -17,14 +16,18 @@ static char	*list_node_at_position(t_list *list, int pos)
 	return ((char*)node->content);
 }
 
-char	map_at(t_map *map, int column, int row, char ch)
+char	map_get_char_at(t_map *map, int column, int row)
 {
 	char	*line;
-	char	previous;
 	
 	line = list_node_at_position(map->rows, row);
-	previous = line[column];
-	if (ch != 0)
-		line[column] = ch;
-	return (previous);
+	return (line[column]);
+}
+
+void	map_set_char_at(t_map *map, int column, int row, char ch)
+{
+	char	*line;
+	
+	line = list_node_at_position(map->rows, row);
+	line[column] = ch;
 }

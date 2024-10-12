@@ -29,7 +29,7 @@ LDFLAGS = -L $(LIB) -lftprintf -lft -lX11 -lXext -lmlx
 
 SRC =	get_next_line.c get_next_line_utils.c \
 		font.c game.c game_draw_map.c game_create.c images.c main.c \
-		map.c map_at.c map_loop.c map_read.c \
+		map.c map_at.c map_read.c \
 		map_verifications.c map_verify_walls.c map_verify_way.c \
 		util.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

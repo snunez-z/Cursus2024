@@ -81,15 +81,13 @@ int	game_draw_map(t_game *game)
 {
 	int	x; // la fila
 	int	y; // la columna
-	int	move_count;
 
 	if (!game->window)
 		return (0);
 	map_loop(game->map, draw_map_cell, game); // pinta todo y cuando se sale
 	x = IMAGE_SIZE; // tamaño de las imagenes 
 	y = IMAGE_SIZE * game->map->height; // calcula donde acaba el mapa
-	move_count = map_get_move_count(game->map);
 	x = print_text(game, "Moves: ", x, y);
-	print_number(game, move_count, x, y);
+	print_number(game, game->map->move_count, x, y);
 	return (0);
 }

@@ -19,7 +19,7 @@
 #include "map.h"
 #include "map_verifications.h"
 
-void	append_line_to_list(t_list **list, char *line)
+static void	append_line_to_list(t_list **list, char *line)
 {
 	int		len;
 	t_list	*line_node;

@@ -44,8 +44,8 @@ typedef struct s_map_loop
 
 t_map	*map_read(const char *file_name);
 void	map_destroy(t_map *map); 
-char	map_at(t_map *map, int column, int row, char ch);
-int		map_get_move_count(t_map *map);
+char	map_get_char_at(t_map *map, int column, int row);
+void	map_set_char_at(t_map *map, int column, int row, char ch);
 int		map_move_player(t_map *map, int inc_x, int inc_y);
 int		map_is_over(t_map *map);
 void	map_loop(t_map *map, int (*fn)(t_map_loop*), void *data);

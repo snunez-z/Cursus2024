@@ -9,7 +9,7 @@ static int	is_valid_cell(t_map *map, int x, int y)
 
 	if (x < 0 || x >= map->width || y < 0 || y >= map->height)
 		return (0);
-	ch = map_at(map, x, y, 0);
+	ch = map_get_char_at(map, x, y);
 	if(ch == MAP_WALL_CHAR || (ch & 128) != 0)
 		return (0);
 	else
@@ -20,13 +20,13 @@ static void	visit_cell(t_map *map, int x, int y, t_map_way_verify *verify)
 {
 	char	ch;
 
-	ch = map_at(map, x, y, 0); 
+	ch = map_get_char_at(map, x, y);
 	if (ch == MAP_FOOD_CHAR)
 		verify->food_left--; 
 	else if (ch == MAP_EXIT_CHAR)
 		verify->passed_exit = 1; 
 
-	map_at(map, x, y, (ch | 128));
+	map_set_char_at(map, x, y, (ch | 128));
 }
 
 static void walk_map(t_map *map, int x, int y, t_map_way_verify *verify)
@@ -44,7 +44,13 @@ static void walk_map(t_map *map, int x, int y, t_map_way_verify *verify)
 
 static int	unmark_cell_function(t_map_loop *map_loop)
 {
-	map_at(map_loop->map, map_loop->x, map_loop->y, (map_loop->ch & 127));
+	char unmarked_char;
+
+	unmarked_char = (map_loop->ch & 127);
+	map_set_char_at(map_loop->map,
+	                map_loop->x,
+	                map_loop->y,
+	                unmarked_char);
 	return (1);
 }
 
