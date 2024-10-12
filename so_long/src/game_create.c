@@ -23,26 +23,6 @@
 
 #include "game.h"
 
-static void	create_map(t_game *game, const char *map_file_name)
-{
-	ft_printf("Creating map\n");
-	game->map = map_read(map_file_name);
-	if (game->map != NULL)
-	{
-		ft_printf("Creating window\n");
-		game->mlx = mlx_init();
-		if (game->mlx)
-		{
-			game->images = images_load(game->mlx);
-			game->font = font_load(game->mlx);
-			game->window = mlx_new_window(game->mlx,
-			                              IMAGE_SIZE * game->map->width,
-			                              IMAGE_SIZE * (game->map->height + 1),
-			                              "So Long");
-		}
-	}
-}
-
 static int	verify_map_fits_into_screen(t_game *game)
 {
 	int	width;
@@ -59,6 +39,26 @@ static int	verify_map_fits_into_screen(t_game *game)
 	return (1);
 }
 
+static void	create_map(t_game *game, const char *map_file_name)
+{
+	ft_printf("Creating map\n");
+	game->map = map_read(map_file_name);
+	if (game->map != NULL)
+	{
+		ft_printf("Creating window\n");
+		game->mlx = mlx_init();
+		if (game->mlx && verify_map_fits_into_screen (game))
+		{
+			game->images = images_load(game->mlx);
+			game->font = font_load(game->mlx);
+			game->window = mlx_new_window(game->mlx,
+			                              IMAGE_SIZE * game->map->width,
+			                              IMAGE_SIZE * (game->map->height + 1),
+			                              "So Long");
+		}
+	}
+}
+
 t_game	*game_create(const char *map_file_name)
 {
 	t_game	*game;
@@ -69,7 +69,7 @@ t_game	*game_create(const char *map_file_name)
 		return (NULL);
 	create_map(game, map_file_name);
 	if (!game->map || !game->font || !game->images || !game->mlx
-		|| !game->window || !verify_map_fits_into_screen (game))
+		|| !game->window)
 	{
 		game_destroy(game);
 		return (NULL);
