@@ -23,9 +23,7 @@
 
 #include "game.h"
 
-#define RATE 10000
-
-static int	draw_map_cell(t_map_loop *map_loop)
+static void	draw_map_cell(t_map_loop *map_loop)
 {
 	t_game	*game;
 	void	*image;
@@ -43,7 +41,6 @@ static int	draw_map_cell(t_map_loop *map_loop)
 		image = game->images->empty;
 	mlx_put_image_to_window(game->mlx, game->window, image,
 		IMAGE_SIZE * map_loop->x, IMAGE_SIZE * map_loop->y);
-	return (1);
 }
 
 static int	print_text(t_game *game, const char *text, int x, int y)
@@ -57,7 +54,7 @@ static int	print_text(t_game *game, const char *text, int x, int y)
 		char_image = font_get_image_for_char(game->font, *aux);
 		if (char_image != NULL)
 			mlx_put_image_to_window(game->mlx, game->window, char_image, x, y);
-		x += IMAGE_SIZE;
+		x += FONT_WIDTH;
 		aux++;
 	}
 	return (x);
@@ -74,7 +71,7 @@ static int	print_number(t_game *game, int number, int x, int y)
 	char_image = font_get_image_for_char(game->font, digit);
 	if (char_image != NULL)
 		mlx_put_image_to_window(game->mlx, game->window, char_image, x, y);
-	return (x + IMAGE_SIZE);
+	return (x + FONT_WIDTH);
 }
 
 int	game_draw_map(t_game *game)
@@ -86,9 +83,9 @@ int	game_draw_map(t_game *game)
 	if (!game->window)
 		return (0);
 	map_loop(game->map, draw_map_cell, game); // pinta todo y cuando se sale
-	x = IMAGE_SIZE; // tamaño de las imagenes 
+	x = 9; // tamaño de las imagenes 
 	y = IMAGE_SIZE * game->map->height; // calcula donde acaba el mapa
-	move_count = map_get_move_count(game->map);
+	move_count = game->map->move_count;
 	x = print_text(game, "Moves: ", x, y);
 	print_number(game, move_count, x, y);
 	return (0);

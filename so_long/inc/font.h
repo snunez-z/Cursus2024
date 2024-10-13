@@ -13,6 +13,7 @@
 #ifndef FONT_H
 # define FONT_H
 
+# define FONT_WIDTH			18
 # define FONT_FIRST_CHAR	'!'
 # define FONT_LAST_CHAR		'}'
 

@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 	{
-		ft_printf("Error\nUsage: %s <path_to_map_file>\n");
+		ft_printf("Error\nUsage: %s <path_to_map_file>\n", argv[0]);
 		return (1);
 	}
 	game = game_create(argv[1]);

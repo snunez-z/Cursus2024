@@ -42,10 +42,9 @@ static void walk_map(t_map *map, int x, int y, t_map_way_verify *verify)
 	walk_map(map, x, y + 1, verify); 
 }
 
-static int	unmark_cell_function(t_map_loop *map_loop)
+static void	unmark_cell_function(t_map_loop *map_loop)
 {
 	map_at(map_loop->map, map_loop->x, map_loop->y, (map_loop->ch & 127));
-	return (1);
 }
 
 int	map_verify_way(t_map *map)
@@ -58,7 +57,6 @@ int	map_verify_way(t_map *map)
 	walk_map(map, map->player_x, map->player_y, &verify); 
 	map_loop(map, unmark_cell_function, NULL); 
 	if (verify.food_left == 0 && verify.passed_exit) 
-													
 		return (1);
 	else
 		return (0);

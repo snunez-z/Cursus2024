@@ -5,7 +5,7 @@
 #include "map.h"
 #include "map_verifications.h"
 
-static	int	count_function(t_map_loop *map_loop) 
+static	void	count_function(t_map_loop *map_loop) 
 {
 	t_count_data	*count_data;
 
@@ -21,8 +21,6 @@ static	int	count_function(t_map_loop *map_loop)
 		count_data->exit_count++;
 	else if (map_loop->ch == MAP_FOOD_CHAR)
 		map_loop->map->food_left++; 
-
-	return (1);
 }
 
 int	map_verify_square(t_map *map)
