@@ -79,6 +79,8 @@ static int	verify_map(t_map *map)
 {
 	if (map == NULL || map->rows == NULL)
 		return (0);
+	if (!map_verify_min_size(map))
+		return (util_display_error("Map does not have the minimum size", 0));
 	if (!map_verify_square(map))
 		return (util_display_error("Map is not rectangular", 0));
 	if (!map_verify_walls(map))

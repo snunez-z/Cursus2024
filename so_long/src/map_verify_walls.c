@@ -49,7 +49,8 @@ int	map_verify_walls(t_map *map)
 	index = 1;
 	while (index < (map->height - 1))
 	{
-		if (!verify_side_walls(list_get(map->rows, index)))
+		line = list_get(map->rows, index);
+		if (!verify_side_walls(line))
 			return (0);
 		index++;
 	}

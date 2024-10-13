@@ -26,11 +26,6 @@ void	map_destroy(t_map *map)
 	free(map);
 }
 
-int	map_get_move_count(t_map *map)
-{
-	return map->move_count;
-}
-
 int	map_move_player(t_map *map, int inc_x, int inc_y) 
 {
 	int	new_x;
@@ -59,7 +54,7 @@ int	map_move_player(t_map *map, int inc_x, int inc_y)
 
 int		map_is_over(t_map *map)
 {
-	return ((map->at_player == 'E') && (map->food_left == 0));
+	return ((map->at_player == MAP_EXIT_CHAR) && (map->food_left == 0));
 }
 
 void	map_loop(t_map *map, void (*fn)(t_map_loop *), void *data)

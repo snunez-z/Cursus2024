@@ -23,30 +23,40 @@ static	void	count_function(t_map_loop *map_loop)
 		map_loop->map->food_left++; 
 }
 
-int	map_verify_square(t_map *map)
+int map_verify_min_size(t_map *map)
 {
-	int	index;
-	int row_width;
+	t_dstr	*first_line;
 
-	ft_printf("Verifying map is rectangular...\n");
+	ft_printf("Verifying map is at least 3x3...\n");
 	map->height = list_size(map->rows);
 	if (map->height < 3) 
 		return (0);
-	map->width = dstr_length(list_get(map->rows, 0));
+	first_line = list_get(map->rows, 0);
+	map->width = dstr_length(first_line);
 	if (map->width < 3)
-		return(0);
-	index = 1;
-	while (index < map->height)
+		return (0);
+	return (1);
+}
+
+int	map_verify_square(t_map *map)
+{
+	t_list	*node;
+	t_dstr	*line;
+	int		line_width;
+
+	ft_printf("Verifying map is rectangular...\n");
+	node = map->rows;
+	while (node != NULL)
 	{
-		row_width = (int)dstr_length(list_get(map->rows, index));
-		if (row_width != map->width) 
+		line = node->line;
+		line_width = dstr_length(line);
+		if (line_width != map->width)
 			return (0);
-		index++;
+		node = node->next;
 	}
 
 	return (1);
 }
-
 int	map_verify_items(t_map *map)
 {
 	t_count_data	count_data;
