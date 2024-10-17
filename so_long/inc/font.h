@@ -20,8 +20,6 @@
 typedef struct s_font
 {
 	void	*mlx;
-	// We have one image per char, starting from '!' (33) to '}' (125)
-	// So we need 125 - 33 + 1 array elements
 	void	*char_images[FONT_LAST_CHAR - FONT_FIRST_CHAR + 1];
 }	t_font;
 

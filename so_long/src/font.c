@@ -73,7 +73,6 @@ void	*font_get_image_for_char(t_font *font, char ch)
 {
 	int	pos;
 
-	// We only have characters from FONT_FIRST_CHAR to FONT_LAST_CHAR
 	if (ch < FONT_FIRST_CHAR || ch > FONT_LAST_CHAR)
 		return (NULL);
 	pos = ch - FONT_FIRST_CHAR;
