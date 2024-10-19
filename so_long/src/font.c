@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:20:31 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 09:31:23 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/19 09:32:35 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	copy_char_file_name(char ch, char *buffer)
 	buffer[7] = (ch / 100) + '0';
 	buffer[8] = ((ch % 100) / 10) + '0';
 	buffer[9] = (ch % 10) + '0';
-	buffer[10] = 0;
+	buffer[10] = '\0';
 	ft_strlcat(buffer, ".xpm", FILE_NAME_SIZE);
 }
 
