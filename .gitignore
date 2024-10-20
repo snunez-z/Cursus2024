@@ -2,7 +2,5 @@ a.out
 .DS_Store
 *.swp
 *.o
-*.PDF
-*.pdf
 *.a
 *.gch
