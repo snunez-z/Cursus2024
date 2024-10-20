@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:21:08 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/04 12:28:30 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/20 17:03:14 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	game_run(t_game *game)
 {
 	if (!mlx_loop_hook(game->mlx, game_draw_map, game)
 		|| !mlx_hook(game->window, DestroyNotify, 0, close_window, game)
-		|| !mlx_hook(game->window, KeyPress, KeyPressMask, key_press_hook, game))
+		|| !mlx_hook(game->window, KeyPress, KeyPressMask,
+			key_press_hook, game))
 	{
 		ft_printf("Error\nError initializing MLX loop\n");
 		game_destroy(game);

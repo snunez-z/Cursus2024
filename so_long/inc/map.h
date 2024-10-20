@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:18:57 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 12:43:07 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:46:03 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_map_loop
 }	t_map_loop;
 
 t_map	*map_read(const char *file_name);
-void	map_destroy(t_map *map); 
+void	map_destroy(t_map *map);
 char	map_at(t_map *map, int column, int row, char ch);
 int		map_move_player(t_map *map, int inc_x, int inc_y);
 int		map_is_over(t_map *map);

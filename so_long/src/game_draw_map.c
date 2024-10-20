@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:21:08 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/11 16:27:20 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/20 17:28:13 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,15 @@ static int	print_number(t_game *game, int number, int x, int y)
 
 int	game_draw_map(t_game *game)
 {
-	int	x; 
-	int	y; 
+	int	x;
+	int	y;
 	int	move_count;
 
 	if (!game->window)
 		return (0);
-	map_loop(game->map, draw_map_cell, game); 
-	x = 9; 
-	y = IMAGE_SIZE * game->map->height; 
+	map_loop(game->map, draw_map_cell, game);
+	x = 9;
+	y = IMAGE_SIZE * game->map->height;
 	move_count = game->map->move_count;
 	x = print_text(game, "Moves: ", x, y);
 	print_number(game, move_count, x, y);

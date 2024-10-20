@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
+/*   game_create.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:21:08 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/04 12:28:30 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/20 17:21:15 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static void	create_map(t_game *game, const char *map_file_name)
 			game->images = images_load(game->mlx);
 			game->font = font_load(game->mlx);
 			game->window = mlx_new_window(game->mlx,
-			                              IMAGE_SIZE * game->map->width,
-			                              IMAGE_SIZE * (game->map->height + 1),
-			                              "So Long");
+					IMAGE_SIZE * game->map->width,
+					IMAGE_SIZE * (game->map->height + 1),
+					"So Long");
 		}
 	}
 }

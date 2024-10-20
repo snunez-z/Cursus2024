@@ -6,13 +6,13 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:20:31 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/19 09:32:35 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/20 20:03:23 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
-#include "ft_printf.h"
+#include "printf.h"
 #include "mlx.h"
 #include "font.h"
 #include "util.h"

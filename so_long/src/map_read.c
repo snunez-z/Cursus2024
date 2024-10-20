@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:22:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/08 09:31:23 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/20 18:20:18 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	read_line_into_buffer(int fd, t_dstr *line)
 	return (1);
 }
 
-static t_dstr	*read_line(int fd) 
+static t_dstr	*read_line(int fd)
 {
 	t_dstr	*line;
 
@@ -54,12 +54,12 @@ static t_dstr	*read_line(int fd)
 
 static t_list	*read_file(int fd)
 {
-	t_list	*rows; 
-	t_dstr	*line; 
+	t_list	*rows;
+	t_dstr	*line;
 
-	rows = NULL; 
+	rows = NULL;
 	line = read_line(fd);
-	while (line != NULL && dstr_length(line) > 0) 
+	while (line != NULL && dstr_length(line) > 0)
 	{
 		rows = list_append(rows, line);
 		if (!rows)
