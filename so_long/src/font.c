@@ -76,7 +76,5 @@ void	*font_get_image_for_char(t_font *font, char ch)
 	if (ch < FONT_FIRST_CHAR || ch > FONT_LAST_CHAR)
 		return (NULL);
 	pos = ch - FONT_FIRST_CHAR;
-	if (font->char_images[pos] == NULL)
-		ft_printf("No image for '%c'\n", ch);
 	return (font->char_images[pos]);
 }
