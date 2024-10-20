@@ -25,11 +25,11 @@ t_images	*images_load(void *mlx)
 	if (!images)
 		return (NULL);
 	images->mlx = mlx;
-	images->empty = util_load_image(mlx, "images/empty.xpm");
-	images->wall = util_load_image(mlx, "images/wall.xpm");
-	images->player = util_load_image(mlx, "images/player.xpm");
-	images->food = util_load_image(mlx, "images/food.xpm");
-	images->exit = util_load_image(mlx, "images/exit.xpm");
+	images->empty = util_load_image(mlx, "textures/empty.xpm");
+	images->wall = util_load_image(mlx, "textures/wall.xpm");
+	images->player = util_load_image(mlx, "textures/player.xpm");
+	images->food = util_load_image(mlx, "textures/food.xpm");
+	images->exit = util_load_image(mlx, "textures/exit.xpm");
 	if (!images->empty || !images->wall || !images->player
 		|| !images->food || !images->exit)
 	{

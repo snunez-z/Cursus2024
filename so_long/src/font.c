@@ -18,15 +18,15 @@
 #include "util.h"
 
 #define FONT_SIZE	32
-#define FILE_NAME_SIZE	20
+#define FILE_NAME_SIZE	25
 
 static void	copy_char_file_name(char ch, char *buffer)
 {
-	ft_strlcpy(buffer, "./font/", FILE_NAME_SIZE);
-	buffer[7] = (ch / 100) + '0';
-	buffer[8] = ((ch % 100) / 10) + '0';
-	buffer[9] = (ch % 10) + '0';
-	buffer[10] = '\0';
+	ft_strlcpy(buffer, "textures/font/", FILE_NAME_SIZE);
+	buffer[14] = (ch / 100) + '0';
+	buffer[15] = ((ch % 100) / 10) + '0';
+	buffer[16] = (ch % 10) + '0';
+	buffer[17] = '\0';
 	ft_strlcat(buffer, ".xpm", FILE_NAME_SIZE);
 }
 
