@@ -19,7 +19,7 @@ OBJ_DIR = ./obj
 
 LIB = ./lib
 LIBFT = ./libft
-FT_PRINTF = ./ft_printf
+FT_PRINTF = $(LIBFT)/ft_printf
 MINILIBX = ./minilibx
 
 CC = cc

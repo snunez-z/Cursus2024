@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 #include "libft.h"
-#include "printf.h"
+#include "ft_printf.h"
 #include "mlx.h"
 #include "font.h"
 #include "util.h"
