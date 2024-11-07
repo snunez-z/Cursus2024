@@ -4,16 +4,17 @@ Sistematizar una solucion usando un conjunto limitado de ordenes.
 
 **Conceptos**
 
-__El ensamblador__ es el lenguaje del procesador. Elconcepto de pila viene de esos tiempos, es la forma que tiene el procesaro y el lenguaje C y cualquier otro lenguaje deprogramacion de soportar llamadas entre funciones,porque lso datos de cada funcion se guardan en la pila encima de lso datos de la funcion que llama a esa funcion.
-Cuando una funcion acaba , se quita de la pila lso datos que usaba.
+__El ensamblador__ es el lenguaje del procesador. El concepto de pila viene de esos tiempos, es la forma que tiene el procesador y el lenguaje C y cualquier otro lenguaje de programacion de soportar llamadas entre funciones,porque los datos de cada funcion se guardan en la pila encima de los datos de la funcion que llama a esa funcion.
+Cuando una funcion acaba, se quita de la pila los datos que usaba.
 
 **Ejecucion 1** 
 En el stack estarian las dos variables que usa esa funcion :
 
 	a-> funcion 1
 	b-> funcion 1
+
 **Ejecucion 2**
-La funcion1 llama a la funcion2 funcion2
+La funcion 1 llama a la funcion2 funcion2
 el stack apila las variables de la funcion2 encima de las varibales de la funcion 1
 	a->funcion2
 	b-> funcion2

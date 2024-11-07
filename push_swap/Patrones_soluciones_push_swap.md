@@ -30,7 +30,6 @@ https://medium.com/@jamierobertdawson/push-swap-the-least-amount-of-moves-with-t
 	100/2, lo que nos da 50, que representaría la mitad de la lista. Luego encuentro el lugar donde está ese número dentro de la lista. El número 8 está en el segundo lugar (el número superior está en el lugar cero, porque se necesitan cero movimientos para llevar el número superior a la parte superior de la lista). Entonces tomo la ubicación de 8 e intento averiguar si la ubicación del número es mayor o menor que 50. Debido a que 2 es menor que 50, sé que sería más rápido ejecutar ra en el número 8 en lugar de rra. Pero el número 12 está en el lugar 96. Debido a que 96 es mayor que 50, sé que tengo que usar rra en él.
 	**500 numeros** lo tienes que dividir en 11 fragmentos. Menos de 5500 movimientos
 
-
 1. Stack a = 15 21 4 7 9
    Stack b = vacio
    Solucion = ra ra -> estan ordenados en dos bloques

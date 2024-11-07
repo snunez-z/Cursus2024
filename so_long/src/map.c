@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:22:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/10/20 17:59:11 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:48:17 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	map_move_player(t_map *map, int inc_x, int inc_y)
 	map->at_player = map_at(map, map->player_x,
 			map->player_y, MAP_PLAYER_CHAR);
 	map->move_count++;
+	ft_printf("Moves %d\n",map->move_count);
 	if (map->at_player == MAP_FOOD_CHAR)
 	{
 		map->at_player = MAP_EMPTY_CHAR;
