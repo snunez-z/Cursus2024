@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+         #
+#    By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/04 09:26:09 by snunez-z          #+#    #+#              #
-#    Updated: 2024/10/04 09:26:15 by snunez-z         ###   ########.fr        #
+#    Updated: 2024/11/07 17:35:08 by snunez-z         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,3 +76,7 @@ $(NAME): $(OBJ_DIR) $(OBJ)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+re: fclean all
+
+.PHONY: all clean fclean re
