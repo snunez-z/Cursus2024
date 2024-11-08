@@ -33,3 +33,4 @@ __Operacion minimas del stack__
 Hay dos operaciones minimas que se hacen para manejar un stack.
 PUSH -> apila 1 dato
 POP-> saca el ultimo elemento que se añadió en la pila.
+
