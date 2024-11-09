@@ -3,7 +3,7 @@
 #include "push_swap.h"
 
 
-static t_stack_list *create_node(size_t number)
+static t_stack_list *create_node(long number)
 {
     t_stack_list *node;
 
@@ -11,19 +11,12 @@ static t_stack_list *create_node(size_t number)
     if (!node) 
 		return (NULL);
 
-    node->numbers = malloc(sizeof(size_t));
-    if (!node->numbers) 
-	{
-        free(node);
-        return (NULL);
-    }
-
-    *node->numbers = number;  
+    node->numbers = number;  
     node->next = NULL;
     return (node);
 }
 
-t_stack_list *list_append(t_stack_list **numbers, size_t number)
+t_stack_list *list_append(t_stack_list **numbers, long number)
  {
     t_stack_list *new_node;
 	t_stack_list *last_node;
@@ -52,7 +45,6 @@ void list_destroy(t_stack_list *numbers)
 	{
         aux = numbers;
         numbers = numbers->next;
-        free(aux->numbers);  
         free(aux);           
     }
 }
@@ -68,6 +60,7 @@ size_t list_size(t_stack_list *numbers)
     }
     return size;
 }
+/*
 size_t *list_get(t_stack_list *numbers, size_t pos)
 {
     while (numbers != NULL && pos > 0)
@@ -97,3 +90,4 @@ int main()
     list_destroy(list);
     return (0);
 }
+*/

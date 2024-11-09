@@ -24,7 +24,7 @@ static int	convert_to_int(const char	*str)
 	return (value);
 }
 
-int	ft_atoi(const char	*str)
+int	su_atoi(const char	*str)
 {
 	int		value;
 	char	is_negative;		
