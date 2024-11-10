@@ -21,7 +21,7 @@ long	stack_pop(t_stack_list	**stack)
 
 return(top_node_content);
 }
-int main()
+/*int main()
 {
     t_stack_list *stack;
 	long value;
@@ -47,4 +47,4 @@ int main()
     printf("Popped value: %ld\n", value);  // Debería imprimir -1 (Error)
 
     return 0;
-}
+}*/

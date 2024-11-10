@@ -1,15 +1,21 @@
 
 #include "push_swap.h"
 
-
-void stack_push(long	num, t_stack_list *stack)
+void stack_push(long	num, t_stack_list **stack)
 {
-	t_stack_list	*new_node;
-	t_stack_list	*first_node;
-	
-	first_node = *stack;
-	new_node = list_append (&stack, new_node->numbers);
-	first_node = *new_node;
+	list_append (&stack, num);
 }
 
+int main(void)
+{
+    t_list_stack *a;
+    
+    a =NULL;
+    list_append(&a, 10);
+    list_append(&a, 30);
+    list_append(&a, 50);
+    
+    stack_push(60, &a);
+	return(0);
+}
 

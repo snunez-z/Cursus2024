@@ -34,3 +34,49 @@ Hay dos operaciones minimas que se hacen para manejar un stack.
 PUSH -> apila 1 dato
 POP-> saca el ultimo elemento que se añadió en la pila.
 
+__**Funcion rotate_up.c__**
+
+Ejemplo :
+a = 500
+ 
+ 500  -> 60
+         next->1000
+
+ 1000 -> 10
+         next->2000
+
+ 2000 -> 30
+         next->3000
+
+ 3000 -> 50
+         next->NULL
+ 
+ -------------------------- PASO #1: El que segundo pasa a ser el primero
+ 
+ a = 1000
+ 
+ -------------------------- PASO #2: El que era último, apunta al que era el primero
+
+ 3000 -> 50
+         next->NULL ------> 500
+ 
+
+--------------------------- PASO #3: El que era primero, ahora es el último y por lo tanto apunta a NULL
+ 
+ 500  -> 60
+         next->1000 -----> NULL
+         
+------------------------------RESULTADO
+
+ 1000 -> 10
+         next->2000
+
+ 2000 -> 30
+         next->3000
+
+ 3000 -> 50
+         next->500
+ 
+ 500  -> 60
+         next->NULL
+
