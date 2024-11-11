@@ -1,11 +1,13 @@
 
 #include "push_swap.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-void stack_push(long	num, t_stack_list **stack)
+void list_stack_push(long	num, t_stack_list **stack)
 {
 	list_append (&stack, num);
 }
-
+/*
 int main(void)
 {
     t_list_stack *a;
@@ -17,5 +19,5 @@ int main(void)
     
     stack_push(60, &a);
 	return(0);
-}
+}*/
 

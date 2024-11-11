@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 
-long	stack_pop(t_stack_list	**stack)
+long	list_stack_pop(t_stack_list	**stack)
 {
 	t_stack_list	*first_node;
 	long			top_node_content;	

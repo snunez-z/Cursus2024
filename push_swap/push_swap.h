@@ -16,5 +16,13 @@ size_t 		list_size(t_stack_list *numbers);
 size_t 		*list_get(t_stack_list *numbers, long pos);
 int		su_atoi(const char *str);
 
+
+void	rotate (t_stack_list **stack);
+void	swap(t_stack_list *stack);
+void	rotate (t_stack_list **stack);
+void	rotate_reverse (t_stack_list **stack);
+long	list_stack_pop(t_stack_list	**stack);
+void 	list_stack_push(long	num, t_stack_list **stack);
+
 #endif
 
