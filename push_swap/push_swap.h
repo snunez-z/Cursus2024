@@ -17,12 +17,17 @@ size_t 		*list_get(t_stack_list *numbers, long pos);
 int		su_atoi(const char *str);
 
 
-void	rotate (t_stack_list **stack);
+void	rr(t_stack_list **a, t_stack_list **b);
+void	ra(t_stack_list **a);
+void	rb(t_stack_list **b);
 void	swap(t_stack_list *stack);
-void	rotate (t_stack_list **stack);
-void	rotate_reverse (t_stack_list **stack);
+void    rrr(t_stack_list **a, t_stack_list **b);
+void    rra(t_stack_list **a);
+void    rrb(t_stack_list **b);
 long	list_stack_pop(t_stack_list	**stack);
 void 	list_stack_push(long	num, t_stack_list **stack);
+
+void    movemment_min_number(t_stack_list **a);
 
 #endif
 

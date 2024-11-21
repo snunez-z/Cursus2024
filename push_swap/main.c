@@ -8,8 +8,8 @@ int	main (int argc, char	**argv)
 	int				i;
 	long			num;
 	t_stack_list 	*aux;
-	t_stack_list	*num_list;	
-	
+	t_stack_list	*num_list;
+		
 	if (argc > 2 )
 	{
 		i = 1;
@@ -20,6 +20,7 @@ int	main (int argc, char	**argv)
 			list_append(&num_list, num);
 			i++;
 		}
+		movemment_min_number(&num_list);
 		aux = num_list;
 		while (aux != NULL)
 		{
@@ -27,7 +28,7 @@ int	main (int argc, char	**argv)
 			aux = aux->next;
 		}
 	}
-	write(1,"\n", 1);
+	printf ("\n");
 	list_destroy(num_list);
 	return (0);
 }
