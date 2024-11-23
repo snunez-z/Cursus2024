@@ -1,7 +1,8 @@
 #include <stdlib.h>
-#include "push_swap.h"
 #include <stdio.h>
 #include <unistd.h>
+#include "push_swap.h"
+#include "move_count.h"
 
 static void	rotate_reverse (t_stack_list **stack)
 {
@@ -30,16 +31,19 @@ void rrr(t_stack_list **a, t_stack_list **b)
     rotate_reverse(a);
     rotate_reverse(b);
     write(1,"rr\n", 3);
+    move_inc();
 }
 
 void rra(t_stack_list **a)
 {
     rotate_reverse(a);
     write(1,"rra\n", 4);
+    move_inc();
 }
 
 void rrb(t_stack_list **b)
 {
     rotate_reverse(b);
     write(1,"rrb\n", 4);
+    move_inc();
 }

@@ -1,11 +1,13 @@
 
-#include "push_swap.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include "push_swap.h"
+#include "move_count.h"
 
 static void list_stack_push(long	num, t_stack_list **stack)
 {
-	list_append (stack, num);
+	list_append_back (stack, num);
 }
 
 static long	list_stack_pop(t_stack_list	**stack)
@@ -29,19 +31,21 @@ return(top_node_content);
 void pa(t_stack_list **a, t_stack_list **b)
 {
     long num;
-    
-    num = list_stack_pop(a);
-    list_stack_push(b, num);
+	    
+  	num = list_stack_pop(a);
+    list_stack_push(num, b);
     write(1, "pa\n", 3);
+	move_inc();
 }
 
-void pa(t_stack_list **a, t_stack_list **b)
+void pb(t_stack_list **b, t_stack_list **a)
 {
     long num;
     
     num = list_stack_pop(b);
-    list_stack_push(a, num);
+    list_stack_push(num, a);
     write(1, "pb\n", 3);
+	move_inc();
 }
 
 

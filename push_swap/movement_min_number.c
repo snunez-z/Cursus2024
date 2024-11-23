@@ -1,6 +1,8 @@
-#include "push_swap.h"
+
 #include <stdio.h>
 #include <stdlib.h>
+#include "push_swap.h"
+#include "move_count.h"
 
 static int     search_sortest_number(t_stack_list  *stack)
 {
@@ -28,14 +30,15 @@ static int     search_sortest_number(t_stack_list  *stack)
         return (pos_min);
 } 
 
-void     movemment_min_number(t_stack_list **a)
+void     movement_min_number(t_stack_list **a,t_stack_list **b)
 {
         int     pos_min;
         int     start;
         int     end;
         int     distance_end;
         int     distance_start;
-        
+        t_stack_list    *top_node;
+                    
         pos_min = search_sortest_number(*a);
         start = 0;
         end = list_size(*a);
@@ -46,6 +49,9 @@ void     movemment_min_number(t_stack_list **a)
                 while(pos_min > 0)
                 {
                         ra(a);
+                        top_node = *a;
+                        if (top_node->numbers > top_node->next->numbers)
+                                sa(*a);
                         pos_min--;
                 }
         }
@@ -54,7 +60,13 @@ void     movemment_min_number(t_stack_list **a)
                 while (pos_min < end)
                 {
                         rra(a);
+                        top_node = *a;
+                        if (top_node->numbers >top_node->next->numbers)
+                                sa(*a);
                         pos_min++;
                 }
-        } 
-}      
+        }
+        pa(a, b);
+        
+}    
+

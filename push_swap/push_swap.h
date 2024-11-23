@@ -10,7 +10,8 @@ typedef struct s_stack_list
     struct s_stack_list *next; 
 } t_stack_list;
 
-t_stack_list	*list_append(t_stack_list **numbers, long number);
+t_stack_list	*list_append_front(t_stack_list **numbers, long number);
+t_stack_list	*list_append_back(t_stack_list **numbers, long number);
 void 		list_destroy(t_stack_list *numbers);
 size_t 		list_size(t_stack_list *numbers);
 size_t 		*list_get(t_stack_list *numbers, long pos);
@@ -20,14 +21,16 @@ int		su_atoi(const char *str);
 void	rr(t_stack_list **a, t_stack_list **b);
 void	ra(t_stack_list **a);
 void	rb(t_stack_list **b);
-void	swap(t_stack_list *stack);
 void    rrr(t_stack_list **a, t_stack_list **b);
 void    rra(t_stack_list **a);
 void    rrb(t_stack_list **b);
-long	list_stack_pop(t_stack_list	**stack);
-void 	list_stack_push(long	num, t_stack_list **stack);
+void pa(t_stack_list **a, t_stack_list **b);
+void pb(t_stack_list **b, t_stack_list **a);
+void ss(t_stack_list *a, t_stack_list *b);
+void sa(t_stack_list *a);
+void sb(t_stack_list *b);
 
-void    movemment_min_number(t_stack_list **a);
-
+void    movement_min_number(t_stack_list **a, t_stack_list **b);
+void     sort_stacks(t_stack_list **a,t_stack_list **b);
 #endif
 

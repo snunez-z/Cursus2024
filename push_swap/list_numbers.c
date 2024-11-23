@@ -16,7 +16,7 @@ static t_stack_list *create_node(long number)
     return (node);
 }
 
-t_stack_list *list_append(t_stack_list **numbers, long number)
+t_stack_list *list_append_front(t_stack_list **numbers, long number)
  {
     t_stack_list *new_node;
 	t_stack_list *last_node;
@@ -37,6 +37,25 @@ t_stack_list *list_append(t_stack_list **numbers, long number)
     return (*numbers);
 }
 
+t_stack_list *list_append_back(t_stack_list **numbers, long number)
+ {
+    t_stack_list *new_node;
+	t_stack_list *first_node;
+	
+	first_node = *numbers;
+    new_node = create_node(number);
+    if (!new_node)
+		return (NULL);
+    if(*numbers == NULL)
+        *numbers = new_node;
+    else
+    {
+        *numbers = new_node;
+        new_node->next = first_node;
+    }
+    return (*numbers);
+ }
+    
 void list_destroy(t_stack_list *numbers)
 {
     t_stack_list *aux;
