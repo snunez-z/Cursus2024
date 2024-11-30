@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:22:54 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/11/30 13:41:48 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/10/20 18:20:18 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@ static int	read_line_into_buffer(int fd, t_dstr *line)
 	char	ch;
 
 	read_result = read(fd, &ch, 1);
-	while (read_result == 1 && ch != '\n')// haya leido y que no sea el final
+	while (read_result == 1 && ch != '\n')
 	{
-		if (!dstr_append_char(line, ch)) // si ha leido añade
+		if (!dstr_append_char(line, ch))
 			return (0);
-		read_result = read(fd, &ch, 1); // con esto itera de nuevo al siguiente 
+		read_result = read(fd, &ch, 1);
 	}
-	if (read_result < 0) // si ha fallaso
+	if (read_result < 0)
 	{
 		ft_printf("Error\nError reading map file\n");
 		dstr_destroy(line);
 		return (0);
 	}
-	return (1); // retorna false 
+	return (1);
 }
 
-static t_dstr	*read_line(int fd) // lee una linea y devuelve el * a dstr, que es una linea.
+static t_dstr	*read_line(int fd)
 {
 	t_dstr	*line;
 
@@ -54,14 +54,14 @@ static t_dstr	*read_line(int fd) // lee una linea y devuelve el * a dstr, que es
 
 static t_list	*read_file(int fd)
 {
-	t_list	*rows; // las lista con cada una de las lineas
-	t_dstr	*line; // una linea
+	t_list	*rows;
+	t_dstr	*line;
 
-	rows = NULL; // inicialmente no hay ninguna
+	rows = NULL;
 	line = read_line(fd);
-	while (line != NULL && dstr_length(line) > 0) // Mientras la linea sea leible y no este vacia- que haya \n al final.
+	while (line != NULL && dstr_length(line) > 0)
 	{
-		rows = list_append(rows, line);//añade
+		rows = list_append(rows, line);
 		if (!rows)
 			return (NULL);
 		line = read_line(fd);
@@ -72,12 +72,15 @@ static t_list	*read_file(int fd)
 		return (NULL);
 	}
 	dstr_destroy(line);
-	// puede fallar al leer la linea , falla al añadir la linea
 	return (rows);
 }
 
 static int	verify_map(t_map *map)
 {
+	if (map == NULL || map->rows == NULL)
+		return (0);
+	if (!map_verify_min_size(map))
+		return (util_display_error("Map does not have the minimum size", 0));
 	if (!map_verify_square(map))
 		return (util_display_error("Map is not rectangular", 0));
 	if (!map_verify_walls(map))
@@ -94,20 +97,20 @@ t_map	*map_read(const char *file_name)
 	t_map	*map;
 	int		fd;
 
-	fd = open(file_name, O_RDONLY); //abre el fichero
+	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
 		ft_printf("Error\nUnable to open map file: %s\n", file_name);
 		return (NULL);
 	}
-	map = (t_map *)util_calloc(sizeof(t_map)); //reserva memoria para la estructura 
+	map = (t_map *)util_calloc(sizeof(t_map));
 	if (map != NULL)
-		map->rows = read_file(fd); //mete en rows la lectura de las lineas de la lista
-	close(fd); //cierra el fichero 
-	if (!verify_map(map)) //verifica que el mapa este bien
+		map->rows = read_file(fd);
+	close(fd);
+	if (!verify_map(map))
 	{
 		map_destroy(map);
 		return (NULL);
 	}
-	return (map); //retorna el mapa
+	return (map);
 }
