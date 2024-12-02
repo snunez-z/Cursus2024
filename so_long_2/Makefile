@@ -16,26 +16,21 @@ PWD = $(shell pwd)
 INC_DIR = ./inc
 SRC_DIR = ./src
 OBJ_DIR = ./obj
-LIB_DIR = ./lib
 
-LIB = ./lib
 LIBFT = ./libft
 FT_PRINTF = $(LIBFT)/ft_printf
 MINILIBX = ./minilibx
 
 CC = cc
 CFLAGS = -Werror -Wall -Wextra -I $(INC_DIR) -I $(LIBFT) -I $(FT_PRINTF) -I $(MINILIBX) -I ./inc
-LDFLAGS = -L $(LIB_DIR) -lftprintf -lft -lmlx -lX11 -lXext
+LDFLAGS = -L $(LIBFT) -L $(FT_PRINTF) -L $(MINILIBX) -lftprintf -lft -lmlx -lX11 -lXext
 
 SRC = dstr.c font.c game.c game_draw_map.c game_create.c images.c list.c main.c \
 		map.c map_at.c map_read.c map_verifications.c map_verify_walls.c map_verify_way.c \
 		util.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-all: $(LIB_DIR)/libft.a $(LIB_DIR)/libftprintf.a $(LIB_DIR)/libmlx.a $(NAME)
-
-$(LIB_DIR):
-	mkdir $(LIB_DIR)
+all: $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a $(MINILIBX)/libmlx.a $(NAME)
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
@@ -49,27 +44,16 @@ $(FT_PRINTF)/libftprintf.a:
 $(MINILIBX)/libmlx.a:
 	INCLUDE_DIR=$(PWD) make -C $(MINILIBX) all
 
-$(LIB_DIR)/libft.a: $(LIB_DIR) $(LIBFT)/libft.a
-	cp $(LIBFT)/libft.a $@
-
-$(LIB_DIR)/libftprintf.a: $(LIB_DIR) $(FT_PRINTF)/libftprintf.a
-	cp $(FT_PRINTF)/libftprintf.a $@
-
-$(LIB_DIR)/libmlx.a: $(LIB_DIR) $(MINILIBX)/libmlx.a
-	cp $(MINILIBX)/libmlx.a $@
-
 clean:
 	make -C $(LIBFT) clean
 	make -C $(FT_PRINTF) clean
 	make -C $(MINILIBX) clean
-	-rm $(LIB_DIR)/* $(OBJ_DIR)/*.o $(NAME)
-	-rmdir $(LIB_DIR)
+	-rm $(OBJ_DIR)/*.o $(NAME)
 
 fclean: clean
 	make -C $(LIBFT) fclean
 	make -C $(FT_PRINTF) fclean
 	make -C $(MINILIBX) clean
-	-rm -rf $(LIB_DIR)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
