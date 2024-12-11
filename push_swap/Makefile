@@ -13,6 +13,7 @@
 
 NAME = push_swap
 
+PDW=$(shell pwd)
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 INC_DIR = ./include
@@ -28,7 +29,7 @@ SRC = list_numbers.c \
       list_stack_push.c \
       move_count.c \
       movement_min_number.c \
-      rotate_resverse.c \
+      rotate_reverse.c \
       rotate.c \
       sort_stacks.c \
       su_atoi.c \
@@ -46,7 +47,7 @@ $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
 
 $(FT_PRINTF)/libftprintf.a:
-	$(MAKE) -C $(FT_PRINTF)
+	INCLUDE_DIR=$(PWD) $(MAKE) -C $(FT_PRINTF)
 
 clean:
 	$(MAKE) -C $(LIBFT) clean
@@ -62,5 +63,8 @@ re: fclean all
 
 $(NAME): $(OBJ_DIR) $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: all clean fclean re
