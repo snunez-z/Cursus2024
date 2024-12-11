@@ -12,10 +12,7 @@ static void	rotate (t_stack_list **stack)
     t_stack_list *last_node;
 
     if (list_size(*stack) < 2)
-	{
-		printf("Error:Stack or node is empty");
 		return ;
-	}
     first_node = *stack;
     second_node = first_node->next;
     last_node = second_node;

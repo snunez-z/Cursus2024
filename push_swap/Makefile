@@ -29,6 +29,8 @@ SRC = list_numbers.c \
       list_stack_push.c \
       move_count.c \
       movement_min_number.c \
+      movement_max_number.c \
+	  movement_numbers.c \
       rotate_reverse.c \
       rotate.c \
       sort_stacks.c \

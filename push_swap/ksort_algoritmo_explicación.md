@@ -2,12 +2,15 @@
 
 El algoritmo K-Sort es un enfoque de ordenamiento que implica dividir los elementos en pequeñas particiones o grupos, ordenarlos localmente y luego combinarlos de forma eficiente. Es útil para estructuras como pilas, donde solo tienes un conjunto limitado de operaciones disponibles.
 
-En tu caso, con las pilas y los movimientos permitidos, el K-Sort puede adaptarse para dividir los números en subconjuntos manejables, pasarlos entre las pilas (a y b) y usar estrategias específicas para ordenarlos.
+Con las pilas y los movimientos permitidos, el K-Sort puede adaptarse para dividir los números en subconjuntos manejables, pasarlos entre las pilas (a y b) y usar estrategias específicas para ordenarlos.
 
 Pasos Básicos de K-Sort
 1.- Dividir en grupos: Divide los números en k subconjuntos según algún criterio, como rangos. Por ejemplo, puedes agrupar números en bloques (0-99, 100-199, etc.).
+
 2.- Mover a b y ordenar: Usa las operaciones permitidas para pasar números de a a b en grupos y ordenarlos en b.
+
 3.- Volver a a ordenados: Devuelve los números de b a a en el orden correcto.
+
 4.- Este proceso asegura que la pila a quede completamente ordenada.
 
 __Ejemplo con Números__

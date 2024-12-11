@@ -4,12 +4,23 @@
 #include "push_swap.h"
 #include "move_count.h"
 
+static void print_list(t_stack_list *list)
+{
+	t_stack_list 	*aux;
+
+	aux = list;
+	while (aux != NULL)
+	{
+		printf("%ld ", aux->numbers);
+		aux = aux->next;
+	}
+	printf("\n");
+}
 
 int	main (int argc, char	**argv)
 {
 	int				i;
 	long			num;
-	t_stack_list 	*aux;
 	t_stack_list	*a;
 	t_stack_list	*b;
 
@@ -25,13 +36,14 @@ int	main (int argc, char	**argv)
 			list_append_front(&a, num);
 			i++;
 		}
+		printf("Antes de hacer nada: ");
+		print_list(a);
+
 		sort_stacks(&a, &b);
-		aux = a;
-		while (aux != NULL)
-		{
-			printf("%ld ", aux->numbers);
-			aux = aux->next;
-		}
+		printf("\n");
+		printf("Después del numbers: ");
+		print_list(a);
+		print_list(b);
 	}
 	printf ("\n");
 	printf("Moves = %d\n", move_count());

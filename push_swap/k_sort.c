@@ -17,20 +17,18 @@ int get_range(int value, int min, int max, int k)
 void	ksort(t_stack_list **a, t_stack_list **b)
 {
 	t_stack_list	*node;
-    int index;
-
-	index = 1;
+    
 	node = *a;
-	while (index < 10)
+	while (node->next != NULL )
 	{
-		if (node->next != NULL && get_range(node->numbers, 1, 500, 5) == 0)
+		if (get_range(node->numbers, 1, 500, 5) == 0)
 		{
-			movement_min_number(a, b);
 			sb(a,b);
+			node = node->next;
 		}
 		else
 		{
-
+			ra (a)
 		}
 		
 		node = node->next

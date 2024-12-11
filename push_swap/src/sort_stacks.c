@@ -38,7 +38,7 @@ void     sort_stacks(t_stack_list **a,t_stack_list **b)
         i = 0;
         while (i < size && is_sorted(*a) == 0)
         {
-               movement_min_number(a, b);
+               movement_numbers(a, b);
                i++;
         }
         while (i > 0)

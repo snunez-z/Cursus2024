@@ -4,62 +4,63 @@
 #include "push_swap.h"
 #include "move_count.h"
 
-static int     search_sortest_number(t_stack_list  *stack)
+static int     search_largest_number(t_stack_list  *stack)
 {
         int     size;
         int     i;
         t_stack_list    *node;
-        int     min;
-        int     pos_min;
+        int     max;
+        int     pos_max;
 
         size = list_size(stack);
         node = stack;
         i = 0;
-        min = node->numbers;
+        max = node->numbers;
         while(i < size)
         {
-                if (node->numbers <= min)
+                if (node->numbers >= max)
                 {
-                        min = node->numbers;
-                        pos_min = i;  
+                        max = node->numbers;
+                        pos_max = i;  
                 }
              
                 node = node->next;
                 i++;
         }
-        return (pos_min);
+        return (pos_max);
 } 
 
-void     movement_min_number(t_stack_list **a,t_stack_list **b)
+void     movement_max_number(t_stack_list **a,t_stack_list **b)
 {
-        int     pos_min;
+        int     pos_max;
         int     start;
         int     end;
         int     distance_end;
         int     distance_start;
-                           
-        pos_min = search_sortest_number(*a);
+                            
+        pos_max = search_largest_number(*a);
         start = 0;
         end = list_size(*a);
-        distance_end = end - pos_min;
-        distance_start = pos_min - start;
+        distance_end = end - pos_max;
+        distance_start = pos_max - start;
         if (distance_end > distance_start) 
         {
-                while(pos_min > 0)
+                while(pos_max > 0)
                 {
                         ra(a);
-                        pos_min--;
+                        pos_max--;
                 }
         }
         else 
         {
-                while (pos_min < end)
+                while (pos_max < end)
                 {
                         rra(a);
-                        pos_min++;
+                        pos_max++;
                 }
         }
         pa(a, b);
+        rb(b);
         
 }    
 
