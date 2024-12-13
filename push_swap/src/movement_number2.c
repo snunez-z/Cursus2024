@@ -54,8 +54,17 @@ static int     search_sortest_number(t_stack_list  *stack)
         }
         return (pos_min);
 } 
+static int must_swap(t_stack_list *a)
+{
+        t_stack_list    *node;
+       
+        node = a;
+        if(node->numbers > node->next->numbers)
+                return(1);
+        return(0);
+}
 
-void     movement_numbers(t_stack_list **a,t_stack_list **b)
+void     movement_number2(t_stack_list **a,t_stack_list **b)
 {
         int     pos_max;
         int     pos_min;
@@ -80,6 +89,8 @@ void     movement_numbers(t_stack_list **a,t_stack_list **b)
                 while(pos_min > 0)
                 {
                         ra (a);
+                        if(must_swap(*a) == 1)
+                                sa(*a);
                         pos_min--;
                 }
                 pa(a, b);
@@ -89,6 +100,8 @@ void     movement_numbers(t_stack_list **a,t_stack_list **b)
                 while(pos_min < end)
                 {
                         rra (a);
+                        if(must_swap(*a) == 1)
+                                sa(*a);
                         pos_min++;
                 }
                 pa (a, b);
@@ -98,6 +111,8 @@ void     movement_numbers(t_stack_list **a,t_stack_list **b)
               while(pos_max > 0)
                 {
                         ra (a);
+                        if(must_swap(*a) == 1)
+                             sa(*a);
                         pos_max--;
                 } 
                 pa (a, b);
@@ -108,6 +123,8 @@ void     movement_numbers(t_stack_list **a,t_stack_list **b)
                 while(pos_max < end)
                 {
                         rra (a);
+                        if(must_swap(*a) == 1)
+                                sa(*a);
                         pos_max++;
                 }
                 pa (a, b);
@@ -115,29 +132,4 @@ void     movement_numbers(t_stack_list **a,t_stack_list **b)
         }
 }    
 
-int	enumerate_index_nodes(t_stack_list *stack)
-{
-	int     size;
-        t_stack_list    *aux;
-        t_stack_list  iterator;
-        int     pos_ordered;
-        
-        size = list_size(stack);
-        iterator = stack;
-        while(iterator != NULL)
-        {
-                aux = stack;
-                pos_ordered = 0;
-                while(aux!= NULL)
-                {
-                        if (aux->numbers < iterator->numbers)
-                                pos_ordered++;
-                        aux = aux->next;
-                }
-                iterator->index = pos_ordered;
-                iterator = iterator->next;
-        }
-}
-        
-        
-     
+

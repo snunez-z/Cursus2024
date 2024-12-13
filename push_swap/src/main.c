@@ -17,6 +17,17 @@ static void print_list(t_stack_list *list)
 	printf("\n");
 }
 
+static int is_num_repeated(t_stack_list *a, int num)
+{
+	while(a != NULL)
+	{
+		if( a->numbers == num)
+			return(1);
+		a = a->next;
+	}
+	return (0);
+}
+
 int	main (int argc, char	**argv)
 {
 	int				i;
@@ -33,13 +44,20 @@ int	main (int argc, char	**argv)
 		while (i < argc)
 		{
 			num = su_atoi(argv[i]);
+			if(is_num_repeated(a, num)!= 0)
+			{
+				list_destroy(a);
+				list_destroy(b);
+				printf("Error\n");
+				return(-1);
+			}
 			list_append_front(&a, num);
 			i++;
 		}
 		printf("Antes de hacer nada: ");
 		print_list(a);
 
-		sort_stacks(&a, &b);
+		sort_stacks2(&a, &b);
 		printf("\n");
 		printf("Después del numbers: ");
 		print_list(a);

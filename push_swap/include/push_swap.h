@@ -7,7 +7,8 @@
 typedef struct s_stack_list
 {
     long	numbers;       
-    struct s_stack_list *next; 
+    struct s_stack_list *next;
+    int index; 
 } t_stack_list;
 
 t_stack_list	*list_append_front(t_stack_list **numbers, long number);
@@ -31,8 +32,11 @@ void sa(t_stack_list *a);
 void sb(t_stack_list *b);
 
 void    movement_min_number(t_stack_list **a, t_stack_list **b);
-void     movement_max_number(t_stack_list **a,t_stack_list **b);
-void     movement_numbers(t_stack_list **a,t_stack_list **b);
-void     sort_stacks(t_stack_list **a,t_stack_list **b);
+void    movement_max_number(t_stack_list **a,t_stack_list **b);
+void    movement_numbers(t_stack_list **a,t_stack_list **b);
+void    movement_number2(t_stack_list **a,t_stack_list **b);
+void    sort_stacks(t_stack_list **a,t_stack_list **b);
+void    sort_stacks2(t_stack_list **a,t_stack_list **b);
+
 #endif
 

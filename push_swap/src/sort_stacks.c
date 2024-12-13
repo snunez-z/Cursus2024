@@ -29,6 +29,20 @@ static  int is_sorted(t_stack_list *stack)
         return (node == NULL && number < stack->numbers);
 }
 
+static void print_list(t_stack_list *list)
+{
+	t_stack_list 	*aux;
+
+	aux = list;
+	while (aux != NULL)
+	{
+		printf("%ld ", aux->numbers);
+		aux = aux->next;
+	}
+	printf("\n");
+}
+
+
 void     sort_stacks(t_stack_list **a,t_stack_list **b)
 {
         int     size;
@@ -38,12 +52,21 @@ void     sort_stacks(t_stack_list **a,t_stack_list **b)
         i = 0;
         while (i < size && is_sorted(*a) == 0)
         {
-               movement_numbers(a, b);
+               movement_number2(a, b);
                i++;
         }
+        printf("Después de movement: %d %d\n", i, is_sorted(*a));
+        printf("a: ");
+        print_list(*a);
+        printf("b: ");
+        print_list(*b);
+
         while (i > 0)
         {
               pb(b, a);
               i--;
         }     
+        printf("Después de mover todo a a\n");
+        printf("a: ");
+        print_list(*a);
 }
