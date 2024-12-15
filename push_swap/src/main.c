@@ -58,8 +58,8 @@ int	main (int argc, char	**argv)
 		print_list(a);
         
 		enumerate_index_nodes(a);
-		k_sort1(*a, *b);
-		k_sort2(*a, *b);
+		k_sort1(&a, &b);
+		k_sort2(&a, &b);
 		printf("\n");
 		printf("Después del sort: ");
 		print_list(a);

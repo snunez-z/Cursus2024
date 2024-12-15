@@ -30,7 +30,6 @@ SRC = list_numbers.c \
       move_count.c \
       movement_min_number.c \
       movement_max_numbers.c \
-	  movement_numbers.c \
 	  movement_number2.c \
 	  movement_numbers_3.c \
       rotate_reverse.c \
