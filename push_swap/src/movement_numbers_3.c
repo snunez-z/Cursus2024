@@ -43,17 +43,28 @@ void	k_sort1(t_stack_list **a, t_stack_list **b)
 	int     size;
         int     sqrt;
         int     b_nodes;
+        int     i_smallest;
 
         size = list_size (*a); 
         sqrt = sqrt_num(size); 
         b_nodes = 0;
+         i_smallest = 0;
         while(*a != NULL)//Mientras no este vacia
         {
-                if((*a)->index <= (b_nodes + sqrt))
+                if((*a)->index == i_smallest)
+                {
                         pa(a, b);
+                        rb(b);
+                        b_nodes++;
+                        i_smallest++;
+                }
+                else if((*a)->index < (b_nodes + sqrt))
+                {
+                        pa(a, b);
+                        b_nodes++;
+                }
                 else
                         ra(a);
-                b_nodes++;
         }
 }
 
