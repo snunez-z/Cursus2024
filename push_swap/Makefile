@@ -32,6 +32,7 @@ SRC = list_numbers.c \
       movement_max_numbers.c \
 	  movement_number2.c \
 	  movement_numbers_3.c \
+	  sort_few_numbers.c \
       rotate_reverse.c \
       rotate.c \
       sort_stacks.c \

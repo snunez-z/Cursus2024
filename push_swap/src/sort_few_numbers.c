@@ -28,8 +28,7 @@ static  int is_sorted(t_stack_list *stack)
         }
         return (node == NULL && number < stack->numbers);
 }
-
-static void print_list(t_stack_list *list)
+/*static void print_list(t_stack_list *list)
 {
 	t_stack_list 	*aux;
 
@@ -40,7 +39,7 @@ static void print_list(t_stack_list *list)
 		aux = aux->next;
 	}
 	printf("\n");
-}
+}*/
 static int     search_sortest_number(t_stack_list  *stack)
 {
         int     size;
@@ -67,55 +66,56 @@ static int     search_sortest_number(t_stack_list  *stack)
         return (pos_min);
 } 
 
-static int     search_largest_number(t_stack_list  *stack)
+void     move_min_number(t_stack_list **a,t_stack_list **b)
 {
-        int     size;
-        int     i;
-        t_stack_list    *node;
-        int     max;
-        int     pos_max;
-
-        size = list_size(stack);
-        node = stack;
-        i = 0;
-        max = node->numbers;
-        while(i < size)
+        int     pos_min;
+        int     start;
+        int     end;
+        int     distance_end;
+        int     distance_start;
+                           
+        pos_min = search_sortest_number(*a);
+        start = 0;
+        end = list_size(*a);
+        distance_end = end - pos_min;
+        distance_start = pos_min - start;
+        if (distance_end > distance_start) 
         {
-                if (node->numbers >= max)
+                while(pos_min > 0)
                 {
-                        max = node->numbers;
-                        pos_max = i;  
+                        ra(a);
+                        pos_min--;
                 }
-             
-                node = node->next;
-                i++;
         }
-        return (pos_max);
-} 
+        else 
+        {
+                while (pos_min < end)
+                {
+                        rra(a);
+                        pos_min++;
+                }
+        }
+        pa(a, b);
+        
+}    
 
-void     sort_stacks2(t_stack_list **a,t_stack_list **b)
+void     sort_few_numbers (t_stack_list **a,t_stack_list **b)
 {
         t_stack_list *node;
-       
-        while (is_sorted(*a) == 0)
+        
+        node = *a;
+        if (is_sorted (*a) == 0)
         {
-               if(search_largest_number (*a) == 0)
-               {
-                        pa(a, b);
-                        rrb(b);
-               }
-               node = *a;
-               if (node->numbers > node->next->numbers)
-                        sa(*a);
-               if(search_sortest_number (*a) == 0)
-                        pa(a, b);
-               ra(a);
+                 while(*a != NULL)
+                 {
+                        move_min_number (a, b);
+                        node = node->next;
+                 }
+                 node = *b;
+                 while (*b != NULL)
+                 {
+                        pb(b,a);
+                        node = node->next;
+                 }
         }
-        printf("Después de movement: %d\n", is_sorted(*a));
-        printf("a: ");
-        print_list(*a);
-        printf("b: ");
-        print_list(*b);
 }
-
-       

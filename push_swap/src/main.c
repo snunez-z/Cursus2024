@@ -57,17 +57,22 @@ int	main (int argc, char	**argv)
 		printf("Antes de hacer nada: ");
 		print_list(a);
         
-		enumerate_index_nodes(a);
-		k_sort1(&a, &b);
-		k_sort2(&a, &b);
-		printf("\n");
-		printf("Después del sort: ");
-		print_list(a);
-		print_list(b);
+		if (a->numbers < 10)
+			sort_few_numbers (&a, &b);
+		else 
+		{
+			enumerate_index_nodes(a);
+			k_sort1(&a, &b);
+			k_sort2(&a, &b);
+			printf("\n");
+			printf("Después del sort: ");
+			print_list(a);
+			print_list(b);
+		}
+		printf ("\n");
+		printf("Moves = %d\n", move_count());
+		list_destroy(a);
+		list_destroy(b);
+		return (0);
 	}
-	printf ("\n");
-	printf("Moves = %d\n", move_count());
-	list_destroy(a);
-	list_destroy(b);
-	return (0);
 }

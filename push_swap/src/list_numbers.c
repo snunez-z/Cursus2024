@@ -79,34 +79,3 @@ size_t list_size(t_stack_list *numbers)
     }
     return size;
 }
-/*
-size_t *list_get(t_stack_list *numbers, size_t pos)
-{
-    while (numbers != NULL && pos > 0)
-	{
-        numbers = numbers->next;
-        pos--;
-    }
-    if (!numbers) return NULL;
-    return numbers->numbers;  // Retorna el puntero al número en la posición
-}
-
-int main()
-{
-    t_stack_list *list;
-	
-	list = NULL;
-
-    list = list_append(&list, 10);
-    list = list_append(&list, 20);
-    list = list_append(&list, 30);
-
-     printf("Tamaño de la lista: %zu\n", list_size(list));
-
-    size_t *number = list_get(list, 1);
-    if (number)
-	    printf("Número en la posición 1: %zu\n", *number);
-    list_destroy(list);
-    return (0);
-}
-*/
