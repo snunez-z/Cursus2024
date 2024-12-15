@@ -28,7 +28,7 @@ int	enumerate_index_nodes(t_stack_list *stack)
         }
 }
 
- int	sqrt_num(int number)
+ static	sqrt_num(int number)
 {
 	int	i;
 
@@ -40,7 +40,7 @@ int	enumerate_index_nodes(t_stack_list *stack)
 	return (i);
 }       
         
-int	k_sort1(t_stack_list **a, t_stack **b)
+int	k_sort1(t_stack_list **a, t_stack_list **b)
 {
 	int     size;
         int     sqrt;
@@ -58,13 +58,58 @@ int	k_sort1(t_stack_list **a, t_stack **b)
         }
 }
 
+static int	search_max_num(t_stack_list *stack)
+{
+	int     pos_max;
+        t_stack_list    *node;
+        int size;
+
+        size =list_size (stack);
+        pos_max = 0;
+        node = stack;
+        while (pos_max <= (size-1))
+        {
+                if(node->index ==(size -1))
+                        return(pos_max);
+                node = node->next;
+                pos_max ++;   
+        }
+        return(0);
+}
+
 int	k_sort2(t_stack_list **a, t_stack **b)
 {
 	int     pos_max;
-        
-        pos_max = b->index
+        int     start;
+        int     end;
+        int     distance_end;
+        int     distance_start;
+                            
+        pos_max = search_max_num(b);
+        start = 0;
+        end = list_size(*b);
+        distance_end = end - pos_max;
+        distance_start = pos_max - start;
+        if (distance_end >= distance_start) 
+        {
+                while(pos_max > 0)
+                {
+                        ra(a);
+                        pos_max--;
+                }
+        }
+        else 
+        {
+                while (pos_max < end)
+                {
+                        rra(a);
+                        pos_max++;
+                }
+        }
+        pa(a, b);
+        rb(b);
+ 	return (0);
 }
-
 
      
         

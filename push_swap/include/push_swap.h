@@ -35,6 +35,7 @@ void    movement_min_number(t_stack_list **a, t_stack_list **b);
 void    movement_max_number(t_stack_list **a,t_stack_list **b);
 void    movement_numbers(t_stack_list **a,t_stack_list **b);
 void    movement_number2(t_stack_list **a,t_stack_list **b);
+void    movement_number_3(t_stack_list **a,t_stack_list **b);
 void    sort_stacks(t_stack_list **a,t_stack_list **b);
 void    sort_stacks2(t_stack_list **a,t_stack_list **b);
 
