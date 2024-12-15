@@ -115,15 +115,13 @@ void     movement_numbers(t_stack_list **a,t_stack_list **b)
         }
 }    
 
-int	enumerate_index_nodes(t_stack_list *stack)
+void	enumerate_index_nodes(t_stack_list *stack)
 {
-	int     size;
-        t_stack_list    *aux;
+	t_stack_list    *aux;
         t_stack_list  *iterator;
         int     pos_ordered;
         
-        size = list_size(stack);
-        iterator = *stack;
+        iterator = stack;
         while(iterator != NULL)
         {
                 aux = stack;

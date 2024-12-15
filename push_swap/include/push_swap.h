@@ -35,9 +35,9 @@ void    movement_min_number(t_stack_list **a, t_stack_list **b);
 void    movement_max_number(t_stack_list **a,t_stack_list **b);
 void    movement_numbers(t_stack_list **a,t_stack_list **b);
 void    movement_number2(t_stack_list **a,t_stack_list **b);
-int	    enumerate_index_nodes(t_stack_list *stack);
+void    enumerate_index_nodes(t_stack_list *stack);
 void	    k_sort1(t_stack_list **a, t_stack_list **b);
-void	    k_sort2(t_stack_list **a, t_stack **b)
+void	    k_sort2(t_stack_list **a, t_stack_list **b);
 
 void    sort_stacks(t_stack_list **a,t_stack_list **b);
 void    sort_stacks2(t_stack_list **a,t_stack_list **b);
