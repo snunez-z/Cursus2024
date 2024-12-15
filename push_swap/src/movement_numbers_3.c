@@ -8,7 +8,7 @@ int	enumerate_index_nodes(t_stack_list *stack)
 {
 	int     size;
         t_stack_list    *aux;
-        t_stack_list  iterator;
+        t_stack_list  *iterator;
         int     pos_ordered;
         
         size = list_size(stack);
@@ -40,7 +40,7 @@ int	enumerate_index_nodes(t_stack_list *stack)
 	return (i);
 }       
         
-int	k_sort1(t_stack_list **a, t_stack_list **b)
+void	k_sort1(t_stack_list **a, t_stack_list **b)
 {
 	int     size;
         int     sqrt;
@@ -49,7 +49,7 @@ int	k_sort1(t_stack_list **a, t_stack_list **b)
         size = list_size (stack); 
         sqrt = sqrt_num(size); 
         b_nodes = 0;
-        while(stack != NULL)//Mientras no este vacia
+        while(a != NULL)//Mientras no este vacia
         {
                 if(stack->index <= (b_nodes + sqrt))
                         pa(a, b);
@@ -77,7 +77,7 @@ static int	search_max_num(t_stack_list *stack)
         return(0);
 }
 
-int	k_sort2(t_stack_list **a, t_stack **b)
+void	k_sort2(t_stack_list **a, t_stack **b)
 {
 	int     pos_max;
         int     start;
@@ -90,25 +90,27 @@ int	k_sort2(t_stack_list **a, t_stack **b)
         end = list_size(*b);
         distance_end = end - pos_max;
         distance_start = pos_max - start;
-        if (distance_end >= distance_start) 
+        while( b!= NULL)// este vacia la pila
         {
-                while(pos_max > 0)
+                if (distance_end >= distance_start) 
                 {
-                        ra(a);
+                        while(pos_max > 0)
+                        {
+                        rb(b);
                         pos_max--;
+                         }       
                 }
-        }
-        else 
-        {
-                while (pos_max < end)
+                else 
                 {
-                        rra(a);
-                        pos_max++;
+                        while (pos_max < end)
+                        {
+                                rrab(b);
+                                pos_max++;
+                        }
                 }
+                pa(b, a);
         }
-        pa(a, b);
-        rb(b);
- 	return (0);
+       	return (0);
 }
 
      

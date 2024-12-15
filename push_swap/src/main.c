@@ -56,10 +56,12 @@ int	main (int argc, char	**argv)
 		}
 		printf("Antes de hacer nada: ");
 		print_list(a);
-
-		sort_stacks2(&a, &b);
+        
+		enumerate_index_nodes(a);
+		k_sort1(*a, *b);
+		k_sort2(*a, *b);
 		printf("\n");
-		printf("Después del numbers: ");
+		printf("Después del sort: ");
 		print_list(a);
 		print_list(b);
 	}
