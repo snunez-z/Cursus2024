@@ -4,14 +4,12 @@
 #include "push_swap.h"
 #include "move_count.h"
 
-int	enumerate_index_nodes(t_stack_list *stack)
+void	enumerate_index_nodes(t_stack_list *stack)
 {
-	int     size;
         t_stack_list    *aux;
         t_stack_list  *iterator;
         int     pos_ordered;
         
-        size = list_size(stack);
         iterator = stack;
         while(iterator != NULL)
         {
@@ -28,7 +26,7 @@ int	enumerate_index_nodes(t_stack_list *stack)
         }
 }
 
- static	sqrt_num(int number)
+static	int sqrt_num(int number)
 {
 	int	i;
 
@@ -46,12 +44,12 @@ void	k_sort1(t_stack_list **a, t_stack_list **b)
         int     sqrt;
         int     b_nodes;
 
-        size = list_size (stack); 
+        size = list_size (*a); 
         sqrt = sqrt_num(size); 
         b_nodes = 0;
-        while(a != NULL)//Mientras no este vacia
+        while(*a != NULL)//Mientras no este vacia
         {
-                if(stack->index <= (b_nodes + sqrt))
+                if((*a)->index <= (b_nodes + sqrt))
                         pa(a, b);
                 else
                         ra(a);
@@ -77,7 +75,7 @@ static int	search_max_num(t_stack_list *stack)
         return(0);
 }
 
-void	k_sort2(t_stack_list **a, t_stack **b)
+void	k_sort2(t_stack_list **a, t_stack_list **b)
 {
 	int     pos_max;
         int     start;
@@ -85,7 +83,7 @@ void	k_sort2(t_stack_list **a, t_stack **b)
         int     distance_end;
         int     distance_start;
                             
-        pos_max = search_max_num(b);
+        pos_max = search_max_num(*b);
         start = 0;
         end = list_size(*b);
         distance_end = end - pos_max;
@@ -104,13 +102,12 @@ void	k_sort2(t_stack_list **a, t_stack **b)
                 {
                         while (pos_max < end)
                         {
-                                rrab(b);
+                                rrb(b);
                                 pos_max++;
                         }
                 }
                 pa(b, a);
         }
-       	return (0);
 }
 
      
