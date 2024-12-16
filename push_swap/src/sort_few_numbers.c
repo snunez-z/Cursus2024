@@ -66,7 +66,7 @@ static int     search_sortest_number(t_stack_list  *stack)
         return (pos_min);
 } 
 
-void     move_min_number(t_stack_list **a,t_stack_list **b)
+void     move_min_number(t_stack_list **a)
 {
         int     pos_min;
         int     start;
@@ -95,27 +95,16 @@ void     move_min_number(t_stack_list **a,t_stack_list **b)
                         pos_min++;
                 }
         }
-        pa(a, b);
-        
-}    
+ }    
 
 void     sort_few_numbers (t_stack_list **a,t_stack_list **b)
 {
-        t_stack_list *node;
-        
-        node = *a;
-        if (is_sorted (*a) == 0)
+        while(*a != NULL && is_sorted (*a) == 0)
         {
-                 while(*a != NULL)
-                 {
-                        move_min_number (a, b);
-                        node = node->next;
-                 }
-                 node = *b;
-                 while (*b != NULL)
-                 {
-                        pb(b,a);
-                        node = node->next;
-                 }
+                move_min_number (a);
+                pa(a, b);
         }
+        move_min_number (a);
+        while (*b != NULL)
+                pb(b,a);
 }
