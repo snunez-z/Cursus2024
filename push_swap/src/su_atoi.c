@@ -9,6 +9,8 @@
 /*   Updated: 2024/12/17 10:31:32 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+// En limits.h están las constantes INT_MAX e INT_MIN
+#include <limits.h>
 
 static int	ft_isspace(const char *str)
 {
@@ -19,18 +21,29 @@ static int	ft_isspace(const char *str)
 		return (0);
 }
 
-static int	convert_to_int(const char	*str)
+static long	convert_to_int(const char	*str, int *p_error)
 {
 	char	digit;
-	int		value;
+	long		value;
 
 	value = 0;
-	while (*str >= '0' && *str <= '9')
+	while (*str >= '0' && *str <= '9' && value <= INT_MAX)
 	{
 		digit = (*str - '0');
 		value = (value * 10) + digit;
 		str++;
 	}
+
+	// se puede haber salido del bucle porque:
+	// * El número es más grande que INT_MAX => tenemos que poner "true" en p_error
+	if (value > INT_MAX)
+		*p_error = 1;
+	// * Hemos encontrado un carácter que no es un dígito => tenemos que poner "true" en p_error
+	else if (*str != '\0' && (*str < '0' || *str > '9'))
+		*p_error = 1;
+	// * En caso contrario... pues todo ha ido bien => tenemos que poner "false" en p_error
+	else
+		*p_error = 0;
 	return (value);
 }
 
@@ -52,7 +65,7 @@ int	su_atoi(const char	*str, int *p_error)
 			is_negative = 0;
 		str++;
 	}
-	value = convert_to_int (str);
+	value = convert_to_int (str, p_error);
 	if (is_negative)
 		value = (value * -1);
 	return (value);
