@@ -6,11 +6,12 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:51:46 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 09:15:35 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:52:10 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
+
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include "push_swap.h"
 #include "move_count.h"
@@ -43,24 +44,24 @@ int	main (int argc, char	**argv)
 {
 	int				i;
 	long			num;
+	int				atoi_error;	
 	t_stack_list	*a;
 	t_stack_list	*b;
 
-		
-	if (argc > 2 )
+    if(argc > 2)
 	{
 		i = 1;
 		a = NULL;
 		b = NULL;
 		while (i < argc)
 		{
-			num = su_atoi(argv[i]);
-			if(is_num_repeated(a, num)!= 0)
+			num = su_atoi(argv[i], &atoi_error);
+			if (atoi_error == 1 || is_num_repeated (a, num)!= 0 )
 			{
-				list_destroy(a);
-				list_destroy(b);
+				list_destroy (a);
+				list_destroy (b);
 				printf("Error\n");
-				return(-1);
+				return (-1);
 			}
 			list_append_front(&a, num);
 			i++;
@@ -76,7 +77,7 @@ int	main (int argc, char	**argv)
 			k_sort1(&a, &b);
 			k_sort2(&a, &b);
 			printf("\n");
-			printf("Después del sort: ");
+			printf("Después del ksort: ");
 			print_list(a);
 			print_list(b);
 		}

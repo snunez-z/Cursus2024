@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:46:37 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 08:46:54 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/17 12:57:14 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_stack_list	*list_append_front(t_stack_list **numbers, long number);
 t_stack_list	*list_append_back(t_stack_list **numbers, long number);
 void 		list_destroy(t_stack_list *numbers);
 size_t 		list_size(t_stack_list *numbers);
-int		su_atoi(const char *str);
+int	su_atoi(const char	*str, int *p_error);
 
 // Allowed movements
 void	rr(t_stack_list **a, t_stack_list **b);

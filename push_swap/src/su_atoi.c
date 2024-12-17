@@ -6,11 +6,13 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:54:00 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 10:31:32 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:34:09 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-// En limits.h están las constantes INT_MAX e INT_MIN
+
 #include <limits.h>
+#include <stdio.h>
+#include "push_swap.h"
 
 static int	ft_isspace(const char *str)
 {
@@ -46,16 +48,13 @@ static long	convert_to_int(const char	*str, int *p_error)
 		*p_error = 0;
 	return (value);
 }
-
-int	su_atoi(const char	*str, int *p_error)
+int su_atoi(const char *str, int *p_error)
 {
 	long    value;
 	char	is_negative;		
 
 	while (ft_isspace(str))
-	{
 		str++;
-	}
 	is_negative = 0;
 	if (*str == '+' || *str == '-')
 	{
@@ -66,7 +65,18 @@ int	su_atoi(const char	*str, int *p_error)
 		str++;
 	}
 	value = convert_to_int (str, p_error);
-	if (is_negative)
-		value = (value * -1);
+	if(*p_error == 1)
+		return (0);
+	else if (is_negative)
+	{
+		if (value < INT_MIN)
+		{
+			*p_error = 1;
+			return (0);
+		}
+		else
+			value = (value * -1);
+	}
 	return (value);
 }
+
