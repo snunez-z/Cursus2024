@@ -29,19 +29,16 @@ static long	convert_to_int(const char	*str, int *p_error)
 	long		value;
 
 	value = 0;
-	while (*str >= '0' && *str <= '9' && value <= INT_MAX)
+	while (*str >= '0' && *str <= '9' && value <= (INT_MAX + 1))
 	{
 		digit = (*str - '0');
 		value = (value * 10) + digit;
 		str++;
 	}
 
-	// se puede haber salido del bucle porque:
-	// * El número es más grande que INT_MAX => tenemos que poner "true" en p_error
-	if (value > INT_MAX)
-		*p_error = 1;
-	// * Hemos encontrado un carácter que no es un dígito => tenemos que poner "true" en p_error
-	else if (*str != '\0' && (*str < '0' || *str > '9'))
+	// * Hemos salido antes de llegar al final del número. Eso es que nos hemos encontrado un
+	// carácter que no es un dígito o nos hemos pasado de INT_MAX + 1
+	if (*str != '\0')
 		*p_error = 1;
 	// * En caso contrario... pues todo ha ido bien => tenemos que poner "false" en p_error
 	else
@@ -67,16 +64,10 @@ int su_atoi(const char *str, int *p_error)
 	value = convert_to_int (str, p_error);
 	if(*p_error == 1)
 		return (0);
-	else if (is_negative)
-	{
-		if (value < INT_MIN)
-		{
-			*p_error = 1;
-			return (0);
-		}
-		else
-			value = (value * -1);
-	}
+	if (is_negative)
+		value = (value * -1);
+	if (value < INT_MIN || value > INT_MAX)
+		*p_error = 1;
 	return (value);
 }
 
