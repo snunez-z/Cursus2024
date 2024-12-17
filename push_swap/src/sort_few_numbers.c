@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_few_numbers.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 09:08:57 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/12/17 09:09:00 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "push_swap.h"
@@ -28,18 +40,6 @@ static  int is_sorted(t_stack_list *stack)
         }
         return (node == NULL && number < stack->numbers);
 }
-/*static void print_list(t_stack_list *list)
-{
-	t_stack_list 	*aux;
-
-	aux = list;
-	while (aux != NULL)
-	{
-		printf("%ld ", aux->numbers);
-		aux = aux->next;
-	}
-	printf("\n");
-}*/
 static int     search_sortest_number(t_stack_list  *stack)
 {
         int     size;

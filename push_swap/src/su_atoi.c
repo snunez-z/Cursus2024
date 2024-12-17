@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   su_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 08:54:00 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/12/17 10:31:32 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 static int	ft_isspace(const char *str)
 {
@@ -24,9 +34,9 @@ static int	convert_to_int(const char	*str)
 	return (value);
 }
 
-int	su_atoi(const char	*str)
+int	su_atoi(const char	*str, int *p_error)
 {
-	int		value;
+	long    value;
 	char	is_negative;		
 
 	while (ft_isspace(str))

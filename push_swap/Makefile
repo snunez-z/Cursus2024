@@ -6,10 +6,9 @@
 #    By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 10:47:03 by snunez-z          #+#    #+#              #
-#    Updated: 2024/12/10 12:00:14 by snunez-z         ###   ########.fr        #
+#    Updated: 2024/12/17 09:26:32 by snunez-z         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = push_swap
 
@@ -28,15 +27,10 @@ LDFLAGS = -L $(LIBFT) -lft -L $(FT_PRINTF) -lftprintf
 SRC = list_numbers.c \
       list_stack_push.c \
       move_count.c \
-      movement_min_number.c \
-      movement_max_numbers.c \
-	  movement_number2.c \
-	  movement_numbers_3.c \
-	  sort_few_numbers.c \
+      sort_few_numbers.c \
+      k_sort.c \
       rotate_reverse.c \
       rotate.c \
-      sort_stacks.c \
-	  sort_stacks2.c \
       su_atoi.c \
       swap.c \
       main.c
@@ -55,6 +49,7 @@ $(FT_PRINTF)/libftprintf.a:
 	INCLUDE_DIR=$(PWD) $(MAKE) -C $(FT_PRINTF)
 
 clean:
+
 	$(MAKE) -C $(LIBFT) clean
 	$(MAKE) -C $(FT_PRINTF) clean
 	rm -f $(OBJ)

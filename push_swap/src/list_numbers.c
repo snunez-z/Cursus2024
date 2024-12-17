@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_numbers.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 09:07:41 by snunez-z          #+#    #+#             */
+/*   Updated: 2024/12/17 09:07:46 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "push_swap.h"
@@ -15,7 +27,6 @@ static t_stack_list *create_node(long number)
     node->next = NULL;
     return (node);
 }
-
 t_stack_list *list_append_front(t_stack_list **numbers, long number)
  {
     t_stack_list *new_node;
