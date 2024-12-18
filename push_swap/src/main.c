@@ -41,6 +41,19 @@ static int is_num_repeated(t_stack_list *a, int num)
 	return (0);
 }
 
+static void free_split(char **split)
+{
+	int index;
+
+	index = 0;
+	while(split[index] != NULL)
+	{
+		free(split[index]);
+		index++;
+	}
+	free(split);
+}
+
 static int parse_argv(char *argv, t_stack_list **stack)
 {
 	char **split;
@@ -49,6 +62,9 @@ static int parse_argv(char *argv, t_stack_list **stack)
 	int	atoi_error;
 
 	split = ft_split(argv, ' ');
+	if (split == NULL)
+		return (0);
+
 	index = 0;
 	while (split[index] != NULL)
 	{
@@ -56,9 +72,16 @@ static int parse_argv(char *argv, t_stack_list **stack)
 		if (atoi_error == 1 || is_num_repeated (*stack, num) != 0)
 			return (0);
 
-		list_append_front(stack, num);
+		if (list_append_front(stack, num) == NULL)
+		{
+			free_split(split);
+			// el list_destroy lo hace el "main", no tenemos que hacerlo nosotros aqui
+			return (0);
+		}
 		index++;
 	}
+
+	free_split(split);
 	return (1);
 }
 
