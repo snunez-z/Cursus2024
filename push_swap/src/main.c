@@ -42,10 +42,11 @@ static int is_num_repeated(t_stack_list *a, int num)
 
 static int parse_argv(char *argv, t_stack_list **stack)
 {
+	long num;
 	int	atoi_error;
 
-	num = su_atoi(argv[i], &atoi_error);
-	if (atoi_error == 1 || is_num_repeated (a, num) != 0)
+	num = su_atoi(argv, &atoi_error);
+	if (atoi_error == 1 || is_num_repeated (*stack, num) != 0)
 		return (0);
 
 	list_append_front(stack, num);
@@ -55,7 +56,6 @@ static int parse_argv(char *argv, t_stack_list **stack)
 int	main (int argc, char	**argv)
 {
 	int				i;
-	long			num;
 	t_stack_list	*a;
 	t_stack_list	*b;
 
