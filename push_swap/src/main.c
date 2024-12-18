@@ -69,7 +69,7 @@ int	main (int argc, char	**argv)
 		printf("Antes de hacer nada: ");
 		print_list(a);
         
-		if (a->numbers < 10)
+		if (list_size (a) < 10)
 			sort_few_numbers (&a, &b);
 		else 
 		{

@@ -29,9 +29,9 @@ static long	convert_to_int(const char	*str, int *p_error)
 	long		value;
 
 	value = 0;
-	while (*str >= '0' && *str <= '9' && value <= (INT_MAX + 1))
+	while (*str >= '0' && *str <= '9' && value <= ((long)INT_MAX + 1))
 	{
-		digit = (*str - '0');
+		digit = (*str - '0'); 
 		value = (value * 10) + digit;
 		str++;
 	}
