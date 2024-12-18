@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include "libft.h"
 #include "push_swap.h"
 #include "move_count.h"
 
@@ -42,14 +43,22 @@ static int is_num_repeated(t_stack_list *a, int num)
 
 static int parse_argv(char *argv, t_stack_list **stack)
 {
+	char **split;
+	int index;
 	long num;
 	int	atoi_error;
 
-	num = su_atoi(argv, &atoi_error);
-	if (atoi_error == 1 || is_num_repeated (*stack, num) != 0)
-		return (0);
+	split = ft_split(argv, ' ');
+	index = 0;
+	while (split[index] != NULL)
+	{
+		num = su_atoi(split[index], &atoi_error);
+		if (atoi_error == 1 || is_num_repeated (*stack, num) != 0)
+			return (0);
 
-	list_append_front(stack, num);
+		list_append_front(stack, num);
+		index++;
+	}
 	return (1);
 }
 
