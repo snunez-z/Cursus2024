@@ -40,11 +40,22 @@ static int is_num_repeated(t_stack_list *a, int num)
 	return (0);
 }
 
+static int parse_argv(char *argv, t_stack_list **stack)
+{
+	int	atoi_error;
+
+	num = su_atoi(argv[i], &atoi_error);
+	if (atoi_error == 1 || is_num_repeated (a, num) != 0)
+		return (0);
+
+	list_append_front(stack, num);
+	return (1);
+}
+
 int	main (int argc, char	**argv)
 {
 	int				i;
 	long			num;
-	int				atoi_error;	
 	t_stack_list	*a;
 	t_stack_list	*b;
 
@@ -55,15 +66,13 @@ int	main (int argc, char	**argv)
 		b = NULL;
 		while (i < argc)
 		{
-			num = su_atoi(argv[i], &atoi_error);
-			if (atoi_error == 1 || is_num_repeated (a, num)!= 0 )
+			if (parse_argv(argv[i], &a) == 0)
 			{
 				list_destroy (a);
 				list_destroy (b);
 				printf("Error\n");
 				return (-1);
 			}
-			list_append_front(&a, num);
 			i++;
 		}
 		printf("Antes de hacer nada: ");
