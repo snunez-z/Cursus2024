@@ -6,12 +6,11 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:54:00 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 15:34:09 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:36:13 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
-#include <stdio.h>
 #include "push_swap.h"
 
 static int	ft_isspace(const char *str)
@@ -28,6 +27,11 @@ static long	convert_to_int(const char	*str, int *p_error)
 	char	digit;
 	long		value;
 
+	if (*str == '\0')
+	{
+		*p_error = 1;
+		return (0);
+	}
 	value = 0;
 	while (*str >= '0' && *str <= '9' && value <= ((long)INT_MAX + 1))
 	{
@@ -40,6 +44,7 @@ static long	convert_to_int(const char	*str, int *p_error)
 	// carácter que no es un dígito o nos hemos pasado de INT_MAX + 1
 	if (*str != '\0')
 		*p_error = 1;
+		
 	// * En caso contrario... pues todo ha ido bien => tenemos que poner "false" en p_error
 	else
 		*p_error = 0;

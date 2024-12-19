@@ -6,16 +6,14 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:53:20 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 09:05:35 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:23:39 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include "push_swap.h"
 #include "move_count.h"
-
 
 static void	rotate (t_stack_list **stack)
 {
@@ -40,20 +38,20 @@ void	rr(t_stack_list **a, t_stack_list **b)
 	rotate(a);
 	rotate(b);
 	write(1, "rr\n", 3);
-    move_inc();
+	move_inc();
 }
 
 void	ra(t_stack_list **a)
 {
 	rotate(a);
 	write(1, "ra\n", 3);
-    move_inc();
+	move_inc();
 }
 
 void	rb(t_stack_list **b)
 {
 	rotate(b);
 	write(1, "rb\n", 3);
-    move_inc();
+	move_inc();
 }
 

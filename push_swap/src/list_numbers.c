@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   list_numbers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:07:41 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 09:07:46 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:26:08 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "push_swap.h"
 
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   list_stack_push.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:50:31 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 08:50:40 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:23:39 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "ft_printf.h"
 #include "push_swap.h"
 #include "move_count.h"
 
@@ -24,11 +24,11 @@ static void list_stack_push(long	num, t_stack_list **stack)
 static long	list_stack_pop(t_stack_list	**stack)
 {
 	t_stack_list	*first_node;
-	long			top_node_content;	
-
+	long			top_node_content;
+	
 	if (*stack == NULL)
 	{
-		printf("Error:Stack is empty");
+		ft_printf("Error:Stack is empty");
 		return (-1);
 	}
 	first_node = *stack;

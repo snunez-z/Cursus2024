@@ -6,14 +6,13 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:51:46 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 13:52:10 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:41:11 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include "libft.h"
+#include "ft_printf.h"
 #include "push_swap.h"
 #include "move_count.h"
 
@@ -24,10 +23,10 @@ static void print_list(t_stack_list *list)
 	aux = list;
 	while (aux != NULL)
 	{
-		printf("%ld ", aux->numbers);
+		ft_printf("%ld ", aux->numbers);
 		aux = aux->next;
 	}
-	printf("\n");
+	ft_printf("\n");
 }
 
 static int is_num_repeated(t_stack_list *a, int num)
@@ -91,7 +90,7 @@ int	main (int argc, char	**argv)
 	t_stack_list	*a;
 	t_stack_list	*b;
 
-    if(argc > 2)
+    if(argc > 1)
 	{
 		i = 1;
 		a = NULL;
@@ -102,14 +101,14 @@ int	main (int argc, char	**argv)
 			{
 				list_destroy (a);
 				list_destroy (b);
-				printf("Error\n");
+				ft_printf("Error\n");
 				return (-1);
 			}
 			i++;
 		}
-		printf("Antes de hacer nada: ");
 		print_list(a);
-        
+		ft_printf("Antes de hacer nada: ");
+		       
 		if (list_size (a) < 10)
 			sort_few_numbers (&a, &b);
 		else 
@@ -117,15 +116,16 @@ int	main (int argc, char	**argv)
 			enumerate_index_nodes(a);
 			k_sort1(&a, &b);
 			k_sort2(&a, &b);
-			printf("\n");
-			printf("Después del ksort: ");
+			ft_printf("\n");
+			ft_printf("Después del ksort: ");
 			print_list(a);
 			print_list(b);
 		}
-		printf ("\n");
-		printf("Moves = %d\n", move_count());
+		ft_printf ("\n");
+		ft_printf("Moves = %d\n", move_count());
 		list_destroy(a);
 		list_destroy(b);
 		return (0);
 	}
 }
+

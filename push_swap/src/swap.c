@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:54:45 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 08:55:04 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:23:39 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
+#include "ft_printf.h"
 #include "push_swap.h"
 #include "move_count.h"
 
@@ -22,7 +22,7 @@ static void	swap(t_stack_list *stack)
 
 	if (stack == NULL || stack->next == NULL)
 	{
-		printf("Error:Stack or node is empty");
+		ft_printf("Error:Stack or node is empty");
 		return ;
 	}
     aux = stack->numbers;

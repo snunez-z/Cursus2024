@@ -6,14 +6,12 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:49:29 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 09:01:51 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:02:18 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "push_swap.h"
-#include "move_count.h"
 
 void	enumerate_index_nodes(t_stack_list *stack)
 {

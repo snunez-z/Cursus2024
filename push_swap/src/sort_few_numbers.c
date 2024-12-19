@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   sort_few_numbers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:08:57 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 09:09:00 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:43:33 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "push_swap.h"
 

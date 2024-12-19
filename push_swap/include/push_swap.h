@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:46:37 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 12:57:14 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:25:28 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_stack_list
 // Stack functions
 
 t_stack_list	*list_append_front(t_stack_list **numbers, long number);
-t_stack_list	*list_append_back(t_stack_list **numbers, long number);
+t_stack_list *list_append_back(t_stack_list **numbers, long number);
 void 		list_destroy(t_stack_list *numbers);
 size_t 		list_size(t_stack_list *numbers);
 int	su_atoi(const char	*str, int *p_error);
@@ -49,7 +49,6 @@ void	sort_few_numbers(t_stack_list **a, t_stack_list **b);
 void    enumerate_index_nodes(t_stack_list *stack);
 void	    k_sort1(t_stack_list **a, t_stack_list **b);
 void	    k_sort2(t_stack_list **a, t_stack_list **b);
-
 
 #endif
 

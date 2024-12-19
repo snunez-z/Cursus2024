@@ -6,7 +6,7 @@
 #    By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 10:47:03 by snunez-z          #+#    #+#              #
-#    Updated: 2024/12/17 13:31:59 by snunez-z         ###   ########.fr        #
+#    Updated: 2024/12/19 13:23:39 by snunez-z         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,14 +26,14 @@ LDFLAGS = -L $(LIBFT) -L $(FT_PRINTF) -lftprintf -lft
 
 SRC = list_numbers.c \
       list_stack_push.c \
-      move_count.c \
       sort_few_numbers.c \
       k_sort.c \
       rotate_reverse.c \
       rotate.c \
       su_atoi.c \
       swap.c \
-      main.c
+      main.c \
+	  move_count.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

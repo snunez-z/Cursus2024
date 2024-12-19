@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rotate_reverse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:53:05 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/17 08:53:09 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:23:39 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
+#include "ft_printf.h"
 #include "push_swap.h"
 #include "move_count.h"
 
@@ -27,7 +27,7 @@ static void	rotate_reverse (t_stack_list **stack)
 
 	if (list_size(*stack) < 2)
 	{
-		printf("Error:Stack or node is empty");
+		ft_printf("Error:Stack or node is empty");
 		return ;
 	}
     while (penultimate->next->next != NULL)
@@ -43,19 +43,19 @@ void rrr(t_stack_list **a, t_stack_list **b)
     rotate_reverse(a);
     rotate_reverse(b);
     write(1,"rr\n", 3);
-    move_inc();
-}
+	move_inc();
+ }
 
 void rra(t_stack_list **a)
 {
     rotate_reverse(a);
     write(1,"rra\n", 4);
-    move_inc();
+	move_inc();
 }
 
 void rrb(t_stack_list **b)
 {
     rotate_reverse(b);
     write(1,"rrb\n", 4);
-    move_inc();
+	move_inc();
 }
