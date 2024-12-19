@@ -15,7 +15,7 @@
 #include "ft_printf.h"
 #include "push_swap.h"
 
-static void print_list(t_stack_list *list)
+/*static void print_list(t_stack_list *list)
 {
 	t_stack_list 	*aux;
 
@@ -26,7 +26,7 @@ static void print_list(t_stack_list *list)
 		aux = aux->next;
 	}
 	ft_printf("\n");
-}
+}*/
 
 static int is_num_repeated(t_stack_list *a, int num)
 {
@@ -105,8 +105,8 @@ int	main (int argc, char	**argv)
 			}
 			i++;
 		}
-		print_list(a);
-		ft_printf("Antes de hacer nada: ");
+		//print_list(a);
+		//ft_printf("Antes de hacer nada: ");
 		       
 		if (list_size (a) < 10)
 			sort_few_numbers (&a, &b);
@@ -116,11 +116,11 @@ int	main (int argc, char	**argv)
 			k_sort1(&a, &b);
 			k_sort2(&a, &b);
 			ft_printf("\n");
-			ft_printf("Después del ksort: ");
-			print_list(a);
-			print_list(b);
+			//ft_printf("Después del ksort: ");
+			//print_list(a);
+			//print_list(b);
 		}
-		ft_printf ("\n");
+		//ft_printf ("\n");
 		list_destroy(a);
 		list_destroy(b);
 		return (0);
