@@ -32,8 +32,7 @@ SRC = list_numbers.c \
       rotate.c \
       su_atoi.c \
       swap.c \
-      main.c \
-	  move_count.c
+      main.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

@@ -14,7 +14,6 @@
 #include "libft.h"
 #include "ft_printf.h"
 #include "push_swap.h"
-#include "move_count.h"
 
 static void print_list(t_stack_list *list)
 {
@@ -23,7 +22,7 @@ static void print_list(t_stack_list *list)
 	aux = list;
 	while (aux != NULL)
 	{
-		ft_printf("%ld ", aux->numbers);
+		ft_printf("%d ", aux->numbers);
 		aux = aux->next;
 	}
 	ft_printf("\n");
@@ -122,7 +121,6 @@ int	main (int argc, char	**argv)
 			print_list(b);
 		}
 		ft_printf ("\n");
-		ft_printf("Moves = %d\n", move_count());
 		list_destroy(a);
 		list_destroy(b);
 		return (0);

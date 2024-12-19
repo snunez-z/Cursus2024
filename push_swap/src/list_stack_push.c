@@ -14,7 +14,6 @@
 #include <unistd.h>
 #include "ft_printf.h"
 #include "push_swap.h"
-#include "move_count.h"
 
 static void list_stack_push(long	num, t_stack_list **stack)
 {
@@ -46,7 +45,6 @@ void pa(t_stack_list **a, t_stack_list **b)
   	num = list_stack_pop(a);
     list_stack_push(num, b);
     write(1, "pa\n", 3);
-	move_inc();
 }
 
 void pb(t_stack_list **b, t_stack_list **a)
@@ -56,7 +54,6 @@ void pb(t_stack_list **b, t_stack_list **a)
     num = list_stack_pop(b);
     list_stack_push(num, a);
     write(1, "pb\n", 3);
-	move_inc();
 }
 
 
