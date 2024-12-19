@@ -22,7 +22,7 @@ FT_PRINTF = $(LIBFT)/ft_printf
 
 CC = cc
 CFLAGS = -Werror -Wall -Wextra -I $(INC_DIR) -I $(LIBFT) -I $(FT_PRINTF)
-LDFLAGS = -L $(LIBFT) -lft -L $(FT_PRINTF) -lftprintf
+LDFLAGS = -L $(LIBFT) -L $(FT_PRINTF) -lftprintf -lft
 
 SRC = list_numbers.c \
       list_stack_push.c \
