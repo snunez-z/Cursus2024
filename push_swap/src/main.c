@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:51:46 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/19 13:41:11 by snunez-z         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:45:48 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main (int argc, char	**argv)
 			enumerate_index_nodes(a);
 			k_sort1(&a, &b);
 			k_sort2(&a, &b);
-			ft_printf("\n");
+			//ft_printf("\n");
 			//ft_printf("Después del ksort: ");
 			//print_list(a);
 			//print_list(b);
