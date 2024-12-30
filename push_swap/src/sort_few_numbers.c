@@ -29,10 +29,10 @@ static  int is_sorted(t_stack_list *stack)
                 node = node->next;
         }
         if (node == NULL)
-                return (1);
+                return (1); // todos estaban ordenados
         number = node->numbers;
         node = node->next;
-        while(node != NULL && node->numbers > number)
+        while(node != NULL && node->numbers > number) // no esta ordenado porque el ultimo de los numeros es mas grande que el primero
         {
                 number = node->numbers;
                 node = node->next;
