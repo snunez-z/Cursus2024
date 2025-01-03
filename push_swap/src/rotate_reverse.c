@@ -37,21 +37,24 @@ static void	rotate_reverse (t_stack_list **stack)
 	last_node->next = first_node;
 }
 
-void rrr(t_stack_list **a, t_stack_list **b)
+void rrr(t_stack_list **a, t_stack_list **b, int has_to_write)
 {
     rotate_reverse(a);
     rotate_reverse(b);
-    write(1,"rr\n", 3);
+    if (has_to_write)
+        write(1,"rr\n", 3);
  }
 
-void rra(t_stack_list **a)
+void rra(t_stack_list **a, int has_to_write)
 {
     rotate_reverse(a);
-    write(1,"rra\n", 4);
+    if (has_to_write)
+        write(1,"rra\n", 4);
 }
 
-void rrb(t_stack_list **b)
+void rrb(t_stack_list **b, int has_to_write)
 {
     rotate_reverse(b);
-    write(1,"rrb\n", 4);
+    if(has_to_write)
+        write(1,"rrb\n", 4);
 }

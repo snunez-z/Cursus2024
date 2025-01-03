@@ -29,23 +29,26 @@ static void	swap(t_stack_list *stack)
 	stack->next->numbers = aux;
 }
 
-void ss(t_stack_list *a, t_stack_list *b)
+void ss(t_stack_list *a, t_stack_list *b, int has_to_write)
 {
 	swap(a);
 	swap(b);
-	write(1, "ss\n", 3);
+	if (has_to_write)
+		write(1, "ss\n", 3);
 }
 
-void sa(t_stack_list *a)
+void sa(t_stack_list *a, int has_to_write)
 {
 	swap(a);
-	write(1, "sa\n", 3);
+	if(has_to_write)
+		write(1, "sa\n", 3);
 }
 
-void sb(t_stack_list *b)
+void sb(t_stack_list *b, int has_to_write)
 {
 	swap(b);
-	write(1, "sb\n", 3);
+	if(has_to_write)
+		write(1, "sb\n", 3);
 }
 
 

@@ -38,22 +38,24 @@ static long	list_stack_pop(t_stack_list	**stack)
 return(top_node_content);
 }
 
-void pa(t_stack_list **a, t_stack_list **b)
+void pa(t_stack_list **a, t_stack_list **b,int has_to_write)
 {
     long num;
 	    
-  	num = list_stack_pop(a);
-    list_stack_push(num, b);
-    write(1, "pa\n", 3);
+  	num = list_stack_pop(b);
+    list_stack_push(num, a);
+    if (has_to_write)
+		write(1, "pa\n", 3);
 }
 
-void pb(t_stack_list **b, t_stack_list **a)
+void pb(t_stack_list **a, t_stack_list **b, int has_to_write)
 {
     long num;
     
-    num = list_stack_pop(b);
-    list_stack_push(num, a);
-    write(1, "pb\n", 3);
+    num = list_stack_pop(a);
+    list_stack_push(num, b);
+    if (has_to_write)
+		write(1, "pb\n", 3);
 }
 
 

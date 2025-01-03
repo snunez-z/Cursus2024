@@ -173,13 +173,13 @@ En caso contrario, en last_node se meterá el numero y bucle para recorrer toda 
 
 __void sort_few_numbers (t_stack_list **a,t_stack_list **b)__
 Si los numeros recibidos son menos de 10, nuestro sistema de ordenamiento consistirá en buscar el numero mas pequeño y moverlo de la pila a a la b, poniendo los mas pequeños abajo de la pila b.
-Nos podemso encontrar que la pila a pase una serie de numeros a la pila b pero de pronto en la propia pila a esten ordenados o esten ordenados con un corte, por eso el programa ha de contemplar este caso.
+Nos podemosencontrar que la pila a pase una serie de numeros a la pila b pero de pronto en la propia pila a esten ordenados o esten ordenados con un corte, por eso el programa ha de contemplar este caso.
 Hace un bucle recorriendo la pila a y muentras la pila no este vacia o no este ordenada, pasa de uno a uno los numeros mas pequeños a la pila b.
 Pero se puede salir del bucle porque la pial a ya este ordenada o con un corte, en ese caso llamaria otra vez a l funcion mov_min_number pasandole como argumento la pila a y en caso de que haya un corte (si no lo hay no hará nada), lo ordena.
 Una vez hecho esto, ya puede pasar todos los numeros de la pila b a la a.
 
 __void move_min_number(t_stack_list **a)__
-ESta funcion se encarga de buscar a posicion del numero mas pequeño, lo sube arriba.
+ESta funcion se encarga de buscar la posicion del numero mas pequeño, lo sube arriba.
 LO hará en funcion de la distancia que haya entre el su posicion el principio o el final.
 
 Si esta mas cerca de la posicion cero, lo hara poniendo el primero al final (ra) y si esta mas cerca del final, lo hara poniendo el final en el principio (rra).
@@ -208,7 +208,7 @@ __void enumerate_index_nodes(t_stack_list *stack)__
 
 Esta función recorrerá la lista para cada nodo, la pila completa, buscando la posición que cada nodo ocuparia si estuviese ordenado en orden creciente y lo guardará en una variable llamada index de la estructura pero que controlará la variable local pos_ordered 
 
-Por eso hay dos bucles de principio a fin, porque comparará cada uno de los nuemros con todos e ira viendo si son mas pequeños que el y en funcion de eso incrementara pos_ordered.
+Por eso hay dos bucles de principio a fin, porque comparará cada uno de los numeros con todos e ira viendo si son mas pequeños que el y en funcion de eso incrementara pos_ordered.
 
 Ejemplo : 5 3 1 2 
 
@@ -217,7 +217,7 @@ Iterator empieza apuntando a 5 a stack.
 Declaramos una nueva variable auxiliar que dentro de este bucle tambien apuntará a stack, a el 5.
 Pos_ordered comienza en cero.
 Bucle, dentro de otro cucle, recorriendo aux hasta el final.
-Si el nuemro (5) es mas pequeño que el numero de iterator (5). pos_ordered se incrementa.
+Si el número (5) es mas pequeño que el numero de iterator (5). pos_ordered se incrementa.
 y aux pasa al siguiente, el 3.
 Como el 3 es mas pequeño que el 5 pos_ordered incrementa, POR AHORA el index de 5 es 1 porque ya hay un numero mas pequeño que el.
 y pasa al siguiente 1, que tambien es mas pequeño que 5 por lo que pos_ordered incrementa, POR AHORA el index de 5 es 2
@@ -225,3 +225,112 @@ y pasa al siguiente que es 2, que tambien es mas pequeño que 5 asi que pos_orde
 Como hemos llegado al final, se sale del bucle y entonces, ya sabemos que el index de 5 es el 3, EN ORDEN CRECIENTE.
 y pasamos al siguiente nodo de la pila (iterator) para volver a compararlo en el bucle de dentro con todos.
 asi hasta que hayamos comparado todos con todos y en el index marcado la posicion de toda la pila en orden creciente.
+__int sqrt_num(int number)__
+
+* Si un numero es menor que cuatro ( Raiz cuadrada de 4 es 2), por lo tanto numero inferior a 4, su raiz cuadrada es 1, retornamos 1.
+* Indice empieza en 1.
+* Bucle para hallar la raiz cuadrada de cualquier número.
+  Mientras la multiplicacion de i por si mismo sea menor que el numero que queremso hallar su raiz cuadra...i sigue creciendo.
+  Ejemplo: 25 
+  2 * 2 = 4 y es menor que 25
+  3 * 3 = 9 es menor que 25
+  4 * 4 = 16 y es menor que 25
+  5 * 5 = 25 y ya no es menor que 25 por lo tanto la raiz cuadra de 25 es 5.
+
+__K_sort1(t_stack_list **a, t_stack_list **b)__
+
+ El reto que se nos plantea es pasar de la pila a a la pila b los numeros, los mas organizados posibles, abajo los mas pequeños, arriba los más grandes.
+ Para ello contamos con el indice previamente localizado con la funcion enumarates_index_nodes que nos dice que posicion 
+ tendrian si estuviesen organizado.
+ Ejemplo: 100 numeros. Posiciones del 0 a 100 en index. 
+ Si comparamos ese indice de 1 en 1, se necesitan muchas operaciones ra para pasarlo, funciona pero es ineficiente.
+ Si lo comparamos con un solo grupo de 100, pasaria tal cual y no estaria organizado.
+ ¿ Como podemos pasar los numeros de a a b lo más organizados posibles y ser eficientes? 
+ Ejemplo : 100 numeros si hacemos muchos grupos de pocos elementos necesitamos hacer muchos ra.
+                       si hacemos poco grupos de muchso elementos -> pasan menso organizados  
+ La forma mas equilibrada para conseguir un numero de grupo óptimo y un número de elementos optimo es la raiz cuadrada.
+ Ahora ya podemos aplicar el algoritmo que consiste comparar el index con la raiz cuadrada + el numero de elementos que va pasando de la pila a a la b.
+ Mientras la pila a no este vacia si el index es más pequeño o igual que la raiz cuadra + el valor que tenga b_nodes que es la variable que controla el
+ numero de elementos que se van asando a la pila, sabemos que esta entre los más pequeños de ese grupo.
+ Y en caso de encontrarse el mas pequeño, ademas de pasarlo lo pondriamos abajo del todo, haciendo un rb.
+ Si no es el mas pequeño y no esta entre los mas pequeños, entonces ra. 
+
+  * if((*a)->index <= b_nodes) // optimizacion, de ser el mas pequeño -> pa(a, b)-> rb(b)-> b_nodes++;
+  * else if((*a)->index <= (b_nodes + sqrt)) // algoritmo -> pa(a, b) -> b_nodes++;
+  * Si es de lso grandes -> ra(a);
+
+__int search_max_num (t_stack_list *stack)__
+  Esta busca la posicion del mas grande. Tenemos el index de la posicion que ocuaria cada elemento si estuviesen ordenado.
+  Sabiendo el numero de elementos que tiene llamando a la funcion list_size y declarandonos una variable pos_max que empezara en cero.
+  Bucle para recorrer la pila hasta el final y si el indice del elemento en cuestion es igual que (size -1 -> pos del ultimo elemento
+  es que lo he encontrado, en caso contrario itero y pos_max va creciendo para seguir mirando el siguiente elemento. 
+
+__void k_sort2 (t_stack_list **a, t_stack_list **b)__
+
+Como estan en la pila b organizados de forma que los numeros estan a pocos rb o rrb de distancia entre si y en general los 
+mas grandes estan en la parte superior y los mas pequeños en la parte inferior. Ahora, buscanbdo la posicion del mas grande y pasandolo 
+a la pila a, ordenamos de forma creciente la pila b en a y de forma eficiente, cumpliendo el objetivo del proyecto.
+Buscamos la posicion del mas grande llamando a la funcion search_max_num.
+Nos declaramos una variable end para saber el tamaño de la pila.
+dos variables que nos dicen a que distancia esta del principio de la pila o del final para decidir si lo subimos al top de una ofrma u de otra.
+O haciendo una operacion rb o una operacion ra.
+
+__void list_stack_push(long num, t_stack_list **stack)__
+  ESta funcion pone encima de la pila un numero, llamando a la funcion list_append_back (stack, num)
+
+__long list_stack_pop (t_stack_list **stack)__
+  Coge de la pila un nodo con un numero y lo saca, retorna el contenido del numero.
+  Declaras un primer nodo que en un principio va a apuntar a dodne esta gauarda la direccion de memoria de stack.
+  en una variable guardas el contenido
+  Ahora donde *stack va a ser igual que el siguiente numero del primer nodo, el que vamos a sacar.
+  Ahora ya puedo liberar la memoria de ese primer nodo que quiero sacar.
+  Retorno su contenido.
+  
+__void pa (t_stack_list **a y t_stack_list **b)__
+
+Coje el primer nodo de la pila a y lo pongo en b.
+Para ello se declara un long num, donde vamlos a guardar el contenido del numero llamando a list_stack_pop (a)
+Lo ponemos en b llamando a la funcion list_stack_push (b)
+Escribimos la orden pa
+
+__void pb(t_stack_list **b, t_stack_list **a)__
+
+Coje el primer nodo de la pila b y lo pongo en a.
+Para ello se declara un long num, donde vamlos a guardar el contenido del numero llamando a list_stack_pop (b)
+Lo ponemos en b llamando a la funcion list_stack_push (a)
+Escribimos la orden pb
+
+__static void	rotate (t_stack_list **stack)__
+  Esta funcion mueve el primer nodo de la lista al final y esto va a afectar a tres nodos, el primero, el segundo y el ultimo.
+  * El primero porque ya no va a apuntar al segundo sino a Null
+  * El segundo porque tiene que ser guardado en stack-> que es un doble puntero.
+  * El ultimo porque tiene que apuntar al primero.
+    asi que nos declaramos esas tres variables y las inicializamos 
+
+  * Primer nodo = *stack
+  * Segundo nodo = a donde pauntaba el primero. Se queda igual en un principio.
+  * Ultimo nodo = comenzando desde el segundo nodo (el primero no es necesario porque va a rotar)
+                  Bucle hasta el final para localizarlo.
+    Y cuando ya tenemos los tres inicializados es cuando hacemos los movimientos.
+  *  Ahora stack apunta al segundo 
+  *  El ultimo apunta el primero
+  *  El siguiente del primero es NULL.
+
+    __static void	rotate_reverse (t_stack_list **stack)__
+   Esta funcion mueve el ultimo nodo de la lista al principio y esto va a afectar a tres nodos, el primero, el penultimo y el ultimo.
+   * El primero se iniciliza en el valor de *stack
+   * el penultimo lo localizamos recorriendo desde el segundo hasta el que el ultimo apunte a NULL.
+   * Y una vez localizado el ultimo sera donde apunte el penultimo.
+   y ahora ya podemos mover 
+   * Stack tendra el valor de donde este el ultimo
+   * El siguiente del penultimo apun tara a NULL
+   * El siguiente del ultimo ya no apuntara a NULL sino al primero.
+
+   __static void	swap(t_stack_list *stack)__
+  Mueve el valor del segundo nodo donde esta el primero y el valor del primer nodo donde esta el segundo.
+  Si la pila esta vacia o solo hay un numero, no se puede intercambiar nada.
+  Necesitamos una variable auxiliar donde meter el valor del primer nodo y así no macharlo al hacer el intercambio. 
+  * En aux metemos el valor del primer numero.
+  * En el nodo primero metenso el valor del segundo
+  * Ahora en el segundo metemos el valor de aux.
+  

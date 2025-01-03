@@ -12,10 +12,13 @@
 
 NAME = push_swap
 
+NAME_BONUS = checker
+
 PDW=$(shell pwd)
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 INC_DIR = ./include
+BONUS_DIR = ./bonus
 
 LIBFT = ./libft
 FT_PRINTF = $(LIBFT)/ft_printf
@@ -24,24 +27,34 @@ CC = cc
 CFLAGS = -Werror -Wall -Wextra -I $(INC_DIR) -I $(LIBFT) -I $(FT_PRINTF)
 LDFLAGS = -L $(LIBFT) -L $(FT_PRINTF) -lftprintf -lft
 
-SRC = list_numbers.c \
+SRC_COMMON = list_numbers.c \
       list_stack_push.c \
+	  rotate_reverse.c \
+      rotate.c \
+	  swap.c \
+	  is_sorted.c \
+	  su_atoi.c \
+	  parse_argv.c
+
+SRC = $(SRC_COMMON) \
       sort_few_numbers.c \
       k_sort.c \
-      rotate_reverse.c \
-      rotate.c \
-      su_atoi.c \
-      swap.c \
       main.c
 
+SRC_BONUS = $(SRC_COMMON) bonus.c
+
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+OBJ_BONUS = $(addprefix $(OBJ_DIR)/, $(SRC_BONUS:.c=.o))
 
 all: $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a $(NAME)
+
+bonus: all $(NAME_BONUS)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 $(LIBFT)/libft.a:
+
 	$(MAKE) -C $(LIBFT)
 
 $(FT_PRINTF)/libftprintf.a:
@@ -63,7 +76,13 @@ re: fclean all
 $(NAME): $(OBJ_DIR) $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
 
+$(NAME_BONUS): $(OBJ_DIR) $(OBJ_BONUS)
+	$(CC) $(OBJ_BONUS) $(LDFLAGS) -o $(NAME_BONUS)
+
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(BONUS_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: all clean fclean re

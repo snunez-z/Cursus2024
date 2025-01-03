@@ -60,17 +60,17 @@ void	k_sort1(t_stack_list **a, t_stack_list **b)
         {
                 if((*a)->index <= b_nodes)
                 {
-                        pa(a, b);
-                        rb(b);
+                        pb(a, b, 1);
+                        rb(b, 1);
                         b_nodes++;
                 }
                 else if((*a)->index <= (b_nodes + sqrt))
                 {
-                        pa(a, b);
+                        pb(a, b, 1);
                         b_nodes++;
                 }
                 else
-                        ra(a);
+                        ra(a, 1);
         }
 }
 
@@ -83,7 +83,7 @@ static int	search_max_num(t_stack_list *stack)
         size =list_size (stack);
         pos_max = 0;
         node = stack;
-        while (pos_max <= (size-1))
+        while (node != NULL)
         {
                 if(node->index ==(size -1))
                         return(pos_max);
@@ -110,7 +110,7 @@ void	k_sort2(t_stack_list **a, t_stack_list **b)
                 {
                         while(pos_max > 0)
                         {
-                                rb(b);
+                                rb(b, 1);
                                 pos_max--;
                         }       
                 }
@@ -118,11 +118,11 @@ void	k_sort2(t_stack_list **a, t_stack_list **b)
                 {
                         while (pos_max < end)
                         {
-                                rrb(b);
+                                rrb(b, 1);
                                 pos_max++;
                         }
                 }
-                pb(b, a);
+                pa(a, b, 1);
         }
 }
 

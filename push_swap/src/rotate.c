@@ -32,22 +32,25 @@ static void	rotate (t_stack_list **stack)
     first_node->next = NULL;
 }
 
-void	rr(t_stack_list **a, t_stack_list **b)
+void	rr(t_stack_list **a, t_stack_list **b, int has_to_write)
 {
 	rotate(a);
 	rotate(b);
-	write(1, "rr\n", 3);
+  if (has_to_write)
+	    write(1, "rr\n", 3);
 }
 
-void	ra(t_stack_list **a)
+void	ra(t_stack_list **a, int has_to_write)
 {
 	rotate(a);
-	write(1, "ra\n", 3);
+  if (has_to_write)
+	  write(1, "ra\n", 3);
 }
 
-void	rb(t_stack_list **b)
+void	rb(t_stack_list **b, int has_to_write)
 {
 	rotate(b);
-	write(1, "rb\n", 3);
+	if (has_to_write)
+    write(1, "rb\n", 3);
 }
 

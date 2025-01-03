@@ -13,32 +13,6 @@
 #include <stdlib.h>
 #include "push_swap.h"
 
-static  int is_sorted(t_stack_list *stack)
-{
-        t_stack_list *node;
-        int number;
-
-        if (list_size(stack) < 2)
-                return (1);
-        node = stack;
-        number = node->numbers;
-        node = node->next;
-        while(node != NULL && node->numbers > number)
-        {
-                number = node->numbers;
-                node = node->next;
-        }
-        if (node == NULL)
-                return (1); // todos estaban ordenados
-        number = node->numbers;
-        node = node->next;
-        while(node != NULL && node->numbers > number) // no esta ordenado porque el ultimo de los numeros es mas grande que el primero
-        {
-                number = node->numbers;
-                node = node->next;
-        }
-        return (node == NULL && number < stack->numbers);
-}
 static int     search_sortest_number(t_stack_list  *stack)
 {
         int     size;
@@ -82,7 +56,7 @@ void     move_min_number(t_stack_list **a)
         {
                 while(pos_min > 0)
                 {
-                        ra(a);
+                        ra(a, 1);
                         pos_min--;
                 }
         }
@@ -90,7 +64,7 @@ void     move_min_number(t_stack_list **a)
         {
                 while (pos_min < end)
                 {
-                        rra(a);
+                        rra(a, 1);
                         pos_min++;
                 }
         }
@@ -98,12 +72,12 @@ void     move_min_number(t_stack_list **a)
 
 void     sort_few_numbers (t_stack_list **a,t_stack_list **b)
 {
-        while(*a != NULL && is_sorted (*a) == 0)
+        while(*a != NULL && is_sorted (*a, 1) == 0)
         {
                 move_min_number (a);
-                pa(a, b);
+                pa(a, b, 1);
         }
         move_min_number (a);
         while (*b != NULL)
-                pb(b,a);
+                pb(b,a, 1);
 }
