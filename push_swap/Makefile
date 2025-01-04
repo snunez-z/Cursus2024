@@ -37,11 +37,15 @@ SRC_COMMON = list_numbers.c \
 	  parse_argv.c
 
 SRC = $(SRC_COMMON) \
+	  enumerate_index_nodes.c \
       sort_few_numbers.c \
       k_sort.c \
       main.c
 
-SRC_BONUS = $(SRC_COMMON) bonus.c
+SRC_BONUS = $(SRC_COMMON) \
+			bonus.c \
+			read_result_push_swap.c
+
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 OBJ_BONUS = $(addprefix $(OBJ_DIR)/, $(SRC_BONUS:.c=.o))

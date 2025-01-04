@@ -14,43 +14,42 @@
 #include <unistd.h>
 #include "push_swap.h"
 
-static void	rotate (t_stack_list **stack)
+static void	rotate(t_stack_list **stack)
 {
-    t_stack_list *first_node;
-    t_stack_list *second_node;
-    t_stack_list *last_node;
+	t_stack_list	*first_node;
+	t_stack_list	*second_node;
+	t_stack_list	*last_node;
 
-    if (list_size(*stack) < 2)
+	if (list_size(*stack) < 2)
 		return ;
-    first_node = *stack;
-    second_node = first_node->next;
-    last_node = second_node;
-    while (last_node->next != NULL)
-        last_node = last_node->next;
-    *stack = second_node;
-    last_node->next = first_node;
-    first_node->next = NULL;
+	first_node = *stack;
+	second_node = first_node->next;
+	last_node = second_node;
+	while (last_node->next != NULL)
+		last_node = last_node->next;
+	*stack = second_node;
+	last_node->next = first_node;
+	first_node->next = NULL;
 }
 
 void	rr(t_stack_list **a, t_stack_list **b, int has_to_write)
 {
 	rotate(a);
 	rotate(b);
-  if (has_to_write)
-	    write(1, "rr\n", 3);
+	if (has_to_write)
+		write(1, "rr\n", 3);
 }
 
 void	ra(t_stack_list **a, int has_to_write)
 {
 	rotate(a);
-  if (has_to_write)
-	  write(1, "ra\n", 3);
+	if (has_to_write)
+		write(1, "ra\n", 3);
 }
 
 void	rb(t_stack_list **b, int has_to_write)
 {
 	rotate(b);
 	if (has_to_write)
-    write(1, "rb\n", 3);
+		write(1, "rb\n", 3);
 }
-

@@ -18,8 +18,8 @@
 typedef struct s_stack_list
 {
 	long				numbers;
-	struct s_stack_list	*next;
 	int					index;
+	struct s_stack_list	*next;
 }	t_stack_list;
 
 // Stack functions
@@ -56,5 +56,9 @@ void			k_sort2(t_stack_list **a, t_stack_list **b);
 
 int				parse_argv(char *argv, t_stack_list **stack);
 int				is_sorted(t_stack_list *stack, int allow_cut);
+
+// bonus
+
+int read_result_push_swap(t_stack_list **a, t_stack_list **b);
 
 #endif

@@ -25,7 +25,7 @@ static int	ft_isspace(const char *str)
 static long	convert_to_int(const char	*str, int *p_error)
 {
 	char	digit;
-	long		value;
+	long	value;
 
 	if (*str == '\0')
 	{
@@ -35,24 +35,22 @@ static long	convert_to_int(const char	*str, int *p_error)
 	value = 0;
 	while (*str >= '0' && *str <= '9' && value <= ((long)INT_MAX + 1))
 	{
-		digit = (*str - '0'); 
+		digit = (*str - '0');
 		value = (value * 10) + digit;
 		str++;
-	}
-
-	// * Hemos salido antes de llegar al final del número. Eso es que nos hemos encontrado un
+	}// * Hemos salido antes de llegar al final del número. Eso es que nos hemos encontrado un
 	// carácter que no es un dígito o nos hemos pasado de INT_MAX + 1
 	if (*str != '\0')
 		*p_error = 1;
-		
 	// * En caso contrario... pues todo ha ido bien => tenemos que poner "false" en p_error
 	else
 		*p_error = 0;
 	return (value);
 }
-int su_atoi(const char *str, int *p_error)
+
+int	su_atoi(const char *str, int *p_error)
 {
-	long    value;
+	long	value;
 	char	is_negative;		
 
 	while (ft_isspace(str))
@@ -67,7 +65,7 @@ int su_atoi(const char *str, int *p_error)
 		str++;
 	}
 	value = convert_to_int (str, p_error);
-	if(*p_error == 1)
+	if (*p_error == 1)
 		return (0);
 	if (is_negative)
 		value = (value * -1);
@@ -75,4 +73,3 @@ int su_atoi(const char *str, int *p_error)
 		*p_error = 1;
 	return (value);
 }
-

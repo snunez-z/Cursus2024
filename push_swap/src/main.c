@@ -15,32 +15,38 @@
 #include "ft_printf.h"
 #include "push_swap.h"
 
-int	main (int argc, char	**argv)
+static int	checker_argv(int argc, char **argv, t_stack_list **a)
 {
-	int				i;
+	int	i;
+
+	i = 1;
+	while (i < argc)
+	{
+		if (parse_argv(argv[i], a) == 0)
+		{
+			list_destroy (*a);
+			ft_printf("Error\n");
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	main(int argc, char **argv)
+{
 	t_stack_list	*a;
 	t_stack_list	*b;
 
-    if(argc > 1)
+	if (argc > 1)
 	{
-		i = 1;
 		a = NULL;
 		b = NULL;
-		while (i < argc)
-		{
-			if (parse_argv(argv[i], &a) == 0)
-			{
-				list_destroy (a);
-				list_destroy (b);
-				ft_printf("Error\n");
-				return (-1);
-			}
-			i++;
-		}
-				       
+		if (!checker_argv(argc, argv, &a))
+			return (-1);
 		if (list_size (a) < 10)
 			sort_few_numbers (&a, &b);
-		else 
+		else
 		{
 			enumerate_index_nodes(a);
 			k_sort1(&a, &b);
@@ -51,4 +57,3 @@ int	main (int argc, char	**argv)
 		return (0);
 	}
 }
-

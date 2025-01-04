@@ -15,16 +15,16 @@
 #include "ft_printf.h"
 #include "push_swap.h"
 
-static void list_stack_push(long	num, t_stack_list **stack)
+static void	list_stack_push(long num, t_stack_list **stack)
 {
-	list_append_back (stack, num);
+	list_append_back(stack, num);
 }
 
 static long	list_stack_pop(t_stack_list	**stack)
 {
 	t_stack_list	*first_node;
 	long			top_node_content;
-	
+
 	if (*stack == NULL)
 	{
 		ft_printf("Error:Stack is empty");
@@ -34,28 +34,25 @@ static long	list_stack_pop(t_stack_list	**stack)
 	top_node_content = first_node->numbers;
 	*stack = first_node->next;
 	free(first_node);
-
-return(top_node_content);
+	return (top_node_content);
 }
 
-void pa(t_stack_list **a, t_stack_list **b,int has_to_write)
+void	pa(t_stack_list **a, t_stack_list **b, int has_to_write)
 {
-    long num;
-	    
-  	num = list_stack_pop(b);
-    list_stack_push(num, a);
-    if (has_to_write)
+	long	num;
+
+	num = list_stack_pop(b);
+	list_stack_push(num, a);
+	if (has_to_write)
 		write(1, "pa\n", 3);
 }
 
-void pb(t_stack_list **a, t_stack_list **b, int has_to_write)
+void	pb(t_stack_list **a, t_stack_list **b, int has_to_write)
 {
-    long num;
-    
-    num = list_stack_pop(a);
-    list_stack_push(num, b);
-    if (has_to_write)
+	long	num;
+
+	num = list_stack_pop(a);
+	list_stack_push(num, b);
+	if (has_to_write)
 		write(1, "pb\n", 3);
 }
-
-
