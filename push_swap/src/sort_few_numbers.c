@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include "push_swap.h"
 
-static int	search_sortest_number(t_stack_list  *stack)
+static int	search_sortest_number(t_stack_list *stack)
 {
 	int				size;
 	int				i;
@@ -42,7 +42,7 @@ void	move_min_number(t_stack_list **a)
 {
 	int	pos_min;
 	int	end;
-	int	distance_end;           
+	int	distance_end;
 
 	pos_min = search_sortest_number(*a);
 	end = list_size(*a);
@@ -63,7 +63,7 @@ void	move_min_number(t_stack_list **a)
 			pos_min++;
 		}
 	}
-}    
+}
 
 void	sort_few_numbers(t_stack_list **a, t_stack_list **b)
 {
@@ -74,5 +74,5 @@ void	sort_few_numbers(t_stack_list **a, t_stack_list **b)
 	}
 	move_min_number (a);
 	while (*b != NULL)
-	pa(a, b, 1);
+		pa(a, b, 1);
 }

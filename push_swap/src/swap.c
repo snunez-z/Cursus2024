@@ -15,21 +15,24 @@
 #include "ft_printf.h"
 #include "push_swap.h"
 
-static void	swap(t_stack_list *stack)
+static void	swap(t_stack_list **stack)
 {
-	long	aux;
+	t_stack_list	first_node;
+	t_stack_list	second_node;
 
-	if (stack == NULL || stack->next == NULL)
+	if (*stack == NULL || *stack->next == NULL)
 	{
 		ft_printf("Error:Stack or node is empty");
 		return ;
 	}
-	aux = stack->numbers;
-	stack->numbers = stack->next->numbers;
-	stack->next->numbers = aux;
+	first_node = *stack;
+	second_node = first_node->next;
+	first_node->next = second_node->next;
+	second_node->next = first_node;
+	*stack = second_node;
 }
 
-void	ss(t_stack_list *a, t_stack_list *b, int has_to_write)
+void	ss(t_stack_list **a, t_stack_list **b, int has_to_write)
 {
 	swap(a);
 	swap(b);
@@ -37,14 +40,14 @@ void	ss(t_stack_list *a, t_stack_list *b, int has_to_write)
 		write(1, "ss\n", 3);
 }
 
-void	sa(t_stack_list *a, int has_to_write)
+void	sa(t_stack_list **a, int has_to_write)
 {
 	swap(a);
 	if (has_to_write)
 		write(1, "sa\n", 3);
 }
 
-void	sb(t_stack_list *b, int has_to_write)
+void	sb(t_stack_list **b, int has_to_write)
 {
 	swap(b);
 	if (has_to_write)

@@ -39,9 +39,9 @@ void			rra(t_stack_list **a, int has_to_write);
 void			rrb(t_stack_list **b, int has_to_write);
 void			pa(t_stack_list **a, t_stack_list **b, int has_to_write);
 void			pb(t_stack_list **a, t_stack_list **b, int has_to_write);
-void			ss(t_stack_list *a, t_stack_list *b, int has_to_write);
-void			sa(t_stack_list *a, int has_to_write);
-void			sb(t_stack_list *b, int has_to_write);
+void			ss(t_stack_list **a, t_stack_list *b, int has_to_write);
+void			sa(t_stack_list **a, int has_to_write);
+void			sb(t_stack_list **b, int has_to_write);
 
 // push_swap functions
 
@@ -58,6 +58,6 @@ int				is_sorted(t_stack_list *stack, int allow_cut);
 
 // bonus
 
-int read_result_push_swap(t_stack_list **a, t_stack_list **b);
+int				read_result_push_swap(t_stack_list **a, t_stack_list **b);
 
 #endif

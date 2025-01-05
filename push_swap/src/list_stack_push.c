@@ -22,11 +22,10 @@ static void	move_top_node(t_stack_list	**from, t_stack_list	**to)
 	if (*from == NULL)
 	{
 		ft_printf("Error:Stack is empty");
-		return;
+		return ;
 	}
 	first_node = *from;
 	*from = first_node->next;
-
 	first_node->next = *to;
 	*to = first_node;
 }
