@@ -17,10 +17,10 @@
 
 static void	swap(t_stack_list **stack)
 {
-	t_stack_list	first_node;
-	t_stack_list	second_node;
+	t_stack_list	*first_node;
+	t_stack_list	*second_node;
 
-	if (*stack == NULL || *stack->next == NULL)
+	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		ft_printf("Error:Stack or node is empty");
 		return ;

@@ -40,11 +40,11 @@ static void	execute_one_command(char *comd, t_stack_list **a, t_stack_list **b)
 	else if (ft_strncmp (comd, "rrr", 4) == 0)
 		rrr (a, b, 0);
 	else if (ft_strncmp (comd, "sa", 3) == 0)
-		sa(*a, 0);
+		sa(a, 0);
 	else if (ft_strncmp (comd, "sb", 3) == 0)
-		sb(*b, 0);
+		sb(b, 0);
 	else if (ft_strncmp (comd, "ss", 3) == 0)
-		ss(*a, *b, 0);
+		ss(a, b, 0);
 	else if (ft_strncmp (comd, "pa", 3) == 0)
 		pa(a, b, 0);
 	else if (ft_strncmp (comd, "pb", 3) == 0)

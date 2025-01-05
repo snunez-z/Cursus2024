@@ -39,7 +39,7 @@ void			rra(t_stack_list **a, int has_to_write);
 void			rrb(t_stack_list **b, int has_to_write);
 void			pa(t_stack_list **a, t_stack_list **b, int has_to_write);
 void			pb(t_stack_list **a, t_stack_list **b, int has_to_write);
-void			ss(t_stack_list **a, t_stack_list *b, int has_to_write);
+void			ss(t_stack_list **a, t_stack_list **b, int has_to_write);
 void			sa(t_stack_list **a, int has_to_write);
 void			sb(t_stack_list **b, int has_to_write);
 
