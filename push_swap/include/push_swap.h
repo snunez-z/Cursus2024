@@ -25,7 +25,6 @@ typedef struct s_stack_list
 // Stack functions
 
 t_stack_list	*list_append_front(t_stack_list **numbers, long number);
-t_stack_list	*list_append_back(t_stack_list **numbers, long number);
 void			list_destroy(t_stack_list *numbers);
 size_t			list_size(t_stack_list *numbers);
 int				su_atoi(const char *str, int *p_error);

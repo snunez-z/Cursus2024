@@ -15,44 +15,32 @@
 #include "ft_printf.h"
 #include "push_swap.h"
 
-static void	list_stack_push(long num, t_stack_list **stack)
-{
-	list_append_back(stack, num);
-}
-
-static long	list_stack_pop(t_stack_list	**stack)
+static void	move_top_node(t_stack_list	**from, t_stack_list	**to)
 {
 	t_stack_list	*first_node;
-	long			top_node_content;
 
-	if (*stack == NULL)
+	if (*from == NULL)
 	{
 		ft_printf("Error:Stack is empty");
-		return (-1);
+		return;
 	}
-	first_node = *stack;
-	top_node_content = first_node->numbers;
-	*stack = first_node->next;
-	free(first_node);
-	return (top_node_content);
+	first_node = *from;
+	*from = first_node->next;
+
+	first_node->next = *to;
+	*to = first_node;
 }
 
 void	pa(t_stack_list **a, t_stack_list **b, int has_to_write)
 {
-	long	num;
-
-	num = list_stack_pop(b);
-	list_stack_push(num, a);
+	move_top_node(b, a);
 	if (has_to_write)
 		write(1, "pa\n", 3);
 }
 
 void	pb(t_stack_list **a, t_stack_list **b, int has_to_write)
 {
-	long	num;
-
-	num = list_stack_pop(a);
-	list_stack_push(num, b);
+	move_top_node(a, b);
 	if (has_to_write)
 		write(1, "pb\n", 3);
 }
