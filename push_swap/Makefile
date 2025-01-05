@@ -28,29 +28,29 @@ CFLAGS = -Werror -Wall -Wextra -I $(INC_DIR) -I $(LIBFT) -I $(FT_PRINTF)
 LDFLAGS = -L $(LIBFT) -L $(FT_PRINTF) -lftprintf -lft
 
 SRC_COMMON = list_numbers.c \
-      list_stack_push.c \
-	  rotate_reverse.c \
-      rotate.c \
-	  swap.c \
-	  is_sorted.c \
-	  su_atoi.c \
-	  parse_argv.c
+	list_stack_push.c \
+	rotate_reverse.c \
+	rotate.c \
+	swap.c \
+	is_sorted.c \
+	su_atoi.c \
+	parse_argv.c
 
 SRC = $(SRC_COMMON) \
-	  enumerate_index_nodes.c \
-      sort_few_numbers.c \
-      k_sort.c \
-      main.c
+	enumerate_index_nodes.c \
+	sort_few_numbers.c \
+	k_sort.c \
+	main.c
 
 SRC_BONUS = $(SRC_COMMON) \
-			bonus.c \
-			read_result_push_swap.c
+	bonus.c \
+	read_result_push_swap.c
 
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 OBJ_BONUS = $(addprefix $(OBJ_DIR)/, $(SRC_BONUS:.c=.o))
 
-all: $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a $(NAME)
+all: $(NAME)
 
 bonus: all $(NAME_BONUS)
 
@@ -58,14 +58,12 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 $(LIBFT)/libft.a:
-
 	$(MAKE) -C $(LIBFT)
 
 $(FT_PRINTF)/libftprintf.a:
 	INCLUDE_DIR=$(PWD) $(MAKE) -C $(FT_PRINTF)
 
 clean:
-
 	$(MAKE) -C $(LIBFT) clean
 	$(MAKE) -C $(FT_PRINTF) clean
 	rm -f $(OBJ)
@@ -77,10 +75,10 @@ fclean: clean
 
 re: fclean all
 
-$(NAME): $(OBJ_DIR) $(OBJ)
+$(NAME): $(OBJ_DIR) $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
 
-$(NAME_BONUS): $(OBJ_DIR) $(OBJ_BONUS)
+$(NAME_BONUS): $(OBJ_DIR) $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a $(OBJ_BONUS)
 	$(CC) $(OBJ_BONUS) $(LDFLAGS) -o $(NAME_BONUS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
