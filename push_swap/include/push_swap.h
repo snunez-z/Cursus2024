@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:46:37 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/19 13:25:28 by snunez-z         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:44:48 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int				is_sorted(t_stack_list *stack, int allow_cut);
 
 // bonus
 
-int				execute_one_command(char *comd, t_stack_list **a, t_stack_list **b);
+int				exec_one_comd(char *comd, t_stack_list **a, t_stack_list **b);
 int				read_result_push_swap(t_stack_list **a, t_stack_list **b);
 
 #endif

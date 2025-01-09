@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:54:00 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/19 12:36:13 by snunez-z         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:58:11 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ static long	convert_to_int(const char	*str, int *p_error)
 		digit = (*str - '0');
 		value = (value * 10) + digit;
 		str++;
-	}// * Hemos salido antes de llegar al final del número. Eso es que nos hemos encontrado un
-	// carácter que no es un dígito o nos hemos pasado de INT_MAX + 1
+	}
 	if (*str != '\0')
 		*p_error = 1;
-	// * En caso contrario... pues todo ha ido bien => tenemos que poner "false" en p_error
 	else
 		*p_error = 0;
 	return (value);

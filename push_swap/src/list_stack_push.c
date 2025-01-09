@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:50:31 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/19 13:23:39 by snunez-z         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:13:00 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ static void	move_top_node(t_stack_list	**from, t_stack_list	**to)
 	t_stack_list	*first_node;
 
 	if (*from == NULL)
-	{
-		ft_printf("Error:Stack is empty");
 		return ;
-	}
 	first_node = *from;
 	*from = first_node->next;
 	first_node->next = *to;

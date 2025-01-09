@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_argv.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/09 13:54:27 by snunez-z          #+#    #+#             */
+/*   Updated: 2025/01/09 15:16:52 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <unistd.h>
 #include "libft.h"
@@ -42,11 +53,10 @@ int	parse_argv(char *argv, t_stack_list **stack)
 	{
 		num = su_atoi(split[index], &atoi_error);
 		if (atoi_error == 1 || is_num_repeated (*stack, num) != 0)
-			return (0);
+			return (free(split), 0);
 		if (list_append_front(stack, num) == NULL)
 		{
 			free_split(split);
-			// el list_destroy lo hace el "main", no tenemos que hacerlo nosotros aqui
 			return (0);
 		}
 		index++;

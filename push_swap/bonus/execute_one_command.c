@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_one_command.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/09 13:40:27 by snunez-z          #+#    #+#             */
+/*   Updated: 2025/01/09 14:02:07 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "push_swap.h"
 
@@ -21,7 +33,7 @@ static int	execute_one_rotate(char *comd, t_stack_list **a, t_stack_list **b)
 	return (0);
 }
 
-static int	execute_one_reverse_rotate(char *comd, t_stack_list **a, t_stack_list **b)
+static int	exec_one_rever_rot(char *comd, t_stack_list **a, t_stack_list **b)
 {
 	if (ft_strncmp (comd, "rra", 4) == 0)
 	{
@@ -76,11 +88,11 @@ static int	execute_one_push(char *comd, t_stack_list **a, t_stack_list **b)
 	return (0);
 }
 
-int	execute_one_command(char *comd, t_stack_list **a, t_stack_list **b)
+int	exec_one_comd(char *comd, t_stack_list **a, t_stack_list **b)
 {
 	if (execute_one_rotate(comd, a, b) == 1)
 		return (1);
-	if (execute_one_reverse_rotate(comd, a, b) == 1)
+	if (exec_one_rever_rot(comd, a, b) == 1)
 		return (1);
 	if (execute_one_swap(comd, a, b) == 1)
 		return (1);

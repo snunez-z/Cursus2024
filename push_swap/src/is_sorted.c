@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_sorted.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/09 13:52:35 by snunez-z          #+#    #+#             */
+/*   Updated: 2025/01/09 13:53:37 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include "push_swap.h"
 
@@ -17,12 +29,12 @@ int	is_sorted(t_stack_list *stack, int allow_cut)
 		node = node->next;
 	}
 	if (node == NULL)
-		return (1); // todos estaban ordenados
+		return (1);
 	if (!allow_cut)
 		return (0);
 	number = node->numbers;
 	node = node->next;
-	while (node != NULL && node->numbers > number) // no esta ordenado porque el ultimo de los numeros es mas grande que el primero
+	while (node != NULL && node->numbers > number)
 	{
 		number = node->numbers;
 		node = node->next;

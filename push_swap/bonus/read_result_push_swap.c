@@ -1,4 +1,15 @@
- 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_result_push_swap.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/09 13:42:56 by snunez-z          #+#    #+#             */
+/*   Updated: 2025/01/09 14:03:05 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <stddef.h>
 #include "ft_printf.h"
@@ -33,7 +44,7 @@ int	read_result_push_swap(t_stack_list **a, t_stack_list **b)
 	read_result = read_line (0, buffer, 9);
 	while (read_result > 0)
 	{
-		if (execute_one_command(buffer, a, b) == 0)
+		if (exec_one_comd(buffer, a, b) == 0)
 			return (0);
 		read_result = read_line (0, buffer, 9);
 	}

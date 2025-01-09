@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:49:29 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/19 13:02:18 by snunez-z         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:55:44 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	k_sort1(t_stack_list **a, t_stack_list **b)
 	size = list_size (*a);
 	sqrt = sqrt_num(size);
 	b_nodes = 0;
-	while (*a != NULL) //Mientras no este vacia
+	while (*a != NULL)
 	{
 		if ((*a)->index <= b_nodes)
 		{
