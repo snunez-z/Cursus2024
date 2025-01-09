@@ -58,6 +58,7 @@ int				is_sorted(t_stack_list *stack, int allow_cut);
 
 // bonus
 
+int				execute_one_command(char *comd, t_stack_list **a, t_stack_list **b);
 int				read_result_push_swap(t_stack_list **a, t_stack_list **b);
 
 #endif

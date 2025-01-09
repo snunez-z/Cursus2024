@@ -37,6 +37,8 @@ int	main(int argc, char **argv)
 		if (read_result_push_swap(&a, &b) < 0)
 		{
 			ft_printf("Error\n");
+			list_destroy(a);
+			list_destroy(b);
 			return (0);
 		}
 		if (is_sorted(a, 0) && list_size (b) == 0)

@@ -44,6 +44,7 @@ SRC = $(SRC_COMMON) \
 
 SRC_BONUS = $(SRC_COMMON) \
 	bonus.c \
+	execute_one_command.c \
 	read_result_push_swap.c
 
 
