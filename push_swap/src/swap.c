@@ -12,7 +12,6 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "ft_printf.h"
 #include "push_swap.h"
 
 static void	swap(t_stack_list **stack)
@@ -21,10 +20,7 @@ static void	swap(t_stack_list **stack)
 	t_stack_list	*second_node;
 
 	if (*stack == NULL || (*stack)->next == NULL)
-	{
-		ft_printf("Error:Stack or node is empty");
 		return ;
-	}
 	first_node = *stack;
 	second_node = first_node->next;
 	first_node->next = second_node->next;

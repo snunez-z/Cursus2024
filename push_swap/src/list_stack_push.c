@@ -12,7 +12,6 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "ft_printf.h"
 #include "push_swap.h"
 
 static void	move_top_node(t_stack_list	**from, t_stack_list	**to)

@@ -5,7 +5,9 @@ nos dan y un número limitado de uso. Hay que sistematizar una solucion y utiliz
 
 **Conceptos Basicos**
 
-__El ensamblador__ es el lenguaje del procesador. El concepto de pila viene de esos tiempos, es la forma que tiene el procesador y el lenguaje C y cualquier otro lenguaje de programacion de soportar llamadas entre funciones,porque los datos de cada funcion se guardan en la pila encima de los datos de la funcion que llama a esa funcion.
+__El ensamblador__ es el lenguaje del procesador. El concepto de pila viene de esos tiempos, es la forma que tiene el procesador 
+y el lenguaje C y cualquier otro lenguaje de programacion de soportar llamadas entre funciones,porque los datos de cada funcion 
+se guardan en la pila encima de los datos de la funcion que llama a esa funcion.
 Cuando una funcion acaba, se quita de la pila los datos que usaba.
 
 **Ejecucion 1** 
@@ -148,6 +150,7 @@ Si no falla sigue hasta que no haya nada mas y libera la reserva para la variabl
 Esta funcion recorre la pila y mientras no este vacia, si el numero de la pila es igual al numero que recibe retorna 1, que si esta repetido.
 Si no sigue al siguiente.
 Si no se sale antes, es que no esta repetido.
+
 .- __static void free_split(char **split)__
 Esta funcion recorre el array de numeros hasta que no haya nada y va liberando posicion a posicion l memoria reservada.
 Cuando acaba libera tambien la reserva de memoria del array.
@@ -208,6 +211,10 @@ Ejemplos: 50 40, estaria ordenado porque con un solo movimiento rra lo ordenaria
           50 40 45 estaria ordenado porque con un solo movimiento ra, lo ordenaria -> 1 corte
           60 50 40 no está ordenado porque por muchos movimientos que se hagan habria mas de un corte.
 Por eso para retornar algo diferente de cero (1 por ejemplo) debe cumplir as dos condiciones, que haya acabado y que el ultimo sea menor al primero.
+Node == NULL signific que ha llegado al final porque habia un corte y la segunda condicion, la varibale number contiene el ultimo número de la pila y en number. 
+Ejemplo de bien  = 10 20 1 2 3, esta ordenado con un corte
+ejemplo de mal = 10 20, 1 2 50. 10 y 20 estan ordenados y 1 2 50 tambien, hay 1 corte pero si 50 es mas grande que 10, estaras haciendo rotaciones en bucle sin ser capaz de ordenarlo.
+por eso es necesario las dos condiciones, que haya llegado al final y que el ultimo de lso numeros sea menor que el primero.
 
 __void enumerate_index_nodes(t_stack_list *stack)__
 
@@ -264,13 +271,7 @@ __K_sort1(t_stack_list **a, t_stack_list **b)__
   * else if((*a)->index <= (b_nodes + sqrt)) // algoritmo -> pa(a, b) -> b_nodes++;
   * Si es de lso grandes -> ra(a);
 
-__int search_max_num (t_stack_list *stack)__
-  Esta busca la posicion del mas grande. Tenemos el index de la posicion que ocuparia cada elemento si estuviesen ordenado.
-  Sabiendo el numero de elementos que tiene llamando a la funcion list_size y declarandonos una variable pos_max que empezara en cero.
-  Bucle para recorrer la pila hasta el final y si el indice del elemento en cuestion es igual que (size -1 -> pos del ultimo elemento
-  es que lo he encontrado, en caso contrario itero y pos_max va creciendo para seguir mirando el siguiente elemento. 
-
-__void k_sort2 (t_stack_list **a, t_stack_list **b)__
+___void k_sort2 (t_stack_list **a, t_stack_list **b)__
 
 Como estan en la pila b organizados de forma que los numeros estan a pocos rb o rrb de distancia entre si y en general los 
 mas grandes estan en la parte superior y los mas pequeños en la parte inferior. Ahora, buscanbdo la posicion del mas grande y pasandolo 
@@ -279,11 +280,26 @@ Buscamos la posicion del mas grande llamando a la funcion search_max_num.
 Llamamos a la funcion move_node_to_top para ver si lo subimos por arriba o por abajo en funcion de la distancia que haya de ese index con la posicion cero o con la ultima posición.
 Luego hacemos una operacion rb o una operacion ra.
 
-__void list_stack_push(.c
+__int search_max_num (t_stack_list *stack)__
+
+  Esta busca la posicion del mas grande. Tenemos el index de la posicion que ocuparia cada elemento si estuviesen ordenado.
+  Sabiendo el numero de elementos que tiene llamando a la funcion list_size y declarandonos una variable pos_max que empezara en cero.
+  Bucle para recorrer la pila hasta el final y si el indice del elemento en cuestion es igual que (size -1) -> pos del ultimo elemento
+  es que lo he encontrado, en caso contrario itero y pos_max va creciendo para seguir mirando el siguiente elemento. 
+
+__void list_stack_push.c
 __static void	move_top_node(t_stack_list	**from, t_stack_list	**to)__
   Hacemos una funcion que mueve el nodo completo, junto con el numero de dentro desde el top de una fila a otra pila. 
   Chequeamos si esta vacia, si no, el primer nodo es el desde donde y vamos cambiando los punteros.
-
+  From es el primer nodo de la pila a
+  to es el priemr nodo del segundo carro.
+  Queremos coger el primer nodo de la pila a y moverlo a la pila b o viceversa.
+  ¿ que tenemos que hacer ? desengancharlo del segundo nodo de la pila a la que esta enganchada por su nodo.
+  
+  first_node = *from;
+	*from = first_node->next; ahora sujeta el siguiente, o sea el segundo
+	first_node->next = *to; ahora lo encadenamos al primer carro de la otra fila
+	*to = first_node; y uan vez que esta ese nodo ahi, to deja de sujetar el de antes y sujeta el que acabo de pasar.
 __void pa (t_stack_list **a y t_stack_list **b)__
 
 Coje el primer nodo de la pila a y lo pongo en b.
@@ -294,7 +310,7 @@ Escribimos la orden pa si es necesario, si la booleana es 1, asi indicamos si ha
 __void pb(t_stack_list **b, t_stack_list **a)__
 
 Coje el primer nodo de la pila b y lo pongo en a.
-Para ello se declara un long num, donde vamlos a guardar el contenido del numero llamando a list_stack_pop (b)
+Para ello se declara un long num, donde vamos a guardar el contenido del numero llamando a list_stack_pop (b)
 Lo ponemos en b llamando a la funcion list_stack_push (a)
 Escribimos la orden pb, escribimos la orden pa si es necesario, si la booleana es 1, asi indicamos si hay que escribir o no en funcion de cual es, si es el push_swap o es el checker.
 
@@ -306,7 +322,7 @@ __static void	rotate (t_stack_list **stack)__
     asi que nos declaramos esas tres variables y las inicializamos 
 
   * Primer nodo = *stack
-  * Segundo nodo = a donde pauntaba el primero. Se queda igual en un principio.
+  * Segundo nodo = a donde apuntaba el primero. Se queda igual en un principio.
   * Ultimo nodo = comenzando desde el segundo nodo (el primero no es necesario porque va a rotar)
                   Bucle hasta el final para localizarlo.
     Y cuando ya tenemos los tres inicializados es cuando hacemos los movimientos.

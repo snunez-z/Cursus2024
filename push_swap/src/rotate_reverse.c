@@ -12,7 +12,6 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "ft_printf.h"
 #include "push_swap.h"
 
 static void	rotate_reverse(t_stack_list **stack)
@@ -24,10 +23,7 @@ static void	rotate_reverse(t_stack_list **stack)
 	first_node = *stack;
 	penultimate = first_node;
 	if (list_size(*stack) < 2)
-	{
-		ft_printf("Error:Stack or node is empty");
 		return ;
-	}
 	while (penultimate->next->next != NULL)
 		penultimate = penultimate->next;
 	last_node = penultimate->next;
