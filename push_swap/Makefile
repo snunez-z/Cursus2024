@@ -51,12 +51,12 @@ SRC_BONUS = $(SRC_COMMON) \
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 OBJ_BONUS = $(addprefix $(OBJ_DIR)/, $(SRC_BONUS:.c=.o))
 
-all: $(NAME)
+all: create_directories $(NAME)
 
 bonus: all $(NAME_BONUS)
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+create_directories: $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
@@ -76,10 +76,10 @@ fclean: clean
 
 re: fclean all
 
-$(NAME): $(OBJ_DIR) $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a $(OBJ)
+$(NAME): $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
 
-$(NAME_BONUS): $(OBJ_DIR) $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a $(OBJ_BONUS)
+$(NAME_BONUS): $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a $(OBJ_BONUS)
 	$(CC) $(OBJ_BONUS) $(LDFLAGS) -o $(NAME_BONUS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
