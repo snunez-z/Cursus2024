@@ -53,12 +53,9 @@ int	parse_argv(char *argv, t_stack_list **stack)
 	{
 		num = su_atoi(split[index], &atoi_error);
 		if (atoi_error == 1 || is_num_repeated (*stack, num) != 0)
-			return (free(split), 0);
+			return (free_split(split), 0);
 		if (list_append_front(stack, num) == NULL)
-		{
-			free_split(split);
-			return (0);
-		}
+			return (free_split(split), 0);
 		index++;
 	}
 	free_split(split);

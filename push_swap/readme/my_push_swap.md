@@ -125,13 +125,18 @@ Si la distancia del final es mayor o igual que la del principio , mientras la po
 
 .- Una vez haya acabado, se libera el espacio de memoria de las pilas.
 La pila a se destruye porque tiene los numeros y la pila b se destruye por buena educacion, no haría falta porque esta vacia, apunta a NULL, pero esta bien hacerlo. 
+__¿Porqué el algoritmpo KSORT es mas eficiente?__
+
+Si vamos a buscar un numero unico, ejemplo el 1, depende de donde esté voy a gastar muchos movimientos para moverlo y pasarlo, por lo tanto para grandes cantidades de numeros no es eficiente. Sin embargo si en lugar de uno, busco unos cuentos de un grupo especifico, entonces me van a valer mas de 1 uno. Si tengo  numero sy busco los 10 primeros, me sirve encontrar el 1, el 2, el 3 etc....pero si solo busco primero el 1 , luego el que este en la posicion 2, luego el que este enla posicion 3 tardo mas y gastos movimientos.
+
 
 **Funciones de verificacion**
 
 1.- __static int parse_argv(char *argv, t_stack_list **stack)__
+
 Por cada argv, verificamos si el numero es correcto y lo metemos en la pila. Esta funcion comprueba que  sean numeros enteros, que no esten repetidos, los pasa de char a int, los mete dentro de un nodo de la pila y libera la reserva de memoria.
 Si nos pasan numeros enteros es muy secillo, solo hay que convertirlos a numero pero tenemos que contemplar que nos pasen un argv de mas de un numero, por lo que necesitamos separlos antes de meterlos en la pila.
-Para cada argv usamos el ft_split para separar por espacios cada numero.
+Necesitamos interpretar los argumentos y meterlos en la pila, asi que a para cada argv usamos el ft_split para separar por espacios cada numero.
 Cada parte le hacemos un atoi y si va bien le metemos en la pila.
 
 Nos declaramos una variable ** split para meter el resultado de trocear el array de numeros que reciba.
@@ -156,6 +161,7 @@ Esta funcion recorre el array de numeros hasta que no haya nada y va liberando p
 Cuando acaba libera tambien la reserva de memoria del array.
 .- __int su_atoi (const char *str, int *p_error)__
 
+Declaramos un long para poder comprobar si me pasan un numero int que sobrepase el max, tener espacio para que quepa y poder generar un error.
 Antes de convertir el char numero en entero, comprueba si hay algun caracter raro y se lo salta, comprueba si es positivo o negativo, lo convierte a int, en caso que falle se sale, en caso de que sea negativo lo convierte en positivo y comprueba que el valor entre entre el maximo y el minimo de enteros permitidos.
 Si llega hasta el final, retorna el valor.
 
