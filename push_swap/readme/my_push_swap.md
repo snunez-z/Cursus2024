@@ -220,7 +220,7 @@ Por eso para retornar algo diferente de cero (1 por ejemplo) debe cumplir as dos
 Node == NULL signific que ha llegado al final porque habia un corte y la segunda condicion, la varibale number contiene el ultimo número de la pila y en number. 
 Ejemplo de bien  = 10 20 1 2 3, esta ordenado con un corte
 ejemplo de mal = 10 20, 1 2 50. 10 y 20 estan ordenados y 1 2 50 tambien, hay 1 corte pero si 50 es mas grande que 10, estaras haciendo rotaciones en bucle sin ser capaz de ordenarlo.
-por eso es necesario las dos condiciones, que haya llegado al final y que el ultimo de lso numeros sea menor que el primero.
+por eso es necesario las dos condiciones, que haya llegado al final y que el ultimo de los numeros sea menor que el primero.
 
 __void enumerate_index_nodes(t_stack_list *stack)__
 
