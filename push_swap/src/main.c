@@ -6,7 +6,7 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:51:46 by snunez-z          #+#    #+#             */
-/*   Updated: 2024/12/20 15:45:48 by snunez-z         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:08:01 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 			return (-1);
 		if (list_size (a) < 10)
 			sort_few_numbers (&a, &b);
-		else
+		else if (is_sorted(a, 0) == 0)
 		{
 			enumerate_index_nodes(a);
 			k_sort1(&a, &b);
