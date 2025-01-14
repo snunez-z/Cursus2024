@@ -55,7 +55,7 @@ all: create_directories $(NAME)
 
 bonus: all $(NAME_BONUS)
 
-create_directories: $(OBJ_DIR)
+create_directories:
 	@mkdir -p $(OBJ_DIR)
 
 $(LIBFT)/libft.a:
