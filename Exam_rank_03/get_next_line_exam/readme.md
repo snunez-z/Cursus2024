@@ -31,7 +31,7 @@ char *get_next_line(int fd);
 
 Tu función debe devolver una línea que haya sido leída del descriptor de archivo pasado como parámetro. Lo que llamamos una "línea que ha sido leída" es una sucesión de 0 a n caracteres que terminan con '\n' (código ascii 0x0a) o con End Of File (EOF).
 
-La línea debe devolverse incluyendo el '\n' en caso de que haya uno al final de la línea que ha sido leída. Cuando hayas llegado al EOF, debes almacenar el buffer actual en un char * y devolverlo. Si el buffer está vacío, debes devolver NULL.
+La línea debe devolverse incluyendo el '\n' en caso de que haya un \n al final de la línea que ha sido leída. Cuando hayas llegado al EOF, debes almacenar el buffer actual en un char * y devolverlo. Si el buffer está vacío, debes devolver NULL.
 
 En caso de error, devuelve NULL. En caso de no devolver NULL, el puntero debe ser libre. Su programa se compilará con el indicador -D BUFFER_SIZE=xx, que debe usarse como tamaño de búfer para las llamadas de lectura en sus funciones.
 
@@ -41,8 +41,4 @@ Por lo tanto, llamar a su función get_next_line() en un bucle le permitirá lee
 
 Asegúrese de que su función se comporte bien cuando lea desde un archivo, desde la salida estándar, desde una redirección, etc.
 
-No se realizará ninguna llamada a otra función en el descriptor de archivo entre 2 llamadas de get_next_line(). Finalmente, consideramos que get_next_line() tiene un comportamiento indefinido cuando lee desde un archivo binario.
-Enviar comentarios
-Paneles laterales
-Historial
-Guardado
+No se realizará ninguna llamada a otra función en el descriptor de archivo entre 2 llamadas de get_next_line(). Finalmente, consideramos que get_next_line() tiene un comportamiento indefinido cuando lee desde un archivo binario

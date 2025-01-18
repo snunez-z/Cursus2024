@@ -11,218 +11,188 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 size_t	ft_strlen(char *str)
 {
 	int	i;
 
-	i = 0;
 	if (!str)
 		return (0);
+	i = 0;
 	while (str[i] != '\0')
 		i++;
 	return (i);
 }
-/*Propósito: Busca la primera aparición de un carácter (c) en la cadena (s).
-Funcionamiento:
-Si la cadena es NULL, retorna NULL.
-Recorre la cadena buscando el carácter c. Si lo encuentra, retorna un puntero al siguiente carácter.
-Si c es el carácter nulo ('\0'), retorna un puntero al final de la cadena.
-Si no encuentra c, retorna NULL.
-Uso: Detecta si una línea contiene un salto de línea (\n) y encuentra su posición.
- */
-char	*ft_strchr(char *s, int c)
+
+char	*ft_strchr(char *str, char c)
 {
-	int	i;
+	char *pos;
 
-	if (!s)
+	if (!str)
 		return (NULL);
-	i = 0;
-	while (s[i] != '\0')
+	pos = str;
+	while (*pos != '\0')
 	{
-		if (s[i] == (unsigned char)c)
-			return ((char *)&s[i] + 1);
-		i++;
+		if (*pos == c)
+			return (pos + 1);
+		pos++;
 	}
-	if ((char)c == '\0')
-		return ((char *)&s[i]);
 	return (NULL);
-}/* Propósito: Concatena dos cadenas (board y buffer) en una nueva.
-Funcionamiento:
-Si buffer está vacío, retorna board directamente.
-Reserva memoria suficiente para ambas cadenas juntas.
-Copia el contenido de board y luego de buffer en el nuevo bloque de memoria.
-Libera la memoria de board y retorna la nueva cadena.
-Uso: Une el contenido previamente leído (board) con nuevos datos del buffer.*/
+}
 
-char	*ft_strjoin(char *board, char *buffer)
+char	*ft_strjoin(char *str1, char *str2)
+{
+	size_t	pos;
+	size_t	pos_2;
+	char	*join;
+
+	if (ft_strlen(str2) == 0)
+		return (str1);
+	join = malloc((ft_strlen(str1) + ft_strlen(str2) + 1));
+	if (!join)
+	{
+		free(str1);
+		return (NULL);
+	}
+	pos = 0;
+	while (str1[pos] != '\0')
+	{
+		join[pos] = str1[pos];
+		pos++;
+	}
+
+	pos_2 = 0;
+	while (str2[pos_2] != '\0')
+	{
+		join[pos] = str2[pos_2];
+		pos++;
+		pos_2++;
+	}
+	join[pos] = '\0';
+	free(str1);
+	return (join);
+}
+
+char	*ft_strndup(char *str, size_t len)
 {
 	size_t	i;
-	size_t	z;
-	char	*board_dir;
+	char	*dup;
 
-	if (ft_strlen(buffer) == 0)
-		return (board);
-	board_dir = malloc((ft_strlen(board) + ft_strlen(buffer) + 1));
-	if (!board_dir)
-	{
-		free(board);
+	if (!str)
 		return (NULL);
-	}
-	i = -1;
-	while (board[++i] != '\0')
-		board_dir[i] = board[i];
-	z = 0;
-	while (buffer[z] != '\0')
-		board_dir[i++] = buffer[z++];
-	board_dir[i] = '\0';
-	free(board);
-	return (board_dir);
-}
-/* Propósito: Crea una copia de la cadena s1.
-Funcionamiento:
-Si s1 es NULL, retorna NULL.
-Calcula la longitud de la cadena, reserva memoria y copia su contenido en la nueva ubicación.
-Uso: Se utiliza para duplicar líneas u otras cadenas en funciones como ft_new_line y ft_line.*/
-char	*ft_strdup(char *s1)
-{
-	int		i;
-	int		len;
-	char	*s2;
-
-	if (!s1)
+	dup = malloc(len + 1);
+	if (!dup)
 		return (NULL);
 	i = 0;
-	len = ft_strlen(s1);
-	s2 = malloc(len + 1);
-	if (!s2)
-		return (NULL);
-	while (s1[i] != '\0')
+	while (i < len)
 	{
-		s2[i] = s1[i];
+		dup[i] = str[i];
 		i++;
 	}
-	s2[i] = '\0';
-	return (s2);
+	dup[i] = '\0';
+	return (dup);
 }
-/*Propósito: Actualiza board eliminando el contenido anterior a la primera línea.
-Funcionamiento:
-Si board es NULL o no contiene \n, libera board y retorna NULL.
-Encuentra la posición del primer \n, duplica el resto de la cadena y libera board.
-Retorna la nueva cadena que empieza después del \n.
-Uso: Mantiene en board solo los datos no procesados tras devolver una línea.*/
-char	*ft_new_line(char *board)
-{
-	char	*new_line;
 
-	if (!board)
+char	*ft_strdup(char *s1)
+{
+	return ft_strndup(s1, ft_strlen(s1));
+}
+
+char	*ft_skip_to_next_line(char *block)
+{
+	char	*end_of_line;
+	char	*next_line;
+
+	if (!block)
 		return (NULL);
-	if (!ft_strchr(board, '\n'))
+	end_of_line = ft_strchr(block, '\n');
+	if (end_of_line == NULL)
 	{
-		free(board);
+		free(block);
 		return (NULL);
 	}
-	new_line = ft_strchr(board, '\n');
-	new_line = ft_strdup(new_line);
-	free(board);
-	return (new_line);
+	next_line = ft_strdup(end_of_line); // copia desde el \n hasta el \0.
+	free(block);
+	return (next_line);
 }
-/*Propósito: Extrae la primera línea de board.
-Funcionamiento:
-Si board está vacío, retorna NULL.
-Si no contiene \n, duplica toda la cadena.
-Si contiene \n, reserva memoria hasta su posición y copia el contenido, incluyendo \n.
-Uso: Devuelve una línea lista para ser utilizada.*/
-char	*ft_line(char *board)
-{
-	char	*ln;
-	int		i;
 
-	i = 0;
-	if (!board[i])
+char	*ft_line(char *block)
+{
+	char	*end_of_line;
+	char	*ln;
+	size_t	line_size;
+
+	if (block == NULL || block[0] == '\0')
 		return (NULL);
-	if (!ft_strchr(board, '\n'))
-		ln = ft_strdup(board);
+	end_of_line = ft_strchr(block, '\n');
+	if (end_of_line == NULL) // si no lo ha encontrado el \n
+		ln = ft_strdup(block); // la linea es todo el bloque
 	else
 	{
-		ln = malloc(ft_strchr(board, '\n') - board + 1);
-		if (!ln)
-			return (NULL);
-		while (board[i] != '\n')
-		{
-			ln[i] = board[i];
-			i++;
-		}
-		ln[i] = board[i];
-		ln[i + 1] = '\0';
+		line_size = end_of_line - block;
+		ln = ft_strndup(block, line_size);
 	}
 	return (ln);
 }
-/*Propósito: Lee datos del descriptor de archivo y los almacena en board.
-Funcionamiento:
-Reserva un buffer temporal.
-Mientras no haya un \n en board y se sigan leyendo datos (read > 0):
-Lee hasta BUFFER_SIZE bytes del archivo.
-Une el contenido leído con board usando ft_strjoin.
-Libera el buffer y retorna board.
-Uso: Llena board con datos hasta encontrar un \n o el final del archivo.*/
-char	*ft_read(int fd, char *board)
+
+char	*ft_read(int fd, char *block)
 {
-	char	*buffer;
+	char	buffer[BUFFER_SIZE + 1];
 	int		bytes_read;
 
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-	{
-		free(board);
-		return (NULL);
-	}
-	bytes_read = 1;
-	while (board && !ft_strchr(board, '\n') && bytes_read > 0)
+	while (block != NULL && !ft_strchr(block, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
+		if (bytes_read == 0) //si he llegado al final
+			return (block);
+		if (bytes_read == -1) // si ha fallado la lectura 
 		{
-			free(buffer);
-			free(board);
+			free(block);
 			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
-		board = ft_strjoin(board, buffer);
+		block = ft_strjoin(block, buffer);
 	}
-	free(buffer);
-	return (board);
+	return (block);
 }
-/*Propósito: Gestiona la lógica para leer una línea completa desde un archivo.
-Funcionamiento:
-Verifica si el descriptor fd y BUFFER_SIZE son válidos.
-Si es la primera llamada, inicializa board.
-Llama a ft_read para leer datos adicionales.
-Extrae la línea completa con ft_line.
-Actualiza board con los datos restantes tras la línea extraída usando ft_new_line.
-Retorna la línea.
-Uso: Es la función principal que los usuarios llaman para obtener líneas consecutivas desde un archivo. */
+
 char	*get_next_line(int fd)
 {
-	static char	*board;
+	static char	*block;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0)
 		return (NULL);
-	if (!board)
+	if (block == NULL) // si es la primera veZ/para inicializar la estatica
 	{
-		board = malloc(1);
-		if (!board)
-			return (NULL);
-		board[0] = '\0';
+		block = malloc(1); // un byte porque inicialmente esta a cero, 1 byte para el barra cero
+		if (block != NULL)
+			block[0] = '\0';
 	}
-	board = ft_read(fd, board);
-	if (!board)
+	block = ft_read(fd, block);//lee bloques 
+	if (!block)
 		return (NULL);
-	line = ft_line(board);
-	board = ft_new_line(board);
+	line = ft_line(block); // extrae una linea
+	block = ft_skip_to_next_line(block); // skip hace que se salte lo copiado y pase a lo siguiente
 	return (line);
 }
-/*El programa mantiene un board estático que almacena los datos leídos pero no procesados.
-Al llamar a get_next_line, se lee más contenido del archivo (si es necesario), se extrae una línea y se actualiza board.
-Este proceso se repite hasta que no haya más líneas que leer. */
+
+/*int	main (void)
+{
+	int fd;
+	char	*buffer;
+	
+	fd = open("readme.md", O_RDONLY);
+	buffer = get_next_line(fd);
+	while (buffer != NULL)
+	{
+		printf("%s", buffer);
+		free(buffer);
+		buffer = get_next_line (fd);
+		
+	}
+	return (0);
+}*/
