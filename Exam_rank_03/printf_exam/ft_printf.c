@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/17 09:01:26 by snunez-z          #+#    #+#             */
+/*   Updated: 2025/02/17 14:32:41 by snunez-z         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <stdarg.h>
 
@@ -20,12 +32,12 @@ void	put_digit(long long int number, int base, int *length)
 	{
 		number = number * -1;
 		write(1, "-", 1);
-		*length++;
+		*length = *length + 1;
 	}
 	if (number >= base)
 		put_digit((number / base), base, length);
 	write(1, hexadecimal + (number % base), 1);
-	lenght++;
+	*length = *length + 1;
 }
 
 int	ft_printf(const char *format, ...)
@@ -54,7 +66,26 @@ int	ft_printf(const char *format, ...)
 		}
 		format++;
 	}
-
 	va_end(next_arg);
 	return (length);
 }
+
+int	main(void)
+{
+	int n;
+	int length;
+	char *null;
+
+	null = NULL; 
+	length = 0;
+	n = ft_printf ("NULL %s NULL\n", null);
+	put_digit (n, 10, &length);
+	put_string("\n", &length);
+	n = ft_printf(" Hola soy %s y tengo %d años\n", "Sushi", 53);
+	put_digit(n, 10, &length);
+	n = ft_printf("%d %d %d %d %d\n", -300, 300, -2147483648, 2147483647, 0);
+	put_digit(n, 10, &length);
+	put_string ("\n", &length);
+	n = ft_printf("%x %x %x %x en hexa\n", 15, 56, 0, 255);
+	put_digit (n, 16, &length);
+} 
