@@ -27,55 +27,6 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strchr(char *str, char c)
-{
-	char *pos;
-
-	if (!str)
-		return (NULL);
-	pos = str;
-	while (*pos != '\0')
-	{
-		if (*pos == c)
-			return (pos + 1);
-		pos++;
-	}
-	return (NULL);
-}
-
-char	*ft_strjoin(char *str1, char *str2)
-{
-	size_t	pos;
-	size_t	pos_2;
-	char	*join;
-
-	if (ft_strlen(str2) == 0)
-		return (str1);
-	join = malloc((ft_strlen(str1) + ft_strlen(str2) + 1));
-	if (!join)
-	{
-		free(str1);
-		return (NULL);
-	}
-	pos = 0;
-	while (str1[pos] != '\0')
-	{
-		join[pos] = str1[pos];
-		pos++;
-	}
-
-	pos_2 = 0;
-	while (str2[pos_2] != '\0')
-	{
-		join[pos] = str2[pos_2];
-		pos++;
-		pos_2++;
-	}
-	join[pos] = '\0';
-	free(str1);
-	return (join);
-}
-
 char	*ft_strndup(char *str, size_t len)
 {
 	size_t	i;
@@ -99,6 +50,22 @@ char	*ft_strndup(char *str, size_t len)
 char	*ft_strdup(char *s1)
 {
 	return ft_strndup(s1, ft_strlen(s1));
+}
+
+char	*ft_strchr(char *str, char c)
+{
+	char *pos;
+
+	if (!str)
+		return (NULL);
+	pos = str;
+	while (*pos != '\0')
+	{
+		if (*pos == c)
+			return (pos + 1);
+		pos++;
+	}
+	return (NULL);
 }
 
 char	*ft_skip_to_next_line(char *block)
@@ -136,6 +103,39 @@ char	*ft_line(char *block)
 		ln = ft_strndup(block, line_size);
 	}
 	return (ln);
+}
+
+char	*ft_strjoin(char *str1, char *str2)
+{
+	size_t	pos;
+	size_t	pos_2;
+	char	*join;
+
+	if (ft_strlen(str2) == 0)
+		return (str1);
+	join = malloc((ft_strlen(str1) + ft_strlen(str2) + 1));
+	if (!join)
+	{
+		free(str1);
+		return (NULL);
+	}
+	pos = 0;
+	while (str1[pos] != '\0')
+	{
+		join[pos] = str1[pos];
+		pos++;
+	}
+
+	pos_2 = 0;
+	while (str2[pos_2] != '\0')
+	{
+		join[pos] = str2[pos_2];
+		pos++;
+		pos_2++;
+	}
+	join[pos] = '\0';
+	free(str1);
+	return (join);
 }
 
 char	*ft_read(int fd, char *block)
@@ -179,8 +179,8 @@ char	*get_next_line(int fd)
 	block = ft_skip_to_next_line(block); // skip hace que se salte lo copiado y pase a lo siguiente
 	return (line);
 }
-
-/*int	main (void)
+/*
+int	main (void)
 {
 	int fd;
 	char	*buffer;
@@ -192,7 +192,6 @@ char	*get_next_line(int fd)
 		printf("%s", buffer);
 		free(buffer);
 		buffer = get_next_line (fd);
-		
 	}
 	return (0);
-}*/
+}*\
