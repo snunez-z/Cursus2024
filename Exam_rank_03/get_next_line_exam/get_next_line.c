@@ -6,13 +6,14 @@
 /*   By: snunez-z <snunez-z@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 10:45:58 by snunez-z          #+#    #+#             */
-/*   Updated: 2025/01/17 13:41:46 by snunez-z         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:38:38 by snunez-z         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+//#include <stdio.h>
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 42
@@ -197,4 +198,4 @@ int	main (void)
 		buffer = get_next_line (fd);
 	}
 	return (0);
-}*\
+}*/
