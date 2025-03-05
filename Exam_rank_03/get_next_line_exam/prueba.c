@@ -1,8 +1,10 @@
+
 #include "get_next_line.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
+
 size_t	ft_strlen(char	*str)
 {
 	size_t	i;
@@ -10,17 +12,18 @@ size_t	ft_strlen(char	*str)
 	if(!str)
 		return(0);
 	i = 0;
-	while( str[i] != '\0')
+	while(str[i] != '\0')
 		i++;
 	return(i);
 }
-char	*ft_strchr(char	*block, char ch)
+
+char	*ft_strchr(char	*str, char ch)
 {
 	char	*pos;
 
-	if(!block)
+	if(!str)
 		return(NULL);
-	pos = block;
+	pos = str;
 	while(*pos != '\0')
 	{
 		if(*pos == ch)
@@ -29,7 +32,8 @@ char	*ft_strchr(char	*block, char ch)
 	}
 	return(NULL);
 }
-char	*ft_strndup(char	*block, size_t len)
+
+char	*ft_strndup(char	*block, size_t	len)
 {
 	char	*dup;
 	size_t	i;
@@ -48,39 +52,19 @@ char	*ft_strndup(char	*block, size_t len)
 	dup[i] = '\0';
 	return(dup);
 }
-
 char	*ft_strdup(char	*block)
 {
 	return(ft_strndup(block, ft_strlen(block)));
 }
-
-char 	*skip_to_next_line(char	*block)
+char	*ft_strjoin(char	*block, char *buffer)
 {
-	char	*end_of_line;
-	char	*next_line;
-
-	if(!block)
-		return (NULL);
-	end_of_line = ft_strchr(block, '\n');
-	if(end_of_line == NULL)
-	{
-		free(block);
-		return(block);
-	}
-	next_line = ft_strdup(end_of_line);
-	free(block);
-	return(next_line);
-}
-
-char	*ft_strjoin(char	*block, char	*buffer)
-{
-	char	*join;
 	size_t	pos;
 	size_t	pos2;
-   
-	if(ft_strlen (buffer) == 0)
+	char	*join;
+
+	if(ft_strlen(buffer) == 0)
 		return(block);
-	join = malloc (ft_strlen(block) + ft_strlen(buffer) + 1);
+	join = malloc (ft_strlen(block) + ft_strlen (buffer) + 1);
 	if(!join)
 	{
 		free(block);
@@ -89,7 +73,7 @@ char	*ft_strjoin(char	*block, char	*buffer)
 	pos = 0;
 	while(block[pos] != '\0')
 	{
-		join [pos] = block[pos];
+		join[pos] = block[pos];
 		pos++;
 	}
 	pos2 = 0;
@@ -103,6 +87,23 @@ char	*ft_strjoin(char	*block, char	*buffer)
 	free(block);
 	return(join);
 }
+char	*skip_to_next_line(char	*block)
+{
+	char	*next_line;
+	char	*end_of_line;
+
+	if(!block)
+		return(NULL);
+	end_of_line = ft_strchr(block, '\n');
+	if (end_of_line == NULL)
+	{
+		free(block);
+		return(NULL);
+	}
+	next_line = ft_strdup(end_of_line);
+	free (block);
+	return(next_line);
+}	
 
 char	*ft_line(char	*block)
 {
@@ -135,10 +136,10 @@ char	*ft_read(int fd, char	*block)
 			return(block);
 		if(bytes_read == -1)
 		{
-			free (block);
+			free(block);
 			return(NULL);
 		}
-		buffer[bytes_read] = '\0';
+		buffer [bytes_read] = '\0';
 		block = ft_strjoin(block, buffer);
 	}
 	return(block);
@@ -146,21 +147,21 @@ char	*ft_read(int fd, char	*block)
 
 char	*get_next_line(int fd)
 {
-	static char	*block;
+	static char *block;
 	char		*line;
 
 	if(fd < 0)
 		return(NULL);
 	if(block == NULL)
 	{
-		block = malloc (1);
+		block = malloc(1);
 		if(block != NULL)
 			block[0] = '\0';
 	}
 	block = ft_read(fd, block);
 	if(!block)
 		return(NULL);
-	line = ft_line(block);
+	line= ft_line(block);
 	block = skip_to_next_line(block);
 	return(line);
 }
@@ -180,3 +181,4 @@ int	main(void)
 	}
 	return(0);
 }
+
